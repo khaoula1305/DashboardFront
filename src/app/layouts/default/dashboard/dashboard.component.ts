@@ -1,12 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 
-import {CompactType, DisplayGrid, Draggable, GridsterConfig, GridsterItem, GridType, PushDirections, Resizable} from 'angular-gridster2';
+import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
 
-interface Safe extends GridsterConfig {
-  draggable: Draggable;
-  resizable: Resizable;
-  pushDirections: PushDirections;
-}
+import {CompactType, DisplayGrid, Draggable, GridType, PushDirections, Resizable} from 'angular-gridster2';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,11 +12,21 @@ interface Safe extends GridsterConfig {
 
 
 export class DashboardComponent implements OnInit {
-  options: Safe;
+  options: GridsterConfig;
   dashboard: Array<GridsterItem>;
 
-  ngOnInit(): void {
+  static itemChange(item, itemComponent) {
+    console.info('itemChanged', item, itemComponent);
+  }
+
+  static itemResize(item, itemComponent) {
+    console.info('itemResized', item, itemComponent);
+  }
+  constructor() { }
+  ngOnInit() {
     this.options = {
+      /*itemChangeCallback: DefaultComponent.itemChange,
+      itemResizeCallback: DefaultComponent.itemResize,*/
       gridType: GridType.Fit,
       compactType: CompactType.None,
       margin: 10,
@@ -44,6 +51,7 @@ export class DashboardComponent implements OnInit {
       defaultItemRows: 1,
       fixedColWidth: 105,
       fixedRowHeight: 105,
+
       keepFixedHeightInMobile: false,
       keepFixedWidthInMobile: false,
       scrollSensitivity: 10,
@@ -62,7 +70,7 @@ export class DashboardComponent implements OnInit {
       resizable: {
         enabled: true,
       },
-      swap: true,
+      swap: false,
       pushItems: true,
       disablePushOnDrag: false,
       disablePushOnResize: false,
@@ -73,32 +81,22 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false
     };
+
     this.dashboard = [
-      {cols: 1, rows: 1, y: 0, x: 0},
-      {cols: 2, rows: 3 , y: 0, x: 2, hasContent: true},
-      /*{cols: 2, rows: 2, y: 3, x: 5, minItemRows: 2, minItemCols: 2, label: 'Min rows & cols = 2'},
-      {cols: 2, rows: 2, y: 2, x: 0, maxItemRows: 2, maxItemCols: 2, label: 'Max rows & cols = 2'},
-      {cols: 2, rows: 1, y: 2, x: 2, dragEnabled: true, resizeEnabled: true, label: 'Drag&Resize Enabled'},
-      {cols: 1, rows: 1, y: 2, x: 4, dragEnabled: false, resizeEnabled: false, label: 'Drag&Resize Disabled'},
-      {cols: 1, rows: 1, y: 2, x: 6},
-      {cols: 1, rows: 1, y: 2, x: 6, label: 'Hello', content: 'myChart'}*/
+      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true},
+      {cols: 2, rows: 2, y: 0, x: 2, resizeEnabled:true, dragEnabled:true}
     ];
-   
   }
 
-  changedOptions(): void {
-    if (this.options.api && this.options.api.optionsChanged) {
-      this.options.api.optionsChanged();
-    }
+  changedOptions() {
+    this.options.api.optionsChanged();
   }
 
-  removeItem($event: MouseEvent | TouchEvent, item): void {
-    $event.preventDefault();
-    $event.stopPropagation();
+  removeItem(item) {
     this.dashboard.splice(this.dashboard.indexOf(item), 1);
   }
 
-  addItem(): void {
-    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+  addItem() {
+   // this.dashboard.push({});
   }
 }
