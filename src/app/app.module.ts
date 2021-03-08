@@ -9,6 +9,14 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenubarModule } from 'primeng/menubar';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { AvatarModule } from "primeng/avatar";
+import { BadgeModule } from "primeng/badge";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +28,14 @@ import { SideBarComponent } from './shared/components/side-bar/side-bar.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MenubarModule,
+    InputTextModule,
+    ButtonModule,
+    PanelMenuModule,
+    AvatarModule,
+    BadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
