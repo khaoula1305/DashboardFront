@@ -28,7 +28,8 @@ import {CardModule} from 'primeng/card';
   exports: [
     DashboardComponent,
     WidgetComponent,
-    DefaultComponent
+    DefaultComponent,
+    WidgetPanelComponent
   ]
 })
 export class DashboardModule { }
