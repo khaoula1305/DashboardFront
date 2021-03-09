@@ -33,7 +33,6 @@ import { BadgeModule } from "primeng/badge";
     AvatarModule,
     BadgeModule,
     DashboardModule,
-    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

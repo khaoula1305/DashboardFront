@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./widget-panel.component.scss']
 })
 export class WidgetPanelComponent implements OnInit {
+  visualisationType: Array<any>= new Array();
+  constructor() { 
 
-  constructor() { }
+  }
 
   ngOnInit(): void {
+    let i;
+    for(i=0; i<10; i++){
+      this.visualisationType.push("graph type "+i);
+    }
+  
   }
 
 }
