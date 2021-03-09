@@ -9,13 +9,16 @@ import { DefaultComponent } from './default.component';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { WidgetPanelComponent } from './widget-panel/widget-panel.component';
 import {CardModule} from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { VisualisationTypeComponent } from './widget-panel/visualisation-type/visualisation-type.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     WidgetComponent,
     DefaultComponent,
-    WidgetPanelComponent
+    WidgetPanelComponent,
+    VisualisationTypeComponent
   ],
   imports: [
     CommonModule,
@@ -23,12 +26,14 @@ import {CardModule} from 'primeng/card';
     BrowserAnimationsModule,
     PanelModule,
     ScrollPanelModule,
-    CardModule
+    CardModule,
+    ButtonModule
   ],
   exports: [
     DashboardComponent,
     WidgetComponent,
-    DefaultComponent
+    DefaultComponent,
+    WidgetPanelComponent
   ]
 })
 export class DashboardModule { }
