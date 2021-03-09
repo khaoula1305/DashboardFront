@@ -4,20 +4,32 @@ import { GridsterModule } from 'angular-gridster2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WidgetComponent } from './widget/widget.component';                 
+import {PanelModule} from 'primeng/panel';
+import { DefaultComponent } from './default.component';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { WidgetPanelComponent } from './widget-panel/widget-panel.component';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    WidgetComponent
+    WidgetComponent,
+    DefaultComponent,
+    WidgetPanelComponent
   ],
   imports: [
     CommonModule,
     GridsterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PanelModule,
+    ScrollPanelModule,
+    CardModule
   ],
   exports: [
     DashboardComponent,
-    WidgetComponent
+    WidgetComponent,
+    DefaultComponent,
+    WidgetPanelComponent
   ]
 })
 export class DashboardModule { }
