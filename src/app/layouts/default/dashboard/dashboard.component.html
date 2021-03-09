@@ -1,0 +1,7 @@
+<p-button label="add" (click)="addItem()"></p-button>
+<gridster [options]="options">
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <!-- your content here -->
+    <app-widget></app-widget>
+  </gridster-item>
+</gridster>
