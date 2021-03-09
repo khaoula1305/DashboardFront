@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
     };
 
     this.dashboard = [
-      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true},
+      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, label:"hello"},
       {cols: 2, rows: 2, y: 0, x: 2, resizeEnabled:true, dragEnabled:true}
     ];
   }
@@ -97,6 +97,9 @@ export class DashboardComponent implements OnInit {
   }
 
   addItem() {
-   // this.dashboard.push({});
+   /*this.dashboard.forEach(el =>{
+     if(el.cols)
+   })*/
+    this.dashboard.push({cols: 1, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
   }
 }
