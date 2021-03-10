@@ -12,6 +12,7 @@ import { GridsterModule } from 'angular-gridster2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WidgetDashboardComponent } from './widget-dashboard/widget-dashboard.component';
+import {SkeletonModule} from 'primeng/skeleton';
 
 
 
@@ -31,7 +32,8 @@ import { WidgetDashboardComponent } from './widget-dashboard/widget-dashboard.co
     ScrollPanelModule,
     CardModule,
     ButtonModule,
-    ChartModule
+    ChartModule,
+    SkeletonModule
   ],
   exports:[
     DefaultComponent

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-widget-panel',
@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WidgetPanelComponent implements OnInit {
 
+  @Output() hidden = new EventEmitter<any>();
   constructor() { }
+
+  hideClick(){
+    console.log('widget ');
+    this.hidden.emit(true);
+  }
 
   ngOnInit(): void {
   }
