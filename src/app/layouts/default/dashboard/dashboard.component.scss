@@ -1,0 +1,21 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: aqua;
+  background-color: beige;
+  border-width: 3px;
+  border-color: brown;
+}
+
+:host ::ng-deep gridster {
+  background-color: rgb(214, 211, 211);
+  height: 900px;
+}
+
+:host ::ng-deep gridster .gridster-column {
+  // width: 30%;
+  height: 100px;
+}
+:host ::ng-deep gridster.gridster-column {
+  // width: 50%;
+  height: 100px;
+}
