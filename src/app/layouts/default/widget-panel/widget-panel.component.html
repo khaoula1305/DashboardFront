@@ -1,24 +1,14 @@
-<div class="panel">
- 
-    <button pButton pRipple type="button" (click)="hideClick()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined"></button>
-    <h5>Add widget</h5>
-    <div class="p-d-flex p-mb-3">
-        <div shape="circle" size="4rem" styleClass="p-mr-2">
-            <img src="../../../../assets/graph.png"/>
-        </div>
-        <div>
-            <div  styleClass="p-mb-2">Title</div>
-            <div styleClass="p-mb-2">Lorem ipsum dolopet quo explicabo magnam velit itaque. Dolores totam rerum earum accusantium enim assumenda excepturi molestiae!</div>
-        </div>
-    </div>
-    <div class="p-d-flex p-mb-3">
-        <div shape="circle" size="4rem" styleClass="p-mr-2">
-            <img src="../../../../assets/increase.png"/>
-        </div>
-        <div>
-            <div  styleClass="p-mb-2">Title</div>
-            <div styleClass="p-mb-2">Description</div>
-        </div>
-    </div>
+<p-card header="Add Widget" styleClass="panel">
+    <button pButton pRipple type="button" (click)="hideClick()" icon="pi pi-times" class="btn p-button-rounded p-button-danger p-button-outlined"></button>
+    <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText name="search" placeholder="Search" [(ngModel)]="searchText" />
+    </span>
 
-</div>
+    <p-scrollPanel [style]="{margin: '20px',  height: '400px'}">
+      <app-widget *ngFor="let widget of widgets | filter: searchText" [widget]="widget"  (click)="addWidget(widget)" class="pointer"></app-widget>
+      <p-scrollTop target="parent" styleClass="custom-scrolltop" [threshold]="100" icon="pi pi-arrow-up"></p-scrollTop>
+    </p-scrollPanel>
+    <p-button label="add" (click)="addItem()"></p-button>  
+</p-card >
+

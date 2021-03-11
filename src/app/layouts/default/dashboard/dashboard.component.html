@@ -1,7 +1,5 @@
-<p-button label="add" (click)="addItem()"></p-button>
 <gridster [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <!-- your content here -->
     <app-widget-dashboard (deleted)="onDeletedClick($event)"></app-widget-dashboard>
   </gridster-item>
 </gridster>
