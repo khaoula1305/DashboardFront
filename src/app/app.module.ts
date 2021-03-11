@@ -11,10 +11,16 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { AvatarModule } from "primeng/avatar";
 import { BadgeModule } from "primeng/badge";
 import { DefaultModule } from './layouts/default/default.module';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    SideBarComponent
   ],
   imports: [
     BrowserModule,
