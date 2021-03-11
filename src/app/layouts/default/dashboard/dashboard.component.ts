@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, DisplayGrid, Draggable, GridType, PushDirections, Resizable} from 'angular-gridster2';
 import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
+import {WidgetDashboardService} from '../../../services/widget-dashboard.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-  constructor() { }
+  constructor(private widgetDashboardService: WidgetDashboardService) { }
   ngOnInit() {
     this.options = {
       /*itemChangeCallback: DefaultComponent.itemChange,
@@ -77,16 +78,8 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false
     };
-    let widgets: Array<any>=new Array();
-    
-    //call service pour ramener les widgets à partir la partie Back
-    widgets= [
-      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, label:"hello"},
-      {cols: 2, rows: 2, y: 0, x: 2, resizeEnabled:true, dragEnabled:true},
-      {cols: 1, rows: 1, y: 1, x: 1, resizeEnabled:true, dragEnabled:true}
-    ];
-
-    this.dashboard=widgets;
+   
+    this.dashboard= this.widgetDashboardService.getAllWidgets();
     //this.dashboard =
   }
 
@@ -109,6 +102,6 @@ export class DashboardComponent implements OnInit {
    /*this.dashboard.forEach(el =>{
      if(el.cols)
    })*/
-    this.dashboard.push({cols: 1, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+    this.dashboard.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
   }
 }

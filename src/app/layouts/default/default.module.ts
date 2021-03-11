@@ -13,8 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WidgetDashboardComponent } from './widget-dashboard/widget-dashboard.component';
 import {SkeletonModule} from 'primeng/skeleton';
-
-
+import {ScrollTopModule} from 'primeng/scrolltop';
+import {InputTextModule} from 'primeng/inputtext';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,11 @@ import {SkeletonModule} from 'primeng/skeleton';
     CardModule,
     ButtonModule,
     ChartModule,
-    SkeletonModule
+    SkeletonModule,
+    ScrollTopModule,
+    InputTextModule,
+    Ng2SearchPipeModule,
+    FormsModule
   ],
   exports:[
     DefaultComponent
