@@ -11,9 +11,9 @@ export class WidgetDashboardService {
   constructor() { 
 
     this.widgetDashboard=[
-      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true , title:"Widget 1" },
-      {cols: 2, rows: 2, y: 0, x: 2, resizeEnabled:true, dragEnabled:true, title:"Widget 2"},
-      {cols: 1, rows: 1, y: 1, x: 1, resizeEnabled:true, dragEnabled:true, title:"Widget 2"}
+      {cols: 2, rows: 1, y: 0, x: 0, resizeEnabled:true, dragEnabled:true , title:"Widget 1", type: 'bar' },
+      {cols: 2, rows: 2, y: 0, x: 2, resizeEnabled:true, dragEnabled:true, title:"Widget 2", type: 'line'},
+      {cols: 1, rows: 1, y: 1, x: 1, resizeEnabled:true, dragEnabled:true, title:"Widget 3", type: 'pie'}
     ];
 
   }

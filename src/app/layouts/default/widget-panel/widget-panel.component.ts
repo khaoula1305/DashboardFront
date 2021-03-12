@@ -30,8 +30,8 @@ export class WidgetPanelComponent implements OnInit {
     console.log('widget panel', this.widgets);
   }
 
-  addWidget(widget : any){
-    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+  addWidget(widget : Widget){
+    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
   addItem() {
     this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});

@@ -88,9 +88,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public pauseState = false;
-  onDeletedClick(state, item){
-  this.pauseState = state;
-  console.log('state', state);
+  onDeletedClick(item){
    this.dashboard.splice(this.dashboard.indexOf(item), 1);
 
 }

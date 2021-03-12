@@ -1,5 +1,5 @@
 <gridster [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <app-widget-dashboard (deleted)="onDeletedClick($event)"></app-widget-dashboard>
+    <app-widget-dashboard (deleted)="onDeletedClick($event)" [widget]="item"></app-widget-dashboard>
   </gridster-item>
 </gridster>
