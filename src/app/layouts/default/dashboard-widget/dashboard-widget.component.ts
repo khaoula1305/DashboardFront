@@ -11,7 +11,7 @@ import {DataSource} from 'src/app/models/data-source.model';
 export class DashboardWidgetComponent implements OnInit {
 
   @Output() deleted = new EventEmitter<any>();
-  @Input() widget;
+  @Input() dashboardWidget;
   basicData: any;
     
   basicOptions: any;
@@ -19,7 +19,7 @@ export class DashboardWidgetComponent implements OnInit {
 
   deleteClick(){
     this.deleted.emit(true);
-    console.log("widget ", this.widget);
+    console.log("widget ", this.dashboardWidget);
   }
   updateClick(){
     // naviguer vers le updateComponent
@@ -27,34 +27,53 @@ export class DashboardWidgetComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let dataSource: DataSource =  this.widget.query.dataSource;
+   // console.log(' dashboardWidget', this.dashboardWidget);
+    let dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
     //let mesures: any[][];
-    this.dataSourceService.getData(dataSource).subscribe(data => {
-      let nameOfDimension=this.widget.query.dimension;
-      let nameOfmesure=this.widget.query.mesure1;
-      let dimension;
-      let mesure1;
-      data.forEach(elm => dimension.push(elm.nameOfDimension));
-    
-     data.forEach(elm => mesure1.push(elm.nameOfmesure));
-    
-     this.basicData = {
+    this.dataSourceService.getData(dataSource).subscribe(
+      (data) => {
+        let dimension= [];
+           data.forEach(elm => {
+          dimension.push(elm.date);
+          //console.log(elm.nameOfDimension);
+        });
+        let mesure2=[];
+        data.forEach(elm => {
+          mesure2.push(elm.positive);
+        });
 
-      labels: dimension,
-      datasets: [
- 
-          {
-              label: 'mesure name',
-              backgroundColor: '#FFA726',
+        let mesure1=[];
+        data.forEach(elm => {
+          mesure1.push(elm.negative);
+        });
+      // data.forEach(elm => mesure2.push(elm.nameOfmesure));
+       this.basicData = {
+  
+        labels: dimension,
+        datasets: [
+   
+            {
+                label: this.dashboardWidget.widget.query.mesure2 ,
+                backgroundColor: '#FFA726',
+                data: mesure2
+            },
+
+            {
+              label: this.dashboardWidget.widget.query.mesure1 ,
+              backgroundColor: '#AAA423',
               data: mesure1
           }
-      ]
-  };
-    });
-  //  console.log('dtat', labels);
-    
+        ]
+    };
 
-
+      },
+      (error) => {
+      console.log('error ' );
+      },
+      () => {
+      console.log('complete');
+      }
+      );
   }
 
 }

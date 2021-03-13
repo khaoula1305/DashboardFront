@@ -1,7 +1,7 @@
-<p-card header="{{widget.title}}">
+<p-card header="{{dashboardWidget.title}}">
 <p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
 <p-button (click)="updateClick()" label="update" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
     <div class="card">
-        <p-chart type="{{widget.type}}" [data]="basicData" [options]="basicOptions"></p-chart>
+        <p-chart type="{{dashboardWidget.widget.type.type}}" [data]="basicData" [options]="basicOptions"></p-chart>
     </div>
 </p-card>
