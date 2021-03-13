@@ -11,7 +11,7 @@ import {ChartModule} from 'primeng/chart';
 import { GridsterModule } from 'angular-gridster2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { WidgetDashboardComponent } from './widget-dashboard/widget-dashboard.component';
+import { DashboardWidgetComponent } from './dashboard-widget/dashboard-widget.component';
 import {SkeletonModule} from 'primeng/skeleton';
 import {ScrollTopModule} from 'primeng/scrolltop';
 import {InputTextModule} from 'primeng/inputtext';
@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
     WidgetComponent,
      WidgetPanelComponent,
       DashboardComponent, 
-      WidgetDashboardComponent,
+      DashboardWidgetComponent,
       DefaultComponent
     ],
   imports: [

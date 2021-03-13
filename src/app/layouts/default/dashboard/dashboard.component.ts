@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, DisplayGrid, Draggable, GridType, PushDirections, Resizable} from 'angular-gridster2';
 import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
-import {WidgetDashboardService} from '../../../services/widget-dashboard.service'
+import {DashboardWidgetService} from '../../../services/dashboard-widget.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-  constructor(private widgetDashboardService: WidgetDashboardService) { }
+  constructor(private widgetDashboardService:DashboardWidgetService) { }
   ngOnInit() {
     this.options = {
       /*itemChangeCallback: DefaultComponent.itemChange,

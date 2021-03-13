@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Widget } from 'src/app/models/widget.model';
-import { WidgetDashboardService } from 'src/app/services/widget-dashboard.service';
+import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
  searchText;
 
-  constructor( private widgetsService: WidgetsService, private widgetDashboardService: WidgetDashboardService) { }
+  constructor( private widgetsService: WidgetsService, private widgetDashboardService: DashboardWidgetService) { }
 
   hideClick(){
     console.log('widget ');

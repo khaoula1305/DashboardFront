@@ -1,14 +1,14 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
-import {DataSource} from 'src/app/models/dataSource.model';
+import {DataSource} from 'src/app/models/data-source.model';
 
 @Component({
-  selector: 'app-widget-dashboard',
-  templateUrl: './widget-dashboard.component.html',
-  styleUrls: ['./widget-dashboard.component.scss']
+  selector: 'app-dashboard-widget',
+  templateUrl: './dashboard-widget.component.html',
+  styleUrls: ['./dashboard-widget.component.scss']
 })
-export class WidgetDashboardComponent implements OnInit {
+export class DashboardWidgetComponent implements OnInit {
 
   @Output() deleted = new EventEmitter<any>();
   @Input() widget;
@@ -25,25 +25,29 @@ export class WidgetDashboardComponent implements OnInit {
   ngOnInit(): void {
     //we have here a widget ==> widget.dataSource
     let dataSource: DataSource =   {id: 1, title: "source 1", url: "https://api.covidtracking.com/v1/us/daily.json"};
-    let mesures;
+    let mesures: any[][];
     this.dataSourceService.getData(dataSource).subscribe(data => {
-     console.log(' data',data);
-     console.log(' data 0',data[0]);
+     //console.log(' data',data);
+    // console.log(' data 0',data[0]);
 
-     mesures=data;
+    let nameOfDimension=this.widget.query.dimension;
+    
+    let nameOfmesures=this.widget.query.mesures;
+
+    let dimension: any[]=[];
+     data.forEach(elm => dimension.push(elm.nameOfDimension));
+    
+     data.forEach(elm => mesures[nameOfmesures].push(elm.nameOfmesures[0]));
+    
      this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+
+      labels: dimension,
       datasets: [
+ 
           {
-              label: 'My First dataset',
-              backgroundColor: '#42A5F5',
-              //data: [65, 59, 80, 81, 56, 55, 40]
-              data: mesures[0].positive
-          },
-          {
-              label: 'My Second dataset',
+              label: 'mesure name',
               backgroundColor: '#FFA726',
-              data: [28, 48, 40, 19, 86, 27, 90]
+              data: mesures
           }
       ]
   };
