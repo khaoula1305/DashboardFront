@@ -26,27 +26,25 @@ export class WidgetPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.widgets=this.widgetsService.getAllWidgets().subscribe(
-      (response) => {
-        console.log('widgets ', response);
-        this.widgets=response;
-      },
-      (error) => {
-        console.log('error ' );
-      },
-      () => {
-        console.log('complete');
-      }
+    this.widgetsService.getAllWidgets().subscribe(
+    (response) => {
+    console.log('widgets ', response);
+    this.widgets=response;
+    },
+    (error) => {
+    console.log('error ' );
+    },
+    () => {
+    console.log('complete');
+    }
     );
-  }
+    }
 
-// add generic widget
   addWidget(){
-    this.dashboardWidgetService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
+    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
-
-  // add widget to the dashboard
   addItem(widget : Widget) {
-    this.dashboardWidgetService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
    }
+
 }

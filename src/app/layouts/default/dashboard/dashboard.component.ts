@@ -78,7 +78,11 @@ export class DashboardComponent implements OnInit {
       scrollToNewItems: false
     };
    
-    this.dashboard= this.dashboardWidgetService.getAllWidgets();
+    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
+      data => {
+        this.dashboard= data;
+      }
+    );
     //this.dashboard =
   }
 

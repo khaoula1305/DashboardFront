@@ -9,22 +9,25 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardsService {
 
+  host:any = environment.host+"/dashboards/";
+
   constructor(private http: HttpClient) { }
 
   getAllDashboards(): Observable<Dashboard[]>{
-    let host= environment.host;
-    return this.http.get<Dashboard[]>(host+"");
+    return this.http.get<Dashboard[]>(this.host);
   }
 
-  addDashboard(): Observable<Dashboard>{
-    return;
+  addDashboard(dashboard: Dashboard){
+    this.http.post(this.host, dashboard);
   }
 
-  editDashboard(dashboard: Dashboard): Observable<Dashboard>{
-    return;
+  updateDashboard(dashboard: Dashboard){
+    console.log(dashboard.id + " updated");
+    this.http.put(this.host, dashboard);
   }
 
-  removeDashboard(dashboard: Dashboard): Observable<Dashboard>{
-    return;
+  deleteDashboard(dashboardId: number){
+    console.log(dashboardId + " deleted");
+    this.http.delete(this.host + dashboardId);
   }
 }

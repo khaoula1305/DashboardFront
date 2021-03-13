@@ -21,23 +21,22 @@ export class DashboardWidgetComponent implements OnInit {
     this.deleted.emit(true);
     console.log("widget ", this.widget);
   }
+  updateClick(){
+    // naviguer vers le updateComponent
+  }
 
   ngOnInit(): void {
-    //we have here a widget ==> widget.dataSource
-    let dataSource: DataSource =   {id: 1, title: "source 1", url: "https://api.covidtracking.com/v1/us/daily.json"};
-    let mesures: any[][];
+
+    let dataSource: DataSource =  this.widget.query.dataSource;
+    //let mesures: any[][];
     this.dataSourceService.getData(dataSource).subscribe(data => {
-     //console.log(' data',data);
-    // console.log(' data 0',data[0]);
-
-    let nameOfDimension=this.widget.query.dimension;
+      let nameOfDimension=this.widget.query.dimension;
+      let nameOfmesure=this.widget.query.mesure1;
+      let dimension;
+      let mesure1;
+      data.forEach(elm => dimension.push(elm.nameOfDimension));
     
-    let nameOfmesures=this.widget.query.mesures;
-
-    let dimension: any[]=[];
-     data.forEach(elm => dimension.push(elm.nameOfDimension));
-    
-     data.forEach(elm => mesures[nameOfmesures].push(elm.nameOfmesures[0]));
+     data.forEach(elm => mesure1.push(elm.nameOfmesure));
     
      this.basicData = {
 
@@ -47,7 +46,7 @@ export class DashboardWidgetComponent implements OnInit {
           {
               label: 'mesure name',
               backgroundColor: '#FFA726',
-              data: mesures
+              data: mesure1
           }
       ]
   };
