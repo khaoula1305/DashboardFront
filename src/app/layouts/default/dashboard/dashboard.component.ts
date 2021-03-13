@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-  constructor(private widgetDashboardService:DashboardWidgetService) { }
+  constructor(private dashboardWidgetService:DashboardWidgetService) { }
   ngOnInit() {
     this.options = {
       /*itemChangeCallback: DefaultComponent.itemChange,
@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit {
       defaultItemRows: 1,
       fixedColWidth: 105,
       fixedRowHeight: 105,
-
       keepFixedHeightInMobile: false,
       keepFixedWidthInMobile: false,
       scrollSensitivity: 10,
@@ -79,7 +78,7 @@ export class DashboardComponent implements OnInit {
       scrollToNewItems: false
     };
    
-    this.dashboard= this.widgetDashboardService.getAllWidgets();
+    this.dashboard= this.dashboardWidgetService.getAllWidgets();
     //this.dashboard =
   }
 
