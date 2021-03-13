@@ -1,31 +1,38 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { DashboardWidget } from '../models/dashboard-widget';
-import { Dashboard } from '../models/dashboard.model';
-import { DataSourceService } from './data-source.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardWidgetService {
 
-  //any should be widgetDashboard ?? widget
-  dashboardWidget:  Array<DashboardWidget>=new Array();
-  dashboard: Dashboard= {id: 1, title: 'Dash 1', description: " for test"};
-  constructor() { 
-    this.dashboardWidget=[
-      {id: 2, description: " description ", x: 1, y: 0, cols: 2, rows:1, title:"Widget 1", dashboard: this.dashboard , widget: null , dataSource: null },
-    ];
+  host:any = environment.host +"/dashboardWidgets/";
+
+
+  constructor(private http: HttpClient) { 
 
   }
 
-  getAllWidgets(): any[] {
-
-    return this.dashboardWidget;
-  
+  getAllDashboardWidget(): Observable<DashboardWidget[]> {
+    return this.http.get<DashboardWidget[]>(this.host);
   }
 
-  addWidget(widget: any){
-    this.dashboardWidget.push(widget);
+  addDashboardWidget(dashboardWidget: DashboardWidget){
+    this.http.post(this.host, dashboardWidget);
+  }
+
+  deleteDashboardWidget(dashboardWidgetId: number){
+    console.log(dashboardWidgetId + " deleted");
+    this.http.delete(this.host + dashboardWidgetId);
+  }
+
+  updateDashboardWidget(dashboardWidget: DashboardWidget){
+    console.log(dashboardWidget.id + " updated");
+    this.http.put(this.host, dashboardWidget);
   }
 
 }

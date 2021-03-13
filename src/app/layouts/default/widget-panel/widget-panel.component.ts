@@ -26,14 +26,25 @@ export class WidgetPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.widgets=this.widgetsService.getAllWidgets();
-    console.log('widget panel', this.widgets);
-  }
+    this.widgetsService.getAllWidgets().subscribe(
+    (response) => {
+    console.log('widgets ', response);
+    this.widgets=response;
+    },
+    (error) => {
+    console.log('error ' );
+    },
+    () => {
+    console.log('complete');
+    }
+    );
+    }
 
   addWidget(widget : Widget){
-    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
+    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
   addItem() {
-    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
    }
+
 }
