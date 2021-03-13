@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Widget } from 'src/app/models/widget.model';
-import { WidgetDashboardService } from 'src/app/services/widget-dashboard.service';
+import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
  searchText;
 
-  constructor( private widgetsService: WidgetsService, private widgetDashboardService: WidgetDashboardService) { }
+  constructor( private widgetsService: WidgetsService, private widgetDashboardService: DashboardWidgetService) { }
 
   hideClick(){
     console.log('widget ');
@@ -30,8 +30,8 @@ export class WidgetPanelComponent implements OnInit {
     console.log('widget panel', this.widgets);
   }
 
-  addWidget(widget : any){
-    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+  addWidget(widget : Widget){
+    this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
   addItem() {
     this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
