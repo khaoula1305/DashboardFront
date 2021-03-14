@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import {DataSource} from 'src/app/models/data-source.model';
@@ -13,8 +12,8 @@ export class DashboardWidgetComponent implements OnInit {
   @Output() deleted = new EventEmitter<any>();
   @Input() dashboardWidget;
   basicData: any;
-    
   basicOptions: any;
+
   constructor(private dataSourceService:DataSourceService) { }
 
   deleteClick(){
@@ -27,7 +26,7 @@ export class DashboardWidgetComponent implements OnInit {
 
   ngOnInit(): void {
 
-   // console.log(' dashboardWidget', this.dashboardWidget);
+   console.log(' dashboardWidget', this.dashboardWidget);
     let dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
     //let mesures: any[][];
     this.dataSourceService.getData(dataSource).subscribe(

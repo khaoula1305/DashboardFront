@@ -14,6 +14,7 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
 export class DashboardComponent implements OnInit {
   options: GridsterConfig;
   dashboardgrid: Array<GridsterItem>;
+  load=false;
   @Input() dashboard: Dashboard;
 
   static itemChange(item, itemComponent) {
@@ -24,21 +25,22 @@ export class DashboardComponent implements OnInit {
     console.info('itemResized', item, itemComponent);
   }
   constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
+  
   ngOnInit() {
-    /*let title = this.route.snapshot.params["title"];
-    console.log(title);
-
-
-    this.widgetDashboardService.getAllDashboards().subscribe(
-      data=>{
-        this.dashboard = data.filter(dash => dash.title == title)[0];
-      }
-    )*/
-
-
+    console.log('dash', this.dashboard);
+    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
+      (data)=>{
+        this.dashboardgrid= data;
+        console.log('dah widg', data);
+    },
+    (error) => {
+    console.log('error ' );
+    },
+    () => {
+      this.load=true;
+    }
+    );
     this.options = {
-      /*itemChangeCallback: DefaultComponent.itemChange,
-      itemResizeCallback: DefaultComponent.itemResize,*/
       gridType: GridType.Fit,
       compactType: CompactType.None,
       margin: 10,
@@ -93,12 +95,7 @@ export class DashboardComponent implements OnInit {
       scrollToNewItems: false
     };
    
-    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      data => {
-        this.dashboardgrid= data;
-      }
-    );
-    //this.dashboard =
+
   }
 
   changedOptions() {

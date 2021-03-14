@@ -35,7 +35,7 @@ export class SideBarComponent implements OnInit {
         {
           label: 'New Dashboard',
           icon:'pi pi-fw pi-plus-circle',
-          //routerLink: "/"
+          routerLink: "/"
         },
           {
               label: 'My Dashbords',
@@ -86,6 +86,7 @@ export class SideBarComponent implements OnInit {
       }});
         console.log(this.myItems);
         });
+        console.log(this.myItems);
       },
       (error) => {
         console.log('error ');
