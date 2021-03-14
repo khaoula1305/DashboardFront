@@ -12,9 +12,9 @@ export class WidgetPanelComponent implements OnInit {
 
   @Output() hidden = new EventEmitter<any>();
   widgets: Widget[];
- searchText;
+  searchText;
 
-  constructor( private widgetsService: WidgetsService, private widgetDashboardService: DashboardWidgetService) { }
+  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService) { }
 
   hideClick(){
     console.log('widget ');

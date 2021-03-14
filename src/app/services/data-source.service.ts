@@ -8,20 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class DataSourceService {
 
- dataSource: DataSource[];
   constructor(private http: HttpClient) {
-
-    this.dataSource=[
-      {id: 1, title: "source 1", url: "https://api.covidtracking.com/v1/us/daily.json" },
-      {id: 2, title: "source 2", url: ""},
-      {id: 3, title: "source 3", url: ""}
-    ]
   }
    getAllDataSource(){
-     return this.dataSource;
+    // return this.dataSource;
    }
-   getData(dt : DataSource): Observable<any[]>{
-
-    return this.http.get<any[]>(dt.url);
+   getData(dataSource : DataSource): Observable<any[]>{
+     return this.http.get<any[]>(dataSource.url);
    }
 }

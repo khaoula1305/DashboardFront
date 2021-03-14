@@ -125,9 +125,8 @@
             "y": 0, 
             "cols": 2,
             "rows":1, 
-            "title":"Widget 1", 
-            "dashboard":
-            {
+            "title":"Dash Widget 1", 
+            "dashboard":{
                 "id": 1, 
                 "title": "Dash 1", 
                 "description": " for test"
@@ -160,9 +159,8 @@
             "y": 0, 
             "cols": 2,
             "rows":1, 
-            "title":"Widget 1", 
-            "dashboard":
-            {
+            "title":"Widget 2", 
+            "dashboard":{
                 "id": 2, 
                 "title": "Dash 2", 
                 "description": " for test"
@@ -173,7 +171,7 @@
                 "description": "Description here: lorem " , 
                 "type": 
                 {
-                    "id":1, "type": "pie",  "img": "../../../../assets/graph.png"
+                    "id":1, "type": "line",  "img": "../../../../assets/graph.png"
                 }, 
                 "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, 
                 "query":{
