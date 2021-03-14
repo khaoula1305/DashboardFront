@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {CompactType, DisplayGrid, Draggable, GridType, PushDirections, Resizable} from 'angular-gridster2';
 import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
+import { Dashboard } from 'src/app/models/dashboard.model';
+import { DashboardsService } from 'src/app/services/dashboards.service';
 import {DashboardWidgetService} from '../../../services/dashboard-widget.service'
 
 @Component({
@@ -10,7 +13,8 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
 })
 export class DashboardComponent implements OnInit {
   options: GridsterConfig;
-  dashboard: Array<GridsterItem>;
+  dashboardgrid: Array<GridsterItem>;
+  @Input() dashboard: Dashboard;
 
   static itemChange(item, itemComponent) {
     console.info('itemChanged', item, itemComponent);
@@ -19,8 +23,19 @@ export class DashboardComponent implements OnInit {
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-  constructor(private dashboardWidgetService:DashboardWidgetService) { }
+  constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
   ngOnInit() {
+    /*let title = this.route.snapshot.params["title"];
+    console.log(title);
+
+
+    this.widgetDashboardService.getAllDashboards().subscribe(
+      data=>{
+        this.dashboard = data.filter(dash => dash.title == title)[0];
+      }
+    )*/
+
+
     this.options = {
       /*itemChangeCallback: DefaultComponent.itemChange,
       itemResizeCallback: DefaultComponent.itemResize,*/
@@ -80,7 +95,7 @@ export class DashboardComponent implements OnInit {
    
     this.dashboardWidgetService.getAllDashboardWidget().subscribe(
       data => {
-        this.dashboard= data;
+        this.dashboardgrid= data;
       }
     );
     //this.dashboard =
@@ -92,17 +107,17 @@ export class DashboardComponent implements OnInit {
 
   public pauseState = false;
   onDeletedClick(item){
-   this.dashboard.splice(this.dashboard.indexOf(item), 1);
+   this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
 
 }
   removeItem(item) {
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
   }
 
   addItem() {
    /*this.dashboard.forEach(el =>{
      if(el.cols)
    })*/
-    this.dashboard.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+    this.dashboardgrid.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
   }
 }

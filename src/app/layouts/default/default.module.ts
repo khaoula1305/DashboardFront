@@ -17,6 +17,7 @@ import {ScrollTopModule} from 'primeng/scrolltop';
 import {InputTextModule} from 'primeng/inputtext';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
+import { DefaultRoutingModule } from './default-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     GridsterModule,
+    DefaultRoutingModule,
     BrowserAnimationsModule,
     PanelModule,
     ScrollPanelModule,
