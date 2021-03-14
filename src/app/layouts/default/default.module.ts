@@ -18,6 +18,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
 import { WidgetConfigurationComponent } from './widget-configuration/widget-configuration.component';
+import { DefaultRoutingModule } from './default-routing.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { WidgetConfigurationComponent } from './widget-configuration/widget-conf
   imports: [
     CommonModule,
     GridsterModule,
+    DefaultRoutingModule,
     BrowserAnimationsModule,
     PanelModule,
     ScrollPanelModule,

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import { Dashboard } from 'src/app/models/dashboard.model';
+import { DashboardsService } from 'src/app/services/dashboards.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -9,30 +11,35 @@ import {MenuItem} from 'primeng/api';
 export class SideBarComponent implements OnInit {
 
   items: MenuItem[];
+  dashboards: Dashboard[];
+  myLabel: string;
+  myItems:MenuItem[]=[];
 
 
-  constructor() { }
+  constructor(private dashboardService: DashboardsService) { }
 
   ngOnInit(): void {
+    this.getDashboards();
+    let test:string="dash";
     this.items = [
       {
       label: 'Home',
-      icon:'pi pi-fw pi-home'
+      icon:'pi pi-fw pi-home',
+      routerLink: "home"
       },
       {
       label: 'Dashboards',
       icon:'pi pi-fw pi-chart-bar',
       items: [
+        {
+          label: 'New Dashboard',
+          icon:'pi pi-fw pi-plus-circle',
+          //routerLink: "/"
+        },
           {
               label: 'My Dashbords',
-              items: [
-                  {
-                  label: 'My first dash'
-                  },
-                  {
-                  label: 'My second dash'
-                  }
-              ]
+              // show all user dashboards 
+              items: this.myItems
           },
           {
               label: 'Shared With Me',
@@ -50,12 +57,33 @@ export class SideBarComponent implements OnInit {
       {
       label: 'Queries',
       icon:'pi pi-fw pi-sliders-h',
+      routerLink: "queries"
       },
       {
       label: 'REST',
-      icon:'pi pi-fw pi-cloud-download'
+      icon:'pi pi-fw pi-cloud-download',
+      routerLink: "rest"
       }
   ]
+  }
+
+  getDashboards(){
+    this.dashboardService.getAllDashboards().subscribe(
+      (response) => {
+        console.log('all dashboards ', response);
+        this.dashboards = response;
+        this.dashboards.forEach( elm => {
+        this.myItems.push({'label': elm.title, 'routerLink':'dashboards/'+elm.title, 'replaceUrl':true});
+        console.log(this.myItems);
+        });
+      },
+      (error) => {
+        console.log('error ');
+      },
+      () => {
+        console.log('complete');
+      }
+    );
   }
 
 }
