@@ -17,6 +17,7 @@ import {ScrollTopModule} from 'primeng/scrolltop';
 import {InputTextModule} from 'primeng/inputtext';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
+import { WidgetConfigurationComponent } from './widget-configuration/widget-configuration.component';
 import { DefaultRoutingModule } from './default-routing.module';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { DefaultRoutingModule } from './default-routing.module';
      WidgetPanelComponent,
       DashboardComponent, 
       DashboardWidgetComponent,
-      DefaultComponent
+      DefaultComponent,
+      WidgetConfigurationComponent
     ],
   imports: [
     CommonModule,
