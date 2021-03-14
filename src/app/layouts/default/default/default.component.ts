@@ -13,26 +13,20 @@ import { DashboardsService } from 'src/app/services/dashboards.service';
 export class DefaultComponent implements OnInit {
   static itemChange: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
   static itemResize: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
-
   dashboard: Dashboard;
-
   add=false;
-
   constructor(private widgetDashboardService: DashboardsService, private route: ActivatedRoute) { }
-
+  
+  
   ngOnInit(): void {
     
-    console.log("test");
-    
     let title = this.route.snapshot.params["title"];
-    if(title==undefined)
-      window.location.reload();
-    console.log(title);
-
-
+    console.log('title', title);
     this.widgetDashboardService.getAllDashboards().subscribe(
       data=>{
+        console.log('data', data);
         this.dashboard = data.filter(dash => dash.title == title)[0];
+        console.log('dash ', this.dashboard);
       }
     );
   }

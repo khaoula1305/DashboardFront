@@ -34,7 +34,7 @@ export class SideBarComponent implements OnInit {
         {
           label: 'New Dashboard',
           icon:'pi pi-fw pi-plus-circle',
-          //routerLink: "/"
+          routerLink: "/"
         },
           {
               label: 'My Dashbords',
@@ -73,9 +73,9 @@ export class SideBarComponent implements OnInit {
         console.log('all dashboards ', response);
         this.dashboards = response;
         this.dashboards.forEach( elm => {
-        this.myItems.push({'label': elm.title, 'routerLink':'dashboards/'+elm.title, 'replaceUrl':true});
-        console.log(this.myItems);
+        this.myItems.push({'label': elm.title, 'url':'dashboards/'+ elm.title});
         });
+        console.log(this.myItems);
       },
       (error) => {
         console.log('error ');

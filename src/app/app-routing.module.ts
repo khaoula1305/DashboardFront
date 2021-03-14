@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './layouts/home/home.component';
 import { DefaultRoutingModule } from './layouts/default/default-routing.module';
 import { DefaultComponent } from './layouts/default/default/default.component';
 import { QueriesComponent } from './layouts/queries/queries.component';
