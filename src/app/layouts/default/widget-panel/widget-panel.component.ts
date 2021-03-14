@@ -40,10 +40,12 @@ export class WidgetPanelComponent implements OnInit {
     );
     }
 
-  addWidget(widget : Widget){
+    // permet d'ajouter un widget de widget-panel dans le dashboard
+  addItem(widget : Widget){
     //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
-  addItem() {
+  // permet d'ajouter un nouveau widget generique
+  addWidget() {
     //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
    }
 

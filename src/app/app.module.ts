@@ -15,13 +15,19 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { QueriesComponent } from './layouts/queries/queries.component';
+import { RestComponent } from './layouts/rest/rest.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    SideBarComponent
+    SideBarComponent,
+    QueriesComponent,
+    RestComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
