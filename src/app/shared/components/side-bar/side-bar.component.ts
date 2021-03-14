@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import { Dashboard } from 'src/app/models/dashboard.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
@@ -16,7 +17,7 @@ export class SideBarComponent implements OnInit {
   myItems:MenuItem[]=[];
 
 
-  constructor(private dashboardService: DashboardsService) { }
+  constructor(private dashboardService: DashboardsService, private router: Router, private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getDashboards();
@@ -73,7 +74,17 @@ export class SideBarComponent implements OnInit {
         console.log('all dashboards ', response);
         this.dashboards = response;
         this.dashboards.forEach( elm => {
-        this.myItems.push({'label': elm.title, 'url':'dashboards/'+ elm.title});
+        this.myItems.push({'label': elm.title, command: (event) => {
+          //event.originalEvent: Browser event
+          //event.item: menuitem metadata
+          console.log(event.item.title);
+          console.log(event.item.label);
+          //let title = this.activatedroute.snapshot.paramMap.get("event.item.title");
+          this.router.navigate(["dashboards", event.item.label]);
+          //this.router.navigate(["dashboards", title], event.item.title);
+          
+      }});
+        console.log(this.myItems);
         });
         console.log(this.myItems);
       },
