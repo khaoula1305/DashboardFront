@@ -1,7 +1,7 @@
 import { Dashboard } from "./dashboard.model";
 import { DataSource } from "./data-source.model";
 import { Widget } from "./widget.model";
-export interface DashboardWidget{
+export class  DashboardWidget{
    id: number;
    title: string;
    description: string;
@@ -9,7 +9,7 @@ export interface DashboardWidget{
    rows: number;
    y:number;
    x: number;
-    dashboard: Dashboard;
+   dashboard: Dashboard;
     widget: Widget;
     dataSource: DataSource;
 }

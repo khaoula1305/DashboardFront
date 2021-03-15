@@ -8,7 +8,7 @@ import { QueriesComponent } from './layouts/queries/queries.component';
 import { RestComponent } from './layouts/rest/rest.component';
 
 const routes: Routes = [
-  //{path: '', component: DefaultComponent},
+  {path: '', component: HomeComponent},
   {path: 'dashboards/:title', component: DefaultComponent },
   {path: 'queries', component: QueriesComponent}, 
   {path: 'rest', component: RestComponent},
