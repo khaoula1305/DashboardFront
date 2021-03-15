@@ -33,23 +33,35 @@ export class DashboardWidgetComponent implements OnInit {
 
    console.log(' dashboardWidget', this.dashboardWidget);
    const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
-    // let mesures: any[][];
    this.dataSourceService.getData(dataSource).subscribe(
       (data) => {
+        // const dimension = [];
+        // data.forEach(elm => {
+        //   dimension.push(elm.date);
+        // });
         const dimension = [];
-        data.forEach(elm => {
-          dimension.push(elm.date);
-          // console.log(elm.nameOfDimension);
+        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
+          dimension.push(elm.dimension);
         });
-        const mesure2 = [];
+     /*    const mesure2 = [];
         data.forEach(elm => {
           mesure2.push(elm.positive);
         });
+         */
+        const mesure2 = [];
+        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
+          mesure2.push(elm.mesure2);
+        });
 
-        const mesure1 = [];
+        /*const mesure1 = [];
         data.forEach(elm => {
           mesure1.push(elm.negative);
+        });*/
+        const mesure1 = [];
+        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
+          mesure1.push(elm.mesure1);
         });
+
       // data.forEach(elm => mesure2.push(elm.nameOfmesure));
         this.basicData = {
 
@@ -65,7 +77,7 @@ export class DashboardWidgetComponent implements OnInit {
             {
               label: this.dashboardWidget.widget.query.mesure1 ,
               backgroundColor: '#AAA423',
-              data: mesure1
+              data:  mesure1
           }
         ]
     };

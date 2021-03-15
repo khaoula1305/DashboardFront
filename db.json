@@ -1,236 +1,429 @@
 {
     "widgets": [
         {
-            "id" : 1, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
+            "id": 1,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
             "type": {
-                "id":1, 
-                "type": "bar",  
+                "id": 1,
+                "type": "bar",
                 "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, 
+            },
+            "resizeEnabled": true,
             "minItemCols": 1,
-             "minItemRows": 1, 
-             "query": {
-                 "id":1 , 
-                 "name": "query 1", 
-                 "dimension":"date" , 
-                 "mesure1": "negative", 
-                 "mesure2": "positive", 
-                 "mesure3": "", 
-                 "dataSource": {
-                     "id": 1, 
-                     "title": "source 1", 
-                     "url": "https://api.covidtracking.com/v1/us/daily.json" 
-                     }
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                },
+                "dataTable": [
+                    {
+                        "dimension": "femme",
+                        "mesure1": 100,
+                        "mesure2": 300
+                    },
+                    {
+                        "dimension": "homme",
+                        "mesure1": 400,
+                        "mesure2": 600
                     }
+                ]
+            }
         },
         {
-            "id" : 2, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
+            "id": 2,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
             "type": {
-                "id":1, 
-                "type": "bar",  
-                "img": "../../../../assets/increase.png" 
-            }, 
-            "resizeEnabled": true, 
-            "minItemCols": 1, 
-            "minItemRows": 1, 
-            "query":{
-                "id":1 , 
-                "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", 
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
                 "dataSource": {
-                    "id": 1, "title": "source 1", 
-                    "url": "https://api.covidtracking.com/v1/us/daily.json" 
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                },
+                "dataTable": [
+                    {
+                        "dimension": "femme",
+                        "mesure1": 100,
+                        "mesure2": 300
+                    },
+                    {
+                        "dimension": "homme",
+                        "mesure1": 400,
+                        "mesure2": 600
                     }
-                }
+                ]
+            }
         },
         {
-            "id" : 3, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, "query":{"id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", "dataSource": {"id": 1, "title": "source 1", "url": "https://api.covidtracking.com/v1/us/daily.json" }}
-        },
-        {
-            "id" : 4, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, "query":{"id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", "dataSource": {"id": 1, "title": "source 1", "url": "https://api.covidtracking.com/v1/us/daily.json" }}
-        },
-        {
-            "id" : 5, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, "query":{"id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", "dataSource": {"id": 1, "title": "source 1", "url": "https://api.covidtracking.com/v1/us/daily.json" }}
-        },
-        {
-            "id" : 6, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, "query":{"id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", "dataSource": {"id": 1, "title": "source 1", "url": "https://api.covidtracking.com/v1/us/daily.json" }}
-        },
-        {
-            "id" : 7,
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, "query":{"id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", "mesure3": "", "dataSource": {"id": 1, "title": "source 1", "url": "https://api.covidtracking.com/v1/us/daily.json" }}
-        },
-        {
-            "id" : 8, 
-            "title" : "Widget 1", 
-            "description": "Description here: lorem " , 
-            "type": 
-            {
-                "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-            }, 
-            "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, 
-            "query":{
-                "id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", 
-                "mesure3": "", 
+            "id": 3,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
                 "dataSource": {
-                    "id": 1, 
-                    "title": "source 1", 
-                    "url": "https://api.covidtracking.com/v1/us/daily.json" 
-                    }
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
                 }
+            },
+            "dataTable":[{
+                "dimension": "femme",
+                "mesure1": 100,
+                "mesure2": 300
+             },{
+                "dimension": "homme",
+                "mesure1": 400,
+                "mesure2": 600
+             }
+                 
+             ]
+            
+        },
+        {
+            "id": 4,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                }
+            },            "dataTable":[{
+                "dimension": "femme",
+                "mesure1": 100,
+                "mesure2": 300
+             },{
+                "dimension": "homme",
+                "mesure1": 400,
+                "mesure2": 600
+             }
+                 
+             ]
+        },
+        {
+            "id": 5,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                }
+            },
+            "dataTable":[{
+                "dimension": "femme",
+                "mesure1": 100,
+                "mesure2": 300
+             },{
+                "dimension": "homme",
+                "mesure1": 400,
+                "mesure2": 600
+             }
+                 
+             ]
+        },
+        {
+            "id": 6,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                }
+            }
+        },
+        {
+            "id": 7,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                }
+            }
+        },
+        {
+            "id": 8,
+            "title": "Widget 1",
+            "description": "Description here: lorem ",
+            "type": {
+                "id": 1,
+                "type": "bar",
+                "img": "../../../../assets/increase.png"
+            },
+            "resizeEnabled": true,
+            "minItemCols": 1,
+            "minItemRows": 1,
+            "query": {
+                "id": 1,
+                "name": "query 1",
+                "dimension": "date",
+                "mesure1": "negative",
+                "mesure2": "positive",
+                "mesure3": "",
+                "dataSource": {
+                    "id": 1,
+                    "title": "source 1",
+                    "url": "https://api.covidtracking.com/v1/us/daily.json"
+                }
+            },
+            "dataTable":[{
+                "dimension": "femme",
+                "mesure1": 100,
+                "mesure2": 300
+             },{
+                "dimension": "homme",
+                "mesure1": 400,
+                "mesure2": 600
+             }
+                 
+             ]
         }
     ],
-    "dashboardWidgets":[
+    "dashboardWidgets": [
         {
-            "id": 1, 
-            "description": " description ", 
-            "x": 1, 
-            "y": 0, 
+            "id": 1,
+            "description": " description ",
+            "x": 1,
+            "y": 0,
             "cols": 2,
-            "rows":1, 
-            "title":"Dash Widget 1", 
-            "dashboard":{
-                "id": 1, 
-                "title": "Dash 1", 
+            "rows": 1,
+            "title": "Dash Widget 1",
+            "dashboard": {
+                "id": 1,
+                "title": "Dash 1",
                 "description": " for test"
-            }, 
-            "widget":{
-                "id" : 8, 
-                "title" : "Widget 1", 
-                "description": "Description here: lorem " , 
-                "type": 
-                {
-                    "id":1, "type": "bar",  "img": "../../../../assets/increase.png"
-                }, 
-                "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, 
-                "query":{
-                    "id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", 
-                    "mesure3": "", 
+            },
+            "widget": {
+                "id": 8,
+                "title": "Widget 1",
+                "description": "Description here: lorem ",
+                "type": {
+                    "id": 1,
+                    "type": "bar",
+                    "img": "../../../../assets/increase.png"
+                },
+                "resizeEnabled": true,
+                "minItemCols": 1,
+                "minItemRows": 1,
+                "query": {
+                    "id": 1,
+                    "name": "query 1",
+                    "dimension": "date",
+                    "mesure1": "Salarié(e)",
+                    "mesure2": "Entrepreneur(e)",
+                    "mesure3": "",
                     "dataSource": {
-                        "id": 1, 
-                        "title": "source 1", 
-                        "url": "https://api.covidtracking.com/v1/us/daily.json" 
-                        }
-                    }
-            } , 
-            "dataSource": null 
+                        "id": 1,
+                        "title": "source 1",
+                        "url": "https://api.covidtracking.com/v1/us/daily.json"
+                    },            "dataTable":[{
+                        "dimension": "femme",
+                        "mesure1": 1,
+                        "mesure2": 8
+                     },{
+                        "dimension": "homme",
+                        "mesure1": 5,
+                        "mesure2": 2
+                     }
+                         
+                     ]
+                }
+            },
+            "dataSource": null
         },
         {
-            "id": 2, 
-            "description": " description ", 
-            "x": 1, 
-            "y": 0, 
+            "id": 2,
+            "description": " description ",
+            "x": 1,
+            "y": 0,
             "cols": 2,
-            "rows":1, 
-            "title":"Widget 2", 
-            "dashboard":{
-                "id": 2, 
-                "title": "Dash 2", 
+            "rows": 1,
+            "title": "Widget 2",
+            "dashboard": {
+                "id": 2,
+                "title": "Dash 2",
                 "description": " for test"
-            }, 
-            "widget":{
-                "id" : 8, 
-                "title" : "Widget 1", 
-                "description": "Description here: lorem " , 
-                "type": 
-                {
-                    "id":1, "type": "line",  "img": "../../../../assets/graph.png"
-                }, 
-                "resizeEnabled": true, "minItemCols": 1, "minItemRows": 1, 
-                "query":{
-                    "id":1 , "name": "query 1", "dimension":"date" , "mesure1": "negative", "mesure2": "positive", 
-                    "mesure3": "", 
+            },
+            "widget": {
+                "id": 8,
+                "title": "Widget 1",
+                "description": "Description here: lorem ",
+                "type": {
+                    "id": 1,
+                    "type": "line",
+                    "img": "../../../../assets/graph.png"
+                },
+                "resizeEnabled": true,
+                "minItemCols": 1,
+                "minItemRows": 1,
+                "query": {
+                    "id": 1,
+                    "name": "query 1",
+                    "dimension": "Homme femme",
+                    "mesure1": "Salarié(e)",
+                    "mesure2": "Entrepreneur(e)",
+                    "mesure3": "",
                     "dataSource": {
-                        "id": 1, 
-                        "title": "source 1", 
-                        "url": "https://api.covidtracking.com/v1/us/daily.json" 
-                        }
-                    }
-            } , 
-            "dataSource": null 
+                        "id": 1,
+                        "title": "source 1",
+                        "url": "https://api.covidtracking.com/v1/us/daily.json"
+                    },            "dataTable":[{
+                        "dimension": "femme",
+                        "mesure1": 100,
+                        "mesure2": 300
+                     },{
+                        "dimension": "homme",
+                        "mesure1": 400,
+                        "mesure2": 600
+                     }
+                         
+                     ]
+                }
+            },
+            "dataSource": null
         }
-      ],
+    ],
     "dashboards": [
         {
-            "id": 1, 
-            "title": "Dash 1", 
+            "id": 1,
+            "title": "Dash 1",
             "description": " for test"
         },
         {
-            "id": 2, 
-            "title": "Dash 2", 
+            "id": 2,
+            "title": "Dash 2",
             "description": " for test"
         },
         {
-            "id": 3, 
-            "title": "Dash 3", 
+            "id": 3,
+            "title": "Dash 3",
             "description": " for test"
         }
-      ],
-    "queries": [{
-        "id":1 , 
-        "name": "query 1", 
-        "dimension":"date" , 
-        "mesure1": "negative", 
-        "mesure2": "positive", 
-        "mesure3": "", 
-        "dataSource": {
-            "id": 1, 
-            "title": "source 1", 
-            "url": "https://api.covidtracking.com/v1/us/daily.json" 
-            }
-           }
-        ],
-     "widgetTypes":[
-         {
-             "id":1,
-             "img":"../../../../assets/graph.png",
-             "name":"Graph"
-
-         },
-         {
-            "id":2,
-            "img":"../../../../assets/increase.png",
-            "name":"Pie"
-
+    ],
+    "queries": [
+        {
+            "id": 1,
+            "name": "query 1",
+            "dimension": "date",
+            "mesure1": "negative",
+            "mesure2": "positive",
+            "mesure3": "",
+            "dataSource": {
+                "id": 1,
+                "title": "source 1",
+                "url": "https://api.covidtracking.com/v1/us/daily.json"
+            },
+            "dataTable": null
         }
-
-        ]
+    ],
+    "widgetTypes": [
+        {
+            "id": 1,
+            "img": "../../../../assets/graph.png",
+            "name": "Graph"
+        },
+        {
+            "id": 2,
+            "img": "../../../../assets/increase.png",
+            "name": "Pie"
+        }
+    ]
 }

@@ -8,4 +8,5 @@ export interface Query{
     mesure2: string;
     mesure3: string;
     dataSource: DataSource;
+    dataTable: any[];
 }
