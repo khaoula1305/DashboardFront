@@ -187,7 +187,7 @@
             "dataSource": null 
         }
       ],
-      "dashboards": [
+    "dashboards": [
         {
             "id": 1, 
             "title": "Dash 1", 
@@ -203,5 +203,34 @@
             "title": "Dash 3", 
             "description": " for test"
         }
-      ]
+      ],
+    "queries": [{
+        "id":1 , 
+        "name": "query 1", 
+        "dimension":"date" , 
+        "mesure1": "negative", 
+        "mesure2": "positive", 
+        "mesure3": "", 
+        "dataSource": {
+            "id": 1, 
+            "title": "source 1", 
+            "url": "https://api.covidtracking.com/v1/us/daily.json" 
+            }
+           }
+        ],
+     "widgetTypes":[
+         {
+             "id":1,
+             "img":"../../../../assets/graph.png",
+             "name":"Graph"
+
+         },
+         {
+            "id":2,
+            "img":"../../../../assets/increase.png",
+            "name":"Pie"
+
+        }
+
+        ]
 }
