@@ -10,11 +10,10 @@ import { WidgetConfigurationComponent } from './layouts/default/widget-configura
 import { AddWidgetComponent } from './layouts/default/add-widget/add-widget.component';
 
 const routes: Routes = [
-  // {path: '', component: DefaultComponent},
+  {path: '', component: HomeComponent},
   {path: 'dashboards/:title', component: DefaultComponent },
   {path: 'queries', component: QueriesComponent},
   {path: 'rest', component: RestComponent},
-  {path: '', component: HomeComponent},
   {path: 'updateWidget/:title', component: WidgetConfigurationComponent},
   {path: 'addWidget', component: AddWidgetComponent}
 ];

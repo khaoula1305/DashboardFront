@@ -22,7 +22,15 @@ export class DashboardWidgetService {
   }
 
   addDashboardWidget(dashboardWidget: DashboardWidget){
-    this.http.post(this.host, dashboardWidget);
+    console.log(dashboardWidget);
+    let test = this.http.post<DashboardWidget>(this.host, dashboardWidget).subscribe(
+      data=> {
+        console.log("success", data);
+      },
+      error=>{
+        console.log(error);
+      }
+      );
   }
 
   deleteDashboardWidget(dashboardWidgetId: number){
