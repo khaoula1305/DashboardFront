@@ -13,7 +13,7 @@ export class DataSourceService {
    getAllDataSource(){
     // return this.dataSource;
    }
-   getData(dataSource : DataSource): Observable<any[]>{
+   getData(dataSource: DataSource): Observable<any[]>{
      return this.http.get<any[]>(dataSource.url);
    }
 }

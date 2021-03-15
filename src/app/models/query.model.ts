@@ -1,4 +1,4 @@
-import { DataSource } from "./data-source.model";
+import { DataSource } from './data-source.model';
 
 export interface Query{
     id: number;

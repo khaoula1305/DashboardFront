@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import {DataSource} from 'src/app/models/data-source.model';
+import { MenuItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -13,12 +15,15 @@ export class DashboardWidgetComponent implements OnInit {
   @Input() dashboardWidget;
   basicData: any;
   basicOptions: any;
+  items: MenuItem[];
+  widgetTitle: string;
 
-  constructor(private dataSourceService:DataSourceService) { }
+
+  constructor(private dataSourceService: DataSourceService, private router: Router) { }
 
   deleteClick(){
     this.deleted.emit(true);
-    console.log("widget ", this.dashboardWidget);
+    console.log('widget ', this.dashboardWidget);
   }
   updateClick(){
     // naviguer vers le updateComponent
@@ -27,30 +32,30 @@ export class DashboardWidgetComponent implements OnInit {
   ngOnInit(): void {
 
    console.log(' dashboardWidget', this.dashboardWidget);
-    let dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
-    //let mesures: any[][];
-    this.dataSourceService.getData(dataSource).subscribe(
+   const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
+    // let mesures: any[][];
+   this.dataSourceService.getData(dataSource).subscribe(
       (data) => {
-        let dimension= [];
-           data.forEach(elm => {
+        const dimension = [];
+        data.forEach(elm => {
           dimension.push(elm.date);
-          //console.log(elm.nameOfDimension);
+          // console.log(elm.nameOfDimension);
         });
-        let mesure2=[];
+        const mesure2 = [];
         data.forEach(elm => {
           mesure2.push(elm.positive);
         });
 
-        let mesure1=[];
+        const mesure1 = [];
         data.forEach(elm => {
           mesure1.push(elm.negative);
         });
       // data.forEach(elm => mesure2.push(elm.nameOfmesure));
-       this.basicData = {
-  
+        this.basicData = {
+
         labels: dimension,
         datasets: [
-   
+
             {
                 label: this.dashboardWidget.widget.query.mesure2 ,
                 backgroundColor: '#FFA726',
@@ -73,6 +78,25 @@ export class DashboardWidgetComponent implements OnInit {
       console.log('complete');
       }
       );
+
+      this.items = [
+        {label: 'Update', icon: 'pi pi-refresh', command: () => {
+            this.router.navigate(['/updateWidget', this.widgetTitle]);
+        }},
+        {label: 'Delete', icon: 'pi pi-times', command: () => {
+           this.deleteClick();
+        }},
+        {label: 'Show', icon: 'pi pi-info', url: '#'},
+        {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/']}
+    ];
   }
+
+  save(severity: string) {
+    this.router.navigate(['/updateWidget', severity]);
+}
+dropdown(info: string){
+  this.widgetTitle=info;
+}
+
 
 }

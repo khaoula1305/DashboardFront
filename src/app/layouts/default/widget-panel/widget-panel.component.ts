@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Widget } from 'src/app/models/widget.model';
 import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -14,22 +15,22 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
   searchText;
 
-  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService) { }
+  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService, private router: Router) { }
 
   hideClick(){
     console.log('widget ');
     this.hidden.emit(true);
   }
 
-  DoSth(evt : any){
-    console.log('Hi', evt )
+  DoSth(evt: any){
+    console.log('Hi', evt );
   }
 
   ngOnInit(): void {
     this.widgetsService.getAllWidgets().subscribe(
     (response) => {
     console.log('widgets ', response);
-    this.widgets=response;
+    this.widgets = response;
     },
     (error) => {
     console.log('error ' );
@@ -41,12 +42,12 @@ export class WidgetPanelComponent implements OnInit {
     }
 
     // permet d'ajouter un widget de widget-panel dans le dashboard
-  addItem(widget : Widget){
-    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
+  addItem(widget: Widget){
+    // this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true, type: widget.type});
   }
   // permet d'ajouter un nouveau widget generique
   addWidget() {
-    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
-   }
+    this.router.navigate(['updateWidget', 'new widget' ]);
+  }
 
 }

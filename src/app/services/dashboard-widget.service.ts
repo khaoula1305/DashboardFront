@@ -10,10 +10,10 @@ import { DashboardWidget } from '../models/dashboard-widget';
 })
 export class DashboardWidgetService {
 
-  host:any = environment.host +"/dashboardWidgets/";
+  host: any = environment.host + '/dashboardWidgets/';
 
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
 
   }
 
@@ -26,12 +26,12 @@ export class DashboardWidgetService {
   }
 
   deleteDashboardWidget(dashboardWidgetId: number){
-    console.log(dashboardWidgetId + " deleted");
+    console.log(dashboardWidgetId + ' deleted');
     this.http.delete(this.host + dashboardWidgetId);
   }
 
   updateDashboardWidget(dashboardWidget: DashboardWidget){
-    console.log(dashboardWidget.id + " updated");
+    console.log(dashboardWidget.id + ' updated');
     this.http.put(this.host, dashboardWidget);
   }
 
