@@ -1,4 +1,4 @@
-import { DataSource } from "./data-source.model";
+import { DataSource } from './data-source.model';
 
 export interface Query{
     id: number;
@@ -8,4 +8,5 @@ export interface Query{
     mesure2: string;
     mesure3: string;
     dataSource: DataSource;
+    dataTable: any[];
 }

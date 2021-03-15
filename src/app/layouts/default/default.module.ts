@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WidgetComponent } from './widget/widget.component';                
+import { WidgetComponent } from './widget/widget.component';
 import {PanelModule, } from 'primeng/panel';
 import { DefaultComponent } from './default/default.component';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
@@ -19,15 +19,22 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
 import { WidgetConfigurationComponent } from './widget-configuration/widget-configuration.component';
 import { DefaultRoutingModule } from './default-routing.module';
+import {DropdownModule} from 'primeng/dropdown';
+import {SplitterModule} from 'primeng/splitter';
+import { AddWidgetComponent } from './add-widget/add-widget.component';
+import { TagModule } from 'primeng/tag';
+import {BadgeModule} from 'primeng/badge';
+import {SplitButtonModule} from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
     WidgetComponent,
      WidgetPanelComponent,
-      DashboardComponent, 
+      DashboardComponent,
       DashboardWidgetComponent,
       DefaultComponent,
-      WidgetConfigurationComponent
+      WidgetConfigurationComponent,
+      AddWidgetComponent
     ],
   imports: [
     CommonModule,
@@ -43,9 +50,14 @@ import { DefaultRoutingModule } from './default-routing.module';
     ScrollTopModule,
     InputTextModule,
     Ng2SearchPipeModule,
-    FormsModule
+    FormsModule,
+    DropdownModule,
+    SplitterModule,
+    TagModule,
+    BadgeModule,
+    SplitButtonModule
   ],
-  exports:[
+  exports: [
     DefaultComponent
   ]
 })

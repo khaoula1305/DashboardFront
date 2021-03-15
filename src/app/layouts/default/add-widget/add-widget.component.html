@@ -1,4 +1,4 @@
-<div class="p-grid" *ngIf="load">
+<div class="p-grid">
     <div class="p-col-12">
         <h4>Configure widget</h4>
     </div>
@@ -10,10 +10,10 @@
       <div class="p-col">
         <div class="box">
             <h5>Title</h5>
-            <input type="text" pInputText [(ngModel)]="dashWidget.title" />
+            <input type="text" pInputText [(ngModel)]="title" />
             <h5>Description</h5>
             <!--label for="description">Description</label-->
-            <textarea id="description" type="text" rows="4" pInputTextarea [(ngModel)]="dashWidget.description"></textarea>
+            <textarea id="description" type="text" rows="4" pInputTextarea [(ngModel)]="description"></textarea>
         </div>
     </div>
     <div class="p-col-12">

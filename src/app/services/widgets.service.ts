@@ -9,12 +9,12 @@ import { Widget } from '../models/widget.model';
   providedIn: 'root'
 })
 export class WidgetsService {
-  
-  host:any = environment.host +"/widgets/";
 
-  widgets: Widget[]=[];
+  host: any = environment.host + '/widgets/';
 
-  constructor(private http: HttpClient) { 
+  widgets: Widget[] = [];
+
+  constructor(private http: HttpClient) {
 
   }
 
@@ -27,12 +27,12 @@ export class WidgetsService {
   }
 
   deleteWidget(widgetId: number){
-    console.log(widgetId + " deleted");
+    console.log(widgetId + ' deleted');
     this.http.delete(this.host + widgetId);
   }
 
   updateWidget(widget: Widget){
-    console.log(widget.id + " updated");
+    console.log(widget.id + ' updated');
     this.http.put(this.host, widget);
   }
 

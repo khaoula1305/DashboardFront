@@ -23,7 +23,19 @@
           "id": 1,
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
-        }
+        },
+        "dataTable": [
+          {
+            "dimension": "femme",
+            "mesure1": 100,
+            "mesure2": 300
+          },
+          {
+            "dimension": "homme",
+            "mesure1": 400,
+            "mesure2": 600
+          }
+        ]
       }
     },
     {
@@ -49,7 +61,19 @@
           "id": 1,
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
-        }
+        },
+        "dataTable": [
+          {
+            "dimension": "femme",
+            "mesure1": 100,
+            "mesure2": 300
+          },
+          {
+            "dimension": "homme",
+            "mesure1": 400,
+            "mesure2": 600
+          }
+        ]
       }
     },
     {
@@ -76,7 +100,19 @@
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
         }
-      }
+      },
+      "dataTable": [
+        {
+          "dimension": "femme",
+          "mesure1": 100,
+          "mesure2": 300
+        },
+        {
+          "dimension": "homme",
+          "mesure1": 400,
+          "mesure2": 600
+        }
+      ]
     },
     {
       "id": 4,
@@ -102,7 +138,19 @@
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
         }
-      }
+      },
+      "dataTable": [
+        {
+          "dimension": "femme",
+          "mesure1": 100,
+          "mesure2": 300
+        },
+        {
+          "dimension": "homme",
+          "mesure1": 400,
+          "mesure2": 600
+        }
+      ]
     },
     {
       "id": 5,
@@ -128,7 +176,19 @@
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
         }
-      }
+      },
+      "dataTable": [
+        {
+          "dimension": "femme",
+          "mesure1": 100,
+          "mesure2": 300
+        },
+        {
+          "dimension": "homme",
+          "mesure1": 400,
+          "mesure2": 600
+        }
+      ]
     },
     {
       "id": 6,
@@ -206,7 +266,19 @@
           "title": "source 1",
           "url": "https://api.covidtracking.com/v1/us/daily.json"
         }
-      }
+      },
+      "dataTable": [
+        {
+          "dimension": "femme",
+          "mesure1": 100,
+          "mesure2": 300
+        },
+        {
+          "dimension": "homme",
+          "mesure1": 400,
+          "mesure2": 600
+        }
+      ]
     }
   ],
   "dashboardWidgets": [
@@ -239,14 +311,26 @@
           "id": 1,
           "name": "query 1",
           "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
+          "mesure1": "Salarié(e)",
+          "mesure2": "Entrepreneur(e)",
           "mesure3": "",
           "dataSource": {
             "id": 1,
             "title": "source 1",
             "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
+          },
+          "dataTable": [
+            {
+              "dimension": "femme",
+              "mesure1": 1,
+              "mesure2": 8
+            },
+            {
+              "dimension": "homme",
+              "mesure1": 5,
+              "mesure2": 2
+            }
+          ]
         }
       },
       "dataSource": null
@@ -279,40 +363,42 @@
         "query": {
           "id": 1,
           "name": "query 1",
-          "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
+          "dimension": "Homme femme",
+          "mesure1": "Salarié(e)",
+          "mesure2": "Entrepreneur(e)",
           "mesure3": "",
           "dataSource": {
             "id": 1,
             "title": "source 1",
             "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
+          },
+          "dataTable": [
+            {
+              "dimension": "femme",
+              "mesure1": 100,
+              "mesure2": 300
+            },
+            {
+              "dimension": "homme",
+              "mesure1": 400,
+              "mesure2": 600
+            }
+          ]
         }
       },
       "dataSource": null
     },
     {
-      "id": 3,
-      "description": " description ",
-      "x": 1,
-      "y": 0,
-      "cols": 2,
-      "rows": 1,
-      "title": "Dash Widget 1",
-      "dashboard": {
-        "id": 1,
-        "title": "Dash 1",
-        "description": " for test"
-      },
+      "title": "Bar Graph",
+      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Bar Graph",
       "widget": {
-        "id": 8,
-        "title": "Widget 1",
-        "description": "Description here: lorem ",
+        "id": 2,
+        "title": "Bar Graph",
+        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Bar Graph",
         "type": {
           "id": 1,
           "type": "bar",
-          "img": "../../../../assets/increase.png"
+          "img": "../../../../assets/images/bar-graph.png"
         },
         "resizeEnabled": true,
         "minItemCols": 1,
@@ -328,39 +414,19 @@
             "id": 1,
             "title": "source 1",
             "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
-        }
-      },
-      "dataSource": null
-    },
-    {
-      "id": 4,
-      "title": "Widget 1",
-      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
-      "widget": {
-        "id": 1,
-        "title": "Widget 1",
-        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
-        "type": {
-          "id": 1,
-          "type": "line",
-          "img": "../../../../assets/images/line_chart.png"
-        },
-        "resizeEnabled": true,
-        "minItemCols": 1,
-        "minItemRows": 1,
-        "query": {
-          "id": 1,
-          "name": "query 1",
-          "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
-          "mesure3": "",
-          "dataSource": {
-            "id": 1,
-            "title": "source 1",
-            "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
+          },
+          "dataTable": [
+            {
+              "dimension": "femme",
+              "mesure1": 100,
+              "mesure2": 300
+            },
+            {
+              "dimension": "homme",
+              "mesure1": 400,
+              "mesure2": 600
+            }
+          ]
         }
       },
       "x": 1,
@@ -368,44 +434,8 @@
       "cols": 1,
       "rows": 1,
       "dataSource": null,
-      "dashboard": null
-    },
-    {
-      "id": 5,
-      "title": "Widget 1",
-      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
-      "widget": {
-        "id": 1,
-        "title": "Widget 1",
-        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
-        "type": {
-          "id": 1,
-          "type": "line",
-          "img": "../../../../assets/images/line_chart.png"
-        },
-        "resizeEnabled": true,
-        "minItemCols": 1,
-        "minItemRows": 1,
-        "query": {
-          "id": 1,
-          "name": "query 1",
-          "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
-          "mesure3": "",
-          "dataSource": {
-            "id": 1,
-            "title": "source 1",
-            "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
-        }
-      },
-      "x": 1,
-      "y": 1,
-      "cols": 1,
-      "rows": 1,
-      "dataSource": null,
-      "dashboard": null
+      "dashboard": null,
+      "id": 3
     },
     {
       "title": "Line Chart",
@@ -433,8 +463,118 @@
             "id": 1,
             "title": "source 1",
             "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
+          },
+          "dataTable": [
+            {
+              "dimension": "femme",
+              "mesure1": 100,
+              "mesure2": 300
+            },
+            {
+              "dimension": "homme",
+              "mesure1": 400,
+              "mesure2": 600
+            }
+          ]
         }
+      },
+      "x": 1,
+      "y": 1,
+      "cols": 1,
+      "rows": 1,
+      "dataSource": null,
+      "dashboard": null,
+      "id": 4
+    },
+    {
+      "title": "Line Chart",
+      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
+      "widget": {
+        "id": 1,
+        "title": "Line Chart",
+        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
+        "type": {
+          "id": 1,
+          "type": "line",
+          "img": "../../../../assets/images/line_chart.png"
+        },
+        "resizeEnabled": true,
+        "minItemCols": 1,
+        "minItemRows": 1,
+        "query": {
+          "id": 1,
+          "name": "query 1",
+          "dimension": "date",
+          "mesure1": "negative",
+          "mesure2": "positive",
+          "mesure3": "",
+          "dataSource": {
+            "id": 1,
+            "title": "source 1",
+            "url": "https://api.covidtracking.com/v1/us/daily.json"
+          },
+          "dataTable": [
+            {
+              "dimension": "femme",
+              "mesure1": 100,
+              "mesure2": 300
+            },
+            {
+              "dimension": "homme",
+              "mesure1": 400,
+              "mesure2": 600
+            }
+          ]
+        }
+      },
+      "x": 1,
+      "y": 1,
+      "cols": 1,
+      "rows": 1,
+      "dataSource": null,
+      "dashboard": null,
+      "id": 5
+    },
+    {
+      "title": "Table",
+      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Table",
+      "widget": {
+        "id": 4,
+        "title": "Table",
+        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Table",
+        "type": {
+          "id": 1,
+          "type": "bar",
+          "img": "../../../../assets/images/table.png"
+        },
+        "resizeEnabled": true,
+        "minItemCols": 1,
+        "minItemRows": 1,
+        "query": {
+          "id": 1,
+          "name": "query 1",
+          "dimension": "date",
+          "mesure1": "negative",
+          "mesure2": "positive",
+          "mesure3": "",
+          "dataSource": {
+            "id": 1,
+            "title": "source 1",
+            "url": "https://api.covidtracking.com/v1/us/daily.json"
+          }
+        },
+        "dataTable": [
+          {
+            "dimension": "femme",
+            "mesure1": 100,
+            "mesure2": 300
+          },
+          {
+            "dimension": "homme",
+            "mesure1": 400,
+            "mesure2": 600
+          }
+        ]
       },
       "x": 1,
       "y": 1,
@@ -443,80 +583,6 @@
       "dataSource": null,
       "dashboard": null,
       "id": 6
-    },
-    {
-      "title": "Widget 8",
-      "description": "Description here: lorem ",
-      "widget": {
-        "id": 8,
-        "title": "Widget 8",
-        "description": "Description here: lorem ",
-        "type": {
-          "id": 1,
-          "type": "bar",
-          "img": "../../../../assets/increase.png"
-        },
-        "resizeEnabled": true,
-        "minItemCols": 1,
-        "minItemRows": 1,
-        "query": {
-          "id": 1,
-          "name": "query 1",
-          "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
-          "mesure3": "",
-          "dataSource": {
-            "id": 1,
-            "title": "source 1",
-            "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
-        }
-      },
-      "x": 1,
-      "y": 1,
-      "cols": 1,
-      "rows": 1,
-      "dataSource": null,
-      "dashboard": null,
-      "id": 7
-    },
-    {
-      "title": "Card",
-      "description": "This widget displays your data as a Card",
-      "widget": {
-        "id": 6,
-        "title": "Card",
-        "description": "This widget displays your data as a Card",
-        "type": {
-          "id": 1,
-          "type": "bar",
-          "img": "../../../../assets/images/card.png"
-        },
-        "resizeEnabled": true,
-        "minItemCols": 1,
-        "minItemRows": 1,
-        "query": {
-          "id": 1,
-          "name": "query 1",
-          "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
-          "mesure3": "",
-          "dataSource": {
-            "id": 1,
-            "title": "source 1",
-            "url": "https://api.covidtracking.com/v1/us/daily.json"
-          }
-        }
-      },
-      "x": 1,
-      "y": 1,
-      "cols": 1,
-      "rows": 1,
-      "dataSource": null,
-      "dashboard": null,
-      "id": 8
     }
   ],
   "dashboards": [
@@ -534,6 +600,34 @@
       "id": 3,
       "title": "Dash 3",
       "description": " for test"
+    }
+  ],
+  "queries": [
+    {
+      "id": 1,
+      "name": "query 1",
+      "dimension": "date",
+      "mesure1": "negative",
+      "mesure2": "positive",
+      "mesure3": "",
+      "dataSource": {
+        "id": 1,
+        "title": "source 1",
+        "url": "https://api.covidtracking.com/v1/us/daily.json"
+      },
+      "dataTable": null
+    }
+  ],
+  "widgetTypes": [
+    {
+      "id": 1,
+      "img": "../../../../assets/graph.png",
+      "name": "Graph"
+    },
+    {
+      "id": 2,
+      "img": "../../../../assets/increase.png",
+      "name": "Pie"
     }
   ]
 }
