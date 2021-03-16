@@ -4,7 +4,9 @@
     </div>
     <div class="p-col-fixed" style="width:670px">
         <div class="box">
-            <div style="height:300px; background-color:gainsboro;"> </div>
+            <div style="height:300px; background-color:gainsboro;"> 
+                <p-chart type="{{type}}" [data]="basicData" [options]="basicOptions"></p-chart>
+            </div>
         </div>
       </div>
       <div class="p-col">
@@ -20,7 +22,7 @@
         <div class="p-fluid p-formgrid p-grid">
                 <div class="p-field p-col">
                     <label for="query">Queries</label>
-                    <p-dropdown inputId="query" [options]="queries" [(ngModel)]="selectedQuery" placeholder="Select" optionLabel="name"></p-dropdown>
+                    <p-dropdown inputId="query" [options]="queries" [(ngModel)]="selectedQuery" placeholder="Select" (onClick)="SelectedQuery()" optionLabel="name"></p-dropdown>
             </div>
             <div class="p-field p-col">
                 <label for="lastname2">Visualisation</label>

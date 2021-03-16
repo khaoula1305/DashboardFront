@@ -10,23 +10,23 @@ import { DashboardsService } from 'src/app/services/dashboards.service';
 export class HomeComponent implements OnInit {
 
   dashboards: Dashboard[];
-  load=false;
+  load = false;
   constructor(private dashboardService: DashboardsService) { }
 
   ngOnInit(): void {
     this.dashboardService.getAllDashboards().subscribe(
-      (data)=>{
-        this.dashboards=data;
+      (data) => {
+        this.dashboards = data;
 
       },
-      (error)=>{
+      (error) => {
         console.error();
       },
-      ()=>{
-        this.load=true;
+      () => {
+        this.load = true;
         console.log('done ');
       }
-    )
+    );
 
   }
 

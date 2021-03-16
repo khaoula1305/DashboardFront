@@ -23,7 +23,7 @@ export class DefaultComponent implements OnInit {
     const title = this.route.snapshot.params.title;
     this.widgetDashboardService.getAllDashboards().subscribe(
       data => {
-        this.dashboard= data.find( elm=> elm.title== title);
+        this.dashboard = data.find( elm => elm.title == title);
       }
     );
   }

@@ -22,12 +22,10 @@ export class DashboardsService {
   }
 
   updateDashboard(dashboard: Dashboard){
-    console.log(dashboard.id + ' updated');
     this.http.put(this.host, dashboard);
   }
 
   deleteDashboard(dashboardId: number){
-    console.log(dashboardId + ' deleted');
     this.http.delete(this.host + dashboardId);
   }
 }

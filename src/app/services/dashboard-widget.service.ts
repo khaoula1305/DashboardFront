@@ -23,11 +23,11 @@ export class DashboardWidgetService {
 
   addDashboardWidget(dashboardWidget: DashboardWidget){
     console.log(dashboardWidget);
-    let test = this.http.post<DashboardWidget>(this.host, dashboardWidget).subscribe(
-      data=> {
-        console.log("success", data);
+    const test = this.http.post<DashboardWidget>(this.host, dashboardWidget).subscribe(
+      data => {
+        console.log('success', data);
       },
-      error=>{
+      error => {
         console.log(error);
       }
       );
@@ -35,7 +35,14 @@ export class DashboardWidgetService {
 
   deleteDashboardWidget(dashboardWidgetId: number){
     console.log(dashboardWidgetId + ' deleted');
-    this.http.delete(this.host + dashboardWidgetId);
+    this.http.delete(this.host + dashboardWidgetId)
+    .subscribe(data => {
+      console.log(data);
+    },
+    error => {
+      console.log(error);
+    }
+    );
   }
 
   updateDashboardWidget(dashboardWidget: DashboardWidget){

@@ -21,15 +21,15 @@ export class WidgetConfigurationComponent implements OnInit {
   dashWidget: DashboardWidget;
   load: boolean=false;
   widgetTypes: WidgetType[];
+  basicData;
+  type;
 
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
               private queryService: QueryService, 
               private widgetTypeService: WidgetTypeService) 
-  {
-
-   }
+              {}
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
@@ -37,7 +37,8 @@ export class WidgetConfigurationComponent implements OnInit {
       this.dashboardWidgetService.getAllDashboardWidget().subscribe(
         (data) => {
           this.dashWidget= data.find( elm=> elm.title== title);
-          this.selectedQuery=this.dashWidget.widget.query;
+          //this.selectedQuery=this.dashWidget.widget.query;
+          this.type=this.dashWidget.widget.type.type;
         },
         (error) => {
           console.log('error ' );
@@ -46,7 +47,6 @@ export class WidgetConfigurationComponent implements OnInit {
          this.load=true;
           }
     );
-
     this.queryService.getAllQueries().subscribe(
       (data) => {
         this.queries = data;
@@ -61,10 +61,54 @@ export class WidgetConfigurationComponent implements OnInit {
         console.log('getAllWidgetTypes error');
       },
       ()=>{
-        //done
+        // done
       }
     );
   }
+  SelectedQuery(){
+    const dimension = [];
+    this.selectedQuery.dataTable.forEach(elm => {
+      dimension.push(elm.dimension);
+    });
+ /*    
+ const mesure2 = [];
+ data.forEach(elm => {
+   mesure2.push(elm.positive);
+  });
+     */
+    const mesure2 = [];
+    this.selectedQuery.dataTable.forEach(elm => {
+      mesure2.push(elm.mesure2);
+    });
 
+    /*
+    const mesure1 = [];
+    data.forEach(elm => {
+    mesure1.push(elm.negative);
+    });
+    */
+    const mesure1 = [];
+    this.selectedQuery.dataTable.forEach(elm => {
+      mesure1.push(elm.mesure1);
+    });
 
+  // data.forEach(elm => mesure2.push(elm.nameOfmesure));
+    this.basicData = {
+
+    labels: dimension,
+    datasets: [
+
+        {
+            label: this.selectedQuery.mesure2 ,
+            backgroundColor: '#FFA726',
+            data: mesure2
+        },
+        {
+          label: this.selectedQuery.mesure1 ,
+          backgroundColor: '#AAA423',
+          data:  mesure1
+      }
+    ]
+};
+}
 }

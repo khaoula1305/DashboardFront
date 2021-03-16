@@ -29,11 +29,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('dash', this.dashboard);
     this.dashboardWidgetService.getAllDashboardWidget().subscribe(
       (data) => {
         this.dashboardgrid = data;
-        console.log('dah widg', data);
     },
     (error) => {
     console.log('error ' );
@@ -54,16 +52,16 @@ export class DashboardComponent implements OnInit {
       useTransformPositioning: true,
       mobileBreakpoint: 640,
       minCols: 1,
-      maxCols: 100,
+      maxCols: 6,
       minRows: 1,
-      maxRows: 100,
-      maxItemCols: 100,
-      minItemCols: 1,
-      maxItemRows: 100,
+      maxRows: 10,
+      maxItemCols: 6,
+      minItemCols: 2,
+      maxItemRows: 2,
       minItemRows: 1,
-      maxItemArea: 2500,
+      maxItemArea: 12,
       minItemArea: 1,
-      defaultItemCols: 1,
+      defaultItemCols: 2,
       defaultItemRows: 1,
       fixedColWidth: 105,
       fixedRowHeight: 105,
@@ -85,7 +83,7 @@ export class DashboardComponent implements OnInit {
       resizable: {
         enabled: true,
       },
-      swap: false,
+      swap: true,
       pushItems: true,
       disablePushOnDrag: false,
       disablePushOnResize: false,
@@ -103,8 +101,12 @@ export class DashboardComponent implements OnInit {
   changedOptions() {
     this.options.api.optionsChanged();
   }
-  onDeletedClick(item){
+  onDeletedClick(evt, item){
    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
+   console.log(item);
+   console.log(evt);
+
+   this.dashboardWidgetService.deleteDashboardWidget(item.id);
 
 }
   removeItem(item) {
