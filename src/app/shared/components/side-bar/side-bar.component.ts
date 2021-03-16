@@ -14,32 +14,32 @@ export class SideBarComponent implements OnInit {
   items: MenuItem[];
   dashboards: Dashboard[];
   myLabel: string;
-  myItems:MenuItem[]=[];
+  myItems: MenuItem[] = [];
 
 
   constructor(private dashboardService: DashboardsService, private router: Router, private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getDashboards();
-    let test:string="dash";
+    const test = 'dash';
     this.items = [
       {
       label: 'Home',
-      icon:'pi pi-fw pi-home',
-      routerLink: "home"
+      icon: 'pi pi-fw pi-home',
+      routerLink: '/'
       },
       {
       label: 'Dashboards',
-      icon:'pi pi-fw pi-chart-bar',
+      icon: 'pi pi-fw pi-chart-bar',
       items: [
         {
           label: 'New Dashboard',
-          icon:'pi pi-fw pi-plus-circle',
-          routerLink: "/"
+          icon: 'pi pi-fw pi-plus-circle',
+          routerLink: '/'
         },
           {
               label: 'My Dashbords',
-              // show all user dashboards 
+              // show all user dashboards
               items: this.myItems
           },
           {
@@ -57,36 +57,31 @@ export class SideBarComponent implements OnInit {
       },
       {
       label: 'Queries',
-      icon:'pi pi-fw pi-sliders-h',
-      routerLink: "queries"
+      icon: 'pi pi-fw pi-sliders-h',
+      routerLink: 'queries'
       },
       {
       label: 'REST',
-      icon:'pi pi-fw pi-cloud-download',
-      routerLink: "rest"
+      icon: 'pi pi-fw pi-cloud-download',
+      routerLink: 'rest'
       }
-  ]
+  ];
   }
 
   getDashboards(){
     this.dashboardService.getAllDashboards().subscribe(
       (response) => {
-        console.log('all dashboards ', response);
         this.dashboards = response;
         this.dashboards.forEach( elm => {
-        this.myItems.push({'label': elm.title, command: (event) => {
-          //event.originalEvent: Browser event
-          //event.item: menuitem metadata
-          console.log(event.item.title);
-          console.log(event.item.label);
-          //let title = this.activatedroute.snapshot.paramMap.get("event.item.title");
-          this.router.navigate(["dashboards", event.item.label]);
-          //this.router.navigate(["dashboards", title], event.item.title);
-          
+        this.myItems.push({label: elm.title, command: (event) => {
+          // event.originalEvent: Browser event
+          // event.item: menuitem metadata
+          // let title = this.activatedroute.snapshot.paramMap.get("event.item.title");
+          this.router.navigate(['dashboards', event.item.label]);
+          // this.router.navigate(["dashboards", title], event.item.title);
+
       }});
-        console.log(this.myItems);
         });
-        console.log(this.myItems);
       },
       (error) => {
         console.log('error ');

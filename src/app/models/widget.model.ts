@@ -1,13 +1,13 @@
-import { Query } from "./query.model";
-import { WidgetType } from "./widget-type";
+import { Query } from './query.model';
+import { WidgetType } from './widget-type';
 
 export interface Widget{
     id: number;
     title: string;
     description: string;
     type: WidgetType;
-    resizeEnabled:boolean ;
+    resizeEnabled: boolean ;
     minItemCols: number;
-    minItemRows:number;
-    query: Query;  
+    minItemRows: number;
+    query: Query;
 }

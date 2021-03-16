@@ -18,21 +18,21 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-          label:'User Name',
-          items:[
+          label: 'User Name',
+          items: [
               {
-                  label:'New',
-                  icon:'pi pi-fw pi-user-plus',
+                  label: 'New',
+                  icon: 'pi pi-fw pi-user-plus',
 
               },
               {
-                  label:'Delete',
-                  icon:'pi pi-fw pi-user-minus',
+                  label: 'Delete',
+                  icon: 'pi pi-fw pi-user-minus',
 
               },
               {
-                  label:'Search',
-                  icon:'pi pi-fw pi-users'
+                  label: 'Search',
+                  icon: 'pi pi-fw pi-users'
               }
           ]
       }

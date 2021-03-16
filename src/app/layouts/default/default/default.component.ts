@@ -14,30 +14,27 @@ export class DefaultComponent implements OnInit {
   static itemChange: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
   static itemResize: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
   dashboard: Dashboard;
-  add=false;
+  add = false;
   constructor(private widgetDashboardService: DashboardsService, private route: ActivatedRoute) { }
-  
-  
+
+
   ngOnInit(): void {
-    
-    let title = this.route.snapshot.params["title"];
-    console.log('title', title);
+
+    const title = this.route.snapshot.params.title;
     this.widgetDashboardService.getAllDashboards().subscribe(
-      data=>{
-        console.log('data', data);
-        this.dashboard = data.filter(dash => dash.title == title)[0];
-        console.log('dash ', this.dashboard);
+      data => {
+        this.dashboard = data.find( elm => elm.title == title);
       }
     );
   }
-  
+
   onHiddenClick(state){
   this.add = false;
   console.log('state hidden', state);
 }
 
   addWidget(){
-    this.add= true;
+    this.add = true;
   }
 
 }

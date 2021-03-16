@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div class="p-grid">
+  <div class=" p-md-2" *ngFor="let dash of dashboards">
+    <div class="card">
+        <h5>{{ dash.title }}</h5>
+        <button
+          pButton
+          type="button"
+          routerLink="/dashboards/{{ dash.title }}"
+          label="{{ dash.title }}"
+          class="ui-button-rounded ui-button-secondary"
+        ></button>
+    </div>
+  </div>
+</div>

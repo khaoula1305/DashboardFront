@@ -4,6 +4,7 @@ import { Widget } from 'src/app/models/widget.model';
 import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-widget-panel',
@@ -16,22 +17,22 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
   searchText;
 
-  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService) { }
+  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService, private router: Router) { }
 
   hideClick(){
     console.log('widget ');
     this.hidden.emit(true);
   }
 
-  DoSth(evt : any){
-    console.log('Hi', evt )
+  DoSth(evt: any){
+    console.log('Hi', evt );
   }
 
   ngOnInit(): void {
     this.widgetsService.getAllWidgets().subscribe(
     (response) => {
     console.log('widgets ', response);
-    this.widgets=response;
+    this.widgets = response;
     },
     (error) => {
     console.log('error ' );
@@ -44,7 +45,6 @@ export class WidgetPanelComponent implements OnInit {
 
     // permet d'ajouter un widget de widget-panel dans le dashboard
   addItem(widget : Widget){
-    debugger
     let dashboardWidget:DashboardWidget=new DashboardWidget();
     console.log(widget);
     console.log(widget.title);
@@ -63,16 +63,15 @@ export class WidgetPanelComponent implements OnInit {
 
     console.log(dashboardWidget);
     this.dashboardWidgetService.addDashboardWidget(dashboardWidget);
-    //this.dashboardWidgetService.getAllDashboardWidget();
-    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      (data)=>{
-        console.log("lst modifs" + data);
-      }
-    )
+    this.changeLocation('Dash 2');
+   // window.location.reload();
   }
-  // permet d'ajouter un nouveau widget generique
-  addWidget() {
-    //this.widgetDashboardService.addWidget({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
-   }
+  changeLocation(locationData) {
 
+    // save current route first
+    const currentRoute = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['dashboards', locationData]); // navigate to same route
+    });
+  }
 }

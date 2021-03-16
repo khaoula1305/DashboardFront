@@ -4,7 +4,7 @@ import {CompactType, DisplayGrid, Draggable, GridType, PushDirections, Resizable
 import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
 import { Dashboard } from 'src/app/models/dashboard.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
-import {DashboardWidgetService} from '../../../services/dashboard-widget.service'
+import {DashboardWidgetService} from '../../../services/dashboard-widget.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +12,13 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
   dashboardgrid: Array<GridsterItem>;
-  load=false;
+  load = false;
   @Input() dashboard: Dashboard;
+
+  public pauseState = false;
 
   static itemChange(item, itemComponent) {
     console.info('itemChanged', item, itemComponent);
@@ -24,20 +27,17 @@ export class DashboardComponent implements OnInit {
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-  constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
-  
+
   ngOnInit() {
-    console.log('dash', this.dashboard);
     this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      (data)=>{
-        this.dashboardgrid= data;
-        console.log('dah widg', data);
+      (data) => {
+        this.dashboardgrid = data;
     },
     (error) => {
     console.log('error ' );
     },
     () => {
-      this.load=true;
+      this.load = true;
     }
     );
     this.options = {
@@ -52,16 +52,16 @@ export class DashboardComponent implements OnInit {
       useTransformPositioning: true,
       mobileBreakpoint: 640,
       minCols: 1,
-      maxCols: 100,
+      maxCols: 6,
       minRows: 1,
-      maxRows: 100,
-      maxItemCols: 100,
-      minItemCols: 1,
-      maxItemRows: 100,
+      maxRows: 10,
+      maxItemCols: 6,
+      minItemCols: 2,
+      maxItemRows: 2,
       minItemRows: 1,
-      maxItemArea: 2500,
+      maxItemArea: 12,
       minItemArea: 1,
-      defaultItemCols: 1,
+      defaultItemCols: 2,
       defaultItemRows: 1,
       fixedColWidth: 105,
       fixedRowHeight: 105,
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
       resizable: {
         enabled: true,
       },
-      swap: false,
+      swap: true,
       pushItems: true,
       disablePushOnDrag: false,
       disablePushOnResize: false,
@@ -94,17 +94,19 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false
     };
-   
+
 
   }
 
   changedOptions() {
     this.options.api.optionsChanged();
   }
-
-  public pauseState = false;
-  onDeletedClick(item){
+  onDeletedClick(evt, item){
    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
+   console.log(item);
+   console.log(evt);
+
+   this.dashboardWidgetService.deleteDashboardWidget(item.id);
 
 }
   removeItem(item) {
@@ -115,6 +117,6 @@ export class DashboardComponent implements OnInit {
    /*this.dashboard.forEach(el =>{
      if(el.cols)
    })*/
-    this.dashboardgrid.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled:true, dragEnabled:true});
+    this.dashboardgrid.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled: true, dragEnabled: true});
   }
 }
