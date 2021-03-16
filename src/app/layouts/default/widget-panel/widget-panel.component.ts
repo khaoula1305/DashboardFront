@@ -45,7 +45,6 @@ export class WidgetPanelComponent implements OnInit {
 
     // permet d'ajouter un widget de widget-panel dans le dashboard
   addItem(widget : Widget){
-    debugger
     let dashboardWidget:DashboardWidget=new DashboardWidget();
     console.log(widget);
     console.log(widget.title);
@@ -64,12 +63,15 @@ export class WidgetPanelComponent implements OnInit {
 
     console.log(dashboardWidget);
     this.dashboardWidgetService.addDashboardWidget(dashboardWidget);
-    //this.dashboardWidgetService.getAllDashboardWidget();
-    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      (data)=>{
-        console.log("lst modifs" + data);
-      }
-    )
+    this.changeLocation('Dash 2');
+   // window.location.reload();
   }
+  changeLocation(locationData) {
 
+    // save current route first
+    const currentRoute = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['dashboards', locationData]); // navigate to same route
+    });
+  }
 }

@@ -22,8 +22,8 @@ export class WidgetsService {
     return this.http.get<Widget[]>(this.host);
   }
 
-  addWidget(widget: Widget){
-    this.http.post(this.host, widget);
+  addWidget(widget: Widget): Observable<Widget>{
+    return this.http.post<Widget>(this.host, widget);
   }
 
   deleteWidget(widgetId: number){
@@ -31,9 +31,10 @@ export class WidgetsService {
     this.http.delete(this.host + widgetId);
   }
 
-  updateWidget(widget: Widget){
+  updateWidget(widget: Widget):Observable<any> {
+    console.log('widash', widget);
     console.log(widget.id + ' updated');
-    this.http.put(this.host, widget);
+    return this.http.put(this.host + widget.id,widget);
   }
 
 }

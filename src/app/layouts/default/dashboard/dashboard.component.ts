@@ -29,11 +29,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('dash', this.dashboard);
     this.dashboardWidgetService.getAllDashboardWidget().subscribe(
       (data) => {
         this.dashboardgrid = data;
-        console.log('dah widg', data);
     },
     (error) => {
     console.log('error ' );
@@ -95,6 +93,7 @@ export class DashboardComponent implements OnInit {
       disableWindowResize: false,
       disableWarnings: false,
       scrollToNewItems: false
+
     };
 
 
@@ -103,8 +102,12 @@ export class DashboardComponent implements OnInit {
   changedOptions() {
     this.options.api.optionsChanged();
   }
-  onDeletedClick(item){
+  onDeletedClick(evt, item){
    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
+   console.log(item);
+   console.log(evt);
+
+   this.dashboardWidgetService.deleteDashboardWidget(item.id);
 
 }
   removeItem(item) {

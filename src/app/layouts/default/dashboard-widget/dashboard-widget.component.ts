@@ -23,7 +23,6 @@ export class DashboardWidgetComponent implements OnInit {
 
   deleteClick(){
     this.deleted.emit(true);
-    console.log('widget ', this.dashboardWidget);
   }
   updateClick(){
     // naviguer vers le updateComponent
@@ -31,7 +30,6 @@ export class DashboardWidgetComponent implements OnInit {
 
   ngOnInit(): void {
 
-   console.log(' dashboardWidget', this.dashboardWidget);
    const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
    this.dataSourceService.getData(dataSource).subscribe(
       (data) => {

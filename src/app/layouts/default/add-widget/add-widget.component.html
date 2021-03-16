@@ -1,38 +1,75 @@
-<div class="p-grid">
-    <div class="p-col-12">
+<form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
+    <div class="p-grid">
+    
+      <div class="p-col-12">
         <h4>Configure widget</h4>
-    </div>
-    <div class="p-col-fixed" style="width:670px">
+      </div>
+      <div class="p-col-fixed" style="width: 670px">
         <div class="box">
-            <div style="height:300px; background-color:gainsboro;"> </div>
+          <div style="height: 300px; background-color: gainsboro">
+            <p-chart
+              type="bar"
+              [data]="basicData"
+             
+            ></p-chart>
+          </div>
         </div>
       </div>
-      <div class="p-col">
-        <div class="box">
+        <div class="p-col">
+          <div class="box">
             <h5>Title</h5>
-            <input type="text" pInputText [(ngModel)]="title" />
+            <input type="text" 
+                   pInputText 
+                   [(ngModel)]="widget.title"
+                   name="title" />
             <h5>Description</h5>
             <!--label for="description">Description</label-->
-            <textarea id="description" type="text" rows="4" pInputTextarea [(ngModel)]="description"></textarea>
+            <textarea
+              name="description"
+              type="text"
+              rows="4"
+              pInputTextarea
+              [(ngModel)]="widget.description"
+            ></textarea>
+          </div>
         </div>
-    </div>
-    <div class="p-col-12">
-        <div class="p-fluid p-formgrid p-grid">
-                <div class="p-field p-col">
-                    <label for="query">Queries</label>
-                    <p-dropdown inputId="query" [options]="queries" [(ngModel)]="selectedQuery" placeholder="Select" optionLabel="name"></p-dropdown>
+        <br/>
+        <br/>
+        <div class="p-col-12">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+              <label for="query">Queries</label>
+              <p-dropdown
+                inputId="query"
+                name="selectedQuery"
+                [options]="queries"
+                [(ngModel)]="selectedQuery"
+                placeholder="Select"
+                (ngModelChange)="SelectedQuery()"
+                optionLabel="name"
+              ></p-dropdown>
             </div>
             <div class="p-field p-col">
-                <label for="lastname2">Visualisation</label>
-                <div class="p-mr-2 p-col" style="height:50px; background-color: ghostwhite;"> 
-                    <div *ngFor="let vis of widgetTypes">
-                    <img src="{{vis.img}}"/>
+              <label for="visualisation">Visualisation</label>
+              <div
+                class="p-mr-2 p-col"
+                style="height: 50px; background-color: ghostwhite"
+              >
+                <div *ngFor="let vis of widgetTypes">
+                  <img src="{{ vis.img }}" />
                 </div>
-                </div>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="p-col-12">
+          <p-button
+            label="Save"
+            icon="pi pi-check"
+            type="submit"
+            iconPos="left"
+          ></p-button>
         </div>
     </div>
-    <div class="p-col-12">
-        <p-button label="Save " icon="pi pi-check"  iconPos="left"></p-button>
-    </div>
-</div>
+    </form>
+    
