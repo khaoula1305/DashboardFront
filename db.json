@@ -163,7 +163,7 @@
       "type": {
         "id": 1,
         "type": "bar",
-        "img": "../../../../assets/increase.png"
+        "img": "../../../../assets/images/increase.png"
       },
       "resizeEnabled": true,
       "minItemCols": 1,
@@ -189,7 +189,7 @@
       "type": {
         "id": 1,
         "type": "bar",
-        "img": "../../../../assets/increase.png"
+        "img": "../../../../assets/images/increase.png"
       },
       "resizeEnabled": true,
       "minItemCols": 1,
