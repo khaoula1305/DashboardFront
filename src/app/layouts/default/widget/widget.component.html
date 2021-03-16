@@ -1,4 +1,4 @@
-<div class="p-d-flex p-mb-3">
+<div class="p-d-flex p-mb-3"  (mouseover)="hover()" (mouseout)="notHover()" [ngStyle]="hoverStyle" >
     <div shape="circle" size="4rem" styleClass="p-mr-2">
         <img src="{{widget.type.img}}">
     </div>

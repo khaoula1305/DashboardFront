@@ -45,9 +45,10 @@ export class DashboardWidgetService {
     );
   }
 
-  updateDashboardWidget(dashboardWidget: DashboardWidget){
+  updateDashboardWidget(dashboardWidget: DashboardWidget):Observable<any> {
+    console.log('widash', dashboardWidget);
     console.log(dashboardWidget.id + ' updated');
-    this.http.put(this.host, dashboardWidget);
+    return this.http.put(this.host + dashboardWidget.id,dashboardWidget);
   }
 
 }

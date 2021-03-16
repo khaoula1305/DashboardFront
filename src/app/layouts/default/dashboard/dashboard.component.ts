@@ -52,16 +52,16 @@ export class DashboardComponent implements OnInit {
       useTransformPositioning: true,
       mobileBreakpoint: 640,
       minCols: 1,
-      maxCols: 6,
+      maxCols: 100,
       minRows: 1,
-      maxRows: 10,
-      maxItemCols: 6,
-      minItemCols: 2,
-      maxItemRows: 2,
+      maxRows: 100,
+      maxItemCols: 100,
+      minItemCols: 1,
+      maxItemRows: 100,
       minItemRows: 1,
-      maxItemArea: 12,
+      maxItemArea: 2500,
       minItemArea: 1,
-      defaultItemCols: 2,
+      defaultItemCols: 1,
       defaultItemRows: 1,
       fixedColWidth: 105,
       fixedRowHeight: 105,
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
       resizable: {
         enabled: true,
       },
-      swap: true,
+      swap: false,
       pushItems: true,
       disablePushOnDrag: false,
       disablePushOnResize: false,
@@ -93,6 +93,7 @@ export class DashboardComponent implements OnInit {
       disableWindowResize: false,
       disableWarnings: false,
       scrollToNewItems: false
+
     };
 
 

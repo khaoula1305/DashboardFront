@@ -9,10 +9,19 @@ import { Widget } from 'src/app/models/widget.model';
 export class WidgetComponent implements OnInit {
 
   @Input() widget: Widget;
+  hoverStyle;
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+  hover(){
+  this.hoverStyle = {
+      'background-color':  '#f6f6f6',
+    };
+  }
+  notHover(){
+    this.hoverStyle={};
   }
 
 }
