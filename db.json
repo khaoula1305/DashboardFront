@@ -620,11 +620,7 @@
       "rows": 1,
       "dataSource": null,
       "dashboard": null,
-<<<<<<< HEAD
-      "id": 10
-=======
       "id": 17
->>>>>>> 9ce4fcfe21f74a6aa25684cbbf54104c41bb37b9
     },
     {
       "title": "Pie Chart",
@@ -1311,9 +1307,6 @@
       "rows": 1,
       "dataSource": null,
       "dashboard": null,
-<<<<<<< HEAD
-      "id": 27
-=======
       "id": 20
     },
     {
@@ -1508,7 +1501,6 @@
       "dataSource": null,
       "dashboard": null,
       "id": 24
->>>>>>> 9ce4fcfe21f74a6aa25684cbbf54104c41bb37b9
     }
   ],
   "dashboards": [
