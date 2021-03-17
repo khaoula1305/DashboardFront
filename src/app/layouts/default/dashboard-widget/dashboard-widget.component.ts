@@ -3,6 +3,8 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 import {DataSource} from 'src/app/models/data-source.model';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import {CardModule} from 'primeng/card';
+import {WidgetTypeEnum} from 'src/app/models/widgetTypeEnum'; 
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -17,6 +19,8 @@ export class DashboardWidgetComponent implements OnInit {
   basicOptions: any;
   items: MenuItem[];
   widgetTitle: string;
+
+  widgetTypeEnum = WidgetTypeEnum;  
 
 
   constructor(private dataSourceService: DataSourceService, private router: Router) { }

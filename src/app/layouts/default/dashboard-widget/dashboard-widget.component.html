@@ -1,8 +1,38 @@
 <p-card header="{{dashboardWidget.title}}">
-    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.title)" [model]="items" (onDropdownClick)="dropdown(dashboardWidget.title)" ></p-splitButton>
-<!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
+    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.title)" [model]="items"
+        (onDropdownClick)="dropdown(dashboardWidget.title)"></p-splitButton>
+    <!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
 <p-button routerLink="/updateWidget/{{dashboardWidget.title}}" label="update" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button-->
-    <div class="card">
-        <p-chart type="{{dashboardWidget.widget.type.type}}" [data]="basicData" [options]="basicOptions"></p-chart>
+
+
+    <div class="card" [ngSwitch]="dashboardWidget.widget.type.type">
+        <ng-template [ngSwitchCase]="widgetTypeEnum.Card">
+            <p-card header="Card header">
+                Content
+            </p-card>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="widgetTypeEnum.Table">
+            <p-table [value]="dashboardWidget.widget.query.dataTable">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Homme</th>
+                        <th>Femme</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>{{dashboardWidget.widget.query.dataTable.mesure1}}</td>
+                        <td>{{dashboardWidget.widget.query.dataTable.mesure2}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </ng-template>
+        <ng-template [ngSwitchCase]="widgetTypeEnum.Number">
+            <p>Number</p>
+        </ng-template>
+
+
+        <!--p-chart type="{{dashboardWidget.widget.type.type}}" [data]="basicData" [options]="basicOptions"></p-chart-->
     </div>
 </p-card>
