@@ -63,6 +63,7 @@ export class WidgetPanelComponent implements OnInit {
 
     console.log(dashboardWidget);
     this.dashboardWidgetService.addDashboardWidget(dashboardWidget);
+    //pour actualiser le dashboard
     this.changeLocation('Dash 2');
    // window.location.reload();
   }
