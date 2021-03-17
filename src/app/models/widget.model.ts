@@ -1,7 +1,7 @@
 import { Query } from './query.model';
 import { WidgetType } from './widget-type';
 
-export interface Widget{
+export class Widget{
     id: number;
     title: string;
     description: string;

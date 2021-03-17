@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { Query } from 'src/app/models/query.model';
 import { WidgetType } from 'src/app/models/widget-type';
 import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { QueryService } from 'src/app/services/query.service';
 import { WidgetTypeService } from 'src/app/services/widget-type.service';
+import {FormControl, NgForm, Validators} from '@angular/forms';
 
 
 @Component({
@@ -28,17 +29,18 @@ export class WidgetConfigurationComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
               private queryService: QueryService, 
-              private widgetTypeService: WidgetTypeService) 
+              private widgetTypeService: WidgetTypeService,
+              private router: Router) 
               {}
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-
       this.dashboardWidgetService.getAllDashboardWidget().subscribe(
         (data) => {
           this.dashWidget= data.find( elm=> elm.title== title);
-          //this.selectedQuery=this.dashWidget.widget.query;
+          this.selectedQuery=this.dashWidget.widget.query;
           this.type=this.dashWidget.widget.type.type;
+          this.SelectedQuery();
         },
         (error) => {
           console.log('error ' );
@@ -70,31 +72,15 @@ export class WidgetConfigurationComponent implements OnInit {
     this.selectedQuery.dataTable.forEach(elm => {
       dimension.push(elm.dimension);
     });
- /*    
- const mesure2 = [];
- data.forEach(elm => {
-   mesure2.push(elm.positive);
-  });
-     */
     const mesure2 = [];
     this.selectedQuery.dataTable.forEach(elm => {
       mesure2.push(elm.mesure2);
     });
-
-    /*
-    const mesure1 = [];
-    data.forEach(elm => {
-    mesure1.push(elm.negative);
-    });
-    */
     const mesure1 = [];
     this.selectedQuery.dataTable.forEach(elm => {
       mesure1.push(elm.mesure1);
     });
-
-  // data.forEach(elm => mesure2.push(elm.nameOfmesure));
     this.basicData = {
-
     labels: dimension,
     datasets: [
 
@@ -110,5 +96,17 @@ export class WidgetConfigurationComponent implements OnInit {
       }
     ]
 };
+}
+onSubmit(m: NgForm) {
+  if ( m.untouched || m.invalid) {
+    alert('Required');
+  } else {
+    this.dashWidget.title = m.value.title;
+    this.dashWidget.description= m.value.description;
+    this.dashWidget.widget.query = m.value.selectedQuery;
+    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
+      result => this.router.navigate(['/dashboards', 'Dash 2'])
+       );
+  }
 }
 }
