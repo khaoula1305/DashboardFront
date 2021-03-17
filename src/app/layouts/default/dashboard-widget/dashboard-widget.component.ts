@@ -22,8 +22,18 @@ export class DashboardWidgetComponent implements OnInit {
 
   widgetTypeEnum = WidgetTypeEnum;  
 
+  isTable= false;
+  isCard= false;
+  isNumber= false;
+  myTable;
 
-  constructor(private dataSourceService: DataSourceService, private router: Router) { }
+  
+
+
+
+  constructor(private dataSourceService: DataSourceService, private router: Router) {
+    
+   }
 
   deleteClick(){
     this.deleted.emit(true);
@@ -33,6 +43,16 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.dashboardWidget.widget.dataTable);
+    this.myTable = this.dashboardWidget.widget.dataTable;
+    //console.log(myTable);
+    const typeWidget = this.dashboardWidget.widget.type.type ;
+    console.log("test." + this.dashboardWidget.widget.type.type);
+    switch (typeWidget) {
+      case 'Table': this.isTable = true;
+      case 'Card': this.isCard = true;
+      case 'Number': this.isNumber = true;
+      }
 
    const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
    this.dataSourceService.getData(dataSource).subscribe(
