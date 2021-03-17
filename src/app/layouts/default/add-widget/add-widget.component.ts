@@ -87,6 +87,7 @@ onSubmit(m: NgForm) {
     this.widget.description= m.value.description;
     this.widget.query = m.value.selectedQuery;
     this.widget.type= this.widgetTypes[1];
+    console.log('add widget ', this.widget);
     this.widgetService.addWidget(this.widget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])
        );
