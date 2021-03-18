@@ -3,6 +3,8 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 import {DataSource} from 'src/app/models/data-source.model';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import {CardModule} from 'primeng/card';
+import {WidgetTypeEnum} from 'src/app/models/widgetTypeEnum'; 
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -18,8 +20,20 @@ export class DashboardWidgetComponent implements OnInit {
   items: MenuItem[];
   widgetTitle: string;
 
+  widgetTypeEnum = WidgetTypeEnum;  
 
-  constructor(private dataSourceService: DataSourceService, private router: Router) { }
+  isTable= false;
+  isCard= false;
+  isNumber= false;
+  myTable;
+
+  
+
+
+
+  constructor(private dataSourceService: DataSourceService, private router: Router) {
+    
+   }
 
   deleteClick(){
     this.deleted.emit(true);
@@ -29,6 +43,16 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.dashboardWidget.widget.dataTable);
+    this.myTable = this.dashboardWidget.widget.dataTable;
+    //console.log(myTable);
+    const typeWidget = this.dashboardWidget.widget.type.type ;
+    console.log("test." + this.dashboardWidget.widget.type.type);
+    switch (typeWidget) {
+      case 'Table': this.isTable = true;
+      case 'Card': this.isCard = true;
+      case 'Number': this.isNumber = true;
+      }
 
    const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
   // this.dataSourceService.getData(dataSource).subscribe(

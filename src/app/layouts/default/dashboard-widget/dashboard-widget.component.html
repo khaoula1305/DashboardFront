@@ -1,8 +1,51 @@
 <p-card header="{{dashboardWidget.title}}">
-    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.title)" [model]="items" (onDropdownClick)="dropdown(dashboardWidget.title)" ></p-splitButton>
-<!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
+    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.title)" [model]="items"
+        (onDropdownClick)="dropdown(dashboardWidget.title)"></p-splitButton>
+    <!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
 <p-button routerLink="/updateWidget/{{dashboardWidget.title}}" label="update" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button-->
-    <div class="card">
-        <p-chart type="{{dashboardWidget.widget.type.type}}" [data]="basicData" [options]="basicOptions"></p-chart>
-    </div>
+<ng-container *ngIf="isTable; then idTable else noTable">
+
+        </ng-container>
+        <ng-template #idTable>
+            
+            <p-table [value]="myTable">
+            
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Entrepreneur</th>
+                        <th>Salarié</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tab>
+                    <tr>
+                        <td>{{tab.dimension}}</td>
+                        <td>{{tab.mesure1}}</td>
+                        <td>{{tab.mesure2}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </ng-template>
+        <ng-template #noTable>
+            <ng-container *ngIf="isCard; then idCard else default">
+
+            </ng-container>
+            <ng-template #idCard>
+                <p-card>
+                    <ng-template pTemplate="header">
+                        Header content here
+                    </ng-template>
+                    Body Content
+                    <ng-template pTemplate="footer">
+                        Footer content here
+                    </ng-template>
+                </p-card>
+            </ng-template>
+
+            <ng-template #default>
+                <p-chart type="{{dashboardWidget.widget.type.type}}" [data]="basicData" [options]="basicOptions">
+                </p-chart>
+            </ng-template>
+        </ng-template>
+  
 </p-card>
