@@ -1,75 +1,89 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
-    <div class="p-grid">
-    
-      <div class="p-col-12">
-        <h4>Configure widget</h4>
-      </div>
-      <div class="p-col-fixed" style="width: 670px">
-        <div class="box">
-          <div style="height: 300px; background-color: gainsboro">
-            <p-chart
-              type="bar"
-              [data]="basicData"
-             
-            ></p-chart>
-          </div>
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h4>Configure widget</h4>
+    </div>
+    <div class="p-col-fixed" style="width: 670px">
+      <div class="box">
+        <div style="height: 300px; background-color: gainsboro">
+          <p-chart type="{{ type }}" [data]="basicData"></p-chart>
         </div>
       </div>
-        <div class="p-col">
-          <div class="box">
-            <h5>Title</h5>
-            <input type="text" 
-                   pInputText 
-                   [(ngModel)]="widget.title"
-                   name="title" />
-            <h5>Description</h5>
-            <!--label for="description">Description</label-->
-            <textarea
-              name="description"
-              type="text"
-              rows="4"
-              pInputTextarea
-              [(ngModel)]="widget.description"
-            ></textarea>
-          </div>
+    </div>
+    <div class="p-col">
+      <div class="box">
+        <h5>Title</h5>
+        <input type="text" pInputText [(ngModel)]="widget.title" name="title" />
+        <h5>Description</h5>
+        <!--label for="description">Description</label-->
+        <textarea
+          name="description"
+          type="text"
+          rows="4"
+          pInputTextarea
+          [(ngModel)]="widget.description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="p-col-12 Col12">
+      <p-divider></p-divider>
+    </div>
+    <div class="p-col-6">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="query">Queries</label>
+          <p-dropdown
+            inputId="query"
+            name="selectedQuery"
+            [options]="queries"
+            [(ngModel)]="selectedQuery"
+            placeholder="Select"
+            (ngModelChange)="SelectedQuery()"
+            optionLabel="name"
+          ></p-dropdown>
         </div>
-        <br/>
-        <br/>
-        <div class="p-col-12">
-          <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col">
-              <label for="query">Queries</label>
-              <p-dropdown
-                inputId="query"
-                name="selectedQuery"
-                [options]="queries"
-                [(ngModel)]="selectedQuery"
-                placeholder="Select"
-                (ngModelChange)="SelectedQuery()"
-                optionLabel="name"
-              ></p-dropdown>
-            </div>
-            <div class="p-field p-col">
-              <label for="visualisation">Visualisation</label>
+        <div class="p-field p-col">
+          <label for="visualisation">Visualisation</label>
+          <p-dropdown
+            [options]="widgetTypes"
+            [(ngModel)]="selectedWidgetType"
+            name="selectedWidgetType"
+            (ngModelChange)="SelectedWidgetType()"
+            optionLabel="type"
+            [filter]="true"
+            filterBy="type"
+            [showClear]="true"
+            placeholder="Select a visualisation"
+          >
+            <ng-template pTemplate="selectedItem">
               <div
-                class="p-mr-2 p-col"
-                style="height: 50px; background-color: ghostwhite"
+                class="widgetType-item widgetType-item-value"
+                *ngIf="selectedWidgetType.type"
               >
-                <div *ngFor="let vis of widgetTypes">
-                  <img src="{{ vis.img }}" />
+                <div class="center">
+                  <img src="{{ selectedWidgetType.img }}" />
+                  {{ selectedWidgetType.type }}
                 </div>
               </div>
-            </div>
-          </div>
+            </ng-template>
+            <ng-template let-widgetType pTemplate="item">
+              <div class="widgetType-item">
+                <div class="center">
+                  <img src="{{ widgetType.img }}" /> {{ widgetType.type }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </div>
-        <div class="p-col-12">
-          <p-button
-            label="Save"
-            icon="pi pi-check"
-            type="submit"
-            iconPos="left"
-          ></p-button>
-        </div>
+      </div>
     </div>
-    </form>
-    
+    <div class="p-col-6">
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        type="submit"
+        iconPos="left"
+      ></p-button>
+    </div>
+  </div>
+</form>

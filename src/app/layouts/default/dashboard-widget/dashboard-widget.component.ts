@@ -55,8 +55,8 @@ export class DashboardWidgetComponent implements OnInit {
       }
 
    const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
-   this.dataSourceService.getData(dataSource).subscribe(
-      (data) => {
+  // this.dataSourceService.getData(dataSource).subscribe(
+      //(data) => {
         // const dimension = [];
         // data.forEach(elm => {
         //   dimension.push(elm.date);
@@ -104,14 +104,14 @@ export class DashboardWidgetComponent implements OnInit {
         ]
     };
 
-      },
+     /* },
       (error) => {
       console.log('error ' );
       },
       () => {
       console.log('complete');
       }
-      );
+      );*/
 
       this.items = [
         {label: 'Update', icon: 'pi pi-refresh', command: () => {

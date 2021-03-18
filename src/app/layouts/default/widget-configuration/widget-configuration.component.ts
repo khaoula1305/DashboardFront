@@ -21,9 +21,15 @@ export class WidgetConfigurationComponent implements OnInit {
   selectedQuery: Query;
   dashWidget: DashboardWidget;
   load: boolean=false;
-  widgetTypes: WidgetType[];
   basicData;
+
+  widgetTypes: WidgetType[];
+  selectedWidgetType: WidgetType;
   type;
+  //chart
+  dimension ;
+  mesure2 ;
+  mesure1;
 
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
@@ -68,34 +74,43 @@ export class WidgetConfigurationComponent implements OnInit {
     );
   }
   SelectedQuery(){
-    const dimension = [];
+    this.dimension=[];
+    this.mesure1=[];
+    this.mesure2=[];
     this.selectedQuery.dataTable.forEach(elm => {
-      dimension.push(elm.dimension);
+      this.dimension.push(elm.dimension);
     });
-    const mesure2 = [];
     this.selectedQuery.dataTable.forEach(elm => {
-      mesure2.push(elm.mesure2);
+      this.mesure2.push(elm.mesure2);
     });
-    const mesure1 = [];
     this.selectedQuery.dataTable.forEach(elm => {
-      mesure1.push(elm.mesure1);
+      this.mesure1.push(elm.mesure1);
     });
-    this.basicData = {
-    labels: dimension,
+    this.draw();
+
+}
+SelectedWidgetType(){
+  this.type=this.selectedWidgetType.type;
+  this.draw();
+}
+draw(){
+  this.basicData = {
+    labels: this.dimension,
     datasets: [
 
         {
             label: this.selectedQuery.mesure2 ,
             backgroundColor: '#FFA726',
-            data: mesure2
+            data: this.mesure2
         },
         {
           label: this.selectedQuery.mesure1 ,
           backgroundColor: '#AAA423',
-          data:  mesure1
+          data:  this.mesure1
       }
     ]
 };
+
 }
 onSubmit(m: NgForm) {
   if ( m.untouched || m.invalid) {
@@ -104,6 +119,7 @@ onSubmit(m: NgForm) {
     this.dashWidget.title = m.value.title;
     this.dashWidget.description= m.value.description;
     this.dashWidget.widget.query = m.value.selectedQuery;
+    this.dashWidget.widget.type= this.selectedWidgetType;
     this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])
        );

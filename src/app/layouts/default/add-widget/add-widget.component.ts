@@ -22,15 +22,25 @@ export class AddWidgetComponent implements OnInit {
   widget: Widget= new Widget();
   title: string;
   description:string;
+
+
   widgetTypes: WidgetType[];
+  selectedWidgetType: WidgetType;
+  type: string;
+  //chart
+  dimension ;
+  mesure2 ;
+  mesure1;
+
+
+
   constructor(private queryService: QueryService, 
     private widgetTypeService: WidgetTypeService,
     private widgetService: WidgetsService,
     private router: Router) { }
 
   ngOnInit(): void {
-
-
+    this.type="bar";
   this.queryService.getAllQueries().subscribe(
     (data) => {
       this.queries = data;
@@ -50,34 +60,45 @@ export class AddWidgetComponent implements OnInit {
   );
 }
 SelectedQuery(){
-  const dimension = [];
+  this.dimension=[];
+  this.mesure1=[];
+  this.mesure2=[];
   this.selectedQuery.dataTable.forEach(elm => {
-    dimension.push(elm.dimension);
+    this.dimension.push(elm.dimension);
   });
-  const mesure2 = [];
   this.selectedQuery.dataTable.forEach(elm => {
-    mesure2.push(elm.mesure2);
+    this.mesure2.push(elm.mesure2);
   });
-  const mesure1 = [];
   this.selectedQuery.dataTable.forEach(elm => {
-    mesure1.push(elm.mesure1);
+    this.mesure1.push(elm.mesure1);
   });
-  this.basicData = {
-  labels: dimension,
+  this.draw();
+
+}
+SelectedWidgetType(){
+this.type=this.selectedWidgetType.type;
+if(this.selectedQuery){
+  this.draw();
+}
+}
+draw(){
+this.basicData = {
+  labels: this.dimension,
   datasets: [
 
       {
           label: this.selectedQuery.mesure2 ,
           backgroundColor: '#FFA726',
-          data: mesure2
+          data: this.mesure2
       },
       {
         label: this.selectedQuery.mesure1 ,
         backgroundColor: '#AAA423',
-        data:  mesure1
+        data:  this.mesure1
     }
   ]
 };
+
 }
 onSubmit(m: NgForm) {
   if ( m.untouched || m.invalid) {

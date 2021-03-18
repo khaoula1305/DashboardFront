@@ -3,12 +3,7 @@
         (onDropdownClick)="dropdown(dashboardWidget.title)"></p-splitButton>
     <!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
 <p-button routerLink="/updateWidget/{{dashboardWidget.title}}" label="update" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button-->
-
-
-    
-       
-
-        <ng-container *ngIf="isTable; then idTable else noTable">
+<ng-container *ngIf="isTable; then idTable else noTable">
 
         </ng-container>
         <ng-template #idTable>
