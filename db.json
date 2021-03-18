@@ -279,41 +279,6 @@
           "mesure2": 600
         }
       ]
-    },
-    {
-      "title": "dEMO",
-      "description": "dESC\n",
-      "query": {
-        "id": 1,
-        "name": "query 1",
-        "dimension": "date",
-        "mesure1": "Salarié",
-        "mesure2": "Entrepreneur",
-        "mesure3": "",
-        "dataSource": {
-          "id": 1,
-          "title": "source 1",
-          "url": "https://api.covidtracking.com/v1/us/daily.json"
-        },
-        "dataTable": [
-          {
-            "dimension": "femme",
-            "mesure1": 100,
-            "mesure2": 300
-          },
-          {
-            "dimension": "homme",
-            "mesure1": 400,
-            "mesure2": 600
-          }
-        ]
-      },
-      "type": {
-        "id": 2,
-        "img": "../../../../assets/images/increase.png",
-        "name": "pie"
-      },
-      "id": 9
     }
   ],
   "dashboardWidgets": [
@@ -431,11 +396,11 @@
         "minItemCols": 1,
         "minItemRows": 1,
         "query": {
-          "id": 1,
-          "name": "query 1",
+          "id": 2,
+          "name": "query 2",
           "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
+          "mesure1": "Satisfaction",
+          "mesure2": "Consommation",
           "mesure3": "",
           "dataSource": {
             "id": 1,
@@ -444,14 +409,14 @@
           },
           "dataTable": [
             {
-              "dimension": "femme",
+              "dimension": "Client externe",
               "mesure1": 100,
-              "mesure2": 300
+              "mesure2": 600
             },
             {
-              "dimension": "homme",
+              "dimension": "Client interne",
               "mesure1": 400,
-              "mesure2": 600
+              "mesure2": 500
             }
           ]
         }
@@ -708,6 +673,52 @@
       "dataSource": null,
       "dashboard": null,
       "id": 33
+    },
+    {
+      "title": "Client",
+      "description": "dadnù",
+      "widget": {
+        "title": "Client",
+        "description": "dadnù",
+        "query": {
+          "id": 2,
+          "name": "query 2",
+          "dimension": "date",
+          "mesure1": "Satisfaction",
+          "mesure2": "Consommation",
+          "mesure3": "",
+          "dataSource": {
+            "id": 1,
+            "title": "source 1",
+            "url": "https://api.covidtracking.com/v1/us/daily.json"
+          },
+          "dataTable": [
+            {
+              "dimension": "Client externe",
+              "mesure1": 100,
+              "mesure2": 600
+            },
+            {
+              "dimension": "Client interne",
+              "mesure1": 400,
+              "mesure2": 500
+            }
+          ]
+        },
+        "type": {
+          "id": 2,
+          "img": "../../../../assets/images/increase.png",
+          "name": "pie"
+        },
+        "id": 11
+      },
+      "x": 1,
+      "y": 1,
+      "cols": 1,
+      "rows": 1,
+      "dataSource": null,
+      "dashboard": null,
+      "id": 34
     }
   ],
   "dashboards": [
@@ -783,12 +794,32 @@
     {
       "id": 1,
       "img": "../../../../assets/images/pie_chart.png",
-      "name": "Graph"
+      "name": "pie"
+    },
+    {
+      "id": 3,
+      "img": "../../../../assets/images/line_chart.png",
+      "name":"line"
+    },
+    {
+      "id": 4,
+      "name": "bar",
+      "img": "../../../../assets/images/bar-graph.png"
+    },
+    {
+      "id": 6,
+      "name": "table",
+      "img": "../../../../assets/images/table.png"
     },
     {
       "id": 2,
-      "img": "../../../../assets/images/increase.png",
-      "name": "pie"
+      "img": "../../../../assets/images/number.png",
+      "name":"number"
+    },
+    {
+      "id": 5,
+      "img": "../../../../assets/images/card.png",
+      "name":"card"
     }
   ]
 }

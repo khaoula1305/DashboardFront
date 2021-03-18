@@ -25,7 +25,8 @@ import { AddWidgetComponent } from './add-widget/add-widget.component';
 import { TagModule } from 'primeng/tag';
 import {BadgeModule} from 'primeng/badge';
 import {SplitButtonModule} from 'primeng/splitbutton';
-
+import {DividerModule} from 'primeng/divider';
+import {TableModule} from 'primeng/table';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -55,7 +56,9 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     SplitterModule,
     TagModule,
     BadgeModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DividerModule,
+    TableModule
   ],
   exports: [
     DefaultComponent
