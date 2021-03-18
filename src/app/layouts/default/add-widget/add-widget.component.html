@@ -8,7 +8,7 @@
         <div class="box">
           <div style="height: 300px; background-color: gainsboro">
             <p-chart
-              type="bar"
+              type="{{type}}"
               [data]="basicData"
              
             ></p-chart>
@@ -52,14 +52,27 @@
             </div>
             <div class="p-field p-col">
               <label for="visualisation">Visualisation</label>
-              <div
-                class="p-mr-2 p-col"
-                style="height: 50px; background-color: ghostwhite"
-              >
-                <div *ngFor="let vis of widgetTypes">
-                  <img src="{{ vis.img }}" />
-                </div>
-              </div>
+              <p-dropdown 
+              [options]="widgetTypes" 
+              [(ngModel)]="selectedWidgetType" 
+              name= "selectedWidgetType" 
+              (ngModelChange)="SelectedWidgetType()"
+              optionLabel="type" 
+              [filter]="true" 
+              filterBy="type" 
+              [showClear]="true" 
+              placeholder="Select a visualisation">
+                <ng-template pTemplate="selectedItem">
+                    <div class="widgetType-item widgetType-item-value" *ngIf="selectedWidgetType.type">
+                        <div class="center"> <img src="{{ selectedWidgetType.img }}"/> {{ selectedWidgetType.type }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-widgetType pTemplate="item">
+                    <div class="widgetType-item">
+                        <div class="center"> <img src="{{ widgetType.img }}"/> {{ widgetType.type }}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
             </div>
           </div>
         </div>

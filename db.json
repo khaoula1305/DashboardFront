@@ -290,7 +290,7 @@
         "title": "Bar Graph",
         "description": "This widget displays the number of positive and negative cases of Covid-19 as a Bar Graph",
         "type": {
-          "id": 1,
+          "id": 4,
           "type": "bar",
           "img": "../../../../assets/images/bar-graph.png"
         },
@@ -381,8 +381,8 @@
       "id": 26
     },
     {
-      "title": "Line Chart",
-      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
+      "title": "demo",
+      "description": "helloe Chart",
       "widget": {
         "id": 1,
         "title": "Line Chart",
@@ -396,11 +396,11 @@
         "minItemCols": 1,
         "minItemRows": 1,
         "query": {
-          "id": 2,
-          "name": "query 2",
+          "id": 1,
+          "name": "query 1",
           "dimension": "date",
-          "mesure1": "Satisfaction",
-          "mesure2": "Consommation",
+          "mesure1": "Salarié",
+          "mesure2": "Entrepreneur",
           "mesure3": "",
           "dataSource": {
             "id": 1,
@@ -409,14 +409,14 @@
           },
           "dataTable": [
             {
-              "dimension": "Client externe",
+              "dimension": "femme",
               "mesure1": 100,
-              "mesure2": 600
+              "mesure2": 300
             },
             {
-              "dimension": "Client interne",
+              "dimension": "homme",
               "mesure1": 400,
-              "mesure2": 500
+              "mesure2": 600
             }
           ]
         }
@@ -479,16 +479,16 @@
       "id": 28
     },
     {
-      "title": "Line Chart",
+      "title": "bar chat",
       "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
       "widget": {
         "id": 1,
         "title": "Line Chart",
         "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
         "type": {
-          "id": 1,
-          "type": "line",
-          "img": "../../../../assets/images/line_chart.png"
+          "id": 4,
+          "type": "bar",
+          "img": "../../../../assets/images/bar-graph.png"
         },
         "resizeEnabled": true,
         "minItemCols": 1,
@@ -497,8 +497,8 @@
           "id": 1,
           "name": "query 1",
           "dimension": "date",
-          "mesure1": "negative",
-          "mesure2": "positive",
+          "mesure1": "Salarié",
+          "mesure2": "Entrepreneur",
           "mesure3": "",
           "dataSource": {
             "id": 1,
@@ -675,17 +675,26 @@
       "id": 33
     },
     {
-      "title": "Client",
-      "description": "dadnù",
+      "title": "Line Chart",
+      "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
       "widget": {
-        "title": "Client",
-        "description": "dadnù",
+        "id": 1,
+        "title": "Line Chart",
+        "description": "This widget displays the number of positive and negative cases of Covid-19 as a Line Chart",
+        "type": {
+          "id": 1,
+          "type": "line",
+          "img": "../../../../assets/images/line_chart.png"
+        },
+        "resizeEnabled": true,
+        "minItemCols": 1,
+        "minItemRows": 1,
         "query": {
-          "id": 2,
-          "name": "query 2",
+          "id": 1,
+          "name": "query 1",
           "dimension": "date",
-          "mesure1": "Satisfaction",
-          "mesure2": "Consommation",
+          "mesure1": "negative",
+          "mesure2": "positive",
           "mesure3": "",
           "dataSource": {
             "id": 1,
@@ -694,23 +703,17 @@
           },
           "dataTable": [
             {
-              "dimension": "Client externe",
+              "dimension": "femme",
               "mesure1": 100,
-              "mesure2": 600
+              "mesure2": 300
             },
             {
-              "dimension": "Client interne",
+              "dimension": "homme",
               "mesure1": 400,
-              "mesure2": 500
+              "mesure2": 600
             }
           ]
-        },
-        "type": {
-          "id": 2,
-          "img": "../../../../assets/images/increase.png",
-          "name": "pie"
-        },
-        "id": 11
+        }
       },
       "x": 1,
       "y": 1,
@@ -794,32 +797,32 @@
     {
       "id": 1,
       "img": "../../../../assets/images/pie_chart.png",
-      "name": "pie"
+      "type": "pie"
     },
     {
       "id": 3,
       "img": "../../../../assets/images/line_chart.png",
-      "name":"line"
+      "type": "line"
     },
     {
       "id": 4,
-      "name": "bar",
+      "type": "bar",
       "img": "../../../../assets/images/bar-graph.png"
     },
     {
       "id": 6,
-      "name": "table",
+      "type": "table",
       "img": "../../../../assets/images/table.png"
     },
     {
       "id": 2,
       "img": "../../../../assets/images/number.png",
-      "name":"number"
+      "type": "number"
     },
     {
       "id": 5,
       "img": "../../../../assets/images/card.png",
-      "name":"card"
+      "type": "card"
     }
   ]
 }
