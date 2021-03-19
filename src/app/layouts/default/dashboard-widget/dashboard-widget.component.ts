@@ -54,7 +54,7 @@ export class DashboardWidgetComponent implements OnInit {
       case 'Number': this.isNumber = true;
       }
 
-   const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
+   //const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
   // this.dataSourceService.getData(dataSource).subscribe(
       //(data) => {
         // const dimension = [];
@@ -125,10 +125,10 @@ export class DashboardWidgetComponent implements OnInit {
     ];
   }
 
-  save(severity: string) {
+  save(severity: any) {
     this.router.navigate(['/updateWidget', severity]);
 }
-dropdown(info: string){
+dropdown(info: any){
   this.widgetTitle=info;
 }
 

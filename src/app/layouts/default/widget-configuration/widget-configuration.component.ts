@@ -43,7 +43,7 @@ export class WidgetConfigurationComponent implements OnInit {
     const title = this.route.snapshot.params.title;
       this.dashboardWidgetService.getAllDashboardWidget().subscribe(
         (data) => {
-          this.dashWidget= data.find( elm=> elm.title== title);
+          this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.query;
           this.type=this.dashWidget.widget.type.type;
           this.SelectedQuery();

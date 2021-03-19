@@ -1,6 +1,6 @@
 <p-card header="{{dashboardWidget.title}}">
-    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.title)" [model]="items"
-        (onDropdownClick)="dropdown(dashboardWidget.title)"></p-splitButton>
+    <p-splitButton icon="pi pi-cog" (onClick)="save(dashboardWidget.id)" [model]="items"
+        (onDropdownClick)="dropdown(dashboardWidget.id)"></p-splitButton>
     <!--p-button (click)="deleteClick()" label="delete" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
 <p-button routerLink="/updateWidget/{{dashboardWidget.title}}" label="update" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button-->
 <ng-container *ngIf="isTable; then idTable else noTable">
