@@ -30,7 +30,7 @@ export class WidgetConfigurationComponent implements OnInit {
   dimension ;
   mesure2 ;
   mesure1;
-
+  myTable;
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
@@ -46,6 +46,7 @@ export class WidgetConfigurationComponent implements OnInit {
           this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.query;
           this.type=this.dashWidget.widget.type.type;
+          this.myTable=this.dashWidget.widget.query.dataTable;
           this.SelectedQuery();
         },
         (error) => {
@@ -77,6 +78,7 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dimension=[];
     this.mesure1=[];
     this.mesure2=[];
+    this.myTable=this.selectedQuery.dataTable;
     this.selectedQuery.dataTable.forEach(elm => {
       this.dimension.push(elm.dimension);
     });

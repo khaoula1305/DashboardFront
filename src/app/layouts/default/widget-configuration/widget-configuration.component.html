@@ -7,12 +7,36 @@
   <div class="p-col-fixed" style="width: 670px">
     <div class="box">
       <!--div style="height: 300px; background-color: gainsboro"-->
-      
-      <p-chart
+      <div [ngSwitch]="type">
+        <div *ngSwitchCase="'Table'">
+          <p-table [value]="myTable">
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Dimension</th>
+                    <th>{{selectedQuery.mesure1}}</th>
+                    <th>{{selectedQuery.mesure2}}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tab>
+                <tr>
+                    <td>{{tab.dimension}}</td>
+                    <td>{{tab.mesure1}}</td>
+                    <td>{{tab.mesure2}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+        <div *ngSwitchCase="'Card' || 'Number'">Card</div>
+        <div *ngSwitchDefault>
+          <p-chart
           type="{{ type }}"
           [data]="basicData"
           [options]="basicOptions"
         ></p-chart>
+        </div>
+      </div>
+     
    
     </div>
   </div>

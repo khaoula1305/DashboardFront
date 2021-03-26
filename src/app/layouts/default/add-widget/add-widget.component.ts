@@ -32,7 +32,7 @@ export class AddWidgetComponent implements OnInit {
   mesure2 ;
   mesure1;
 
-
+  myTable;
 
   constructor(private queryService: QueryService, 
     private widgetTypeService: WidgetTypeService,
@@ -63,6 +63,7 @@ SelectedQuery(){
   this.dimension=[];
   this.mesure1=[];
   this.mesure2=[];
+  this.myTable=this.selectedQuery.dataTable;
   this.selectedQuery.dataTable.forEach(elm => {
     this.dimension.push(elm.dimension);
   });
