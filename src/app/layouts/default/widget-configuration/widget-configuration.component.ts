@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
-import { Query } from 'src/app/models/query.model';
 import { WidgetType } from 'src/app/models/widget-type';
 import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
-import { QueryService } from 'src/app/services/query.service';
 import { WidgetTypeService } from 'src/app/services/widget-type.service';
 import {FormControl, NgForm, Validators} from '@angular/forms';
+import { DataSource } from 'src/app/models/data-source.model';
+import { DataSourceService } from 'src/app/services/data-source.service';
 
 
 @Component({
@@ -17,8 +17,8 @@ import {FormControl, NgForm, Validators} from '@angular/forms';
 
 export class WidgetConfigurationComponent implements OnInit {
 
-  queries: Query[];
-  selectedQuery: Query;
+  queries: DataSource[];
+  selectedQuery: DataSource;
   dashWidget: DashboardWidget;
   load: boolean=false;
   basicData;
@@ -30,11 +30,11 @@ export class WidgetConfigurationComponent implements OnInit {
   dimension ;
   mesure2 ;
   mesure1;
-  myTable;
+  results;
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
-              private queryService: QueryService, 
+              private dataSourceService: DataSourceService, 
               private widgetTypeService: WidgetTypeService,
               private router: Router) 
               {}
@@ -44,9 +44,9 @@ export class WidgetConfigurationComponent implements OnInit {
       this.dashboardWidgetService.getAllDashboardWidget().subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
-          this.selectedQuery=this.dashWidget.widget.query;
-          this.type=this.dashWidget.widget.type.type;
-          this.myTable=this.dashWidget.widget.query.dataTable;
+          this.selectedQuery=this.dashWidget.widget.dataSource;
+           //this.myTable=this.dashWidget.widget.query.dataTable;
+          this.type=this.dashWidget.widget.widgetType.type;
           this.SelectedQuery();
         },
         (error) => {
@@ -56,7 +56,7 @@ export class WidgetConfigurationComponent implements OnInit {
          this.load=true;
           }
     );
-    this.queryService.getAllQueries().subscribe(
+    this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
       }
@@ -78,7 +78,7 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dimension=[];
     this.mesure1=[];
     this.mesure2=[];
-    this.myTable=this.selectedQuery.dataTable;
+    /*this.myTable=this.selectedQuery.dataTable;
     this.selectedQuery.dataTable.forEach(elm => {
       this.dimension.push(elm.dimension);
     });
@@ -87,7 +87,7 @@ export class WidgetConfigurationComponent implements OnInit {
     });
     this.selectedQuery.dataTable.forEach(elm => {
       this.mesure1.push(elm.mesure1);
-    });
+    });*/
     this.draw();
 
 }
@@ -120,8 +120,8 @@ onSubmit(m: NgForm) {
   } else {
     this.dashWidget.title = m.value.title;
     this.dashWidget.description= m.value.description;
-    this.dashWidget.widget.query = m.value.selectedQuery;
-    this.dashWidget.widget.type= this.selectedWidgetType;
+    this.dashWidget.widget.dataSource = m.value.selectedQuery;
+    this.dashWidget.widget.widgetType= this.selectedWidgetType;
     this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])
        );

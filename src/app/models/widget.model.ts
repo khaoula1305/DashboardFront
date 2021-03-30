@@ -1,13 +1,15 @@
-import { Query } from './query.model';
+import { DataSource } from './data-source.model';
 import { WidgetType } from './widget-type';
 
 export class Widget{
     id: number;
     title: string;
     description: string;
-    type: WidgetType;
-    resizeEnabled: boolean ;
+    resizeEnabled: boolean;
     minItemCols: number;
     minItemRows: number;
-    query: Query;
+    /*defaultItemCols: number;
+    defaultItemRows: number;*/
+    dataSource: DataSource;
+    widgetType: WidgetType;
 }

@@ -10,7 +10,7 @@ import { DashboardWidget } from '../models/dashboard-widget';
 })
 export class DashboardWidgetService {
 
-  host: any = environment.host + '/dashboardWidgets/';
+  host: any = environment.hostApi + '/DashboardWidget/';
 
 
   constructor(private http: HttpClient) {
@@ -18,7 +18,7 @@ export class DashboardWidgetService {
   }
 
   getAllDashboardWidget(): Observable<DashboardWidget[]> {
-    return this.http.get<DashboardWidget[]>(this.host);
+    return this.http.get<DashboardWidget[]>(this.host+'alldashboardwidgets');
   }
 
   addDashboardWidget(dashboardWidget: DashboardWidget){

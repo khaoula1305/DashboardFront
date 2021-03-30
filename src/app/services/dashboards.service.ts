@@ -9,12 +9,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardsService {
 
-  host: any = environment.host + '/dashboards/';
-
+  host: any = environment.hostApi + '/Dashboard/';
   constructor(private http: HttpClient) { }
 
   getAllDashboards(): Observable<Dashboard[]>{
-    return this.http.get<Dashboard[]>(this.host);
+    return this.http.get<Dashboard[]>(this.host+'alldashboards');
   }
 
   addDashboard(dashboard: Dashboard){

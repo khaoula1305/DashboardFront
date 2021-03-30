@@ -20,14 +20,8 @@ export class WidgetPanelComponent implements OnInit {
   constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService, private router: Router) { }
 
   hideClick(){
-    console.log('widget ');
     this.hidden.emit(true);
   }
-
-  DoSth(evt: any){
-    console.log('Hi', evt );
-  }
-
   ngOnInit(): void {
     this.widgetsService.getAllWidgets().subscribe(
     (response) => {
@@ -46,8 +40,6 @@ export class WidgetPanelComponent implements OnInit {
     // permet d'ajouter un widget de widget-panel dans le dashboard
   addItem(widget : Widget){
     let dashboardWidget:DashboardWidget=new DashboardWidget();
-    console.log(widget);
-    console.log(widget.title);
 
    // dashboardWidget.id=5;
 

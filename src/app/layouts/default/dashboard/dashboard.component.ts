@@ -106,7 +106,6 @@ export class DashboardComponent implements OnInit {
    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
    console.log(item);
    console.log(evt);
-
    this.dashboardWidgetService.deleteDashboardWidget(item.id);
 
 }

@@ -1,136 +1,108 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
-import {DataSource} from 'src/app/models/data-source.model';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CardModule} from 'primeng/card';
-import {WidgetTypeEnum} from 'src/app/models/widgetTypeEnum'; 
+import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
+import { DataSource } from 'src/app/models/data-source.model';
+import { DashboardWidget } from 'src/app/models/dashboard-widget';
 
 @Component({
   selector: 'app-dashboard-widget',
   templateUrl: './dashboard-widget.component.html',
-  styleUrls: ['./dashboard-widget.component.scss']
+  styleUrls: ['./dashboard-widget.component.scss'],
 })
 export class DashboardWidgetComponent implements OnInit {
-
   @Output() deleted = new EventEmitter<any>();
-  @Input() dashboardWidget;
+  @Input() dashboardWidget: DashboardWidget;
   basicData: any;
   basicOptions: any;
   items: MenuItem[];
   widgetTitle: string;
-
-  widgetTypeEnum = WidgetTypeEnum;  
-
-  isTable= false;
-  isCard= false;
-  isNumber= false;
+  widgetTypeEnum = WidgetTypeEnum;
+  isTable = false;
+  isCard = false;
+  isNumber = false;
   myTable;
 
-  
+  constructor(
+    private dataSourceService: DataSourceService,
+    private router: Router
+  ) {}
 
-
-
-  constructor(private dataSourceService: DataSourceService, private router: Router) {
-    
-   }
-
-  deleteClick(){
+  deleteClick() {
     this.deleted.emit(true);
   }
-  updateClick(){
-    // naviguer vers le updateComponent
-  }
-
   ngOnInit(): void {
-    console.log(this.dashboardWidget.widget.dataTable);
-    this.myTable = this.dashboardWidget.widget.dataTable;
-    //console.log(myTable);
-    const typeWidget = this.dashboardWidget.widget.type.type ;
-    console.log("test." + this.dashboardWidget.widget.type.type);
-    switch (typeWidget) {
-      case 'Table': this.isTable = true;
-      case 'Card': this.isCard = true;
-      case 'Number': this.isNumber = true;
+    if(this.dashboardWidget.widget){
+      const typeWidget = this.dashboardWidget.widget.widgetType.type;
+      switch (typeWidget) {
+        case 'Table':
+          this.isTable = true;
+        case 'Card':
+          this.isCard = true;
+        case 'Card':
+          this.isNumber = true;
       }
-
-   //const dataSource: DataSource =  this.dashboardWidget.widget.query.dataSource;
-  // this.dataSourceService.getData(dataSource).subscribe(
-      //(data) => {
-        // const dimension = [];
-        // data.forEach(elm => {
-        //   dimension.push(elm.date);
-        // });
-        const dimension = [];
-        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
-          dimension.push(elm.dimension);
-        });
-     /*    const mesure2 = [];
-        data.forEach(elm => {
-          mesure2.push(elm.positive);
-        });
-         */
-        const mesure2 = [];
-        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
-          mesure2.push(elm.mesure2);
-        });
-
-        /*const mesure1 = [];
-        data.forEach(elm => {
-          mesure1.push(elm.negative);
-        });*/
-        const mesure1 = [];
-        this.dashboardWidget.widget.query.dataTable.forEach(elm => {
-          mesure1.push(elm.mesure1);
-        });
-
-      // data.forEach(elm => mesure2.push(elm.nameOfmesure));
-        this.basicData = {
-
+      const dataSource: DataSource =  this.dashboardWidget.widget.dataSource;
+       this.dataSourceService.getDataFromURL(dataSource.url).subscribe(
+      (data) => {
+        //Ce traitement est static nous devons le remplacer
+       const dimension = [];
+      data.forEach(elm => {
+       dimension.push(elm.date);
+      });
+      const mesure2 = [];
+      data.forEach(elm => {
+        mesure2.push(elm.positive);
+          });
+      const mesure1 = [];
+          data.forEach(elm => {
+            mesure1.push(elm.negative);
+          });
+      this.basicData = {
         labels: dimension,
         datasets: [
-
-            {
-                label: this.dashboardWidget.widget.query.mesure2 ,
-                backgroundColor: '#FFA726',
-                data: mesure2
-            },
-
-            {
-              label: this.dashboardWidget.widget.query.mesure1 ,
-              backgroundColor: '#AAA423',
-              data:  mesure1
-          }
-        ]
-    };
-
-     /* },
-      (error) => {
-      console.log('error ' );
+          {
+            label: this.dashboardWidget.widget.dataSource.mesure1,
+            backgroundColor: '#FFA726',
+            data: mesure1,
+          },
+  
+          {
+            label: this.dashboardWidget.widget.dataSource.mesure2,
+            backgroundColor: '#AAA423',
+            data: mesure2,
+          },
+        ],
+       };
+      });
+    }
+   
+    this.items = [
+      {
+        label: 'Update',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.router.navigate(['/updateWidget', this.widgetTitle]);
+        },
       },
-      () => {
-      console.log('complete');
-      }
-      );*/
-
-      this.items = [
-        {label: 'Update', icon: 'pi pi-refresh', command: () => {
-            this.router.navigate(['/updateWidget', this.widgetTitle]);
-        }},
-        {label: 'Delete', icon: 'pi pi-times', command: () => {
-           this.deleteClick();
-        }},
-        {label: 'Show', icon: 'pi pi-info', url: '#'},
-        {label: 'Setup', icon: 'pi pi-cog', routerLink: ['/']}
+      {
+        label: 'Delete',
+        icon: 'pi pi-times',
+        command: () => {
+          this.deleteClick();
+        },
+      },
+      { label: 'Show', icon: 'pi pi-info', url: '#' },
+      { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/'] },
     ];
+   
   }
 
   save(severity: any) {
     this.router.navigate(['/updateWidget', severity]);
-}
-dropdown(info: any){
-  this.widgetTitle=info;
-}
-
-
+  }
+  dropdown(info: any) {
+    this.widgetTitle = info;
+  }
 }

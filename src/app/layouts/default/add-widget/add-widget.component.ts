@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Query } from 'src/app/models/query.model';
 import { WidgetType } from 'src/app/models/widget-type';
 import { Widget } from 'src/app/models/widget.model';
-import { QueryService } from 'src/app/services/query.service';
 import { WidgetTypeService } from 'src/app/services/widget-type.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import {FormControl, NgForm, Validators} from '@angular/forms';
+import { DataSource } from 'src/app/models/data-source.model';
+import { DataSourceService } from 'src/app/services/data-source.service';
 
 
 @Component({
@@ -17,8 +17,8 @@ import {FormControl, NgForm, Validators} from '@angular/forms';
 export class AddWidgetComponent implements OnInit {
 
   basicData;
-  queries: Query[];
-  selectedQuery: Query;
+  queries: DataSource[];
+  selectedQuery: DataSource;
   widget: Widget= new Widget();
   title: string;
   description:string;
@@ -34,14 +34,14 @@ export class AddWidgetComponent implements OnInit {
 
   myTable;
 
-  constructor(private queryService: QueryService, 
+  constructor(private dataSourceService: DataSourceService, 
     private widgetTypeService: WidgetTypeService,
     private widgetService: WidgetsService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.type="bar";
-  this.queryService.getAllQueries().subscribe(
+  this.dataSourceService.getAllDataSources().subscribe(
     (data) => {
       this.queries = data;
     }
@@ -63,7 +63,7 @@ SelectedQuery(){
   this.dimension=[];
   this.mesure1=[];
   this.mesure2=[];
-  this.myTable=this.selectedQuery.dataTable;
+  /*this.myTable=this.selectedQuery.dataTable;
   this.selectedQuery.dataTable.forEach(elm => {
     this.dimension.push(elm.dimension);
   });
@@ -72,7 +72,7 @@ SelectedQuery(){
   });
   this.selectedQuery.dataTable.forEach(elm => {
     this.mesure1.push(elm.mesure1);
-  });
+  });*/
   this.draw();
 
 }
@@ -107,8 +107,8 @@ onSubmit(m: NgForm) {
   } else {
     this.widget.title = m.value.title;
     this.widget.description= m.value.description;
-    this.widget.query = m.value.selectedQuery;
-    this.widget.type= this.widgetTypes[1];
+    this.widget.dataSource = m.value.selectedQuery;
+    this.widget.widgetType= this.widgetTypes[1];
     console.log('add widget ', this.widget);
     this.widgetService.addWidget(this.widget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])

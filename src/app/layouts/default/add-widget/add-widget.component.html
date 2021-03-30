@@ -87,7 +87,7 @@
                 *ngIf="selectedWidgetType.type"
               >
                 <div class="center">
-                  <img src="{{ selectedWidgetType.img }}" />
+                  <img src="{{ selectedWidgetType.imagePath }}" />
                   {{ selectedWidgetType.type }}
                 </div>
               </div>
@@ -95,7 +95,7 @@
             <ng-template let-widgetType pTemplate="item">
               <div class="widgetType-item">
                 <div class="center">
-                  <img src="{{ widgetType.img }}" /> {{ widgetType.type }}
+                  <img src="{{ widgetType.imagePath }}" /> {{ widgetType.type }}
                 </div>
               </div>
             </ng-template>

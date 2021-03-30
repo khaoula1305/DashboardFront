@@ -8,25 +8,21 @@ import { WidgetType } from '../models/widget-type';
   providedIn: 'root'
 })
 export class WidgetTypeService {
-  host: any = environment.host + '/widgetTypes/';
+  host: any = environment.hostApi + '/WidgetType/';
 
   constructor(private http: HttpClient) { }
 
   getAllWidgetTypes(): Observable<WidgetType[]>{
-    return this.http.get<WidgetType[]>(this.host);
+    return this.http.get<WidgetType[]>(this.host+'allwidgettypes');
   }
 
   addWidgetType(widgetType: WidgetType){
     this.http.post(this.host, widgetType);
   }
-
   updateWidgetType(widgetType: WidgetType){
-    console.log(widgetType.id + ' updated');
     this.http.put(this.host, widgetType);
   }
-
   deleteWidgetType(widgetTypeId: number){
-    console.log(widgetTypeId + ' deleted');
     this.http.delete(this.host + widgetTypeId);
   }
 }

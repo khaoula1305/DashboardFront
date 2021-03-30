@@ -1,5 +1,5 @@
-export interface WidgetType{
+export class WidgetType{
     id: number;
-    img: string;
     type: string;
+    imagePath: string;
 }
