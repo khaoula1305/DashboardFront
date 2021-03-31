@@ -15,15 +15,20 @@ export class DefaultComponent implements OnInit {
   static itemResize: (item: GridsterItem, itemComponent: GridsterItemComponentInterface) => void;
   dashboard: Dashboard;
   add = false;
-  constructor(private widgetDashboardService: DashboardsService, private route: ActivatedRoute) { }
-
-
+  load=false;
+  constructor(private dashboardService: DashboardsService, private route: ActivatedRoute) { }
   ngOnInit(): void {
-
-    const title = this.route.snapshot.params.title;
-    this.widgetDashboardService.getAllDashboards().subscribe(
+    const id = this.route.snapshot.params.id;
+    this.dashboardService.getDashboard(id).subscribe(
       data => {
-        this.dashboard = data.find( elm => elm.title == title);
+        this.dashboard = data;
+        console.log(this.dashboard);
+      },
+      (error) => {
+        console.log('error ');
+      },
+      () => {
+        this.load=true;
       }
     );
   }

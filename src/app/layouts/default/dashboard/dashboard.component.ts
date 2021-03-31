@@ -14,32 +14,19 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
 export class DashboardComponent implements OnInit {
   constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
-  dashboardgrid: Array<GridsterItem>;
+  dashboardgrid: Array<GridsterItem>= [];
   load = false;
   @Input() dashboard: Dashboard;
+  @Input() dashboardId:any;
 
   public pauseState = false;
-
   static itemChange(item, itemComponent) {
     console.info('itemChanged', item, itemComponent);
   }
-
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-
   ngOnInit() {
-    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      (data) => {
-        this.dashboardgrid = data;
-    },
-    (error) => {
-    console.log('error ' );
-    },
-    () => {
-      this.load = true;
-    }
-    );
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,
@@ -95,6 +82,18 @@ export class DashboardComponent implements OnInit {
       scrollToNewItems: false
 
     };
+    console.log(this.dashboard);
+    this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
+      (data) => {
+         data.forEach( elm=> this.dashboardgrid.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
+    },
+    (error) => {
+    console.log('error ' );
+    },
+    () => {
+      this.load = true;
+    }
+    );
 
 
   }
@@ -106,7 +105,13 @@ export class DashboardComponent implements OnInit {
    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
    console.log(item);
    console.log(evt);
-   this.dashboardWidgetService.deleteDashboardWidget(item.id);
+   this.dashboardWidgetService.deleteDashboardWidget(this.dashboard.id,item.widgetdashboard).subscribe(data => {
+    console.log(data);
+  },
+  error => {
+    console.log(error);
+  }
+  );;
 
 }
   removeItem(item) {

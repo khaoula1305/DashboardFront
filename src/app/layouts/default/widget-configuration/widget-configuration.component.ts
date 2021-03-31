@@ -41,12 +41,12 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-      this.dashboardWidgetService.getAllDashboardWidget().subscribe(
+      this.dashboardWidgetService.getAllDashboardWidget('8629ac54-6808-49f6-9ec7-9755646396b9').subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
-          this.selectedQuery=this.dashWidget.widget.dataSource;
+          //this.selectedQuery=this.dashWidget.widget.dataSource;
            //this.myTable=this.dashWidget.widget.query.dataTable;
-          this.type=this.dashWidget.widget.widgetType.type;
+        //  this.type=this.dashWidget.widget.widgetType.type;
           this.SelectedQuery();
         },
         (error) => {
@@ -120,8 +120,8 @@ onSubmit(m: NgForm) {
   } else {
     this.dashWidget.title = m.value.title;
     this.dashWidget.description= m.value.description;
-    this.dashWidget.widget.dataSource = m.value.selectedQuery;
-    this.dashWidget.widget.widgetType= this.selectedWidgetType;
+   // this.dashWidget.widget.dataSource = m.value.selectedQuery;
+    //this.dashWidget.widget.widgetType= this.selectedWidgetType;
     this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])
        );

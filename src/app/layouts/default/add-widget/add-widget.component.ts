@@ -22,8 +22,6 @@ export class AddWidgetComponent implements OnInit {
   widget: Widget= new Widget();
   title: string;
   description:string;
-
-
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
   type: string;
@@ -44,6 +42,7 @@ export class AddWidgetComponent implements OnInit {
   this.dataSourceService.getAllDataSources().subscribe(
     (data) => {
       this.queries = data;
+      console.log(this.queries);
     }
   );
   this.widgetTypeService.getAllWidgetTypes().subscribe(
@@ -108,7 +107,7 @@ onSubmit(m: NgForm) {
     this.widget.title = m.value.title;
     this.widget.description= m.value.description;
     this.widget.dataSource = m.value.selectedQuery;
-    this.widget.widgetType= this.widgetTypes[1];
+    this.widget.widgetType= m.value.selectedWidgetType;
     console.log('add widget ', this.widget);
     this.widgetService.addWidget(this.widget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])

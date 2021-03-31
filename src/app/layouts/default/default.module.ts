@@ -27,6 +27,8 @@ import {BadgeModule} from 'primeng/badge';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {DividerModule} from 'primeng/divider';
 import {TableModule} from 'primeng/table';
+import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
+import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -35,7 +37,9 @@ import {TableModule} from 'primeng/table';
       DashboardWidgetComponent,
       DefaultComponent,
       WidgetConfigurationComponent,
-      AddWidgetComponent
+      AddWidgetComponent,
+      CreateDashboardComponent,
+      UpdateDashboardComponent
     ],
   imports: [
     CommonModule,

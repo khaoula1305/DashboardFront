@@ -15,16 +15,19 @@ export class DashboardsService {
   getAllDashboards(): Observable<Dashboard[]>{
     return this.http.get<Dashboard[]>(this.host+'alldashboards');
   }
-
-  addDashboard(dashboard: Dashboard){
-    this.http.post(this.host, dashboard);
+  getDashboard(dashboardId: any): Observable<Dashboard>{
+    return this.http.get<Dashboard>(this.host+dashboardId);
   }
 
-  updateDashboard(dashboard: Dashboard){
-    this.http.put(this.host, dashboard);
+  addDashboard(dashboard: Dashboard): Observable<Dashboard>{
+    return this.http.post<Dashboard>(this.host, dashboard);
   }
 
-  deleteDashboard(dashboardId: number){
-    this.http.delete(this.host + dashboardId);
+  updateDashboard(dashboard: Dashboard):Observable<Dashboard>{
+    return this.http.put<Dashboard>(this.host, dashboard);
+  }
+
+  deleteDashboard(dashboardId: any): Observable<Dashboard>{
+    return this.http.delete<Dashboard>(this.host + dashboardId);
   }
 }
