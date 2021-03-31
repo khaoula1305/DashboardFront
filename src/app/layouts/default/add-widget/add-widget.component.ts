@@ -4,7 +4,7 @@ import { WidgetType } from 'src/app/models/widget-type';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetTypeService } from 'src/app/services/widget-type.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
-import {FormControl, NgForm, Validators} from '@angular/forms';
+import { FormControl, NgForm, Validators } from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 
@@ -19,100 +19,120 @@ export class AddWidgetComponent implements OnInit {
   basicData;
   queries: DataSource[];
   selectedQuery: DataSource;
-  widget: Widget= new Widget();
+  widget: Widget = new Widget();
   title: string;
-  description:string;
+  description: string;
 
 
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
   type: string;
   //chart
-  dimension ;
-  mesure2 ;
-  mesure1;
+  dimension=[];
+  mesure2=[];
+  mesure1=[];
 
-  myTable;
+  results=[];
 
-  constructor(private dataSourceService: DataSourceService, 
+  constructor(private dataSourceService: DataSourceService,
     private widgetTypeService: WidgetTypeService,
     private widgetService: WidgetsService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.type="bar";
-  this.dataSourceService.getAllDataSources().subscribe(
-    (data) => {
-      this.queries = data;
-    }
-  );
-  this.widgetTypeService.getAllWidgetTypes().subscribe(
-    (data)=>{
-      this.widgetTypes=data;
+    this.type = "bar";
+    this.dataSourceService.getAllDataSources().subscribe(
+      (data) => {
+        this.queries = data;
+        console.log("before queries");
+        console.log("queries", this.queries);
+        console.log("after queries");
+      }
+    );
+    this.widgetTypeService.getAllWidgetTypes().subscribe(
+      (data) => {
+        this.widgetTypes = data;
 
-    },
-    (error)=>{
-      console.log('getAllWidgetTypes error');
-    },
-    ()=>{
-      //done
-    }
-  );
-}
-SelectedQuery(){
-  this.dimension=[];
-  this.mesure1=[];
-  this.mesure2=[];
-  /*this.myTable=this.selectedQuery.dataTable;
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.dimension.push(elm.dimension);
-  });
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.mesure2.push(elm.mesure2);
-  });
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.mesure1.push(elm.mesure1);
-  });*/
-  this.draw();
+      },
+      (error) => {
+        console.log('getAllWidgetTypes error');
+      },
+      () => {
+        //done
+      }
+    );
+  }
+  SelectedQuery() {
 
-}
+
+    this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
+      (data) => {
+        this.results=data;
+        console.log("results",this.results);
+
+        //Ce traitement est static nous devons le remplacer
+        //console.log("url data",data);
+        
+        data.forEach(elm => {
+          this.dimension.push(elm.date);
+        });
+        data.forEach(elm => {
+          this.mesure2.push(elm.positive);
+        });
+        data.forEach(elm => {
+          this.mesure1.push(elm.negative);
+        });
+
+        //console.log("before")
+
+      });
+      console.log('selected query', this.selectedQuery);
+      this.draw();
+  }
+  
 SelectedWidgetType(){
-this.type=this.selectedWidgetType.type;
-if(this.selectedQuery){
+  //console.log("before type", this.type);
+  this.type = this.selectedWidgetType.type;
+  //console.log("after type", this.type);
+  if (this.selectedQuery) {
+    
+  }
   this.draw();
-}
 }
 draw(){
-this.basicData = {
-  labels: this.dimension,
-  datasets: [
-
+  //console.log("mesure1", this.mesure1);
+  //console.log("mesure2", this.mesure2);
+  this.basicData = {
+    labels: this.dimension,
+    datasets: [
       {
-          label: this.selectedQuery.mesure2 ,
-          backgroundColor: '#FFA726',
-          data: this.mesure2
+        label: "Negative Cases",
+        backgroundColor: '#FFA726',
+        data: this.mesure2
       },
       {
-        label: this.selectedQuery.mesure1 ,
+        label: "Positive Cases",
         backgroundColor: '#AAA423',
-        data:  this.mesure1
-    }
-  ]
-};
+        data: this.mesure1
+      }
+    ]
+  };
 
 }
 onSubmit(m: NgForm) {
-  if ( m.untouched || m.invalid) {
+  if (m.untouched || m.invalid) {
     alert('Required');
   } else {
     this.widget.title = m.value.title;
-    this.widget.description= m.value.description;
+    this.widget.description = m.value.description;
     this.widget.dataSource = m.value.selectedQuery;
-    this.widget.widgetType= this.widgetTypes[1];
+    console.log('before select type ', this.selectedWidgetType);
+    this.widget.widgetType = this.selectedWidgetType;
+    console.log('after select type ', this.selectedWidgetType);
     console.log('add widget ', this.widget);
     this.widgetService.addWidget(this.widget).subscribe(
       result => this.router.navigate(['/dashboards', 'Dash 2'])
-       );
+    );
   }
 }
 

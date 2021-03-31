@@ -8,6 +8,7 @@ import { QueriesComponent } from './layouts/queries/queries.component';
 import { RestComponent } from './layouts/rest/rest.component';
 import { WidgetConfigurationComponent } from './layouts/default/widget-configuration/widget-configuration.component';
 import { AddWidgetComponent } from './layouts/default/add-widget/add-widget.component';
+import { AddDashboardComponent } from './layouts/default/add-dashboard/add-dashboard.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'queries', component: QueriesComponent},
   {path: 'rest', component: RestComponent},
   {path: 'updateWidget/:title', component: WidgetConfigurationComponent},
-  {path: 'addWidget', component: AddWidgetComponent}
+  {path: 'addWidget', component: AddWidgetComponent},
+  {path: 'addDashboard', component: AddDashboardComponent}
 ];
 
 @NgModule({

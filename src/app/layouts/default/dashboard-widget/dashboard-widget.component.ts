@@ -63,13 +63,13 @@ export class DashboardWidgetComponent implements OnInit {
         labels: dimension,
         datasets: [
           {
-            label: this.dashboardWidget.widget.dataSource.mesure1,
+            label: "positive cases",
             backgroundColor: '#FFA726',
             data: mesure1,
           },
   
           {
-            label: this.dashboardWidget.widget.dataSource.mesure2,
+            label: "negatives cases",
             backgroundColor: '#AAA423',
             data: mesure2,
           },

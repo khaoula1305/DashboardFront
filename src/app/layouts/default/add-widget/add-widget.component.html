@@ -1,34 +1,46 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
   <div class="p-grid">
     <div class="p-col-12">
-      <h4>Configure widget</h4>
+      <h3>Add New Widget</h3>
     </div>
     <div class="p-col-fixed" style="width: 670px">
       <div class="box">
         <div [ngSwitch]="type">
-          <div *ngSwitchCase="'Table'">
-            <p-table [value]="myTable">
+          <div *ngSwitchCase="'table'">
+            <p-table [value]="results">
               
               <ng-template pTemplate="header">
                   <tr>
-                      <th>Dimension</th>
-                      <th>{{selectedQuery.mesure1}}</th>
-                      <th>{{selectedQuery.mesure2}}</th>
+                      <th>Date</th>
+                      <th>Positive Cases</th>
+                      <th>Negative Cases</th>
                   </tr>
               </ng-template>
               <ng-template pTemplate="body" let-tab>
                   <tr>
-                      <td>{{tab.dimension}}</td>
-                      <td>{{tab.mesure1}}</td>
-                      <td>{{tab.mesure2}}</td>
+                      <td>{{tab.date}}</td>
+                      <td>{{tab.positive}}</td>
+                      <td>{{tab.negative}}</td>
                   </tr>
               </ng-template>
           </p-table>
           </div>
-          <div *ngSwitchCase="'Card' || 'Number'">Card</div>
-          <div *ngSwitchDefault>
+
+          <div *ngSwitchCase="'card'">
+            <p-card class="containSize partition">
+              <ng-template pTemplate="header">
+                  {{Widget.title}}
+              </ng-template>
+              {{results.Total}}
+              <ng-template pTemplate="footer">
+                  
+              </ng-template>
+          </p-card>
+          </div>
+          
+          <div *ngSwitchDefault> 
             <p-chart
-            type="{{ type }}"
+            type="{{type}}"
             [data]="basicData"
             [options]="basicOptions"
           ></p-chart>
@@ -65,7 +77,7 @@
             [(ngModel)]="selectedQuery"
             placeholder="Select"
             (ngModelChange)="SelectedQuery()"
-            optionLabel="name"
+            optionLabel="title"
           ></p-dropdown>
         </div>
         <div class="p-field p-col">

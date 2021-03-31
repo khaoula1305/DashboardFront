@@ -47,7 +47,9 @@ export class WidgetConfigurationComponent implements OnInit {
           this.selectedQuery=this.dashWidget.widget.dataSource;
            //this.myTable=this.dashWidget.widget.query.dataTable;
           this.type=this.dashWidget.widget.widgetType.type;
+          
           this.SelectedQuery();
+          //console.log("selected query",this.selectedQuery);
         },
         (error) => {
           console.log('error ' );
@@ -59,6 +61,7 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
+        //console.log("queries list",data);
       }
     );
     this.widgetTypeService.getAllWidgetTypes().subscribe(
@@ -101,12 +104,12 @@ draw(){
     datasets: [
 
         {
-            label: this.selectedQuery.mesure2 ,
+            label: "positive cases",
             backgroundColor: '#FFA726',
             data: this.mesure2
         },
         {
-          label: this.selectedQuery.mesure1 ,
+          label: "negative cases",
           backgroundColor: '#AAA423',
           data:  this.mesure1
       }

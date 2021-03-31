@@ -27,6 +27,7 @@ export class WidgetPanelComponent implements OnInit {
     (response) => {
     console.log('widgets ', response);
     this.widgets = response;
+    console.log("widget type heloo", this.widgets[0].widgetType);
     },
     (error) => {
     console.log('error ' );

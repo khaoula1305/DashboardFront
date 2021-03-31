@@ -19,6 +19,8 @@ import { QueriesComponent } from './layouts/queries/queries.component';
 import { RestComponent } from './layouts/rest/rest.component';
 import { HomeComponent } from './layouts/home/home.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,7 @@ import { HomeComponent } from './layouts/home/home.component';
     SideBarComponent,
     QueriesComponent,
     RestComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
