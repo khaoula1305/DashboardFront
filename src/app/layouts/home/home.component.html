@@ -1,13 +1,15 @@
 <div class="p-grid">
-  <div class=" p-md-2" *ngFor="let dash of dashboards">
-    <div class="card">
-        <button
-          pButton
-          type="button"
-          routerLink="/dashboards/{{ dash.title }}"
-          label="{{ dash.title }}"
-          class="ui-button-rounded ui-button-secondary"
-        ></button>
-    </div>
+  <div *ngFor="let dash of dashboards">
+    <p-card>
+      <div routerLink="/dashboards/{{ dash.id }}">
+        <h3>{{ dash.title }}</h3>
+        <p>    {{dash.description}}</p>
+      </div>
+    <footer>
+      <p-button (click)="updateDashboard(dash.id)" icon="pi pi-cog"></p-button>
+      <p-button (click)="deleteDashboard(dash.id)" icon="pi pi-times"></p-button>
+    </footer>
+  </p-card>
+
   </div>
 </div>

@@ -4,39 +4,25 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Widget } from '../models/widget.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WidgetsService {
+  host: any = environment.hostApi + '/Widget/';
 
-  host: any = environment.host + '/widgets/';
-
-  widgets: Widget[] = [];
-
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   getAllWidgets(): Observable<Widget[]> {
-    return this.http.get<Widget[]>(this.host);
+    return this.http.get<Widget[]>(this.host + 'allwidgets');
   }
-
-  addWidget(widget: Widget): Observable<Widget>{
+  addWidget(widget: Widget): Observable<Widget> {
     return this.http.post<Widget>(this.host, widget);
   }
 
-  deleteWidget(widgetId: number){
-    console.log(widgetId + ' deleted');
+  deleteWidget(widgetId: number) {
     this.http.delete(this.host + widgetId);
   }
-
-  updateWidget(widget: Widget):Observable<any> {
-    console.log('widash', widget);
-    console.log(widget.id + ' updated');
-    return this.http.put(this.host + widget.id,widget);
+  updateWidget(widget: Widget): Observable<any> {
+    return this.http.put(this.host + widget.id, widget);
   }
-
 }
-
-

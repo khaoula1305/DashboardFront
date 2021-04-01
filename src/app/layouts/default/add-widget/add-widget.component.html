@@ -5,9 +5,6 @@
     </div>
     <div class="p-col-fixed" style="width: 670px">
       <div class="box">
-        <div style="height: 300px; background-color: gainsboro">
-          <p-chart type="{{ type }}" [data]="basicData"></p-chart>
-        </div>
       </div>
     </div>
     <div class="p-col">
@@ -61,7 +58,7 @@
                 *ngIf="selectedWidgetType.type"
               >
                 <div class="center">
-                  <img src="{{ selectedWidgetType.img }}" />
+                  <img src="{{ selectedWidgetType.imagePath }}" />
                   {{ selectedWidgetType.type }}
                 </div>
               </div>
@@ -69,7 +66,7 @@
             <ng-template let-widgetType pTemplate="item">
               <div class="widgetType-item">
                 <div class="center">
-                  <img src="{{ widgetType.img }}" /> {{ widgetType.type }}
+                  <img src="{{ widgetType.imagePath }}" /> {{ widgetType.type }}
                 </div>
               </div>
             </ng-template>

@@ -1,9 +1,9 @@
-import { Query } from './query.model';
-
 export interface DataSource{
     id: number;
     title: string;
     url: string;
-    // authentication
-    // query: Query[];
+    dimension: string;
+    mesure1: string;
+    mesure2: string;
+    mesure3: string;
 }
