@@ -6,8 +6,7 @@
   </div>
   <div class="p-col-fixed" style="width: 670px">
     <div class="box">
-      <!--div style="height: 300px; background-color: gainsboro"-->
-      <div [ngSwitch]="type">
+gi      <div [ngSwitch]="type">
         <div *ngSwitchCase="'Table'">
           <p-table [value]="myTable">
             
@@ -48,7 +47,6 @@
                [(ngModel)]="dashWidget.title"
                name="title" />
         <h5>Description</h5>
-        <!--label for="description">Description</label-->
         <textarea
           name="description"
           type="text"
