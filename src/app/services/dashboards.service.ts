@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardsService {
 
+  currentDasboard: Dashboard;
   host: any = environment.hostApi + '/Dashboard/';
   constructor(private http: HttpClient) { }
 
@@ -22,7 +23,11 @@ export class DashboardsService {
   addDashboard(dashboard: Dashboard): Observable<Dashboard>{
     return this.http.post<Dashboard>(this.host, dashboard);
   }
+  setDashboard(dashboard: Dashboard){
 
+    this.currentDasboard=dashboard;
+
+  }
   updateDashboard(dashboard: Dashboard):Observable<Dashboard>{
     return this.http.put<Dashboard>(this.host, dashboard);
   }

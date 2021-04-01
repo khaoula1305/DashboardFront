@@ -1,5 +1,4 @@
 import { Dashboard } from './dashboard.model';
-import { DataSource } from './data-source.model';
 import { Widget } from './widget.model';
 export class DashboardWidget{
    id: number;

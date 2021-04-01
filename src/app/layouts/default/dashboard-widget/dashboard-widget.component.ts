@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
+import { DashboardsService } from 'src/app/services/dashboards.service';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -26,6 +27,7 @@ export class DashboardWidgetComponent implements OnInit {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private dashboardsService: DashboardsService,
     private router: Router
   ) {}
 
@@ -83,6 +85,9 @@ export class DashboardWidgetComponent implements OnInit {
         label: 'Update',
         icon: 'pi pi-refresh',
         command: () => {
+          this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
+          console.log(this.widgetTitle);
+          console.log(this.dashboardWidget.id);
           this.router.navigate(['/updateWidget', this.widgetTitle]);
         },
       },

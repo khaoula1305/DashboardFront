@@ -1,5 +1,5 @@
+<div *ngIf="load">
 <p-button class="btn" label="add widget" (click)="addWidget()"></p-button>
 <app-widget-panel *ngIf="add" class="panel" (hidden)="onHiddenClick($event)" [dashboard]="dashboard"></app-widget-panel>
-<ng-template ngIf="load">
-    <app-dashboard  [dashboard]="dashboard" [dashboardId]="dashboard.id"> </app-dashboard>
-</ng-template>
+    <app-dashboard  [dashboard]="dashboard"> </app-dashboard>
+</div>

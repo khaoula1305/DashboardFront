@@ -6,6 +6,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dashboard } from 'src/app/models/dashboard.model';
+import { DashboardsService } from '../../../services/dashboards.service';
 
 @Component({
   selector: 'app-widget-panel',
@@ -19,7 +20,7 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
   searchText;
 
-  constructor( private widgetsService: WidgetsService, private dashboardWidgetService: DashboardWidgetService, private router: Router) { }
+  constructor( private widgetsService: WidgetsService, private dashboardsService: DashboardsService, private dashboardWidgetService: DashboardWidgetService, private router: Router) { }
 
   hideClick(){
     this.hidden.emit(true);
@@ -48,12 +49,20 @@ export class WidgetPanelComponent implements OnInit {
     dashboardWidget.columnValue=1;
     dashboardWidget.maxItemCols=1;
     dashboardWidget.maxItemRows=1;
+    dashboardWidget.xAxisValue=1;
+    dashboardWidget.yAxisValue=2;
     dashboardWidget.widget=widget;
     dashboardWidget.dashboard=this.dashboard;
     console.log(dashboardWidget);
     this.dashboardWidgetService.addDashboardWidget(this.dashboard.id, dashboardWidget).subscribe(
       data => {
         console.log('success', data);
+        this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
+          dssd=>{
+            console.log('all widget', dssd);
+          }
+        )
+
       },
       error => {
         console.log(error);

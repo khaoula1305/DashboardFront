@@ -21,9 +21,8 @@ export class DashboardWidgetService {
   }
   deleteDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget): Observable<DashboardWidget>{
     return this.http.delete<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/'+ dashboardWidget.id);
-   
   }
-  updateDashboardWidget(dashboardWidget: DashboardWidget):Observable<any> {
-    return this.http.put(this.host + dashboardWidget.id,dashboardWidget);
+  updateDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget) : Observable<DashboardWidget>{
+    return this.http.put<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/', dashboardWidget);
   }
 }

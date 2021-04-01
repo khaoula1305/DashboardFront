@@ -7,6 +7,7 @@ import { WidgetTypeService } from 'src/app/services/widget-type.service';
 import {FormControl, NgForm, Validators} from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { DashboardsService } from 'src/app/services/dashboards.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class WidgetConfigurationComponent implements OnInit {
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
+              private dashboardsService: DashboardsService , 
               private dataSourceService: DataSourceService, 
               private widgetTypeService: WidgetTypeService,
               private router: Router) 
@@ -41,7 +43,8 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-      this.dashboardWidgetService.getAllDashboardWidget('8629ac54-6808-49f6-9ec7-9755646396b9').subscribe(
+    //const dashboardId=this.dashboardsService.currentDasboard.id;
+      this.dashboardWidgetService.getAllDashboardWidget('2b0588d4-9309-4ddd-9d7d-9054f123be2a').subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
           //this.selectedQuery=this.dashWidget.widget.dataSource;
@@ -101,12 +104,12 @@ draw(){
     datasets: [
 
         {
-            label: this.selectedQuery.mesure2 ,
+           // label: this.selectedQuery.mesure2 ,
             backgroundColor: '#FFA726',
             data: this.mesure2
         },
         {
-          label: this.selectedQuery.mesure1 ,
+         // label: this.selectedQuery.mesure1 ,
           backgroundColor: '#AAA423',
           data:  this.mesure1
       }
@@ -122,9 +125,7 @@ onSubmit(m: NgForm) {
     this.dashWidget.description= m.value.description;
    // this.dashWidget.widget.dataSource = m.value.selectedQuery;
     //this.dashWidget.widget.widgetType= this.selectedWidgetType;
-    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
-      result => this.router.navigate(['/dashboards', 'Dash 2'])
-       );
+    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget);
   }
 }
 }

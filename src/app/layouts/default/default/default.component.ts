@@ -22,7 +22,6 @@ export class DefaultComponent implements OnInit {
     this.dashboardService.getDashboard(id).subscribe(
       data => {
         this.dashboard = data;
-        console.log(this.dashboard);
       },
       (error) => {
         console.log('error ');
