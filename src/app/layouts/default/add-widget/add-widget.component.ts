@@ -25,11 +25,6 @@ export class AddWidgetComponent implements OnInit {
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
   type: string;
-  //chart
-  dimension ;
-  mesure2 ;
-  mesure1;
-
   myTable;
 
   constructor(private dataSourceService: DataSourceService, 
@@ -59,19 +54,6 @@ export class AddWidgetComponent implements OnInit {
   );
 }
 SelectedQuery(){
-  this.dimension=[];
-  this.mesure1=[];
-  this.mesure2=[];
-  /*this.myTable=this.selectedQuery.dataTable;
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.dimension.push(elm.dimension);
-  });
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.mesure2.push(elm.mesure2);
-  });
-  this.selectedQuery.dataTable.forEach(elm => {
-    this.mesure1.push(elm.mesure1);
-  });*/
   this.draw();
 
 }
@@ -82,22 +64,6 @@ if(this.selectedQuery){
 }
 }
 draw(){
-this.basicData = {
-  labels: this.dimension,
-  datasets: [
-
-      {
-          label: this.selectedQuery.mesure2 ,
-          backgroundColor: '#FFA726',
-          data: this.mesure2
-      },
-      {
-        label: this.selectedQuery.mesure1 ,
-        backgroundColor: '#AAA423',
-        data:  this.mesure1
-    }
-  ]
-};
 
 }
 onSubmit(m: NgForm) {

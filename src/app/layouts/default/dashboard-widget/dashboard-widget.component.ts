@@ -42,8 +42,6 @@ export class DashboardWidgetComponent implements OnInit {
           this.isTable = true;
         case 'Card':
           this.isCard = true;
-        case 'Card':
-          this.isNumber = true;
       }
       const dataSource: DataSource =  this.dashboardWidget.widget.dataSource;
        this.dataSourceService.getDataFromURL(dataSource.url).subscribe(
