@@ -8,8 +8,8 @@ export class Widget{
     resizeEnabled: boolean;
     minItemCols: number;
     minItemRows: number;
-    /*defaultItemCols: number;
-    defaultItemRows: number;*/
+    defaultItemCols: number;
+    defaultItemRows: number;
     dataSource: DataSource;
     widgetType: WidgetType;
 }

@@ -1,7 +1,7 @@
 import { DashboardWidget } from './dashboard-widget';
-export interface Dashboard{
-    id: number;
+export class Dashboard{
+    id: any;
     title: string;
     description: string;
-    dashbaordWidgets: DashboardWidget[];
+    dashboardWidgetList: DashboardWidget[];
 }

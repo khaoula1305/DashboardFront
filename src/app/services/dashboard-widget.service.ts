@@ -10,45 +10,19 @@ import { DashboardWidget } from '../models/dashboard-widget';
 })
 export class DashboardWidgetService {
 
-  host: any = environment.hostApi + '/DashboardWidget/';
-
-
+  host: any = environment.hostApi + '/Dashboard/';
   constructor(private http: HttpClient) {
-
   }
-
-  getAllDashboardWidget(): Observable<DashboardWidget[]> {
-    return this.http.get<DashboardWidget[]>(this.host+'alldashboardwidgets');
+  getAllDashboardWidget(dashboardId: any): Observable<DashboardWidget[]> {
+    return this.http.get<DashboardWidget[]>(this.host+dashboardId+'/DashboardWidget');
   }
-
-  addDashboardWidget(dashboardWidget: DashboardWidget){
-    console.log(dashboardWidget);
-    const test = this.http.post<DashboardWidget>(this.host, dashboardWidget).subscribe(
-      data => {
-        console.log('success', data);
-      },
-      error => {
-        console.log(error);
-      }
-      );
+  addDashboardWidget( dashboardId: any, dashboardWidget: DashboardWidget):  Observable<DashboardWidget>{
+   return  this.http.post<DashboardWidget>(this.host+dashboardId+'/DashboardWidget', dashboardWidget);
   }
-
-  deleteDashboardWidget(dashboardWidgetId: number){
-    console.log(dashboardWidgetId + ' deleted');
-    this.http.delete(this.host + dashboardWidgetId)
-    .subscribe(data => {
-      console.log(data);
-    },
-    error => {
-      console.log(error);
-    }
-    );
+  deleteDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget): Observable<DashboardWidget>{
+    return this.http.delete<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/'+ dashboardWidget.id);
   }
-
-  updateDashboardWidget(dashboardWidget: DashboardWidget):Observable<any> {
-    console.log('widash', dashboardWidget);
-    console.log(dashboardWidget.id + ' updated');
-    return this.http.put(this.host + dashboardWidget.id,dashboardWidget);
+  updateDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget) : Observable<DashboardWidget>{
+    return this.http.put<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/', dashboardWidget);
   }
-
 }

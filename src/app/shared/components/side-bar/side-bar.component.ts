@@ -35,7 +35,7 @@ export class SideBarComponent implements OnInit {
         {
           label: 'New Dashboard',
           icon: 'pi pi-fw pi-plus-circle',
-          routerLink: '/'
+          routerLink: '/NewDashboard'
         },
           {
               label: 'My Dashbords',

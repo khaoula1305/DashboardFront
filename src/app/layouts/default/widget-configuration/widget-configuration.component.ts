@@ -7,6 +7,7 @@ import { WidgetTypeService } from 'src/app/services/widget-type.service';
 import {FormControl, NgForm, Validators} from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { DashboardsService } from 'src/app/services/dashboards.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class WidgetConfigurationComponent implements OnInit {
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
+              private dashboardsService: DashboardsService , 
               private dataSourceService: DataSourceService, 
               private widgetTypeService: WidgetTypeService,
               private router: Router) 
@@ -41,7 +43,7 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-      this.dashboardWidgetService.getAllDashboardWidget().subscribe(
+      this.dashboardWidgetService.getAllDashboardWidget(title).subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.dataSource;
@@ -64,6 +66,7 @@ export class WidgetConfigurationComponent implements OnInit {
         //console.log("queries list",data);
       }
     );
+     
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data)=>{
         this.widgetTypes=data;
@@ -123,11 +126,7 @@ onSubmit(m: NgForm) {
   } else {
     this.dashWidget.title = m.value.title;
     this.dashWidget.description= m.value.description;
-    this.dashWidget.widget.dataSource = m.value.selectedQuery;
-    this.dashWidget.widget.widgetType= this.selectedWidgetType;
-    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget).subscribe(
-      result => this.router.navigate(['/dashboards', 'Dash 2'])
-       );
+    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget);
   }
 }
 }

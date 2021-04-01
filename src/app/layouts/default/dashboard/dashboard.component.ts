@@ -14,33 +14,22 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
 export class DashboardComponent implements OnInit {
   constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
-  dashboardgrid: Array<GridsterItem>;
+  dashboardGridster: Array<GridsterItem>= [];
   load = false;
   @Input() dashboard: Dashboard;
 
   public pauseState = false;
-
   static itemChange(item, itemComponent) {
     console.info('itemChanged', item, itemComponent);
   }
-
   static itemResize(item, itemComponent) {
     console.info('itemResized', item, itemComponent);
   }
-
   ngOnInit() {
-    this.dashboardWidgetService.getAllDashboardWidget().subscribe(
-      (data) => {
-        this.dashboardgrid = data;
-    },
-    (error) => {
-    console.log('error ' );
-    },
-    () => {
-      this.load = true;
-    }
-    );
     this.options = {
+      itemChangeCallback :(item)=>{
+        this.saveItemChanges(item);
+      },
       gridType: GridType.Fit,
       compactType: CompactType.None,
       margin: 10,
@@ -93,30 +82,53 @@ export class DashboardComponent implements OnInit {
       disableWindowResize: false,
       disableWarnings: false,
       scrollToNewItems: false
-
     };
-
-
+    console.log(this.dashboard);
+    this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
+      (data) => {
+        console.log('get all dash', data);
+         data.forEach( elm=> this.dashboardGridster.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
+    },
+    (error) => {
+    console.log('error ' );
+    },
+    () => {
+      this.load = true;
+    }
+    );
   }
-
   changedOptions() {
     this.options.api.optionsChanged();
   }
-  onDeletedClick(evt, item){
-   this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
-   console.log(item);
-   console.log(evt);
-   this.dashboardWidgetService.deleteDashboardWidget(item.id);
+  saveItemChanges(item: GridsterItem) {
+    item.widgetdashboard.xAxisValue= item.x;
+    item.widgetdashboard.yAxisValue= item.y;
+    item.widgetdashboard.columnValue= item.cols;
+    item.widgetdashboard.rowValue= item.rows;
+    this.options.api.optionsChanged();
+    console.log('dash widget',  item.widgetdashboard);
+    this.dashboardWidgetService.updateDashboardWidget(this.dashboard.id, item.widgetdashboard).subscribe(
+      result => console.log('result ', result)
+       );
+  }
+  onDeletedClick(evt , item){
+   this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
+   console.log('delete', item.widgetdashboard);
+   console.log('delete dashh', item.widgetdashboard.dashboard);
 
+   this.dashboardWidgetService.deleteDashboardWidget(this.dashboard.id,item.widgetdashboard).subscribe(data => {
+    console.log(data);
+  },
+  error => {
+    console.log(error);
+  }
+  );
 }
   removeItem(item) {
-    this.dashboardgrid.splice(this.dashboardgrid.indexOf(item), 1);
+    this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
   }
 
   addItem() {
-   /*this.dashboard.forEach(el =>{
-     if(el.cols)
-   })*/
-    this.dashboardgrid.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled: true, dragEnabled: true});
+    this.dashboardGridster.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled: true, dragEnabled: true});
   }
 }
