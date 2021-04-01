@@ -8,22 +8,17 @@ import {FormControl, NgForm, Validators} from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { DashboardsService } from 'src/app/services/dashboards.service';
-
-
 @Component({
   selector: 'app-widget-configuration',
   templateUrl: './widget-configuration.component.html',
   styleUrls: ['./widget-configuration.component.scss']
 })
-
 export class WidgetConfigurationComponent implements OnInit {
-
   queries: DataSource[];
   selectedQuery: DataSource;
   dashWidget: DashboardWidget;
   load: boolean=false;
   basicData;
-
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
   type;
@@ -43,6 +38,29 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
+      this.dashboardWidgetService.getAllDashboardWidget(title).subscribe(
+        (data) => {
+          this.dashWidget= data.find( elm => elm.id == title);
+          this.selectedQuery=this.dashWidget.widget.dataSource;
+           //this.myTable=this.dashWidget.widget.query.dataTable;
+          this.type=this.dashWidget.widget.widgetType.type;
+          
+          this.SelectedQuery();
+          //console.log("selected query",this.selectedQuery);
+        },
+        (error) => {
+          console.log('error ' );
+          },
+          () => {
+         this.load=true;
+          }
+    );
+    this.dataSourceService.getAllDataSources().subscribe(
+      (data) => {
+        this.queries = data;
+        //console.log("queries list",data);
+      }
+    );
      
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data)=>{
@@ -57,6 +75,46 @@ export class WidgetConfigurationComponent implements OnInit {
       }
     );
   }
+  SelectedQuery(){
+    this.dimension=[];
+    this.mesure1=[];
+    this.mesure2=[];
+    /*this.myTable=this.selectedQuery.dataTable;
+    this.selectedQuery.dataTable.forEach(elm => {
+      this.dimension.push(elm.dimension);
+    });
+    this.selectedQuery.dataTable.forEach(elm => {
+      this.mesure2.push(elm.mesure2);
+    });
+    this.selectedQuery.dataTable.forEach(elm => {
+      this.mesure1.push(elm.mesure1);
+    });*/
+    this.draw();
+
+}
+SelectedWidgetType(){
+  this.type=this.selectedWidgetType.type;
+  this.draw();
+}
+draw(){
+  this.basicData = {
+    labels: this.dimension,
+    datasets: [
+
+        {
+            label: "positive cases",
+            backgroundColor: '#FFA726',
+            data: this.mesure2
+        },
+        {
+          label: "negative cases",
+          backgroundColor: '#AAA423',
+          data:  this.mesure1
+      }
+    ]
+};
+
+}
 onSubmit(m: NgForm) {
   if ( m.untouched || m.invalid) {
     alert('Required');

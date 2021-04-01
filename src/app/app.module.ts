@@ -19,8 +19,6 @@ import { QueriesComponent } from './layouts/queries/queries.component';
 import { RestComponent } from './layouts/rest/rest.component';
 import { HomeComponent } from './layouts/home/home.component';
 import {CardModule} from 'primeng/card';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +27,7 @@ import {CardModule} from 'primeng/card';
     SideBarComponent,
     QueriesComponent,
     RestComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
