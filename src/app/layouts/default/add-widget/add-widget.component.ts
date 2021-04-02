@@ -117,7 +117,7 @@ onSubmit(m: NgForm) {
     this.widget.dataSource = m.value.selectedQuery;
     this.widget.widgetType = this.selectedWidgetType;
     this.widgetService.addWidget(this.widget).subscribe(
-      result => this.router.navigate(['/dashboards', 'Dash 2'])
+      result =>      this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a'])
     );
   }
 }

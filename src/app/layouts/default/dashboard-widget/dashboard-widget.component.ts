@@ -51,15 +51,18 @@ export class DashboardWidgetComponent implements OnInit {
         (data) => {
           this.results=data;
           //Ce traitement est static nous devons le remplacer
-          data.forEach(elm => {
-            this.dimension.push(elm.date);
-          });
-          data.forEach(elm => {
-            this.mesure2.push(elm.positive);
-          });
-          data.forEach(elm => {
-            this.mesure1.push(elm.negative);
-          });
+          if( this.dashboardWidget.widget.widgetType.type!= 'card'){
+            data.forEach(elm => {
+              this.dimension.push(elm.date);
+            });
+            data.forEach(elm => {
+              this.mesure2.push(elm.positive);
+            });
+            data.forEach(elm => {
+              this.mesure1.push(elm.negative);
+            });
+          }
+    
         });
 
         this.basicData = {

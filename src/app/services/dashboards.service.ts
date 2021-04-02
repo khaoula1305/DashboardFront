@@ -24,15 +24,12 @@ export class DashboardsService {
     return this.http.post<Dashboard>(this.host, dashboard);
   }
   setDashboard(dashboard: Dashboard){
-
     this.currentDasboard=dashboard;
-
   }
   updateDashboard(dashboard: Dashboard):Observable<Dashboard>{
-    return this.http.put<Dashboard>(this.host, dashboard);
+    return this.http.put<Dashboard>(this.host+ '?id='+  dashboard.id, dashboard);
   }
-
   deleteDashboard(dashboardId: any): Observable<Dashboard>{
-    return this.http.delete<Dashboard>(this.host + dashboardId);
+    return this.http.delete<Dashboard>(this.host+ dashboardId);
   }
 }

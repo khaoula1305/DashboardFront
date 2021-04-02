@@ -16,16 +16,17 @@ export class DataSourceService {
   getAllDataSources(): Observable<DataSource[]> {
     return this.http.get<DataSource[]>(this.host + 'alldatasource');
   }
-  addDataSource(dataSource: DataSource): Observable<DataSource> {
-    return this.http.post<DataSource>(this.host, dataSource);
-  }
   getDataFromURL( url: string ): Observable<any[]> {
     return this.http.get<any[]>(url);
   }
-  deleteDataSource(dataSourceId: number) {
-    this.http.delete(this.host + dataSourceId);
+  deleteDataSource(dataSourceId: any) : Observable<DataSource>{
+    return this.http.delete<DataSource>(this.host + dataSourceId);
   }
+
   updateDataSource(dataSource: DataSource): Observable<any> {
     return this.http.put(this.host + dataSource.id, dataSource);
+  }
+  addDataSource(dataSource: DataSource): Observable<DataSource>{
+    return this.http.post<DataSource>(this.host, dataSource);
   }
 }

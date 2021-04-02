@@ -38,13 +38,11 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-      this.dashboardWidgetService.getAllDashboardWidget(title).subscribe(
+      this.dashboardWidgetService.getAllDashboardWidget('3f2b0163-e62b-4187-a941-fd542945752a').subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.dataSource;
-           //this.myTable=this.dashWidget.widget.query.dataTable;
           this.type=this.dashWidget.widget.widgetType.type;
-          
           this.SelectedQuery();
           //console.log("selected query",this.selectedQuery);
         },
@@ -79,16 +77,21 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dimension=[];
     this.mesure1=[];
     this.mesure2=[];
-    /*this.myTable=this.selectedQuery.dataTable;
-    this.selectedQuery.dataTable.forEach(elm => {
-      this.dimension.push(elm.dimension);
-    });
-    this.selectedQuery.dataTable.forEach(elm => {
-      this.mesure2.push(elm.mesure2);
-    });
-    this.selectedQuery.dataTable.forEach(elm => {
-      this.mesure1.push(elm.mesure1);
-    });*/
+    this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
+      (Restdata) => {
+        this.results=Restdata;
+        if( this.dashWidget.widget.widgetType.type!= 'card'){
+        Restdata.forEach(elm => {
+          this.dimension.push(elm.date);
+        });
+        Restdata.forEach(elm => {
+          this.mesure2.push(elm.positive);
+        });
+        Restdata.forEach(elm => {
+          this.mesure1.push(elm.negative);
+        });
+      }
+      });
     this.draw();
 
 }
@@ -113,7 +116,6 @@ draw(){
       }
     ]
 };
-
 }
 onSubmit(m: NgForm) {
   if ( m.untouched || m.invalid) {
@@ -121,7 +123,13 @@ onSubmit(m: NgForm) {
   } else {
     this.dashWidget.title = m.value.title;
     this.dashWidget.description= m.value.description;
-    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget);
+    this.dashWidget.widget.dataSource= m.value.selectedQuery;
+    this.dashWidget.widget.widgetType=m.value.selectedWidgetType;
+    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget).subscribe(
+      data => console.log('update', data)
+    );
+    this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a']);
+    //Navigate ToBeImplemented
   }
 }
 }

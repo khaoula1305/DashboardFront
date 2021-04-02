@@ -19,6 +19,9 @@ import { QueriesComponent } from './layouts/queries/queries.component';
 import { RestComponent } from './layouts/rest/rest.component';
 import { HomeComponent } from './layouts/home/home.component';
 import {CardModule} from 'primeng/card';
+import { FormsModule } from '@angular/forms';
+import {TableModule} from 'primeng/table';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,9 @@ import {CardModule} from 'primeng/card';
     DefaultModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    CardModule
+    CardModule,
+    FormsModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
