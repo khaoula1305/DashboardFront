@@ -34,7 +34,6 @@ export class DefaultComponent implements OnInit {
 
   onHiddenClick(state){
   this.add = false;
-  console.log('state hidden', state);
 }
 
   addWidget(){

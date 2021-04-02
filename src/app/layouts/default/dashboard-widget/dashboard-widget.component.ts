@@ -20,9 +20,7 @@ export class DashboardWidgetComponent implements OnInit {
   items: MenuItem[];
   widgetId: any;
   widgetTypeEnum = WidgetTypeEnum;
-  isTable = false;
-  isCard = false;
-  isNumber = false;
+  widgetType: string;
   dimension=[];
   mesure2=[];
   mesure1=[];
@@ -39,13 +37,7 @@ export class DashboardWidgetComponent implements OnInit {
   }
   ngOnInit(): void {
     if(this.dashboardWidget.widget){
-      const typeWidget = this.dashboardWidget.widget.widgetType.type;
-      switch (typeWidget) {
-        case 'table':
-          this.isTable = true;
-        case 'card':
-          this.isCard = true;
-      }
+     this.widgetType = this.dashboardWidget.widget.widgetType.type;
     }
       this.dataSourceService.getDataFromURL(this.dashboardWidget.widget.dataSource.url).subscribe(
         (data) => {
@@ -105,9 +97,14 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   save(severity: any) {
+    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', severity]);
   }
   dropdown(info: any) {
     this.widgetId = info;
+  }
+  updateWidgetDashboard(id: any){
+    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
+    this.router.navigate(['/updateWidget', id]);
   }
 }

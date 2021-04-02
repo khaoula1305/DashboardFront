@@ -106,7 +106,6 @@ export class DashboardComponent implements OnInit {
     item.widgetdashboard.columnValue= item.cols;
     item.widgetdashboard.rowValue= item.rows;
     this.options.api.optionsChanged();
-    console.log('dash widget',  item.widgetdashboard);
     this.dashboardWidgetService.updateDashboardWidget(this.dashboard.id, item.widgetdashboard).subscribe(
       result => console.log('result ', result)
        );

@@ -7,6 +7,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { WidgetTypeEnum } from '../../../models/widgetTypeEnum';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class AddWidgetComponent implements OnInit {
   description: string;
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
-  type: string;
+  widgetType: string;
+  widgetTypeEnum = WidgetTypeEnum;
   //chart
   dimension=[];
   mesure2=[];
@@ -37,7 +39,7 @@ export class AddWidgetComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.type = "bar";
+    this.widgetType = "bar";
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
@@ -86,7 +88,7 @@ export class AddWidgetComponent implements OnInit {
   }
   
 SelectedWidgetType(){
-  this.type = this.selectedWidgetType.type;
+  this.widgetType = this.selectedWidgetType.type;
   if (this.selectedQuery) {
     this.draw();
   }

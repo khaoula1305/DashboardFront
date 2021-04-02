@@ -2,4 +2,9 @@
   position: fixed;
   z-index: 999;
   right: 0;
+  top: 0px;
+  visibility: hidden;
+}
+p-card:hover .conf {
+  visibility: visible;
 }
