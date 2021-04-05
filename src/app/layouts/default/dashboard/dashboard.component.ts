@@ -15,8 +15,10 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem>= [];
+  dashboardOriginal: Array<GridsterItem>;
   load = false;
   editMode= false;
+  searchText:any;
   @Input() dashboard: Dashboard;
 
   public pauseState = false;
@@ -93,20 +95,30 @@ export class DashboardComponent implements OnInit {
     }
     );
   }
-  OnEdit(){
-    if(!this.editMode){
+  OnEdit(reset: boolean){
+    if(!this.editMode ){
+      this.dashboardOriginal = this.dashboardGridster.map(x => ({...x}));
       this.options.draggable.enabled=true;
       this.options.resizable.enabled=true;
       this.options.displayGrid= DisplayGrid.Always;
       this.editMode=true;
-    }else{
+    }
+    else{
       this.options.draggable.enabled=false;
       this.options.resizable.enabled=false;
       this.options.displayGrid= DisplayGrid.None;
       this.editMode=false;
     }
-    this.changedOptions();
-    this.updateDashboard();
+    if(!reset){
+      this.changedOptions();
+      this.updateDashboard();
+    }
+    else{
+      this.dashboardGridster = this.dashboardOriginal.map(x => ({...x}));
+    }
+  }
+  trackBy(index: number, item: GridsterItem): number {
+    return item.id;
   }
   changedOptions(): void {
     if (this.options.api && this.options.api.optionsChanged) {

@@ -71,15 +71,14 @@ export class SideBarComponent implements OnInit {
   getDashboards(){
     this.dashboardService.getAllDashboards().subscribe(
       (response) => {
-        this.dashboards = response;
-        this.dashboards.forEach( elm => {
+        response.forEach( elm => {
         this.myItems.push({label: elm.title, command: (event) => {
+          response.find(e=> e.title==event.item.label);
           // event.originalEvent: Browser event
           // event.item: menuitem metadata
           // let title = this.activatedroute.snapshot.paramMap.get("event.item.title");
           this.router.navigate(['dashboards', event.item.label]);
           // this.router.navigate(["dashboards", title], event.item.title);
-
       }});
         });
       },

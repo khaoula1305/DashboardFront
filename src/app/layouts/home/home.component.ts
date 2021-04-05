@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
     this.dashboardService.getAllDashboards().subscribe(
       (data) => {
         this.dashboards = data;
-
       },
       (error) => {
         console.error();
@@ -28,7 +27,6 @@ export class HomeComponent implements OnInit {
         console.log('done ');
       }
     );
-
   }
   updateDashboard(dashboardId: Dashboard){
     this.router.navigate(['/updateDashboard',dashboardId ]);
@@ -42,12 +40,14 @@ export class HomeComponent implements OnInit {
         console.log('delete dashboard error');
       },
       ()=>{
-        //window.location.reload();
       this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/']); 
         });
       }
     );
   }
-
+  goToDashboard(dahsboard: Dashboard ){
+    this.dashboardService.setCurrentDashboard(dahsboard);
+    this.router.navigate(['dashboards', dahsboard.id]); 
+  }
 }

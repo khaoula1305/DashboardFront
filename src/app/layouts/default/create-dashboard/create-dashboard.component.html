@@ -6,8 +6,8 @@
         </div>
         <div class="p-col">
             <div class="box">
-                <h5>Title</h5>
-                <input type="text" pInputText [(ngModel)]="title" name="title" />
+                <h5>Title *</h5>
+                <input type="text" pInputText [(ngModel)]="title" name="title" required/>
                 <h5>Description</h5>
                 <textarea
                 name="description"
@@ -20,6 +20,7 @@
         </div>
         <div class="p-col-6">
             <p-button
+            [disabled]="!newDashboard.valid"
               label="Save"
               icon="pi pi-check"
               type="submit"

@@ -1,7 +1,7 @@
 <div class="p-grid">
   <div *ngFor="let dash of dashboards">
     <p-card>
-      <div routerLink="/dashboards/{{ dash.id }}">
+      <div (click)="goToDashboard(dash)">
         <h3>{{ dash.title }}</h3>
         <p>    {{dash.description}}</p>
       </div>

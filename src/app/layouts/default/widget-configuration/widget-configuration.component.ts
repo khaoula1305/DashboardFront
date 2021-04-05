@@ -8,6 +8,7 @@ import {FormControl, NgForm, Validators} from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { DashboardsService } from 'src/app/services/dashboards.service';
+import { Dashboard } from '../../../models/dashboard.model';
 @Component({
   selector: 'app-widget-configuration',
   templateUrl: './widget-configuration.component.html',
@@ -16,6 +17,7 @@ import { DashboardsService } from 'src/app/services/dashboards.service';
 export class WidgetConfigurationComponent implements OnInit {
   queries: DataSource[];
   selectedQuery: DataSource;
+  currentDashboard: Dashboard;
   dashWidget: DashboardWidget;
   load: boolean=false;
   basicData;
@@ -38,7 +40,8 @@ export class WidgetConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     const title = this.route.snapshot.params.title;
-      this.dashboardWidgetService.getAllDashboardWidget('3f2b0163-e62b-4187-a941-fd542945752a').subscribe(
+    this.currentDashboard =this.dashboardsService.getCurretDashboard();
+      this.dashboardWidgetService.getAllDashboardWidget(this.currentDashboard.id).subscribe(
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.dataSource;
@@ -119,7 +122,7 @@ onSubmit(m: NgForm) {
     this.dashWidget.widget.dataSource= m.value.selectedQuery;
     this.dashWidget.widget.widgetType=m.value.selectedWidgetType;
     this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget).subscribe(
-      data =>   this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a'])   //Navigate ToBeImplemented
+      data =>   this.router.navigate(['/dashboards',this.currentDashboard.id])
     );
   }
 }

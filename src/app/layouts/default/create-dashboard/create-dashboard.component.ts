@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Dashboard } from 'src/app/models/dashboard.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
@@ -11,7 +11,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   styleUrls: ['./create-dashboard.component.scss']
 })
 export class CreateDashboardComponent implements OnInit {
-  
+  messageControl = new FormControl('', Validators.required);
   title: string;
   description: string;
   constructor(private dashboardService: DashboardsService,

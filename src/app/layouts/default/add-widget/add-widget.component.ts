@@ -8,15 +8,14 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetTypeEnum } from '../../../models/widgetTypeEnum';
-
-
+import { DashboardsService } from 'src/app/services/dashboards.service';
+import { Dashboard } from 'src/app/models/dashboard.model';
 @Component({
   selector: 'app-add-widget',
   templateUrl: './add-widget.component.html',
   styleUrls: ['./add-widget.component.scss']
 })
 export class AddWidgetComponent implements OnInit {
-
   basicData;
   queries: DataSource[];
   selectedQuery: DataSource;
@@ -27,19 +26,20 @@ export class AddWidgetComponent implements OnInit {
   selectedWidgetType: WidgetType;
   widgetType: string;
   widgetTypeEnum = WidgetTypeEnum;
- //ToBeImplemented
-  dimension=[];
-  mesure2=[];
-  mesure1=[];
-  results=[];
+ // ToBeImplemented
+  dimension = [];
+  mesure2 = [];
+  mesure1 = [];
+  results = [];
 
-  constructor(private dataSourceService: DataSourceService,
+  constructor(
+    private dataSourceService: DataSourceService,
+    private dashboardsService: DashboardsService,
     private widgetTypeService: WidgetTypeService,
     private widgetService: WidgetsService,
     private router: Router) { }
-
   ngOnInit(): void {
-    this.widgetType = "bar";
+    this.widgetType = 'bar';
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
@@ -59,8 +59,8 @@ export class AddWidgetComponent implements OnInit {
     this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
       (data) => {
         this.results=data;
-        //ToBeImplemented
-        //Ce traitement est static nous devons le remplacer        
+        // ToBeImplemented
+        // Ce traitement est static nous devons le remplacer        
         data.forEach(elm => {
           this.dimension.push(elm.date);
         });
@@ -73,7 +73,6 @@ export class AddWidgetComponent implements OnInit {
       });
       this.draw();
   }
-  
 SelectedWidgetType(){
   this.widgetType = this.selectedWidgetType.type;
   if (this.selectedQuery) {
@@ -105,8 +104,9 @@ onSubmit(m: NgForm) {
     this.widget.description = m.value.description;
     this.widget.dataSource = m.value.selectedQuery;
     this.widget.widgetType = this.selectedWidgetType;
+    let dash= this.dashboardsService.getCurretDashboard();
     this.widgetService.addWidget(this.widget).subscribe(
-      result =>      this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a'])
+      result =>      this.router.navigate(['/dashboards',dash.id])
     );
   }
 }
