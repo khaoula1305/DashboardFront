@@ -7,6 +7,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { WidgetTypeEnum } from '../../../models/widgetTypeEnum';
 
 
 @Component({
@@ -24,8 +25,9 @@ export class AddWidgetComponent implements OnInit {
   description: string;
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
-  type: string;
-  //chart
+  widgetType: string;
+  widgetTypeEnum = WidgetTypeEnum;
+ //ToBeImplemented
   dimension=[];
   mesure2=[];
   mesure1=[];
@@ -37,11 +39,10 @@ export class AddWidgetComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.type = "bar";
+    this.widgetType = "bar";
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
-        console.log("queries", this.queries);
       }
     );
     this.widgetTypeService.getAllWidgetTypes().subscribe(
@@ -50,24 +51,16 @@ export class AddWidgetComponent implements OnInit {
 
       },
       (error) => {
-        console.log('getAllWidgetTypes error');
-      },
-      () => {
-        //done
+        console.log(error);
       }
     );
   }
   SelectedQuery() {
-
-
     this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
       (data) => {
         this.results=data;
-        console.log("results visualize",this.results);
-
-        //Ce traitement est static nous devons le remplacer
-        //console.log("url data",data);
-        
+        //ToBeImplemented
+        //Ce traitement est static nous devons le remplacer        
         data.forEach(elm => {
           this.dimension.push(elm.date);
           console.log("elm ", elm);
@@ -78,16 +71,12 @@ export class AddWidgetComponent implements OnInit {
         data.forEach(elm => {
           this.mesure1.push(elm.negative);
         });
-
-        //console.log("before")
-
       });
-      console.log('selected query', this.selectedQuery);
       this.draw();
   }
   
 SelectedWidgetType(){
-  this.type = this.selectedWidgetType.type;
+  this.widgetType = this.selectedWidgetType.type;
   if (this.selectedQuery) {
     this.draw();
   }

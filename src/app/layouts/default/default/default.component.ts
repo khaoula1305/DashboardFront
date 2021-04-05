@@ -24,7 +24,7 @@ export class DefaultComponent implements OnInit {
         this.dashboard = data;
       },
       (error) => {
-        console.log('error ');
+        console.log(error);
       },
       () => {
         this.load=true;
@@ -34,7 +34,6 @@ export class DefaultComponent implements OnInit {
 
   onHiddenClick(state){
   this.add = false;
-  console.log('state hidden', state);
 }
 
   addWidget(){
