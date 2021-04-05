@@ -63,13 +63,14 @@ export class AddWidgetComponent implements OnInit {
     this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
       (data) => {
         this.results=data;
-        console.log("results",this.results);
+        console.log("results visualize",this.results);
 
         //Ce traitement est static nous devons le remplacer
         //console.log("url data",data);
         
         data.forEach(elm => {
           this.dimension.push(elm.date);
+          console.log("elm ", elm);
         });
         data.forEach(elm => {
           this.mesure2.push(elm.positive);
