@@ -10,6 +10,7 @@ import { WidgetConfigurationComponent } from './layouts/default/widget-configura
 import { AddWidgetComponent } from './layouts/default/add-widget/add-widget.component';
 import { CreateDashboardComponent } from './layouts/default/create-dashboard/create-dashboard.component';
 import { UpdateDashboardComponent } from './layouts/default/update-dashboard/update-dashboard.component';
+import { ConfigureRestComponent } from './layouts/configure-rest/configure-rest.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'updateWidget/:title', component: WidgetConfigurationComponent},
   {path: 'addWidget', component: AddWidgetComponent},
   {path: 'NewDashboard', component: CreateDashboardComponent},
-  {path: 'updateDashboard/:id', component: UpdateDashboardComponent}
+  {path: 'updateDashboard/:id', component: UpdateDashboardComponent},
+  {path: 'configureRest', component: ConfigureRestComponent}  
 ];
 
 @NgModule({

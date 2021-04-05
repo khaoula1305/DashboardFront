@@ -63,6 +63,7 @@ export class AddWidgetComponent implements OnInit {
         //Ce traitement est static nous devons le remplacer        
         data.forEach(elm => {
           this.dimension.push(elm.date);
+          console.log("elm ", elm);
         });
         data.forEach(elm => {
           this.mesure2.push(elm.positive);

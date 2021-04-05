@@ -21,6 +21,8 @@ import { HomeComponent } from './layouts/home/home.component';
 import {CardModule} from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import {TableModule} from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfigureRestComponent } from './layouts/configure-rest/configure-rest.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {TableModule} from 'primeng/table';
     QueriesComponent,
     RestComponent,
     HomeComponent,
+    ConfigureRestComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {TableModule} from 'primeng/table';
     Ng2SearchPipeModule,
     CardModule,
     FormsModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
