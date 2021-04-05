@@ -1,3 +1,11 @@
 export enum WidgetTypeEnum {
-   Table, Number , Card,  Graph
-}  
+   Table = "table", 
+   Card ="card", 
+   Graph= "graph"
+}
+
+export enum graphEnum{
+   Bar="bar",
+   Pie="pie",
+   Line="line"
+}

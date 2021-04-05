@@ -1,10 +1,50 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
   <div class="p-grid">
     <div class="p-col-12">
-      <h4>Configure widget</h4>
+      <h3>Add New Widget</h3>
     </div>
     <div class="p-col-fixed" style="width: 670px">
       <div class="box">
+        <div [ngSwitch]="widgetType">
+          <div *ngSwitchCase="widgetTypeEnum.Table">
+            <p-table [value]="results">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Date</th>
+                      <th>Positive Cases</th>
+                      <th>Negative Cases</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-tab>
+                  <tr>
+                      <td>{{tab.date}}</td>
+                      <td>{{tab.positive}}</td>
+                      <td>{{tab.negative}}</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+          </div>
+
+          <div *ngSwitchCase="widgetTypeEnum.Card">
+            <p-card class="containSize partition">
+              <ng-template pTemplate="header">
+                  {{Widget.title}}
+              </ng-template>
+              {{results.Total}}
+              <ng-template pTemplate="footer">
+                  
+              </ng-template>
+          </p-card>
+          </div>
+          
+          <div *ngSwitchDefault> 
+            <p-chart
+            type="{{widgetType}}"
+            [data]="basicData"
+            [options]="basicOptions"
+          ></p-chart>
+          </div>
+        </div>
       </div>
     </div>
     <div class="p-col">
@@ -12,7 +52,6 @@
         <h5>Title</h5>
         <input type="text" pInputText [(ngModel)]="widget.title" name="title" />
         <h5>Description</h5>
-        <!--label for="description">Description</label-->
         <textarea
           name="description"
           type="text"
@@ -36,7 +75,7 @@
             [(ngModel)]="selectedQuery"
             placeholder="Select"
             (ngModelChange)="SelectedQuery()"
-            optionLabel="name"
+            optionLabel="title"
           ></p-dropdown>
         </div>
         <div class="p-field p-col">
@@ -58,7 +97,7 @@
                 *ngIf="selectedWidgetType.type"
               >
                 <div class="center">
-                  <img src="{{ selectedWidgetType.imagePath }}" />
+                  <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
                   {{ selectedWidgetType.type }}
                 </div>
               </div>
@@ -66,7 +105,7 @@
             <ng-template let-widgetType pTemplate="item">
               <div class="widgetType-item">
                 <div class="center">
-                  <img src="{{ widgetType.imagePath }}" /> {{ widgetType.type }}
+                  <img src="{{ widgetType.imagePath }}" alt="{{widgetType.type}}" /> {{ widgetType.type }}
                 </div>
               </div>
             </ng-template>

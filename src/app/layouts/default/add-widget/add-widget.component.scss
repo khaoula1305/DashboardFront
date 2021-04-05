@@ -13,3 +13,15 @@ img {
 .center img {
   margin-right: 10px;
 }
+.partition {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  .flex-start {
+    justify-content: flex-start;
+  }
+}
+.containSize {
+  contain: size;
+  height: auto;
+  margin-top: 30px;
+}

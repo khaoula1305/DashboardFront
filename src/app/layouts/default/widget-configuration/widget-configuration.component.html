@@ -6,37 +6,45 @@
   </div>
   <div class="p-col-fixed" style="width: 670px">
     <div class="box">
-gi      <div [ngSwitch]="type">
-        <div *ngSwitchCase="'Table'">
-          <p-table [value]="myTable">
-            
+      <div [ngSwitch]="type">
+        <div *ngSwitchCase="'table'">
+          <p-table [value]="results">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Dimension</th>
-                    <th>{{selectedQuery.mesure1}}</th>
-                    <th>{{selectedQuery.mesure2}}</th>
+                    <th>Date</th>
+                    <th>Positive Cases</th>
+                    <th>Negative Cases</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-tab>
                 <tr>
-                    <td>{{tab.dimension}}</td>
-                    <td>{{tab.mesure1}}</td>
-                    <td>{{tab.mesure2}}</td>
+                    <td>{{tab.date}}</td>
+                    <td>{{tab.positive}}</td>
+                    <td>{{tab.negative}}</td>
                 </tr>
             </ng-template>
         </p-table>
         </div>
-        <div *ngSwitchCase="'Card' || 'Number'">Card</div>
-        <div *ngSwitchDefault>
+
+        <div *ngSwitchCase="'card'">
+          <p-card class="containSize partition">
+            <ng-template pTemplate="header">
+            </ng-template>
+            {{results.Total}}
+            <ng-template pTemplate="footer">
+                
+            </ng-template>
+        </p-card>
+        </div>
+        
+        <div *ngSwitchDefault> 
           <p-chart
-          type="{{ type }}"
+          type="{{type}}"
           [data]="basicData"
           [options]="basicOptions"
         ></p-chart>
         </div>
       </div>
-     
-   
     </div>
   </div>
     <div class="p-col">
@@ -70,7 +78,7 @@ gi      <div [ngSwitch]="type">
             [(ngModel)]="selectedQuery"
             placeholder="Select"
             (ngModelChange)="SelectedQuery()"
-            optionLabel="name"
+            optionLabel="title"
           ></p-dropdown>
         </div>
         <div class="p-field p-col">
@@ -85,16 +93,24 @@ gi      <div [ngSwitch]="type">
           filterBy="type" 
           [showClear]="true" 
           placeholder="Select a visualisation">
-            <ng-template pTemplate="selectedItem">
-                <div class="widgetType-item widgetType-item-value" *ngIf="selectedWidgetType.type">
-                    <div class="center"> <img src="{{ selectedWidgetType.img }}"/> {{ selectedWidgetType.type }}</div>
-                </div>
-            </ng-template>
-            <ng-template let-widgetType pTemplate="item">
-                <div class="widgetType-item">
-                    <div class="center"> <img src="{{ widgetType.img }}"/> {{ widgetType.type }}</div>
-                </div>
-            </ng-template>
+          <ng-template pTemplate="selectedItem">
+            <div
+              class="widgetType-item widgetType-item-value"
+              *ngIf="selectedWidgetType.type"
+            >
+              <div class="center">
+                <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
+                {{ selectedWidgetType.type }}
+              </div>
+            </div>
+          </ng-template>
+          <ng-template let-widgetType pTemplate="item">
+            <div class="widgetType-item">
+              <div class="center">
+                <img src="{{ widgetType.imagePath }}" alt="{{widgetType.type}}" /> {{ widgetType.type }}
+              </div>
+            </div>
+          </ng-template>
         </p-dropdown>
         </div>
       </div>

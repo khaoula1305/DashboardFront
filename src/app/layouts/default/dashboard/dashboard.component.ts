@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem>= [];
   load = false;
+  editMode= false;
   @Input() dashboard: Dashboard;
 
   public pauseState = false;
@@ -27,9 +28,6 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit() {
     this.options = {
-      itemChangeCallback :(item)=>{
-        this.saveItemChanges(item);
-      },
       gridType: GridType.Fit,
       compactType: CompactType.None,
       margin: 10,
@@ -67,10 +65,10 @@ export class DashboardComponent implements OnInit {
       emptyCellDragMaxRows: 50,
       ignoreMarginInRow: false,
       draggable: {
-        enabled: true,
+        enabled: false,
       },
       resizable: {
-        enabled: true,
+        enabled: false,
       },
       swap: false,
       pushItems: true,
@@ -78,15 +76,13 @@ export class DashboardComponent implements OnInit {
       disablePushOnResize: false,
       pushDirections: {north: true, east: true, south: true, west: true},
       pushResizeItems: false,
-      displayGrid: DisplayGrid.OnDragAndResize,
+      displayGrid: DisplayGrid.None,
       disableWindowResize: false,
       disableWarnings: false,
       scrollToNewItems: false
     };
-    console.log(this.dashboard);
     this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
       (data) => {
-        console.log('get all dash', data);
          data.forEach( elm=> this.dashboardGridster.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
     },
     (error) => {
@@ -97,8 +93,36 @@ export class DashboardComponent implements OnInit {
     }
     );
   }
-  changedOptions() {
-    this.options.api.optionsChanged();
+  OnEdit(){
+    if(!this.editMode){
+      this.options.draggable.enabled=true;
+      this.options.resizable.enabled=true;
+      this.options.displayGrid= DisplayGrid.Always;
+      this.editMode=true;
+    }else{
+      this.options.draggable.enabled=false;
+      this.options.resizable.enabled=false;
+      this.options.displayGrid= DisplayGrid.None;
+      this.editMode=false;
+    }
+    this.changedOptions();
+    this.updateDashboard();
+  }
+  changedOptions(): void {
+    if (this.options.api && this.options.api.optionsChanged) {
+      this.options.api.optionsChanged();
+    }
+  }
+  updateDashboard(){
+    this.dashboardGridster.forEach(item => { 
+      item.widgetdashboard.xAxisValue= item.x;
+      item.widgetdashboard.yAxisValue= item.y;
+      item.widgetdashboard.columnValue= item.cols;
+      item.widgetdashboard.rowValue= item.rows;
+      this.dashboardWidgetService.updateDashboardWidget(this.dashboard.id, item.widgetdashboard).subscribe(
+        result => console.log('result ', result)
+         );
+    });
   }
   saveItemChanges(item: GridsterItem) {
     item.widgetdashboard.xAxisValue= item.x;
@@ -106,16 +130,12 @@ export class DashboardComponent implements OnInit {
     item.widgetdashboard.columnValue= item.cols;
     item.widgetdashboard.rowValue= item.rows;
     this.options.api.optionsChanged();
-    console.log('dash widget',  item.widgetdashboard);
     this.dashboardWidgetService.updateDashboardWidget(this.dashboard.id, item.widgetdashboard).subscribe(
       result => console.log('result ', result)
        );
   }
   onDeletedClick(evt , item){
    this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
-   console.log('delete', item.widgetdashboard);
-   console.log('delete dashh', item.widgetdashboard.dashboard);
-
    this.dashboardWidgetService.deleteDashboardWidget(this.dashboard.id,item.widgetdashboard).subscribe(data => {
     console.log(data);
   },
@@ -124,11 +144,4 @@ export class DashboardComponent implements OnInit {
   }
   );
 }
-  removeItem(item) {
-    this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
-  }
-
-  addItem() {
-    this.dashboardGridster.push({cols: 2, rows: 2, y: 0, x: 0, resizeEnabled: true, dragEnabled: true});
-  }
 }

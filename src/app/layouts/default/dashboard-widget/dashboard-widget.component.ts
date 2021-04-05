@@ -18,12 +18,13 @@ export class DashboardWidgetComponent implements OnInit {
   basicData: any;
   basicOptions: any;
   items: MenuItem[];
-  widgetTitle: string;
+  widgetId: any;
   widgetTypeEnum = WidgetTypeEnum;
-  isTable = false;
-  isCard = false;
-  isNumber = false;
-  myTable;
+  widgetType: string;
+  dimension=[];
+  mesure2=[];
+  mesure1=[];
+  results=[];
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -36,47 +37,42 @@ export class DashboardWidgetComponent implements OnInit {
   }
   ngOnInit(): void {
     if(this.dashboardWidget.widget){
-      const typeWidget = this.dashboardWidget.widget.widgetType.type;
-      switch (typeWidget) {
-        case 'Table':
-          this.isTable = true;
-        case 'Card':
-          this.isCard = true;
-      }
-      const dataSource: DataSource =  this.dashboardWidget.widget.dataSource;
-       this.dataSourceService.getDataFromURL(dataSource.url).subscribe(
-      (data) => {
-        //Ce traitement est static nous devons le remplacer
-       const dimension = [];
-      data.forEach(elm => {
-       dimension.push(elm.date);
-      });
-      const mesure2 = [];
-      data.forEach(elm => {
-        mesure2.push(elm.positive);
-          });
-      const mesure1 = [];
-          data.forEach(elm => {
-            mesure1.push(elm.negative);
-          });
-      this.basicData = {
-        labels: dimension,
-        datasets: [
-          {
-            label: this.dashboardWidget.widget.dataSource.mesure1,
-            backgroundColor: '#FFA726',
-            data: mesure1,
-          },
-  
-          {
-            label: this.dashboardWidget.widget.dataSource.mesure2,
-            backgroundColor: '#AAA423',
-            data: mesure2,
-          },
-        ],
-       };
-      });
+     this.widgetType = this.dashboardWidget.widget.widgetType.type;
     }
+      this.dataSourceService.getDataFromURL(this.dashboardWidget.widget.dataSource.url).subscribe(
+        (data) => {
+          this.results=data;
+          //Ce traitement est static nous devons le remplacer
+          if( this.dashboardWidget.widget.widgetType.type!= 'card'){
+            data.forEach(elm => {
+              this.dimension.push(elm.date);
+            });
+            data.forEach(elm => {
+              this.mesure2.push(elm.positive);
+            });
+            data.forEach(elm => {
+              this.mesure1.push(elm.negative);
+            });
+          }
+    
+        });
+
+        this.basicData = {
+          labels: this.dimension,
+          datasets: [
+            {
+              label: "Negative Cases",
+              backgroundColor: '#FFA726',
+              data: this.mesure2
+            },
+            {
+              label: "Positive Cases",
+              backgroundColor: '#AAA423',
+              data: this.mesure1
+            }
+          ]
+        };
+
    
     this.items = [
       {
@@ -84,9 +80,7 @@ export class DashboardWidgetComponent implements OnInit {
         icon: 'pi pi-refresh',
         command: () => {
           this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
-          console.log(this.widgetTitle);
-          console.log(this.dashboardWidget.id);
-          this.router.navigate(['/updateWidget', this.widgetTitle]);
+          this.router.navigate(['/updateWidget', this.widgetId]);
         },
       },
       {
@@ -103,9 +97,14 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   save(severity: any) {
+    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', severity]);
   }
   dropdown(info: any) {
-    this.widgetTitle = info;
+    this.widgetId = info;
+  }
+  updateWidgetDashboard(id: any){
+    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
+    this.router.navigate(['/updateWidget', id]);
   }
 }
