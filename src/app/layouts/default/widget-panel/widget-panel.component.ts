@@ -26,10 +26,7 @@ export class WidgetPanelComponent implements OnInit {
       this.widgets = response;
     },
     (error) => {
-    console.log('error ' );
-    },
-    () => {
-    console.log('Panel: complete get all widget ');
+    console.log(error);
     }
     );
     }
@@ -48,14 +45,12 @@ export class WidgetPanelComponent implements OnInit {
     dashboardWidget.dashboard=this.dashboard;
     this.dashboardWidgetService.addDashboardWidget(this.dashboard.id, dashboardWidget).subscribe(
       data => {
-        console.log('add dash widget', data)
+        this.changeLocation(this.dashboard.id);
       },
       error => {
         console.log(error);
       }
       );
-    //pour actualiser le dashboard
-    this.changeLocation(this.dashboard.id);
   }
   changeLocation(locationData) {
     // save current route first

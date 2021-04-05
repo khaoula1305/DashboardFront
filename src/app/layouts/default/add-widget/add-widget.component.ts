@@ -27,7 +27,7 @@ export class AddWidgetComponent implements OnInit {
   selectedWidgetType: WidgetType;
   widgetType: string;
   widgetTypeEnum = WidgetTypeEnum;
-  //chart
+ //ToBeImplemented
   dimension=[];
   mesure2=[];
   mesure1=[];
@@ -43,7 +43,6 @@ export class AddWidgetComponent implements OnInit {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
-        console.log("queries", this.queries);
       }
     );
     this.widgetTypeService.getAllWidgetTypes().subscribe(
@@ -52,24 +51,16 @@ export class AddWidgetComponent implements OnInit {
 
       },
       (error) => {
-        console.log('getAllWidgetTypes error');
-      },
-      () => {
-        //done
+        console.log(error);
       }
     );
   }
   SelectedQuery() {
-
-
     this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
       (data) => {
         this.results=data;
-        console.log("results",this.results);
-
-        //Ce traitement est static nous devons le remplacer
-        //console.log("url data",data);
-        
+        //ToBeImplemented
+        //Ce traitement est static nous devons le remplacer        
         data.forEach(elm => {
           this.dimension.push(elm.date);
         });
@@ -79,11 +70,7 @@ export class AddWidgetComponent implements OnInit {
         data.forEach(elm => {
           this.mesure1.push(elm.negative);
         });
-
-        //console.log("before")
-
       });
-      console.log('selected query', this.selectedQuery);
       this.draw();
   }
   

@@ -18,7 +18,6 @@ export class QueriesComponent implements OnInit {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
-        console.log("queries", this.queries);
       }
     );
   }

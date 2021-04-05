@@ -24,7 +24,7 @@ export class DefaultComponent implements OnInit {
         this.dashboard = data;
       },
       (error) => {
-        console.log('error ');
+        console.log(error);
       },
       () => {
         this.load=true;

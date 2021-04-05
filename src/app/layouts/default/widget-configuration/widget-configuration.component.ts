@@ -44,10 +44,9 @@ export class WidgetConfigurationComponent implements OnInit {
           this.selectedQuery=this.dashWidget.widget.dataSource;
           this.type=this.dashWidget.widget.widgetType.type;
           this.SelectedQuery();
-          //console.log("selected query",this.selectedQuery);
         },
         (error) => {
-          console.log('error ' );
+          console.log(error);
           },
           () => {
          this.load=true;
@@ -56,24 +55,20 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
-        //console.log("queries list",data);
       }
     );
      
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data)=>{
         this.widgetTypes=data;
-
       },
       (error)=>{
-        console.log('getAllWidgetTypes error');
-      },
-      ()=>{
-        // done
+        console.log(error);
       }
     );
   }
   SelectedQuery(){
+    //ToBeImplemented
     this.dimension=[];
     this.mesure1=[];
     this.mesure2=[];
@@ -93,7 +88,6 @@ export class WidgetConfigurationComponent implements OnInit {
       }
       });
     this.draw();
-
 }
 SelectedWidgetType(){
   this.type=this.selectedWidgetType.type;
@@ -103,7 +97,6 @@ draw(){
   this.basicData = {
     labels: this.dimension,
     datasets: [
-
         {
             label: "positive cases",
             backgroundColor: '#FFA726',
@@ -126,10 +119,8 @@ onSubmit(m: NgForm) {
     this.dashWidget.widget.dataSource= m.value.selectedQuery;
     this.dashWidget.widget.widgetType=m.value.selectedWidgetType;
     this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget).subscribe(
-      data => console.log('update', data)
+      data =>   this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a'])   //Navigate ToBeImplemented
     );
-    this.router.navigate(['/dashboards','3f2b0163-e62b-4187-a941-fd542945752a']);
-    //Navigate ToBeImplemented
   }
 }
 }
