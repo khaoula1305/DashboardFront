@@ -21,6 +21,9 @@ import { HomeComponent } from './layouts/home/home.component';
 import {CardModule} from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import {TableModule} from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
+
+
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import {TableModule} from 'primeng/table';
     Ng2SearchPipeModule,
     CardModule,
     FormsModule,
-    TableModule
+    TableModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
