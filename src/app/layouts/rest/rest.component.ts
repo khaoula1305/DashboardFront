@@ -22,10 +22,9 @@ export class RestComponent implements OnInit {
     } else {
       this.dataSource.title = rest.value.title;
       this.dataSource.url= rest.value.url;
-      console.log('add REST');
+      this.dataSource.type= 'Rest API';
       this.dataSourceService.addDataSource(this.dataSource).subscribe(
         result => this.router.navigate(['/queries'])
-        
          );
          
     }

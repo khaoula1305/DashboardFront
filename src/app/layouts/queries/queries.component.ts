@@ -14,9 +14,9 @@ export class QueriesComponent implements OnInit {
   constructor(private dataSourceService: DataSourceService, private router: Router) { }
 
   ngOnInit(): void {
-
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
+        console.log(data);
         this.queries = data;
       }
     );

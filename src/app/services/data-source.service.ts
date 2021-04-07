@@ -22,7 +22,6 @@ export class DataSourceService {
   deleteDataSource(dataSourceId: any) : Observable<DataSource>{
     return this.http.delete<DataSource>(this.host + dataSourceId);
   }
-
   updateDataSource(dataSource: DataSource): Observable<any> {
     return this.http.put(this.host + dataSource.id, dataSource);
   }

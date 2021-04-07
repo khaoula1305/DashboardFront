@@ -5,13 +5,13 @@
     <ng-template pTemplate="header">
         <tr>
             <th>Title</th>
-            <th>Rest Host</th>
+            <th>Data Source Type</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-tab>
         <tr>
             <td>{{tab.title}}</td>
-            <td>{{tab.url}}</td>
+            <td>{{tab.type}}</td>
             <p-button (click)="deleteQuery(tab.id)" icon="pi pi-times"></p-button>
         </tr>
     </ng-template>
@@ -20,7 +20,7 @@
     <p-button
       label="New Query"
       icon="pi pi-check"
-      routerLink='/rest'
+      routerLink='/dataSource'
       type="submit"
       iconPos="left"
     ></p-button>

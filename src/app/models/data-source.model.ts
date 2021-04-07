@@ -1,7 +1,7 @@
 export class DataSource{
     id: number;
     title: string;
+    type:string;
     url: string;
-    password: string;
-    userName: string;
+    text: string;
 }
