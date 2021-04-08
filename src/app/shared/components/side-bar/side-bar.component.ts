@@ -57,18 +57,13 @@ export class SideBarComponent implements OnInit {
       },
       {
         label: 'Data Sources',
-        icon: 'pi pi-fw pi-sliders-h',
+        icon: 'pi pi-fw pi-cloud-download',
         routerLink: 'dataSource'
         },
       {
       label: 'Queries',
       icon: 'pi pi-fw pi-sliders-h',
       routerLink: 'queries'
-      },
-      {
-      label: 'REST',
-      icon: 'pi pi-fw pi-cloud-download',
-      routerLink: 'rest'
       }
   ];
   }

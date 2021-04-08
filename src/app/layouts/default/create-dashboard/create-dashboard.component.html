@@ -1,10 +1,8 @@
 
 <form (ngSubmit)="onSubmit(newDashboard)" #newDashboard="ngForm">
-    <div class="p-grid"  style="text-align:center">
-        <div class="p-col-6">
-            <h4>Create Dashboard</h4>
-        </div>
+    <div class="p-grid">
         <div class="p-col">
+          <h4>Create Dashboard</h4>
             <div class="box">
                 <h5>Title *</h5>
                 <input type="text" pInputText [(ngModel)]="title" name="title" required/>
@@ -17,8 +15,6 @@
                 [(ngModel)]="description"
               ></textarea>
             </div>
-        </div>
-        <div class="p-col-6">
             <p-button
             [disabled]="!newDashboard.valid"
               label="Save"
@@ -26,6 +22,6 @@
               type="submit"
               iconPos="left"
             ></p-button>
-          </div>
+        </div>
      </div>
 </form>

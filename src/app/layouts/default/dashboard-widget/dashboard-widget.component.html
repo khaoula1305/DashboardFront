@@ -1,10 +1,9 @@
 <p-card header="{{dashboardWidget.title}}">
     <div class="conf">
      <button pButton pRipple type="button" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-
-     </div>
-     <div [ngSwitch]="widgetType">
+     <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+    </div>
+    <div *ngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">
             <p-table [value]="results">
                 <ng-template pTemplate="header">

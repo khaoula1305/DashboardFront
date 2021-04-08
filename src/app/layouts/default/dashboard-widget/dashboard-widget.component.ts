@@ -21,6 +21,7 @@ export class DashboardWidgetComponent implements OnInit {
   widgetId: any;
   widgetTypeEnum = WidgetTypeEnum;
   widgetType: string;
+  load= false;
   dimension=[];
   mesure2=[];
   mesure1=[];
@@ -38,8 +39,7 @@ export class DashboardWidgetComponent implements OnInit {
   ngOnInit(): void {
     if(this.dashboardWidget.widget){
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-    }
-      this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+     this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
           //Ce traitement est static nous devons le remplacer
@@ -54,8 +54,15 @@ export class DashboardWidgetComponent implements OnInit {
               this.mesure1.push(elm.negative);
             });
           }
-    
-        });
+        },
+        (error) => {
+          console.log(error);
+          },
+          () => {
+         this.load=true;
+          }
+          );
+      }
 
         this.basicData = {
           labels: this.dimension,

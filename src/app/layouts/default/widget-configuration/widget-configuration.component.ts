@@ -9,6 +9,7 @@ import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { Dashboard } from '../../../models/dashboard.model';
+import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 @Component({
   selector: 'app-widget-configuration',
   templateUrl: './widget-configuration.component.html',
@@ -23,7 +24,7 @@ export class WidgetConfigurationComponent implements OnInit {
   basicData;
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
-  type;
+  widgetTypeEnum = WidgetTypeEnum;
   //chart
   dimension ;
   mesure2 ;
@@ -45,15 +46,9 @@ export class WidgetConfigurationComponent implements OnInit {
         (data) => {
           this.dashWidget= data.find( elm => elm.id == title);
           this.selectedQuery=this.dashWidget.widget.dataSource;
-          this.type=this.dashWidget.widget.widgetType.type;
           this.SelectedQuery();
-        },
-        (error) => {
-          console.log(error);
-          },
-          () => {
-         this.load=true;
-          }
+          this.selectedWidgetType=this.dashWidget.widget.widgetType;
+        }
     );
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
@@ -89,11 +84,16 @@ export class WidgetConfigurationComponent implements OnInit {
           this.mesure1.push(elm.negative);
         });
       }
-      });
+      },
+      (error) => {
+        console.log(error);
+        },
+        () => {
+       this.load=true;
+        });
     this.draw();
 }
 SelectedWidgetType(){
-  this.type=this.selectedWidgetType.type;
   this.draw();
 }
 draw(){

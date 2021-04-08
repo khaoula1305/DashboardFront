@@ -6,8 +6,8 @@
   </div>
   <div class="p-col-fixed" style="width: 670px">
     <div class="box">
-      <div [ngSwitch]="type">
-        <div *ngSwitchCase="'table'">
+      <div [ngSwitch]="selectedWidgetType.type">
+        <div *ngSwitchCase="widgetTypeEnum.Table">
           <p-table [value]="results">
             <ng-template pTemplate="header">
                 <tr>
@@ -26,20 +26,19 @@
         </p-table>
         </div>
 
-        <div *ngSwitchCase="'card'">
+        <div *ngSwitchCase="widgetTypeEnum.Card">
           <p-card class="containSize partition">
             <ng-template pTemplate="header">
             </ng-template>
             {{results.Total}}
             <ng-template pTemplate="footer">
-                
             </ng-template>
         </p-card>
         </div>
         
         <div *ngSwitchDefault> 
           <p-chart
-          type="{{type}}"
+          type="{{selectedWidgetType.type}}"
           [data]="basicData"
           [options]="basicOptions"
         ></p-chart>
