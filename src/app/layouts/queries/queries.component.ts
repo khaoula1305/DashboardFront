@@ -16,7 +16,6 @@ export class QueriesComponent implements OnInit {
   ngOnInit(): void {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
-        console.log(data);
         this.queries = data;
       }
     );

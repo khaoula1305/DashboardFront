@@ -16,6 +16,9 @@ export class DataSourceService {
   getAllDataSources(): Observable<DataSource[]> {
     return this.http.get<DataSource[]>(this.host + 'alldatasource');
   }
+  getDataFrom(dataSource: DataSource): Observable<any[]>{
+      return this.http.get<any[]>(this.host+dataSource.id);
+  }
   getDataFromURL( url: string ): Observable<any[]> {
     return this.http.get<any[]>(url);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataSource } from '../../models/data-source.model';
+import { Rest } from '../../models/rest.model';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataSourceService } from 'src/app/services/data-source.service';
@@ -11,7 +11,7 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 })
 export class RestComponent implements OnInit {
 
-  dataSource: DataSource= new DataSource();
+  dataSource: Rest= new Rest();
   constructor(private dataSourceService: DataSourceService, private router: Router) { }
 
   ngOnInit(): void {

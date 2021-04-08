@@ -75,7 +75,7 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dimension=[];
     this.mesure1=[];
     this.mesure2=[];
-    this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
+    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
       (Restdata) => {
         this.results=Restdata;
         if( this.dashWidget.widget.widgetType.type!= 'card'){

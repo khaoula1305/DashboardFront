@@ -56,7 +56,7 @@ export class AddWidgetComponent implements OnInit {
     );
   }
   SelectedQuery() {
-    this.dataSourceService.getDataFromURL(this.selectedQuery.url).subscribe(
+    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
       (data) => {
         this.results=data;
         // ToBeImplemented

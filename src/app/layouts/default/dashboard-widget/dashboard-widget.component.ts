@@ -39,7 +39,7 @@ export class DashboardWidgetComponent implements OnInit {
     if(this.dashboardWidget.widget){
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
     }
-      this.dataSourceService.getDataFromURL(this.dashboardWidget.widget.dataSource.url).subscribe(
+      this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
           //Ce traitement est static nous devons le remplacer
