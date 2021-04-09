@@ -20,6 +20,10 @@ export class QueriesComponent implements OnInit {
       }
     );
   }
+  queryDetails(queryId : any){
+    this.router.navigate(['/queryDetails', queryId]);
+
+  }
   deleteQuery(id: any){
     this.dataSourceService.deleteDataSource(id).subscribe(
       result=> {

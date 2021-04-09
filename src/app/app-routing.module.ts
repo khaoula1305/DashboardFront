@@ -11,6 +11,7 @@ import { AddWidgetComponent } from './layouts/default/add-widget/add-widget.comp
 import { CreateDashboardComponent } from './layouts/default/create-dashboard/create-dashboard.component';
 import { UpdateDashboardComponent } from './layouts/default/update-dashboard/update-dashboard.component';
 import { DataSourceComponent } from './layouts/data-source/data-source.component';
+import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'addWidget', component: AddWidgetComponent},
   {path: 'NewDashboard', component: CreateDashboardComponent},
   {path: 'updateDashboard/:id', component: UpdateDashboardComponent},
-  {path: 'dataSource', component: DataSourceComponent}
+  {path: 'dataSource', component: DataSourceComponent},
+  {path: 'queryDetails/:id', component: QueryDetailsComponent}
 ];
 
 @NgModule({

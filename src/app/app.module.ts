@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import { DataSourceComponent } from './layouts/data-source/data-source.component';
+import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { DataSourceComponent } from './layouts/data-source/data-source.component
     QueriesComponent,
     RestComponent,
     HomeComponent,
-    DataSourceComponent
+    DataSourceComponent,
+    QueryDetailsComponent
   ],
   imports: [
     BrowserModule,
