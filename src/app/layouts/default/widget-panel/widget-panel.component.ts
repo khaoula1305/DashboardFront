@@ -24,9 +24,6 @@ export class WidgetPanelComponent implements OnInit {
     this.widgetsService.getAllWidgets().subscribe(
     (response) => {
       this.widgets = response;
-    },
-    (error) => {
-    console.log(error);
     }
     );
     }

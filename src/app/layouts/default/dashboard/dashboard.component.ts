@@ -12,10 +12,15 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private dashboardWidgetService: DashboardWidgetService, private route: ActivatedRoute, private widgetDashboardService: DashboardsService) { }
+  constructor(
+    private dashboardWidgetService: DashboardWidgetService, 
+    private route: ActivatedRoute, 
+    private dashboardService: DashboardsService,
+    private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem>= [];
   dashboardOriginal: Array<GridsterItem>;
+  add=false;
   load = false;
   editMode= false;
   searchText:any;
@@ -83,17 +88,28 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false
     };
-    this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
-      (data) => {
-         data.forEach( elm=> this.dashboardGridster.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
-    },
-    (error) => {
-    console.log('error ' );
-    },
-    () => {
-      this.load = true;
-    }
+     const id = this.route.snapshot.params.id;
+    this.dashboardService.getDashboard(id).subscribe(
+      data => {
+        this.dashboard = data;
+        this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
+          (dashwidget) => {
+            dashwidget.forEach( elm=> this.dashboardGridster.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
+        });
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        this.load=true;
+      }
     );
+  }
+  onHiddenClick(state){
+  this.add = false;
+}
+  addWidget(){
+    this.add = true;
   }
   OnEdit(reset: boolean){
     if(!this.editMode ){

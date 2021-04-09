@@ -69,12 +69,12 @@ export class DashboardWidgetComponent implements OnInit {
           datasets: [
             {
               label: "Negative Cases",
-              backgroundColor: '#FFA726',
+              backgroundColor:  '#EC407A',
               data: this.mesure2
             },
             {
               label: "Positive Cases",
-              backgroundColor: '#AAA423',
+              backgroundColor: '#AB47BC',
               data: this.mesure1
             }
           ]

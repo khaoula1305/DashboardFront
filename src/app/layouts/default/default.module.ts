@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WidgetComponent } from './widget/widget.component';
 import {PanelModule, } from 'primeng/panel';
-import { DefaultComponent } from './default/default.component';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { WidgetPanelComponent } from './widget-panel/widget-panel.component';
 import {CardModule} from 'primeng/card';
@@ -35,7 +34,6 @@ import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.co
      WidgetPanelComponent,
       DashboardComponent,
       DashboardWidgetComponent,
-      DefaultComponent,
       WidgetConfigurationComponent,
       AddWidgetComponent,
       CreateDashboardComponent,
@@ -65,7 +63,6 @@ import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.co
     TableModule
   ],
   exports: [
-    DefaultComponent
   ]
 })
 export class DefaultModule { }

@@ -1,10 +1,9 @@
-<div class="p-d-flex p-mb-3"  (mouseover)="hover()" (mouseout)="notHover()" [ngStyle]="hoverStyle" >
+<div class="p-d-flex p-mb-3"  (mouseover)="hover()" (mouseout)="notHover()" [ngStyle]="hoverStyle"  >
     <div shape="circle" size="4rem" styleClass="p-mr-2">
         <img src="{{widget.widgetType.imagePath}}">
     </div>
     <div class="content">
         <div styleClass="p-mb-2"> {{ widget.title}}</div>
-        <!--div styleClass="p-mb-2" id="left" ><div id="left2">{{widget.description}}</div></div-->
         <div styleClass="p-mb-2" class="description text-muted">{{widget.description}}</div>
     </div>
 </div>

@@ -5,7 +5,11 @@
   border-width: 3px;
   border-color: brown;
 }
-
+.panel {
+  position: fixed;
+  z-index: 999;
+  right: 0;
+}
 :host ::ng-deep gridster {
   background-color: rgb(255, 254, 254);
   height: 900px;
