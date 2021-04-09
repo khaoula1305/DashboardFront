@@ -19,9 +19,10 @@ export class WidgetsService {
     return this.http.post<Widget>(this.host, widget);
   }
 
-  deleteWidget(widgetId: number) {
-    this.http.delete(this.host + widgetId);
+  deleteWidget(widgetId: any) : Observable<Widget>{
+    return this.http.delete<Widget>(this.host + widgetId);
   }
+
   updateWidget(widget: Widget): Observable<any> {
     return this.http.put(this.host + widget.id, widget);
   }

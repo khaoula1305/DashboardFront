@@ -6,6 +6,8 @@ import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DashboardsService } from 'src/app/services/dashboards.service';
+import { MetaDataSource } from 'src/app/models/meta-data-source.model';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -15,6 +17,7 @@ import { DashboardsService } from 'src/app/services/dashboards.service';
 export class DashboardWidgetComponent implements OnInit {
   @Output() deleted = new EventEmitter<any>();
   @Input() dashboardWidget: DashboardWidget;
+  selectedKeys : MetaDataSource[];
   basicData: any;
   basicOptions: any;
   items: MenuItem[];
@@ -25,6 +28,9 @@ export class DashboardWidgetComponent implements OnInit {
   mesure2=[];
   mesure1=[];
   results=[];
+  dimensionKey: MetaDataSource;
+  load=false;
+  datasets: any[] = [];
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -36,42 +42,43 @@ export class DashboardWidgetComponent implements OnInit {
     this.deleted.emit(true);
   }
   ngOnInit(): void {
+    var myLabels=[];
+    var objet: any;
     if(this.dashboardWidget.widget){
+      console.log(this.dashboardWidget.widget);
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
+     this.selectedKeys= this.dashboardWidget.widget.metaDataSourceDataModels;
     }
       this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
-          //Ce traitement est static nous devons le remplacer
-          if( this.dashboardWidget.widget.widgetType.type!= 'card'){
-            data.forEach(elm => {
-              this.dimension.push(elm.date);
-            });
-            data.forEach(elm => {
-              this.mesure2.push(elm.positive);
-            });
-            data.forEach(elm => {
-              this.mesure1.push(elm.negative);
-            });
-          }
+          this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
+          this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
+          this.dashboardWidget.widget.metaDataSourceDataModels.forEach(element=> {
+            if(!element.isDimension){
+              var label = [];
+              this.results.forEach(elm => label.push(elm[element.key]));
+              objet = {
+                label: this.dimensionKey.label,
+                backgroundColor: this.generateColor(),
+                data: label
+              };
+              this.datasets.push(objet);
+            }
+          })
+         
     
+        },
+        (error) => {
+          console.log(error);
+        },
+        ()=>{
+          this.load=true;
         });
 
-        this.basicData = {
-          labels: this.dimension,
-          datasets: [
-            {
-              label: "Negative Cases",
-              backgroundColor: '#FFA726',
-              data: this.mesure2
-            },
-            {
-              label: "Positive Cases",
-              backgroundColor: '#AAA423',
-              data: this.mesure1
-            }
-          ]
-        };
+
+        this.basicData = { labels: myLabels, datasets: this.datasets };
+       
 
    
     this.items = [
@@ -106,5 +113,9 @@ export class DashboardWidgetComponent implements OnInit {
   updateWidgetDashboard(id: any){
     this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', id]);
+  }
+
+  generateColor() {
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }
 }

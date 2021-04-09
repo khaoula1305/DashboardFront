@@ -29,6 +29,8 @@ import {DividerModule} from 'primeng/divider';
 import {TableModule} from 'primeng/table';
 import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
 import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.component';
+import { MyWidgetsComponent } from './my-widgets/my-widgets.component';
+import {ToastModule} from 'primeng/toast';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -39,7 +41,8 @@ import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.co
       WidgetConfigurationComponent,
       AddWidgetComponent,
       CreateDashboardComponent,
-      UpdateDashboardComponent
+      UpdateDashboardComponent,
+      MyWidgetsComponent
     ],
   imports: [
     CommonModule,
@@ -62,7 +65,8 @@ import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.co
     BadgeModule,
     SplitButtonModule,
     DividerModule,
-    TableModule
+    TableModule,
+    ToastModule
   ],
   exports: [
     DefaultComponent

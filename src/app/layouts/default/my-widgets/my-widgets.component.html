@@ -1,0 +1,36 @@
+<p-toast position="bottom-center" key="a" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+          <div class="p-text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="p-grid p-fluid">
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onReject()" label="Ok" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
+
+<div class="p-col-12" style="text-align:left">
+    <h3>My Widgets</h3>
+</div>
+<div class="p-grid">
+    <div *ngFor="let widget of myWidgets">
+      <p-card>
+        <div>
+          <h3>{{widget.title }}</h3>
+          <p> {{widget.description}}</p>
+        </div>
+      <footer>
+        <p-button (click)="onDeleteWidget(widget.id)" icon="pi pi-fw pi-trash"></p-button>
+        <p-messages *ngIf="err" [(value)]="errDeletingMsgs" [enableService]="false"></p-messages>
+      </footer>
+    </p-card>
+  
+    </div>
+</div>
+  

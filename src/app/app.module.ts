@@ -23,6 +23,8 @@ import { FormsModule } from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import { DataSourceComponent } from './layouts/data-source/data-source.component';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {CheckboxModule} from 'primeng/checkbox';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { DataSourceComponent } from './layouts/data-source/data-source.component
     CardModule,
     FormsModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    MultiSelectModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

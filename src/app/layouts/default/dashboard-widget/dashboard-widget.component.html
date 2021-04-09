@@ -4,21 +4,17 @@
   <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
 
      </div>
-     <div [ngSwitch]="widgetType">
+     <div ùngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">
             <p-table [value]="results">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Date</th>
-                        <th>Positive Cases</th>
-                        <th>Negative Cases</th>
+                        <th  *ngFor="let th of selectedKeys" >{{th.label}}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
                     <tr>
-                        <td>{{tab.date}}</td>
-                        <td>{{tab.positive}}</td>
-                        <td>{{tab.negative}}</td>
+                        <td  *ngFor="let th of selectedKeys">{{tab[th.key]}}</td>
                     </tr>
                 </ng-template>
             </p-table>
