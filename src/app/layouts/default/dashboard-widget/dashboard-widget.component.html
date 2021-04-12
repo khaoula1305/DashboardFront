@@ -5,7 +5,7 @@
     </div>
     <div *ngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">
-            <p-table [value]="results">
+            <p-table [value]="results" [scrollable]="true" scrollHeight="700px">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Date</th>

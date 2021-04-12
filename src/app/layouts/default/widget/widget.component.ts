@@ -13,8 +13,6 @@ export class WidgetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
-    console.log(this.widget);
   }
   hover(){
   this.hoverStyle = {

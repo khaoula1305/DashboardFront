@@ -14,17 +14,13 @@
             <td (click)="queryDetails(tab.id)">{{tab.title}}</td>
             <td (click)="queryDetails(tab.id)">{{tab.type}}</td>
             <td>
-                <button type="button" pButton pRipple icon="pi pi-fw pi-trash" (click)="deleteQuery(tab.id)"></button>
+                 <button pButton pRipple type="button" (click)="deleteQuery(tab.id)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+
             </td>
         </tr>
     </ng-template>
 </p-table>
 <div class="p-col-6">
-    <p-button
-      label="New Query"
-      icon="pi pi-check"
-      routerLink='/dataSource'
-      type="submit"
-      iconPos="left"
-    ></p-button>
+  <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"    
+  iconPos="left"></button>
   </div>
