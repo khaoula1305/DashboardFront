@@ -75,7 +75,7 @@
           <div class="card">
             <div class="p-col-12" *ngIf="isGraph">
               <label>Dimension</label> <br>
-            <p-dropdown name="dimensionKey" [options]="allKeys" [(ngModel)]="dimensionKey" editable="true" optionLabel="key"  (ngModelChange)="onSelectedDimension()"></p-dropdown>
+            <p-dropdown name="dimensionKey" [options]="allKeys" [ngModel]="dimensionKey" editable="true" optionLabel="key"  (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
             <!--div class="p-col-12" *ngIf="isGraph">
               <p-button
                 label="Next"

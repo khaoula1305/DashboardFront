@@ -48,6 +48,7 @@ export class AddWidgetComponent implements OnInit {
   isGraph= false;
   isTable = false;
   isDimension;
+  oldValue:string;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -73,7 +74,14 @@ export class AddWidgetComponent implements OnInit {
       }
     );
   }
-  onSelectedDimension() {
+  onSelectedDimension(event) {
+  if(this.dimensionKey!=undefined) {
+    this.allKeys.push(this.dimensionKey);
+    this.labels = [];
+    var removeIndex = this.selectedKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
+    this.selectedKeys.splice(removeIndex, 1); 
+  } 
+  this.dimensionKey=event;
   this.dimensionKey.isDimension=true;
   this.results.forEach(elm=> this.labels.push(elm[this.dimensionKey.key])) ;
   var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
@@ -129,8 +137,6 @@ export class AddWidgetComponent implements OnInit {
         for(let key in data[0]){
           this.allKeys.push({id: UUID.UUID(),key, label:'label 1', isDimension:false});
         }
-        console.log("all keys",this.allKeys);
-
       });
       if(this.selectedWidgetType.type == 'bar' || this.selectedWidgetType.type == 'pie' || this.selectedWidgetType.type == 'line') {
         this.isGraph = true;
