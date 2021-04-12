@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultComponent } from './default.component';
+import { QueryDetailsComponent } from './query-details.component';
 
-describe('DefaultComponent', () => {
-  let component: DefaultComponent;
-  let fixture: ComponentFixture<DefaultComponent>;
+describe('QueryDetailsComponent', () => {
+  let component: QueryDetailsComponent;
+  let fixture: ComponentFixture<QueryDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DefaultComponent ]
+      declarations: [ QueryDetailsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DefaultComponent);
+    fixture = TestBed.createComponent(QueryDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

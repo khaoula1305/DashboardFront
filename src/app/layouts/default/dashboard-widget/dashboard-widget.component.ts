@@ -24,12 +24,12 @@ export class DashboardWidgetComponent implements OnInit {
   widgetId: any;
   widgetTypeEnum = WidgetTypeEnum;
   widgetType: string;
+  load= false;
   dimension=[];
   mesure2=[];
   mesure1=[];
   results=[];
   dimensionKey: MetaDataSource;
-  load=false;
   datasets: any[] = [];
 
   constructor(

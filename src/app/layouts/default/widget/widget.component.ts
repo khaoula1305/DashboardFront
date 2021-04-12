@@ -13,9 +13,6 @@ export class WidgetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //console.log("widget type", this.widget.widgetType.type);
-    console.log("imagePath", this.widget.widgetType.imagePath);
-
   }
   hover(){
   this.hoverStyle = {

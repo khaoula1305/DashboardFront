@@ -25,6 +25,7 @@ import {ToastModule} from 'primeng/toast';
 import { DataSourceComponent } from './layouts/data-source/data-source.component';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {CheckboxModule} from 'primeng/checkbox';
+import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {CheckboxModule} from 'primeng/checkbox';
     QueriesComponent,
     RestComponent,
     HomeComponent,
-    DataSourceComponent
+    DataSourceComponent,
+    QueryDetailsComponent
   ],
   imports: [
     BrowserModule,

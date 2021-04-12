@@ -1,14 +1,14 @@
 <p-card header="Available Widgets" styleClass="panel">
-    <button pButton pRipple type="button" (click)="hideClick()" icon="pi pi-times" class="btn p-button-rounded p-button-danger p-button-outlined"></button>
+  <button pButton pRipple type="button"  (click)="hideClick()"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input type="text" pInputText name="search" placeholder="Search" [(ngModel)]="searchText" />
     </span>
 
     <p-scrollPanel [style]="{margin: '20px',  height: '400px'}">
-      <app-widget *ngFor="let widget of widgets | filter: searchText" [widget]="widget"  (click)="addItem(widget)" class="pointer"></app-widget>
+      <app-widget *ngFor="let widget of widgets | filter: searchText" [widget]="widget"   (click)="addClick(widget)" class="pointer"></app-widget>
       <p-scrollTop target="parent" styleClass="custom-scrolltop" [threshold]="100" icon="pi pi-arrow-up"></p-scrollTop>
     </p-scrollPanel>
-    <p-button label="add" routerLink="/addWidget"></p-button>  
+  <button pButton pRipple type="button" label="Create widget" routerLink="/addWidget" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
 </p-card >
 

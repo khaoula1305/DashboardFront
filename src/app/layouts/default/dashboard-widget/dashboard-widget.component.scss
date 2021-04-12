@@ -5,6 +5,10 @@
   top: 0px;
   visibility: hidden;
 }
+p-card {
+  display: block;
+  margin: auto;
+}
 p-card:hover .conf {
   visibility: visible;
 }

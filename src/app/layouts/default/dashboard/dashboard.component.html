@@ -1,3 +1,4 @@
+<div *ngIf="load"><p-divider class="divider1"></p-divider>
 <div class="header">
   {{dashboard.title}}
   <span class="p-input-icon-left">
@@ -11,9 +12,13 @@
   <button pButton pRipple type="button"  *ngIf="editMode" (click)="OnEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button"  *ngIf="editMode" (click)="OnEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
   <button pButton pRipple type="button" label="delete" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+  <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
 </div>
-<gridster *ngIf="load" [options]="options">
+<p-divider></p-divider>
+<app-widget-panel *ngIf="add" class="panel"  (added)="onAddedClick($event)" (hidden)="onHiddenClick($event)"></app-widget-panel>
+<gridster  [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
     <app-dashboard-widget (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
   </gridster-item>
 </gridster>
+</div>

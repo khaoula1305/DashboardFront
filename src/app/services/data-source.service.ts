@@ -22,6 +22,9 @@ export class DataSourceService {
   getDataFromURL( url: string ): Observable<any[]> {
     return this.http.get<any[]>(url);
   }
+  getDataSource(dataSourceId: any) : Observable<DataSource>{
+    return this.http.get<DataSource>(this.host +'test/'+ dataSourceId);
+  }
   deleteDataSource(dataSourceId: any) : Observable<DataSource>{
     return this.http.delete<DataSource>(this.host + dataSourceId);
   }
