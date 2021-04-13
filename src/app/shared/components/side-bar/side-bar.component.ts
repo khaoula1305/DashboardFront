@@ -64,6 +64,11 @@ export class SideBarComponent implements OnInit {
       label: 'Queries',
       icon: 'pi pi-fw pi-sliders-h',
       routerLink: 'queries'
+      },
+      {
+      label: 'My Widgets',
+      icon: 'pi pi-fw pi-calendar',
+      routerLink: 'myWidgets'
       }
   ];
   }

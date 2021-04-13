@@ -1,4 +1,5 @@
 import { DataSource } from './data-source.model';
+import { MetaDataSource } from './meta-data-source.model';
 import { WidgetType } from './widget-type';
 
 export class Widget{
@@ -12,4 +13,5 @@ export class Widget{
     defaultItemRows: number;
     dataSource: DataSource;
     widgetType: WidgetType;
+    metaDataSourceDataModels: MetaDataSource[];
 }
