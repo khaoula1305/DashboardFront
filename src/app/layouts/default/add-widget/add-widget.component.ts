@@ -104,6 +104,10 @@ onSubmit(m: NgForm) {
     this.widget.description = m.value.description;
     this.widget.dataSource = m.value.selectedQuery;
     this.widget.widgetType = this.selectedWidgetType;
+    this.widget.defaultItemCols=2;
+    this.widget.defaultItemRows=2;
+    this.widget.minItemCols=1;
+    this.widget.minItemRows=1;
     let dash= this.dashboardsService.getCurretDashboard();
     this.widgetService.addWidget(this.widget).subscribe(
       result =>      this.router.navigate(['/dashboards',dash.id])

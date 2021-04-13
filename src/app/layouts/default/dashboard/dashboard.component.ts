@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {CompactType, DisplayGrid, Draggable, GridsterItemComponent, GridType, PushDirections, Resizable} from 'angular-gridster2';
 import { GridsterConfig, GridsterItem }  from 'angular-gridster2';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardWidgetService: DashboardWidgetService, 
     private route: ActivatedRoute, 
+    private router: Router, 
     private dashboardService: DashboardsService,
     private widgetDashboardService: DashboardsService) { }
   options: GridsterConfig;
@@ -42,14 +43,14 @@ export class DashboardComponent implements OnInit {
       useTransformPositioning: true,
       mobileBreakpoint: 640,
       minCols: 1,
-      maxCols: 100,
+      maxCols: 10,
       minRows: 1,
       maxRows: 100,
-      maxItemCols: 100,
+      maxItemCols: 5,
       minItemCols: 1,
       maxItemRows: 100,
       minItemRows: 1,
-      maxItemArea: 2500,
+      maxItemArea: 250,
       minItemArea: 1,
       defaultItemCols: 1,
       defaultItemRows: 1,
@@ -90,7 +91,16 @@ export class DashboardComponent implements OnInit {
         this.dashboard = data;
         this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
           (dashwidget) => {
-            dashwidget.forEach( elm=> this.dashboardGridster.push({x: elm.xAxisValue, y: elm.yAxisValue, cols:elm.columnValue, rows:elm.rowValue, widgetdashboard: elm}) ) 
+            dashwidget.forEach( elm=> this.dashboardGridster.push(
+              { x: elm.xAxisValue, 
+                y: elm.yAxisValue, 
+                cols:elm.columnValue, 
+                rows:elm.rowValue, 
+                maxItemRows: elm.maxItemRows,
+                minItemRows: elm.widget.minItemRows,
+                maxItemCols: elm.maxItemCols,
+                minItemCols: elm.widget.minItemCols,
+                widgetdashboard: elm}) ) 
         });
       },
       (error) => {
@@ -110,23 +120,33 @@ export class DashboardComponent implements OnInit {
   onAddedClick(widget : Widget){
     let dashboardWidget: DashboardWidget=new DashboardWidget();
     // ToBeImplemented
-    widget.defaultItemCols=2;
-    widget.defaultItemRows=2;
+    dashboardWidget.maxItemCols=4;
+    dashboardWidget.maxItemRows=4;
+
     dashboardWidget.title=widget.title;
     dashboardWidget.description=widget.description;
     dashboardWidget.dashboard=this.dashboard;
     dashboardWidget.widget=widget;
-    //ToBeImblemented
     dashboardWidget.rowValue=   widget.defaultItemCols;
     dashboardWidget.columnValue= widget.defaultItemRows;
-    dashboardWidget.maxItemCols=1;
-    dashboardWidget.maxItemRows=1;
-    let item: GridsterItem 
-    item=this.options.api.getLastPossiblePosition(item);
+    let item: GridsterItem ={x:0, y:0, rows: dashboardWidget.rowValue, cols:  dashboardWidget.columnValue};
+    item=this.options.api.getFirstPossiblePosition(item);
     dashboardWidget.xAxisValue=item.x;
     dashboardWidget.yAxisValue=item.y;
     this.dashboardGridster.push({x: item.x, y : item.y, cols : widget.defaultItemCols, rows: widget.defaultItemRows, widgetdashboard: dashboardWidget});
-    this.dashboardWidgetService.addDashboardWidget(this.dashboard.id, dashboardWidget).subscribe();
+    this.dashboardWidgetService.addDashboardWidget(this.dashboard.id, dashboardWidget).subscribe(
+      (data)=>{
+        this.changeLocation(this.dashboard.id);
+      }
+    );
+
+  }
+  changeLocation(locationData) {
+    // save current route first
+    const currentRoute = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['dashboards', locationData]); // navigate to same route
+    });
   }
   OnEdit(reset: boolean){
     if(!this.editMode ){
@@ -160,6 +180,7 @@ export class DashboardComponent implements OnInit {
   }
   updateDashboard(){
     this.dashboardGridster.forEach(item => { 
+      // add isEqual function
       item.widgetdashboard.xAxisValue= item.x;
       item.widgetdashboard.yAxisValue= item.y;
       item.widgetdashboard.columnValue= item.cols;
@@ -180,5 +201,6 @@ export class DashboardComponent implements OnInit {
   onDeletedClick(evt , item){
    this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
    this.dashboardWidgetService.deleteDashboardWidget(this.dashboard.id,item.widgetdashboard).subscribe();
+   this.options.api.optionsChanged();
 }
 }
