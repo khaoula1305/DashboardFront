@@ -24,6 +24,7 @@ const routes: Routes = [
   {path: 'updateDashboard/:id', component: UpdateDashboardComponent}, 
   {path: 'dataSource', component: DataSourceComponent},
   {path: 'myWidgets', component: MyWidgetsComponent}
+  
 ];
 
 @NgModule({

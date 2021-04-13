@@ -41,6 +41,11 @@
                 class="widgetType-item widgetType-item-value"
                 *ngIf="selectedWidgetType.type"
               >
+              
+              <!-- here -->
+             
+              <!-- here -->
+
                 <div class="center">
                   <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
                   {{ selectedWidgetType.type }}
@@ -57,6 +62,19 @@
           </p-dropdown>
         </div>
 
+        <div class="box">
+          <div [ngSwitch]="widgetType">
+            <div *ngSwitchCase="widgetTypeEnum.Table">
+              <app-table></app-table>
+            </div>
+            <div *ngSwitchCase="widgetTypeEnum.Card">
+            </div>
+            <div *ngSwitchDefault> 
+            </div>
+          </div>
+        </div>
+       
+        <!-- To be removed
         <div class="p-field p-col" *ngIf="showQueries">
           <label for="query">Queries</label>
           <p-dropdown
@@ -69,6 +87,7 @@
             optionLabel="title"
           ></p-dropdown>
         </div>
+      -->
       </div>
       <div class="p-col-12">
         <div class="p-field p-col" *ngIf="showKeys">
@@ -156,6 +175,7 @@
       <div class="box">
         <div [ngSwitch]="widgetType">
           <div *ngSwitchCase="widgetTypeEnum.Table">
+
             <p-table [value]="results" [scrollable]="true" scrollHeight="400px">
               <ng-template pTemplate="header">
                   <tr>

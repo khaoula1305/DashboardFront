@@ -1,0 +1,73 @@
+<div class="p-grid">
+ <div class="p-col-12">
+    <div class="p-field p-col">
+        <label for="query">Queries</label>
+        <p-dropdown
+          inputId="query"
+          name="selectedQuery"
+          [options]="queries"
+          [(ngModel)]="selectedQuery"
+          placeholder="Select"
+          (ngModelChange)="onSelectedQuery()"
+          optionLabel="title"
+        ></p-dropdown>
+      </div>
+</div>
+<div class="p-col-6">
+    <div class="p-field p-col" *ngIf="showKeys">
+            <div class="card">
+                <p-splitter [style]="{'height': '300px','width': '100px'}" styleClass="p-mb-5">
+                    <ng-template pTemplate>
+                        <div class="p-col p-d-flex p-ai-center p-jc-center">
+                          <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{width:'300px'}">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Mesures</th>
+                                    <th>          </th>
+                                    <th>          </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-tab>
+                                <tr>
+                                    <td>{{tab.key}}</td>
+                                    <td>           </td>
+                                    <td><p-button (click)="onSelectedKey(tab.key, tab.id)" icon="pi pi-check"></p-button></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate>
+                        <div class="p-col p-d-flex p-ai-center p-jc-center">
+                          <div class="p-field p-col" *ngIf="showKeys">
+                            <div class="card">
+                              <p-table [value]="selectedKeys" [scrollable]="true" scrollHeight="250px" [style]="{width:'500px'}">
+                                  <ng-template pTemplate="header">
+                                      <tr>
+                                          <th>Selected Keys</th>
+                                          <th>Labels</th>
+                                          <th>          </th>
+                                          
+                                      </tr>
+                                  </ng-template>
+                                  <ng-template pTemplate="body" let-tab>
+                                      <tr>
+                                          <td>{{tab.key}}</td>
+                                          <td>
+                                          <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"  placeholder="Add a label"/>  
+                                          </td>     
+                                          <td><p-button (click)="onRemovedKey(tab.key)" icon="pi pi-times"></p-button></td>
+                                      </tr>
+                                  </ng-template>
+                              </p-table>
+                          </div>
+                          </div>
+                        </div>
+                    </ng-template>
+                </p-splitter>
+            </div> 
+    </div>
+ </div>
+</div>
+
+       
