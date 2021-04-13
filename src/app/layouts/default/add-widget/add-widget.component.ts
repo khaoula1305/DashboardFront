@@ -19,7 +19,7 @@ import { UUID } from 'angular2-uuid';
 export class AddWidgetComponent implements OnInit {
   basicData;
   queries: DataSource[];
-  selectedQuery: DataSource;
+  selectedQuery: DataSource; 
   widget: Widget = new Widget();
   title: string;
   description: string;
@@ -59,12 +59,12 @@ export class AddWidgetComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.widgetType = 'bar';
-    this.dataSourceService.getAllDataSources().subscribe(
+    //this.widgetType = 'bar';
+    /*this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
       }
-    );
+    );*/
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         this.widgetTypes = data;
@@ -74,7 +74,7 @@ export class AddWidgetComponent implements OnInit {
       }
     );
   }
-  onSelectedDimension(event) {
+  /*onSelectedDimension(event) {
   if(this.dimensionKey!=undefined) {
     this.allKeys.push(this.dimensionKey);
     this.labels = [];
@@ -87,8 +87,8 @@ export class AddWidgetComponent implements OnInit {
   var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
   this.allKeys.splice(removeIndex, 1); 
   this.selectedKeys.push(this.dimensionKey); 
-  }
-  onSelectedMesure(data: MetaDataSource) {
+  }*/
+  /*onSelectedMesure(data: MetaDataSource) {
     var objet: any;
     var label=[];
     this.results.forEach(elm=> label.push(elm[data.key])) ;
@@ -98,8 +98,8 @@ export class AddWidgetComponent implements OnInit {
       data: label
     };
     this.datasets.push(objet);
-  }
-  onSelectedKey(key: string, id: string){
+  }*/
+  /*onSelectedKey(key: string, id: string){
 
     this.selectedKeys.push({ id, key, label: key, isDimension:false});
     if(this.selectedKeys.length== 0) this.preview=true;
@@ -108,8 +108,8 @@ export class AddWidgetComponent implements OnInit {
     this.labelsWrited=true;
     this.onSelectedMesure({ id, key, label: key, isDimension:false});
    
-  }
-  onRemovedKey(key: string, id: string) {
+  }*/
+  /*onRemovedKey(key: string, id: string) {
 
     this.allKeys.push({id, key, label: key, isDimension:false});
     this.removeSelectedKeyFromSecondList(id);
@@ -128,8 +128,8 @@ export class AddWidgetComponent implements OnInit {
   generateColor() {
     return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
 
-  }
-  onSelectedQuery() {
+  }*/
+  /*onSelectedQuery() {
     this.showKeys = true;
     this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
       (data) => {
@@ -141,17 +141,16 @@ export class AddWidgetComponent implements OnInit {
       if(this.selectedWidgetType.type == 'bar' || this.selectedWidgetType.type == 'pie' || this.selectedWidgetType.type == 'line') {
         this.isGraph = true;
       } else this.isTable = true;
-  }
+  }*/
   OnSelectedWidgetType() {
-    this.showQueries = true;
-    this.widgetType = this.selectedWidgetType.type;
+    //this.showQueries = true;
   }
-  draw() {
+  /*draw() {
 
     this.drawType = true;
     this.basicData = { labels: this.labels, datasets: this.datasets };
 
-  }
+  }*/
   onSubmit(m: NgForm) {
     if (m.untouched || m.invalid) {
       alert('Required');

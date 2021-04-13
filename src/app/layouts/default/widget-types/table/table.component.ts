@@ -20,6 +20,7 @@ export class TableComponent implements OnInit {
   showKeys=false;
   preview=false;
   labelsWrited=false;
+  drawType=false;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -40,7 +41,7 @@ export class TableComponent implements OnInit {
       (data) => {
         this.results = data;
         for(let key in data[0]){
-          this.allKeys.push({id: UUID.UUID(),key, label:'label 1', isDimension:false});
+          this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
         }
       });
   }
@@ -52,12 +53,14 @@ export class TableComponent implements OnInit {
     else  this.preview=false;
     this.removeSelectedKeyFromFirstList(id);
     this.labelsWrited=true;
+    console.log('selectedKeys list', this.selectedKeys)
   }
 
   onRemovedKey(key: string, id: string) {
 
     this.allKeys.push({id, key, label: key, isDimension:false});
     this.removeSelectedKeyFromSecondList(id);
+
   }
   removeSelectedKeyFromFirstList(id: string) {
 
@@ -69,6 +72,10 @@ export class TableComponent implements OnInit {
     this.selectedKeys.splice(removeIndex, 1);
     if(this.selectedKeys.length== 0) this.preview=true;
     else  this.preview=false;
+  }
+
+  drawTable(){
+    this.drawType = true;
   }
 
 }

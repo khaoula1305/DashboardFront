@@ -1,0 +1,38 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="p-field p-col">
+            <label for="query">Queries</label>
+            <p-dropdown inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="selectedQuery"
+                placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title"></p-dropdown>
+        </div>
+    </div>
+    <div class="p-col-6">
+        <div class="p-field p-col" *ngIf="showKeys">
+            <div class="card">
+                <div class="p-col-12">
+                    <label>Available Keys</label> <br>
+                    <p-dropdown name="dimensionKey" [options]="allKeys" [ngModel]="cardKey" editable="true"
+                        optionLabel="key" (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
+                </div>
+            </div>
+            <div class="card">
+                {{cardRes}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

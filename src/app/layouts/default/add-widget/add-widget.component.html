@@ -23,7 +23,7 @@
     <div class="p-col-12">
       <div class="p-fluid p-formgrid p-grid">
         
-        <div class="p-field p-col">
+        <div class="p-field p-col-12">
           <label for="visualisation">Visualisation</label>
           <p-dropdown
             [options]="widgetTypes"
@@ -41,10 +41,6 @@
                 class="widgetType-item widgetType-item-value"
                 *ngIf="selectedWidgetType.type"
               >
-              
-              <!-- here -->
-             
-              <!-- here -->
 
                 <div class="center">
                   <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
@@ -62,14 +58,16 @@
           </p-dropdown>
         </div>
 
-        <div class="box">
-          <div [ngSwitch]="widgetType">
+        <div class="box" *ngIf="selectedWidgetType">
+          <div [ngSwitch]="selectedWidgetType.type">
             <div *ngSwitchCase="widgetTypeEnum.Table">
               <app-table></app-table>
             </div>
             <div *ngSwitchCase="widgetTypeEnum.Card">
+              <app-card></app-card>
             </div>
             <div *ngSwitchDefault> 
+              <app-graph [selectedWidgetType]="selectedWidgetType"></app-graph>
             </div>
           </div>
         </div>
@@ -89,20 +87,13 @@
         </div>
       -->
       </div>
-      <div class="p-col-12">
+      <!--div class="p-col-12">
         <div class="p-field p-col" *ngIf="showKeys">
           <div class="card">
             <div class="p-col-12" *ngIf="isGraph">
               <label>Dimension</label> <br>
             <p-dropdown name="dimensionKey" [options]="allKeys" [ngModel]="dimensionKey" editable="true" optionLabel="key"  (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
-            <!--div class="p-col-12" *ngIf="isGraph">
-              <p-button
-                label="Next"
-                icon="pi pi-check"
-                iconPos="left"
-                (click)="setDimensionTrue()"
-              ></p-button>
-            </div-->
+
             </div>
 
             <div class="card">
@@ -159,59 +150,9 @@
         </div>
         </div>
  
-      </div>
+      </div-->
     </div>
 
-    <div class="p-col-12" *ngIf="labelsWrited">
-      <p-button
-        label="Preview"
-        [disabled]="preview"
-        icon="pi pi-check"
-        (click)="draw()"
-        iconPos="left"
-      ></p-button>
-    </div>
-    <div class="p-col-fixed" style="width: 670px" *ngIf="drawType && selectedKeys.length!=0">
-      <div class="box">
-        <div [ngSwitch]="widgetType">
-          <div *ngSwitchCase="widgetTypeEnum.Table">
-
-            <p-table [value]="results" [scrollable]="true" scrollHeight="400px">
-              <ng-template pTemplate="header">
-                  <tr>
-                      <th  *ngFor="let th of selectedKeys" >{{th.label}}</th>
-                  </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-tab>
-                  <tr>
-                      <td  *ngFor="let th of selectedKeys">{{tab[th.key]}}</td>
-                  </tr>
-              </ng-template>
-          </p-table>
-          </div>
-
-          <div *ngSwitchCase="widgetTypeEnum.Card">
-            <p-card class="containSize partition">
-              <ng-template pTemplate="header">
-                  {{Widget.title}}
-              </ng-template>
-              {{results.Total}}
-              <ng-template pTemplate="footer">
-                  
-              </ng-template>
-          </p-card>
-          </div>
-          
-          <div *ngSwitchDefault> 
-            <p-chart
-            type="{{widgetType}}"
-            [data]="basicData"
-            [options]="basicOptions"
-          ></p-chart>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="p-col-12 Col12">
       <p-divider></p-divider>
