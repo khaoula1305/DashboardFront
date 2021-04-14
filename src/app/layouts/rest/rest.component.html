@@ -4,28 +4,53 @@
     <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
     <div class="p-col-12">
         <h3>Add New Rest</h3>
-      </div>
-    <div class="p-col">
+    </div>
+    <div class="p-col-12">
         <div class="box">
           <h5>Title</h5>
-          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" />
+          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" required />
         </div>
     </div>
-    <div class="p-col">
-        <div class="box">
-          <h5>URL</h5>
-          <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" />
-        </div>
+    <div class="p-col-12">
+      <div class="box">
+        <h5>Token </h5>
+        <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
+      </div>
+      <div class="box">
+        <h5>URL *</h5>
+        <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" required />
+      </div>
+    </div>
+    <div class="p-col-12">
+      <div class="box">
+        <h5>User Id for basic authentication </h5>
+        <input type="text" pInputText  />
+      </div>
+      <div class="box">
+        <h5>Password  for basic authentication </h5>
+        <input type="text" pInputText  />
+      </div>
     </div>
  
-    <div class="p-col-6">
+    <div class="p-col-12">
+      <div class="box">
         <p-button
+        [disabled]="!rest.valid"
+        label="Test Connection"
+        icon="pi pi-check"
+        iconPos="left"
+      ></p-button>
+      </div>
+    <div class="box">
+        <p-button
+          [disabled]="!rest.valid"
           label="Save"
           icon="pi pi-check"
           type="submit"
           iconPos="left"
         ></p-button>
       </div>
+    </div>
 </form>
 </div>
 </div>
