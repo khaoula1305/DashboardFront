@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UUID } from 'angular2-uuid';
 import { DataSource } from 'src/app/models/data-source.model';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
@@ -28,6 +28,8 @@ export class GraphComponent implements OnInit {
   basicData;
   showQueries=false;
   @Input() selectedWidgetType: WidgetType;
+
+  @Output() added = new EventEmitter<any>();
 
   constructor(private dataSourceService: DataSourceService) { }
 
@@ -61,7 +63,6 @@ export class GraphComponent implements OnInit {
     else this.preview = false;
     this.removeSelectedKeyFromFirstList(id);
     this.labelsWrited = true;
-    this.onSelectedMesure({ id, key, label: key, isDimension:false});
   }
 
   onSelectedMesure(data: MetaDataSource) {
@@ -99,7 +100,12 @@ export class GraphComponent implements OnInit {
   }
 
   draw() {
+    this.datasets=[];
     this.drawType = true;
+    this.selectedKeys.forEach(elm=>{
+      if(!elm.isDimension)
+      this.onSelectedMesure(elm)
+    } );
     this.basicData = { labels: this.labels, datasets: this.datasets };
   }
   onSelectedQuery() {
@@ -111,6 +117,10 @@ export class GraphComponent implements OnInit {
           this.allKeys.push({ id: UUID.UUID(), key, label: key, isDimension: false });
         }
       });
+  }
+
+  onSendData() {
+    this.added.emit([this.selectedKeys, this.selectedQuery]);
   }
 
 }

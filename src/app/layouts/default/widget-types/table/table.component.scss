@@ -1,0 +1,32 @@
+.Col12 {
+    margin-top: 30px;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .center img {
+    margin-right: 10px;
+  }
+  .partition {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    .flex-start {
+      justify-content: flex-start;
+    }
+  }
+  .containSize {
+    contain: size;
+    height: auto;
+    margin-top: 30px;
+  }
+  
+  p-table{
+    display: inline-block;
+  }
+  

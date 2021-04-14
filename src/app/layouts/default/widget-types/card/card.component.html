@@ -15,11 +15,41 @@
                         optionLabel="key" (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
                 </div>
             </div>
-            <div class="card">
-                {{cardRes}}
+        </div>
+        <div class="p-col-12" *ngIf="selectedKey.length!=0">
+            <p-button label="Preview" icon="pi pi-check" (click)="showCard()" iconPos="left">
+            </p-button>
+        </div>
+        <br>
+        <div class="p-col-fixed" style="width: 200px" *ngIf="showPreview && selectedKey.length!=0">
+            <div class="box">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        
+                        <input type="text" pInputText [(ngModel)]="selectedKey[0].label" name="{{selectedKey[0].label}}" placeholder="Add a label" />
+                    </ng-template>
+                    {{cardRes}}
+                    <ng-template pTemplate="footer">
+                       
+                    </ng-template>
+                </p-card>
             </div>
         </div>
     </div>
+
+    <div class="p-col-12 Col12">
+        <p-divider></p-divider>
+      </div>
+    
+     <div class="p-col-12">
+        <p-button
+          label="Save"
+          icon="pi pi-check"
+          (click)="onSendData()"
+          iconPos="left"
+        ></p-button>
+      </div>
+      
 </div>
 
 

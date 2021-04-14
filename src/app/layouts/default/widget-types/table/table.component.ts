@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UUID } from 'angular2-uuid';
 import { DataSource } from 'src/app/models/data-source.model';
@@ -21,6 +21,8 @@ export class TableComponent implements OnInit {
   preview=false;
   labelsWrited=false;
   drawType=false;
+  
+  @Output() added = new EventEmitter<any>();
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -76,6 +78,11 @@ export class TableComponent implements OnInit {
 
   drawTable(){
     this.drawType = true;
+  }
+
+  onSendData() {
+
+    this.added.emit([this.selectedKeys, this.selectedQuery]);
   }
 
 }
