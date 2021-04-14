@@ -36,7 +36,16 @@ export class GraphComponent implements OnInit {
   ngOnInit(): void {
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
-        this.queries = data;
+        this.queries = [];
+        data.forEach(elm => {
+          this.dataSourceService.getDataFrom(elm).subscribe(
+            (dataBody) => {
+              if(dataBody.length>=2 && Object.keys(dataBody[0]).length>=2){
+                this.queries.push(elm);
+              }
+            }
+          );
+        })
       }
     );
   }

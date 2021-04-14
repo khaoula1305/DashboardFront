@@ -7,4 +7,20 @@
 }
 p-card:hover .conf {
   visibility: visible;
+
+}
+
+.partition{
+  color: black;
+}
+
+.cardColor{
+  background-color: rgb(143, 241, 233);
+}
+
+element {
+  --main-bg-color: brown;
+}
+.element{
+  background-color: var(--main-bg-color);
 }

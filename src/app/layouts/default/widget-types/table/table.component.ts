@@ -55,7 +55,6 @@ export class TableComponent implements OnInit {
     else  this.preview=false;
     this.removeSelectedKeyFromFirstList(id);
     this.labelsWrited=true;
-    console.log('selectedKeys list', this.selectedKeys)
   }
 
   onRemovedKey(key: string, id: string) {
