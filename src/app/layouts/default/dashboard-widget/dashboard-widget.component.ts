@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { error } from '@angular/compiler/src/util';
   selector: 'app-dashboard-widget',
   templateUrl: './dashboard-widget.component.html',
   styleUrls: ['./dashboard-widget.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardWidgetComponent implements OnInit {
   @Output() deleted = new EventEmitter<any>();
@@ -31,6 +32,7 @@ export class DashboardWidgetComponent implements OnInit {
   results=[];
   dimensionKey: MetaDataSource;
   datasets: any[] = [];
+  result;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -52,22 +54,45 @@ export class DashboardWidgetComponent implements OnInit {
       this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
-          this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
-          if(this.dimensionKey) 
-          {this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
-          this.dashboardWidget.widget.metaDataSourceDataModels.forEach(element=> {
-            if(!element.isDimension){
-              var label = [];
-              this.results.forEach(elm => label.push(elm[element.key]));
-              objet = {
-                label: this.dimensionKey.label,
-                backgroundColor: this.generateColor(),
-                data: label
-              };
-              this.datasets.push(objet);
+          switch(this.widgetType) {
+            case this.widgetTypeEnum.Table : {
+              break;
+
             }
-          });
-        }
+            case this.widgetTypeEnum.Card : {
+              this.results.forEach(elm => {
+                this.result = {
+                  key: elm[this.selectedKeys[0].key],
+                  label:this.selectedKeys[0].label
+                }
+              })
+              break;
+
+            }
+            default : {
+              this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
+              if(this.dimensionKey){
+               this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
+               this.dashboardWidget.widget.metaDataSourceDataModels.forEach(element=> {
+                 if(!element.isDimension){
+                   var label = [];
+                   this.results.forEach(elm => label.push(elm[element.key]));
+                   objet = {
+                     label: this.dimensionKey.label,
+                     backgroundColor: this.generateColor(),
+                     data: label
+                   };
+                   this.datasets.push(objet);
+                 }
+               })
+              } 
+              break;
+
+            }
+          }
+         
+         
+    
         },
         (error) => {
           console.log(error);
@@ -113,4 +138,5 @@ export class DashboardWidgetComponent implements OnInit {
   generateColor() {
     return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }
+
 }

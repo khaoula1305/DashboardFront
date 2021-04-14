@@ -19,7 +19,7 @@ import { UUID } from 'angular2-uuid';
 export class AddWidgetComponent implements OnInit {
   basicData;
   queries: DataSource[];
-  selectedQuery: DataSource;
+  selectedQuery: DataSource; 
   widget: Widget = new Widget();
   title: string;
   description: string;
@@ -59,12 +59,6 @@ export class AddWidgetComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.widgetType = 'bar';
-    this.dataSourceService.getAllDataSources().subscribe(
-      (data) => {
-        this.queries = data;
-      }
-    );
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         this.widgetTypes = data;
@@ -74,84 +68,10 @@ export class AddWidgetComponent implements OnInit {
       }
     );
   }
-  onSelectedDimension(event) {
-  if(this.dimensionKey!=undefined) {
-    this.allKeys.push(this.dimensionKey);
-    this.labels = [];
-    var removeIndex = this.selectedKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
-    this.selectedKeys.splice(removeIndex, 1); 
-  } 
-  this.dimensionKey=event;
-  this.dimensionKey.isDimension=true;
-  this.results.forEach(elm=> this.labels.push(elm[this.dimensionKey.key])) ;
-  var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
-  this.allKeys.splice(removeIndex, 1); 
-  this.selectedKeys.push(this.dimensionKey); 
-  }
-  onSelectedMesure(data: MetaDataSource) {
-    var objet: any;
-    var label=[];
-    this.results.forEach(elm=> label.push(elm[data.key])) ;
-    objet = {
-      label: data.label,
-      backgroundColor: this.generateColor(),
-      data: label
-    };
-    this.datasets.push(objet);
-  }
-  onSelectedKey(key: string, id: string){
-
-    this.selectedKeys.push({ id, key, label: key, isDimension:false});
-    if(this.selectedKeys.length== 0) this.preview=true;
-    else  this.preview=false;
-    this.removeSelectedKeyFromFirstList(id);
-    this.labelsWrited=true;
-    this.onSelectedMesure({ id, key, label: key, isDimension:false});
-   
-  }
-  onRemovedKey(key: string, id: string) {
-
-    this.allKeys.push({id, key, label: key, isDimension:false});
-    this.removeSelectedKeyFromSecondList(id);
-  }
-  removeSelectedKeyFromFirstList(id: string) {
-
-    var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(id);
-    this.allKeys.splice(removeIndex, 1);
-  }
-  removeSelectedKeyFromSecondList(id: string) {
-    var removeIndex = this.selectedKeys.map(function (item) { return item.id; }).indexOf(id);
-    this.selectedKeys.splice(removeIndex, 1);
-    if(this.selectedKeys.length== 0) this.preview=true;
-    else  this.preview=false;
-  }
-  generateColor() {
-    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
-
-  }
-  onSelectedQuery() {
-    this.showKeys = true;
-    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
-      (data) => {
-        this.results = data;
-        for(let key in data[0]){
-          this.allKeys.push({id: UUID.UUID(),key, label:'label 1', isDimension:false});
-        }
-      });
-      if(this.selectedWidgetType.type == 'bar' || this.selectedWidgetType.type == 'pie' || this.selectedWidgetType.type == 'line') {
-        this.isGraph = true;
-      } else this.isTable = true;
-  }
   OnSelectedWidgetType() {
-    this.showQueries = true;
-    this.widgetType = this.selectedWidgetType.type;
+    //this.showQueries = true;
   }
-  draw() {
-
-    this.drawType = true;
-    this.basicData = { labels: this.labels, datasets: this.datasets };
-
-  }
+ 
   onSubmit(m: NgForm) {
     if (m.untouched || m.invalid) {
       alert('Required');
@@ -170,6 +90,21 @@ export class AddWidgetComponent implements OnInit {
         result => this.router.navigate(['/dashboards', dash.id])
       );
     }
+  }
+
+  onAddedClick(event){
+    this.widget.defaultItemCols=2;
+    this.widget.defaultItemRows=2;
+    this.widget.minItemCols=1;
+    this.widget.minItemRows=1;
+    this.widget.widgetType = this.selectedWidgetType;
+    this.widget.dataSource = event[1];
+    this.widget.metaDataSourceDataModels =event[0];
+    console.log('created widget', this.widget);
+    let dash = this.dashboardsService.getCurretDashboard();
+    this.widgetService.addWidget(this.widget).subscribe(
+      result => this.router.navigate(['/dashboards', dash.id])
+    );
   }
 
 }

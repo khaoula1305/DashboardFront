@@ -23,8 +23,6 @@ const routes: Routes = [
   {path: 'updateDashboard/:id', component: UpdateDashboardComponent}, 
   {path: 'dataSource', component: DataSourceComponent},
   {path: 'myWidgets', component: MyWidgetsComponent},
-  {path: 'updateDashboard/:id', component: UpdateDashboardComponent},
-  {path: 'dataSource', component: DataSourceComponent},
   {path: 'queryDetails/:id', component: QueryDetailsComponent}
 ];
 

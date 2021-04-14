@@ -30,6 +30,9 @@ import { CreateDashboardComponent } from './create-dashboard/create-dashboard.co
 import { UpdateDashboardComponent } from './update-dashboard/update-dashboard.component';
 import { MyWidgetsComponent } from './my-widgets/my-widgets.component';
 import {ToastModule} from 'primeng/toast';
+import { TableComponent } from './widget-types/table/table.component';
+import { GraphComponent } from './widget-types/graph/graph.component';
+import { CardComponent } from './widget-types/card/card.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -40,7 +43,10 @@ import {ToastModule} from 'primeng/toast';
       AddWidgetComponent,
       CreateDashboardComponent,
       UpdateDashboardComponent,
-      MyWidgetsComponent
+      MyWidgetsComponent,
+      TableComponent,
+      GraphComponent,
+      CardComponent
     ],
   imports: [
     CommonModule,
