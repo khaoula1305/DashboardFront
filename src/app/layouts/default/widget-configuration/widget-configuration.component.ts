@@ -10,6 +10,7 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { Dashboard } from '../../../models/dashboard.model';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
+import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 @Component({
   selector: 'app-widget-configuration',
   templateUrl: './widget-configuration.component.html',
@@ -17,19 +18,20 @@ import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 })
 export class WidgetConfigurationComponent implements OnInit {
   queries: DataSource[];
+  results;
   selectedQuery: DataSource;
   currentDashboard: Dashboard;
-  dashWidget: DashboardWidget;
+  dashboardWidget: DashboardWidget;
   load: boolean=false;
-  basicData;
+  widgetTypeEnum = WidgetTypeEnum;
+  dimensionKey: MetaDataSource;
+  datasets: any[] = [];
+  selectedKeys : MetaDataSource[];
+  basicData: any;
+  basicOptions: any;
+  result;
   widgetTypes: WidgetType[];
   selectedWidgetType: WidgetType;
-  widgetTypeEnum = WidgetTypeEnum;
-  //chart
-  dimension ;
-  mesure2 ;
-  mesure1;
-  results;
   addWidget: boolean= false;
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
@@ -40,14 +42,60 @@ export class WidgetConfigurationComponent implements OnInit {
               {}
 
   ngOnInit(): void {
-    const title = this.route.snapshot.params.title;
+    const id = this.route.snapshot.params.title;
     this.currentDashboard =this.dashboardsService.getCurretDashboard();
       this.dashboardWidgetService.getAllDashboardWidget(this.currentDashboard.id).subscribe(
         (data) => {
-          this.dashWidget= data.find( elm => elm.id == title);
-          this.selectedQuery=this.dashWidget.widget.dataSource;
-          this.SelectedQuery();
-          this.selectedWidgetType=this.dashWidget.widget.widgetType;
+          this.dashboardWidget= data.find(e=> e.id==id);
+          var myLabels=[];
+          var objet: any;
+          this.selectedWidgetType = this.dashboardWidget.widget.widgetType;
+           this.selectedKeys= this.dashboardWidget.widget.metaDataSourceDataModels;
+          this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+              (data) => {
+                this.results=data;
+                switch(this.selectedWidgetType.type) {
+                  case this.widgetTypeEnum.Table : {
+                    break;
+                   }
+                  case this.widgetTypeEnum.Card : {
+                    this.results.forEach(elm => {
+                      this.result = {
+                        key: elm[this.selectedKeys[0].key],
+                        label:this.selectedKeys[0].label
+                      }
+                    })
+                    break;
+                  }
+                  default : {
+                    this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
+                    if(this.dimensionKey){
+                     this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
+                     this.dashboardWidget.widget.metaDataSourceDataModels.forEach(element=> {
+                       if(!element.isDimension){
+                         var label = [];
+                         this.results.forEach(elm => label.push(elm[element.key]));
+                         objet = {
+                           label: this.dimensionKey.label,
+                           backgroundColor: this.generateColor(),
+                           data: label
+                         };
+                         this.datasets.push(objet);
+                       }
+                     })
+                    } 
+                    break;
+      
+                  }
+                }
+              },
+              (error) => {
+                console.log(error);
+              },
+              ()=>{
+                this.load=true;
+              });
+              this.basicData = { labels: myLabels, datasets: this.datasets };
         }
     );
     this.dataSourceService.getAllDataSources().subscribe(
@@ -65,63 +113,24 @@ export class WidgetConfigurationComponent implements OnInit {
       }
     );
   }
-  SelectedQuery(){
-    //ToBeImplemented
-    this.dimension=[];
-    this.mesure1=[];
-    this.mesure2=[];
-    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
-      (Restdata) => {
-        this.results=Restdata;
-        if( this.dashWidget.widget.widgetType.type!= 'card'){
-        Restdata.forEach(elm => {
-          this.dimension.push(elm.date);
-        });
-        Restdata.forEach(elm => {
-          this.mesure2.push(elm.positive);
-        });
-        Restdata.forEach(elm => {
-          this.mesure1.push(elm.negative);
-        });
-      }
-      },
-      (error) => {
-        console.log(error);
-        },
-        () => {
-       this.load=true;
-        });
-    this.draw();
-}
-SelectedWidgetType(){
-  this.draw();
-}
-draw(){
-  this.basicData = {
-    labels: this.dimension,
-    datasets: [
-        {
-            label: "positive cases",
-            backgroundColor: '#FFA726',
-            data: this.mesure2
-        },
-        {
-          label: "negative cases",
-          backgroundColor: '#AAA423',
-          data:  this.mesure1
-      }
-    ]
-};
-}
+  generateColor() {
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+  }
+  SelectedWidgetType(){
+    this.basicData.datasets[0].backgroundColor=this.generateColor();
+    console.log(this.basicData.datasets[0].backgroundColor);
+
+  }
+  
 onSubmit(m: NgForm) {
   if ( m.untouched || m.invalid) {
     alert('Required');
   } else {
-    this.dashWidget.title = m.value.title;
-    this.dashWidget.description= m.value.description;
-    this.dashWidget.widget.dataSource= m.value.selectedQuery;
-    this.dashWidget.widget.widgetType=m.value.selectedWidgetType;
-    this.dashboardWidgetService.updateDashboardWidget(this.dashWidget.dashboard.id, this.dashWidget).subscribe(
+    this.dashboardWidget.title = m.value.title;
+    this.dashboardWidget.description= m.value.description;
+    //this.dashboardWidget.widget.dataSource= m.value.selectedQuery;
+    this.dashboardWidget.widget.widgetType=m.value.selectedWidgetType;
+    this.dashboardWidgetService.updateDashboardWidget(this.dashboardWidget.dashboard.id, this.dashboardWidget).subscribe(
       data =>   this.router.navigate(['/dashboards',this.currentDashboard.id])
     );
   }
