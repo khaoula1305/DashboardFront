@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UUID } from 'angular2-uuid';
+import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DataSource } from 'src/app/models/data-source.model';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { WidgetType } from 'src/app/models/widget-type';
@@ -28,12 +29,24 @@ export class GraphComponent implements OnInit {
   basicData;
   showQueries=false;
   @Input() selectedWidgetType: WidgetType;
+  @Input() dashWidget: DashboardWidget;
 
   @Output() added = new EventEmitter<any>();
+
+  newWidget=false;
 
   constructor(private dataSourceService: DataSourceService) { }
 
   ngOnInit(): void {
+    console.log('dash widget', this.dashWidget);
+    if(this.dashWidget == null) this.newWidget=true;
+    else {
+      //this.dimensionKey = this.dashWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension == true);
+      this.selectedQuery = this.dashWidget.widget.dataSource; 
+      this.onSelectedQuery();
+      this.selectedKeys = this.dashWidget.widget.metaDataSourceDataModels;
+
+    }
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = [];
@@ -113,7 +126,7 @@ export class GraphComponent implements OnInit {
     this.drawType = true;
     this.selectedKeys.forEach(elm=>{
       if(!elm.isDimension)
-      this.onSelectedMesure(elm)
+      this.onSelectedMesure(elm);
     } );
     this.basicData = { labels: this.labels, datasets: this.datasets };
   }

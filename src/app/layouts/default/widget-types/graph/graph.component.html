@@ -1,6 +1,6 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <div class="p-field p-col">
+        <div class="p-field p-col" *ngIf="newWidget">
             <label for="query">Queries</label>
             <p-dropdown inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="selectedQuery"
                 placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title"></p-dropdown>
@@ -8,15 +8,15 @@
     </div>
     <div class="p-col-6">
         <div class="p-field p-col" *ngIf="showKeys">
-            <div class="p-col-12">
+            <div class="p-col-12" *ngIf="newWidget">
                 <label>Dimension</label> <br>
-                <p-dropdown name="dimensionKey" [options]="allKeys" [ngModel]="dimensionKey" editable="true"
+                <p-dropdown name="dimensionKey" [options]="allKeys" [(ngModel)]="dimensionKey" editable="true"
                     optionLabel="key" (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
             </div>
             <br>
             <div class="card">
                 <p-splitter [style]="{'height': '300px','width': '100px'}" styleClass="p-mb-5">
-                    <ng-template pTemplate>
+                    <ng-template pTemplate *ngIf="newWidget">
                         <div class="p-col p-d-flex p-ai-center p-jc-center">
                             <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px"
                                 [style]="{width:'300px'}">

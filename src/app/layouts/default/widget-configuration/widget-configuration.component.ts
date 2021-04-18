@@ -31,6 +31,7 @@ export class WidgetConfigurationComponent implements OnInit {
   mesure1;
   results;
   addWidget: boolean= false;
+
   constructor(private route: ActivatedRoute, 
               private dashboardWidgetService: DashboardWidgetService , 
               private dashboardsService: DashboardsService , 
@@ -40,11 +41,11 @@ export class WidgetConfigurationComponent implements OnInit {
               {}
 
   ngOnInit(): void {
-    const title = this.route.snapshot.params.title;
+    const widgetDashId = this.route.snapshot.params.title;
     this.currentDashboard =this.dashboardsService.getCurretDashboard();
       this.dashboardWidgetService.getAllDashboardWidget(this.currentDashboard.id).subscribe(
         (data) => {
-          this.dashWidget= data.find( elm => elm.id == title);
+          this.dashWidget= data.find( elm => elm.id == widgetDashId);
           this.selectedQuery=this.dashWidget.widget.dataSource;
           this.SelectedQuery();
           this.selectedWidgetType=this.dashWidget.widget.widgetType;
@@ -91,6 +92,7 @@ export class WidgetConfigurationComponent implements OnInit {
         () => {
        this.load=true;
         });
+        
     this.draw();
 }
 SelectedWidgetType(){

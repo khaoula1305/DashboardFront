@@ -8,6 +8,7 @@ import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { error } from '@angular/compiler/src/util';
+import { WidgetType } from 'src/app/models/widget-type';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -33,6 +34,7 @@ export class DashboardWidgetComponent implements OnInit {
   dimensionKey: MetaDataSource;
   datasets: any[] = [];
   result;
+  widgetTypeOnUpdate:WidgetType;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -78,7 +80,7 @@ export class DashboardWidgetComponent implements OnInit {
                    var label = [];
                    this.results.forEach(elm => label.push(elm[element.key]));
                    objet = {
-                     label: this.dimensionKey.label,
+                     label: element.label,
                      backgroundColor: this.generateColor(),
                      data: label
                    };
