@@ -11,6 +11,7 @@ import { WidgetTypeEnum } from '../../../models/widgetTypeEnum';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { UUID } from 'angular2-uuid';
+
 @Component({
   selector: 'app-add-widget',
   templateUrl: './add-widget.component.html',
@@ -24,23 +25,15 @@ export class AddWidgetComponent implements OnInit {
   title: string;
   description: string;
   widgetTypes: WidgetType[];
-  selectedWidgetType: WidgetType;
   widgetType: string;
   widgetTypeEnum = WidgetTypeEnum;
-
-  //chart
   labels: any[]=[];
   datasets: any[] = [];
-  // ToBeImplemented
-  dimension = [];
-  mesure2 = [];
-  mesure1 = [];
   results = [];
-
   showQueries = false;
   showKeys = false;
   allKeys: MetaDataSource[]=[];
-  selectedKeys: MetaDataSource[]=[];
+ // selectedKeys: MetaDataSource[]=[];
   preview=false;
   labelsWrited=false;
   drawType=false;
@@ -49,6 +42,7 @@ export class AddWidgetComponent implements OnInit {
   isTable = false;
   isDimension;
   oldValue:string;
+  disableQueriesDropdown=false;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -59,6 +53,14 @@ export class AddWidgetComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.widgetService.currentWidget.subscribe(
+      (widget) => {
+        widget.metaDataSourceDataModels = [];
+
+        this.widget = widget;
+      }
+    );
+    
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         this.widgetTypes = data;
@@ -67,9 +69,44 @@ export class AddWidgetComponent implements OnInit {
         console.log(error);
       }
     );
+
+    this.dataSourceService.getAllDataSources().subscribe(
+      (data) => {
+        this.queries = data;
+        /*data.forEach(elm => {
+          this.dataSourceService.getDataFrom(elm).subscribe(
+            (dataBody) => {
+              if(dataBody.length>=2 && Object.keys(dataBody[0]).length>=2){
+                this.queries.push(elm);
+              }
+            }
+          );
+        })*/
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-  OnSelectedWidgetType() {
-    //this.showQueries = true;
+ 
+
+  onSelectedQuery() {
+    //un filtrage à faire
+    /*this.showKeys = true;
+    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
+      (data) => {
+        this.results = data;
+        for (let key in data[0]) {
+          this.allKeys.push({ id: UUID.UUID(), key, label: key, isDimension: false });
+        }
+      });*/
+      if(this.widget.dataSource!=null) this.disableQueriesDropdown=true;
+  }
+  onSelectedType(){
+   
+
+   // this.widgetService.setCurrentWidget(this.widget);
+
   }
  
   onSubmit(m: NgForm) {
@@ -79,12 +116,11 @@ export class AddWidgetComponent implements OnInit {
       this.widget.title = m.value.title;
       this.widget.description = m.value.description;
       this.widget.dataSource = m.value.selectedQuery;
-      this.widget.widgetType = this.selectedWidgetType;
       this.widget.defaultItemCols=2;
       this.widget.defaultItemRows=2;
       this.widget.minItemCols=1;
       this.widget.minItemRows=1;
-      this.widget.metaDataSourceDataModels = this.selectedKeys;
+      //this.widget.metaDataSourceDataModels = this.selectedKeys;
       let dash = this.dashboardsService.getCurretDashboard();
       this.widgetService.addWidget(this.widget).subscribe(
         result => this.router.navigate(['/dashboards', dash.id])
@@ -97,9 +133,7 @@ export class AddWidgetComponent implements OnInit {
     this.widget.defaultItemRows=2;
     this.widget.minItemCols=1;
     this.widget.minItemRows=1;
-    this.widget.widgetType = this.selectedWidgetType;
-    this.widget.dataSource = event[1];
-    this.widget.metaDataSourceDataModels =event[0];
+    this.widget.metaDataSourceDataModels =event.metaDataSourceDataModels;
     console.log('created widget', this.widget);
     let dash = this.dashboardsService.getCurretDashboard();
     this.widgetService.addWidget(this.widget).subscribe(

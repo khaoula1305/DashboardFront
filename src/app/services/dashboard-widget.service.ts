@@ -16,6 +16,9 @@ export class DashboardWidgetService {
   getAllDashboardWidget(dashboardId: any): Observable<DashboardWidget[]> {
     return this.http.get<DashboardWidget[]>(this.host+dashboardId+'/DashboardWidget');
   }
+  getDashboardWidget(dashboardId: any, dashboardWidgetId: any): Observable<DashboardWidget> {
+    return this.http.get<DashboardWidget>(this.host+dashboardId+'/DashboardWidget/'+dashboardWidgetId);
+  }
   addDashboardWidget( dashboardId: any, dashboardWidget: DashboardWidget):  Observable<DashboardWidget>{
    return  this.http.post<DashboardWidget>(this.host+dashboardId+'/DashboardWidget', dashboardWidget);
   }

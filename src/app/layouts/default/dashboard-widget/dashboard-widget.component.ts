@@ -27,9 +27,6 @@ export class DashboardWidgetComponent implements OnInit {
   widgetTypeEnum = WidgetTypeEnum;
   widgetType: string;
   load= false;
-  dimension=[];
-  mesure2=[];
-  mesure1=[];
   results=[];
   dimensionKey: MetaDataSource;
   datasets: any[] = [];
@@ -41,26 +38,18 @@ export class DashboardWidgetComponent implements OnInit {
     private dashboardsService: DashboardsService,
     private router: Router
   ) {}
-
-  deleteClick() {
-    this.deleted.emit(true);
-  }
   ngOnInit(): void {
     var myLabels=[];
     var objet: any;
-    if(this.dashboardWidget.widget){
-      console.log(this.dashboardWidget.widget);
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
      this.selectedKeys= this.dashboardWidget.widget.metaDataSourceDataModels;
-    }
-      this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+    this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
           switch(this.widgetType) {
             case this.widgetTypeEnum.Table : {
               break;
-
-            }
+             }
             case this.widgetTypeEnum.Card : {
               this.results.forEach(elm => {
                 this.result = {
@@ -69,7 +58,6 @@ export class DashboardWidgetComponent implements OnInit {
                 }
               })
               break;
-
             }
             default : {
               this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
@@ -92,9 +80,6 @@ export class DashboardWidgetComponent implements OnInit {
 
             }
           }
-         
-         
-    
         },
         (error) => {
           console.log(error);
@@ -102,43 +87,16 @@ export class DashboardWidgetComponent implements OnInit {
         ()=>{
           this.load=true;
         });
-        this.basicData = { labels: myLabels, datasets: this.datasets };   
-        this.items = [
-      {
-        label: 'Update',
-        icon: 'pi pi-refresh',
-        command: () => {
-          this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
-          this.router.navigate(['/updateWidget', this.widgetId]);
-        },
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-        command: () => {
-          this.deleteClick();
-        },
-      },
-      { label: 'Show', icon: 'pi pi-info', url: '#' },
-      { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/'] },
-    ];
-   
+        this.basicData = { labels: myLabels, datasets: this.datasets };
   }
-
-  save(severity: any) {
-    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
-    this.router.navigate(['/updateWidget', severity]);
-  }
-  dropdown(info: any) {
-    this.widgetId = info;
+  generateColor() {
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }
   updateWidgetDashboard(id: any){
     this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', id]);
   }
-
-  generateColor() {
-    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+  deleteClick() {
+    this.deleted.emit(true);
   }
-
 }

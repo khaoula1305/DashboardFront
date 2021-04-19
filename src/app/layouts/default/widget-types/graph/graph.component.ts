@@ -4,7 +4,10 @@ import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DataSource } from 'src/app/models/data-source.model';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { WidgetType } from 'src/app/models/widget-type';
+import { Widget } from 'src/app/models/widget.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { WidgetTypeService } from 'src/app/services/widget-type.service';
+import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
   selector: 'app-graph',
@@ -14,11 +17,10 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 export class GraphComponent implements OnInit {
 
   dimensionKey: MetaDataSource;
-  queries: DataSource[];
   selectedQuery: DataSource;
   results = [];
   allKeys: MetaDataSource[] = [];
-  selectedKeys: MetaDataSource[] = [];
+  //selectedKeys: MetaDataSource[] = [];
   showKeys = false;
   preview = false;
   labelsWrited = false;
@@ -27,61 +29,69 @@ export class GraphComponent implements OnInit {
   labels: any[] = [];
   datasets: any[] = [];
   basicData;
-  showQueries=false;
+  showQueries = false;
   @Input() selectedWidgetType: WidgetType;
   @Input() dashWidget: DashboardWidget;
+   widget: Widget;
 
   @Output() added = new EventEmitter<any>();
 
-  newWidget=false;
+  newWidget = false;
+  previewOnUpdate = false;
+  myVar="";
 
-  constructor(private dataSourceService: DataSourceService) { }
+  constructor(private dataSourceService: DataSourceService, private widgetService: WidgetsService) { }
 
   ngOnInit(): void {
-    console.log('dash widget', this.dashWidget);
-    if(this.dashWidget == null) this.newWidget=true;
-    else {
-      //this.dimensionKey = this.dashWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension == true);
-      this.selectedQuery = this.dashWidget.widget.dataSource; 
-      this.onSelectedQuery();
-      this.selectedKeys = this.dashWidget.widget.metaDataSourceDataModels;
+    this.widgetService.currentWidget.subscribe(widget => this.widget = widget);
 
+    if(this.dimensionKey==null){
+      this.dimensionKey = this.widget.metaDataSourceDataModels[0];
     }
-    this.dataSourceService.getAllDataSources().subscribe(
+
+    console.log('curent widget from graph ngOninit ');
+    this.widgetService.getCurrentWidget();
+
+    this.dataSourceService.getDataFrom(this.widget.dataSource).subscribe(
       (data) => {
-        this.queries = [];
-        data.forEach(elm => {
-          this.dataSourceService.getDataFrom(elm).subscribe(
-            (dataBody) => {
-              if(dataBody.length>=2 && Object.keys(dataBody[0]).length>=2){
-                this.queries.push(elm);
-              }
-            }
-          );
-        })
-      }
-    );
+        this.results = data;
+        for (let key in data[0]) {
+          this.allKeys.push({ id: UUID.UUID(), key, label: key, isDimension: false });
+        }
+      });
+
+    if (this.dashWidget == null) this.newWidget = true;
+    else {
+      this.previewOnUpdate = true;
+      //this.dimensionKey = this.dashWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension == true);
+      this.selectedQuery = this.dashWidget.widget.dataSource;
+      this.onSelectedQuery();
+     // this.selectedKeys = this.dashWidget.widget.metaDataSourceDataModels;
+      this.dimensionKey = this.dashWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension == true)
+    }
   }
 
   onSelectedDimension(event) {
+    console.log('dimensionKey', this.dimensionKey);
+    console.log('event', event);
     if (this.dimensionKey != undefined) {
       this.allKeys.push(this.dimensionKey);
       this.labels = [];
-      var removeIndex = this.selectedKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
-      this.selectedKeys.splice(removeIndex, 1);
+      var removeIndex = this.widget.metaDataSourceDataModels.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
+      this.widget.metaDataSourceDataModels.splice(removeIndex, 1);
     }
     this.dimensionKey = event;
     this.dimensionKey.isDimension = true;
-    this.results.forEach(elm => this.labels.push(elm[this.dimensionKey.key]));
+    //this.results.forEach(elm => this.labels.push(elm[this.dimensionKey.key]));
     var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(this.dimensionKey.id);
     this.allKeys.splice(removeIndex, 1);
-    this.selectedKeys.push(this.dimensionKey);
+    this.widget.metaDataSourceDataModels.push(this.dimensionKey);
   }
 
   onSelectedKey(key: string, id: string) {
 
-    this.selectedKeys.push({ id, key, label: key, isDimension: false });
-    if (this.selectedKeys.length == 0) this.preview = true;
+    this.widget.metaDataSourceDataModels.push({ id, key, label: key, isDimension: false });
+    if (this.widget.metaDataSourceDataModels.length == 0) this.preview = true;
     else this.preview = false;
     this.removeSelectedKeyFromFirstList(id);
     this.labelsWrited = true;
@@ -111,9 +121,9 @@ export class GraphComponent implements OnInit {
     this.allKeys.splice(removeIndex, 1);
   }
   removeSelectedKeyFromSecondList(id: string) {
-    var removeIndex = this.selectedKeys.map(function (item) { return item.id; }).indexOf(id);
-    this.selectedKeys.splice(removeIndex, 1);
-    if (this.selectedKeys.length == 0) this.preview = true;
+    var removeIndex = this.widget.metaDataSourceDataModels.map(function (item) { return item.id; }).indexOf(id);
+    this.widget.metaDataSourceDataModels.splice(removeIndex, 1);
+    if (this.widget.metaDataSourceDataModels.length == 0) this.preview = true;
     else this.preview = false;
   }
   generateColor() {
@@ -122,13 +132,21 @@ export class GraphComponent implements OnInit {
   }
 
   draw() {
-    this.datasets=[];
+    
+    this.datasets = [];
     this.drawType = true;
-    this.selectedKeys.forEach(elm=>{
-      if(!elm.isDimension)
-      this.onSelectedMesure(elm);
-    } );
+    this.widget.metaDataSourceDataModels.forEach(elm => {
+      if (!elm.isDimension)
+        this.onSelectedMesure(elm);
+    });
+    this.results.forEach(elm => this.labels.push(elm[this.dimensionKey.key]));
     this.basicData = { labels: this.labels, datasets: this.datasets };
+
+    console.log('curent widget from graph just after draw');
+    this.widgetService.getCurrentWidget();
+
+
+    
   }
   onSelectedQuery() {
     this.showKeys = true;
@@ -142,7 +160,12 @@ export class GraphComponent implements OnInit {
   }
 
   onSendData() {
-    this.added.emit([this.selectedKeys, this.selectedQuery]);
+    //this.widget.metaDataSourceDataModels = this.selectedKeys;
+   // this.widgetService.setCurrentWidget(this.widget);
+   
+
+    this.added.emit(this.widget);
+    
   }
 
 }

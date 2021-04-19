@@ -3,48 +3,40 @@
     <div class="p-col-12">
       <h3>Add New Widget</h3>
     </div>
-    
+
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-5">
         <h5>Title</h5>
         <input type="text" pInputText [(ngModel)]="widget.title" name="title" />
-           </div>
+      </div>
       <div class="p-field p-col-12 p-md-7">
         <h5>Description</h5>
-        <textarea
-          name="description"
-          type="text"
-          rows="4"
-          pInputTextarea
-          [(ngModel)]="widget.description"
-        ></textarea>    </div>
+        <textarea name="description" type="text" rows="4" pInputTextarea [(ngModel)]="widget.description"></textarea>
+      </div>
     </div>
 
     <div class="p-col-12">
       <div class="p-fluid p-formgrid p-grid">
-        
+
+        <div class="p-col-12">
+          <div class="p-field p-col">
+            <label for="query">Queries</label>
+            <p-dropdown inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
+              placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
+          </div>
+        </div>
+
         <div class="p-field p-col-12">
           <label for="visualisation">Visualisation</label>
-          <p-dropdown
-            [options]="widgetTypes"
-            [(ngModel)]="selectedWidgetType"
-            name="selectedWidgetType"
-            (ngModelChange)="OnSelectedWidgetType()"
-            optionLabel="type"
-            [filter]="true"
-            filterBy="type"
-            [showClear]="true"
-            placeholder="Select a visualisation"
-          >
+          <p-dropdown [options]="widgetTypes" [(ngModel)]="widget.widgetType" (ngModelChange)="onSelectedType()" name="selectedWidgetType"
+            optionLabel="type" [filter]="true" filterBy="type"
+            [showClear]="true" placeholder="Select a visualisation">
             <ng-template pTemplate="selectedItem">
-              <div
-                class="widgetType-item widgetType-item-value"
-                *ngIf="selectedWidgetType.type"
-              >
+              <div class="widgetType-item widgetType-item-value" *ngIf="widget.widgetType">
 
                 <div class="center">
-                  <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
-                  {{ selectedWidgetType.type }}
+                  <img src="{{ widget.widgetType.imagePath }}" alt="{{widget.widgetType.type}}" />
+                  {{ widget.widgetType.type }}
                 </div>
               </div>
             </ng-template>
@@ -58,16 +50,16 @@
           </p-dropdown>
         </div>
 
-        <div class="box" *ngIf="selectedWidgetType">
-          <div [ngSwitch]="selectedWidgetType.type">
+        <div class="box" *ngIf="widget.widgetType">
+          <div [ngSwitch]="widget.widgetType.type">
             <div *ngSwitchCase="widgetTypeEnum.Table">
               <app-table (added)="onAddedClick($event)"></app-table>
             </div>
             <div *ngSwitchCase="widgetTypeEnum.Card">
               <app-card (added)="onAddedClick($event)"></app-card>
             </div>
-            <div *ngSwitchDefault> 
-              <app-graph [selectedWidgetType]="selectedWidgetType" (added)="onAddedClick($event)"></app-graph>
+            <div *ngSwitchDefault>
+              <app-graph (added)="onAddedClick($event)"></app-graph>
             </div>
           </div>
         </div>
@@ -80,5 +72,3 @@
 
   </div>
 </form>
-
-

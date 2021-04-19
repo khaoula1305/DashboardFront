@@ -32,6 +32,7 @@ export class DataSourceService {
     return this.http.put(this.host + dataSource.id, dataSource);
   }
   addDataSource(dataSource: DataSource): Observable<DataSource>{
+    console.log('data', dataSource);
     return this.http.post<DataSource>(this.host, dataSource);
   }
 }

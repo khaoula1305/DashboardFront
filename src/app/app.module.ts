@@ -26,8 +26,10 @@ import { DataSourceComponent } from './layouts/data-source/data-source.component
 import {MultiSelectModule} from 'primeng/multiselect';
 import {CheckboxModule} from 'primeng/checkbox';
 import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
+import {DropdownModule} from 'primeng/dropdown';
 
-
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,10 @@ import { QueryDetailsComponent } from './layouts/query-details/query-details.com
     TableModule,
     ToastModule,
     MultiSelectModule,
-    CheckboxModule
+    CheckboxModule,
+    DropdownModule,
+    MessageModule,
+    MessagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

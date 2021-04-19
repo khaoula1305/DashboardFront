@@ -5,7 +5,7 @@
     </div>
     <div *ngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">
-            <p-table [value]="results" [scrollable]="true" scrollHeight="700px">
+            <p-table [value]="results" [scrollable]="true" scrollHeight="700px" scrollWidth="900px">
                 <ng-template pTemplate="header">
                     <tr>
                         <th  *ngFor="let th of selectedKeys" >{{th.label}}</th>
@@ -31,5 +31,5 @@
             <p-chart type="{{dashboardWidget.widget.widgetType.type}}" [data]="basicData" [options]="basicOptions">
             </p-chart>
           </div>
-        </div>
+    </div>
 </p-card>
