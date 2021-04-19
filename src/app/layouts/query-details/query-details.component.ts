@@ -23,7 +23,8 @@ export class QueryDetailsComponent implements OnInit {
         this.dataSource=data;
         this.dataSourceService.getDataFrom(data).subscribe(
           (data) => {
-            this.results=data;
+            this.results= Object.assign({}, ...Object.values(data));
+            console.log(data);
             for (let key in data[0]) {
               this.cols.push( { field: key, header: key });
             }

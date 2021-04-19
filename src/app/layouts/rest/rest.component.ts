@@ -22,16 +22,15 @@ export class RestComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationType=[
-      {name:'Basic'},
-      {name:'OAuth 2.0'},
+      {name:'Basic Auth'},
+      {name:'Bearer Token'},
+      //{name:'OAuth 2.0'},
       {name:'Other'}
     ];
     this.headers=[
-      {code: "apiKay", value:"Your api"},
 
     ];
     this.params=[
-      {code: "access_key", value:"Your access"},
 
     ]
   }
@@ -56,22 +55,51 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
+  this.saveRest();
+  this.dataSourceService.addDataSource(this.dataSource).subscribe(
+    (result)=>{
+      this.dataSourceService.getDataFrom(result).subscribe(
+        (result)=>{
+          console.log("result delete if ok", result);
+        },
+        (error)=>{
+          console.log("result delete", error.status);
+          //MESAGE HERE
+        },
+        ()=>{
+          //message here
+        }
+      )
+    }
+  );
   this.isConnection=true;
+
+}
+saveRest(){
+  if(this.params.length>0){
+    this.dataSource.url=this.dataSource.url+'?';
+    let i=0;
+    this.params.forEach(elm =>{
+      if(i>0)   this.dataSource.url+='&';
+      i++;
+      this.dataSource.url+=elm.code+'='+elm.value;
+      }
+  );
+  }
+
+  this.dataSource.type= 'Rest API';
 }
   onSubmit(rest: NgForm) {
     if ( rest.untouched || rest.invalid) {
       alert('Required');
     } else {
-      this.dataSource.title = rest.value.title;
-      this.dataSource.url= rest.value.url;
-      this.headers.forEach(elm =>{
-        if(elm.value!="Your access"){
-          this.dataSource.url=this.dataSource.url+'?'+elm.code+'='+elm.value;
-        }
-      });
-      this.dataSource.type= 'Rest API';
+      this.saveRest();
       this.dataSourceService.addDataSource(this.dataSource).subscribe(
-        result => this.router.navigate(['/queries'])
+        result =>{
+          console.log(result);
+         this.router.navigate(['/queries'])
+
+        }
          );
          
     }

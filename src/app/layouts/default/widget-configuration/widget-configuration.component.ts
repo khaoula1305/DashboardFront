@@ -117,7 +117,7 @@ export class WidgetConfigurationComponent implements OnInit {
     return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }
   SelectedWidgetType(){
-    this.basicData.datasets[0].backgroundColor=this.generateColor();
+    //this.basicData.datasets[0].backgroundColor=this.generateColor();
     console.log(this.basicData.datasets[0].backgroundColor);
 
   }

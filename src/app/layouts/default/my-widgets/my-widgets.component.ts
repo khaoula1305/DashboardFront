@@ -53,7 +53,6 @@ export class MyWidgetsComponent implements OnInit {
   }
 
   deleteWidget(widgetId: any){
-    console.log('widget Id', widgetId);
     this.widgetService.deleteWidget(widgetId).subscribe(
       (result)=>{
         console.log("result delete if ok", result);

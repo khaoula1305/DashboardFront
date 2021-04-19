@@ -27,7 +27,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {CheckboxModule} from 'primeng/checkbox';
 import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
 import {DropdownModule} from 'primeng/dropdown';
-
+import {DividerModule} from 'primeng/divider';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 @NgModule({
@@ -63,7 +63,8 @@ import {MessageModule} from 'primeng/message';
     CheckboxModule,
     DropdownModule,
     MessageModule,
-    MessagesModule
+    MessagesModule,
+    DividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,43 +1,48 @@
 
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
   <p-message *ngIf="isConnection" severity="warn" text="Connection Failed: Error:"  class="p-mr-6" ></p-message> 
-  <div class="p-fluid p-grid">
-    <div class="p-field p-col-12 p-md-4">
-        <h3>Add New Rest</h3>
-    </div>
-    <div class="p-field p-col-12 p-md-4">
-          <h5>Title</h5>
-          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" required />
-    </div>
+  <div class=" my-card">
+    <h3> New Rest</h3>
     <div class="p-col-12 p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-5">
+        <h5>Data Source Name *</h5>
+        <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" placeholder="Enter title" required />
+      </div>
       <div class="p-field p-col-12 p-md-6">
         <h5>Rest Host *</h5>
         <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" required />
       </div>     
-       <div class="p-field p-col-12 p-md-6">
+       <div class="p-field p-col-12 p-md-5">
         <h5>Authentication Type *</h5>
         <p-dropdown [options]="authenticationType" (onChange)="onChange($event)" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a Type" [showClear]="true"></p-dropdown>
       </div>
     </div>
+    <p-divider></p-divider>
     <div *ngIf='selectedAuthetification' [ngSwitch]="selectedAuthetification.name">
-        <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic'">
-          <div class="p-field p-col-12 p-md-6">
+        <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic Auth'">
+          <div class="p-md-5">
             <h5>User Id for basic authentication </h5>
-            <input type="text" pInputText  />
+            <input type="text" pInputText [(ngModel)]="dataSource.username" name="username" />
           </div>
-          <div class="p-field p-col-12 p-md-6">
+          <div class="p-md-5">
             <h5>Password  for basic authentication </h5>
-            <input type="text" pInputText  />
+            <input type="text" pInputText  [(ngModel)]="dataSource.password" name="password" />
           </div>    
         </div>
-        <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'OAuth 2.0'">
-          <div class="p-field p-col-12">
+        <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'Bearer Token'">
+          <div class="p-md-5">
             <h5>Access Token </h5>
             <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
           </div>
         </div>
+        <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'OAuth 2.0'">
+          <div class="p-md-5">
+            <h5>To Be implemented </h5>
+            <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
+          </div>
+        </div>
         <div  class="p-col-12 p-fluid p-grid" *ngSwitchDefault> 
-          <div class="p-field p-col-12 p-md-6">
+          <div class="p-md-6">
             <div class="card">
                Auth URL Params
               <button (click)="addParam()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-help"></button>
@@ -122,14 +127,15 @@
           </div>
         </div>
      </div>
+    <p-divider></p-divider>
      <div class="p-col-12 p-fluid p-grid">
         <h3>SETTINGS</h3>
         <div class="p-field p-col-12 p-md-6">
           <h5>JSON Path </h5>
           <input type="text" pInputText  placeholder="Json Key List to access array of values, separated b ; "/>
         </div>
-      </div>
-      <div class="p-field p-col-12 p-md-6">
+     </div>
+      <div class="p-col-12 p-fluid p-grid">
         <p-button
         [disabled]="!rest.valid"
         label="Test Connection"
@@ -137,8 +143,6 @@
         iconPos="left"
         (click)="TestConnection()"
       ></p-button>
-      </div>
-    <div class="p-field p-col-12 p-md-4">
         <p-button
           [disabled]="!rest.valid"
           label="Save"
