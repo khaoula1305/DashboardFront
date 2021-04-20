@@ -8,24 +8,36 @@ import { DataSource } from 'src/app/models/data-source.model';
   templateUrl: './query-details.component.html',
   styleUrls: ['./query-details.component.scss']
 })
+
 export class QueryDetailsComponent implements OnInit {
 
-  results: any[];
+  results: any[]=[];
   cols: any[]=[];
   load= false;
   dataSource: DataSource;
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
 
+   flat = (obj, out) => {
+    Object.keys(obj).forEach(key => {
+        if (typeof obj[key] == 'object') {
+            out = this.flat(obj[key], out) //recursively call for nesteds
+        } else {
+            out[key] = obj[key] //direct assign for values
+        }
+    })
+    return out
+  }
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
-      (data)=>{
-        this.dataSource=data;
-        this.dataSourceService.getDataFrom(data).subscribe(
+      (result)=>{
+        this.dataSource=result;
+        this.dataSourceService.getDataFrom(result).subscribe(
           (data) => {
-            this.results= Object.assign({}, ...Object.values(data));
-            console.log(data);
-            for (let key in data[0]) {
+            data.forEach(el=>{
+              this.results.push(this.flat(el,{}));
+            });
+            for (let key in this.results[0]) {
               this.cols.push( { field: key, header: key });
             }
           },
@@ -37,7 +49,7 @@ export class QueryDetailsComponent implements OnInit {
             });
       }
     );
-   
+
   }
 
 
