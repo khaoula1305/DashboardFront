@@ -12,8 +12,9 @@ import {MessageService} from 'primeng/api';
 
 })
 export class QueriesComponent implements OnInit {
-
+  searchText:any;
   queries: DataSource[];
+  query: any;
   constructor(
     private dataSourceService: DataSourceService, 
     private router: Router,
@@ -30,28 +31,38 @@ export class QueriesComponent implements OnInit {
     this.router.navigate(['/queryDetails', queryId]);
 
   }
-  showConfirm() {
+  showConfirm(message: any) {
     this.messageService.clear();
-    this.messageService.add({key: 'a', sticky: true, severity:'warn', summary:'Query is already used', detail:'Confirm to proceed'});
+    this.messageService.add(message);
 }
 onConfirm() {
   this.messageService.clear('a');
-  this.messageService.add({key: 'b', sticky: true, severity:'warn', summary:'Query is removed'});
-}
+  this.deleteQuery(this.query);}
 
 onReject() {
   this.messageService.clear('a');
-  this.messageService.clear('b');
 }
-  deleteQuery(id: any){
-    this.dataSourceService.deleteDataSource(id).subscribe(
+updateQuery(query: DataSource){
+
+}
+onDelete(query: DataSource){
+  this.query=query;
+  this.dataSourceService.getAllWidgets(query.id).subscribe(
+    (data) => {
+      if(data.length>0){
+        this.showConfirm({key: 'a', sticky: true, severity:'warn', summary:'Query is already used', detail:' This will remove the data and its associated widget and cannot be undone!'});
+      } else{
+        this.showConfirm({key: 'a', sticky: true, severity:'custom', summary:'Are you sure you want to remove this Query?', detail:' !'});
+      }
+    }
+  );
+}
+  deleteQuery(query: DataSource){
+    this.dataSourceService.deleteDataSource(query.id).subscribe(
       (result)=>{
-        console.log("result delete if ok", result);
-        this.onConfirm();
       },
       (error)=>{
-        console.log("result delete", error.status);
-        this.showConfirm();
+
       },
       ()=>{
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

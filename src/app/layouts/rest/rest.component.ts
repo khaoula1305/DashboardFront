@@ -55,23 +55,7 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
-  this.saveRest();
-  this.dataSourceService.addDataSource(this.dataSource).subscribe(
-    (result)=>{
-      this.dataSourceService.getDataFrom(result).subscribe(
-        (result)=>{
-          console.log("result delete if ok", result);
-        },
-        (error)=>{
-          console.log("result delete", error.status);
-          //MESAGE HERE
-        },
-        ()=>{
-          //message here
-        }
-      )
-    }
-  );
+  //Function here for testing
   this.isConnection=true;
 
 }
@@ -86,7 +70,6 @@ saveRest(){
       }
   );
   }
-
   this.dataSource.type= 'Rest API';
 }
   onSubmit(rest: NgForm) {
@@ -96,9 +79,7 @@ saveRest(){
       this.saveRest();
       this.dataSourceService.addDataSource(this.dataSource).subscribe(
         result =>{
-          console.log(result);
          this.router.navigate(['/queries'])
-
         }
          );
          

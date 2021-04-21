@@ -3,6 +3,7 @@ import { DataSource} from '../models/data-source.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Widget } from '../models/widget.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class DataSourceService {
 
   getAllDataSources(): Observable<DataSource[]> {
     return this.http.get<DataSource[]>(this.host + 'alldatasource');
+  }
+
+  getAllWidgets(datasourceId: any): Observable<Widget[]> {
+    return this.http.get<Widget[]>(this.host + datasourceId+ '/allwidgets');
   }
   getDataFrom(dataSource: DataSource): Observable<any[]>{
       return this.http.get<any[]>(this.host+dataSource.id);

@@ -84,7 +84,7 @@ export class AddWidgetComponent implements OnInit {
       this.widget.defaultItemRows=2;
       this.widget.minItemCols=1;
       this.widget.minItemRows=1;
-      this.widget.metaDataSourceDataModels = this.selectedKeys;
+      this.widget.MetaDataSources = this.selectedKeys;
       let dash = this.dashboardsService.getCurretDashboard();
       this.widgetService.addWidget(this.widget).subscribe(
         result => this.router.navigate(['/dashboards', dash.id])
@@ -99,7 +99,7 @@ export class AddWidgetComponent implements OnInit {
     this.widget.minItemRows=1;
     this.widget.widgetType = this.selectedWidgetType;
     this.widget.dataSource = event[1];
-    this.widget.metaDataSourceDataModels =event[0];
+    this.widget.MetaDataSources =event[0];
     console.log('created widget', this.widget);
     let dash = this.dashboardsService.getCurretDashboard();
     this.widgetService.addWidget(this.widget).subscribe(

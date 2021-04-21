@@ -1,7 +1,9 @@
-<div class="myCard">
-    <h3>Create new source</h3>
-    <div>
-        <button pButton pRipple type="button" label="Rest Api" class="p-button-info" routerLink="/rest" ></button>
-        <button pButton pRipple  (click)="goToQueryBuilder()" type="button" label="Query Builder" class="p-button-warning"></button>
-    </div>
+<h3 style="text-align: center">Create new data source</h3>
+<div class="p-grid">
+  <p-card header="Rest Api" routerLink="/rest">
+    <img alt="rest" src="../../../assets/images/rest.png" />
+  </p-card>
+  <p-card (click)="goToQueryBuilder()" header="Query Builder">
+    <img alt="QueryBuilder" src="../../../assets/images/QueryBuilder.png" />
+  </p-card>
 </div>

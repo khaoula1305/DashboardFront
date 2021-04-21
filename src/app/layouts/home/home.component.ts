@@ -14,7 +14,7 @@ import {MessageService} from 'primeng/api';
 export class HomeComponent implements OnInit {
   dashboards: Dashboard[];
   load = false;
-  dashboardId: any;
+  dashboard: any;
   constructor(
     private dashboardService: DashboardsService, 
     private router: Router, 
@@ -31,27 +31,25 @@ export class HomeComponent implements OnInit {
       },
       () => {
         this.load = true;
-        console.log('done ');
       }
     );
   }
   updateDashboard(dashboard: Dashboard){
     this.router.navigate(['/updateDashboard',dashboard.id ]);
   }
-  showConfirm() {
+  showConfirm(message: any) {
     this.messageService.clear();
-    this.messageService.add({key: 'a', sticky: true, severity:'warn', summary:'Dashboard is not empty', detail:'Confirm to proceed'});
+    this.messageService.add(message);
 }
 onConfirm() {
-  this.deleteDashboard(this.dashboardId);
+  this.deleteDashboard(this.dashboard);
   this.messageService.clear('a');
 }
-
 onReject() {
   this.messageService.clear('a');
 }
-  deleteDashboard(dashboardID: any){
-    this.dashboardService.deleteDashboard(dashboardID).subscribe(
+  deleteDashboard(dashboard: any){
+    this.dashboardService.deleteDashboard(dashboard.id).subscribe(
       (result)=>{
         console.log(result);
       },
@@ -66,13 +64,13 @@ onReject() {
     );
   }
   onDelete(dashboard: Dashboard){
+    this.dashboard=dashboard;
     this.dashboardWidgetService.getAllDashboardWidget(dashboard.id).subscribe(
       (data) => {
         if(data.length>0){
-          this.dashboardId=dashboard.id;
-          this.showConfirm();
+          this.showConfirm({key: 'a', sticky: true, severity:'warn', summary:'Dashboard is not empty', detail:' This will remove the dashboard and its associated widgets and cannot be undone!'});
         } else{
-          this.deleteDashboard(dashboard.id); 
+          this.showConfirm({key: 'a',  severity:'custom', summary:'Are you sure you want to remove this Dashboard?', detail:' !'});
         }
       }
     );

@@ -19,8 +19,10 @@
         </ng-template>
         <ng-template pTemplate="body" let-tab>
             <tr>
-                <td *ngFor="let col of cols">
-                    {{tab[col.field]}}
+                <td  *ngFor="let col of cols">
+                    <div class="description">
+                        {{tab[col.field]}}
+                    </div>
                 </td>
             </tr>
         </ng-template>

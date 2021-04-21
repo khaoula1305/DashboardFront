@@ -40,7 +40,7 @@ export class DashboardWidgetComponent implements OnInit {
     var myLabels=[];
     var objet: any;
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-     this.selectedKeys= this.dashboardWidget.widget.metaDataSourceDataModels;
+     this.selectedKeys= this.dashboardWidget.widget.MetaDataSources;
     this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
@@ -58,10 +58,10 @@ export class DashboardWidgetComponent implements OnInit {
               break;
             }
             default : {
-              this.dimensionKey = this.dashboardWidget.widget.metaDataSourceDataModels.find(elm => elm.isDimension==true);
+              this.dimensionKey = this.dashboardWidget.widget.MetaDataSources.find(elm => elm.isDimension==true);
               if(this.dimensionKey){
                this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
-               this.dashboardWidget.widget.metaDataSourceDataModels.forEach(element=> {
+               this.dashboardWidget.widget.MetaDataSources.forEach(element=> {
                  if(!element.isDimension){
                    var label = [];
                    this.results.forEach(elm => label.push(elm[element.key]));

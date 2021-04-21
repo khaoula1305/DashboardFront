@@ -16,8 +16,8 @@ export class MyWidgetsComponent implements OnInit {
   load = false;
   errDeletingMsgs: Message[];
   err = false;
-  widgetId: any;
-
+  widget: any;
+  searchText:any;
   constructor(private widgetService: WidgetsService, private router: Router, private primengConfig: PrimeNGConfig,
     private messageService: MessageService) { }
 
@@ -34,17 +34,26 @@ export class MyWidgetsComponent implements OnInit {
       }
     );
   }
-
-  onDeleteWidget(widget: Widget){
-    this.deleteWidget(this.widgetId);
-    //this.showConfirm();
+  updateWidget(widget: any){
   }
-  showConfirm() {
+  onDeleteWidget(widget: Widget){
+    this.widget=widget;
+    this.widgetService.getAllDashboardWidgets(widget.id).subscribe(
+      (data) => {
+        if(data.length>0){
+          this.showConfirm({key: 'a', sticky: true, severity:'warn', summary:'Widget is already used', detail:' This will remove the widget and its associated data and cannot be undone!'});
+        } else{
+          this.showConfirm({key: 'a',  severity:'custom', summary:'Are you sure you want to remove this widget?', detail:' !'});
+        }
+      }
+    );
+  }
+  showConfirm(message: any) {
     this.messageService.clear();
-    this.messageService.add({key: 'a', sticky: true, severity:'warn', summary:'Widget already used', detail:' '});
+    this.messageService.add(message);
 }
   onConfirm() {
-    this.deleteWidget(this.widgetId);
+    this.deleteWidget(this.widget);
     this.messageService.clear('a');
   }
   
@@ -52,16 +61,9 @@ export class MyWidgetsComponent implements OnInit {
     this.messageService.clear('a');
   }
 
-  deleteWidget(widgetId: any){
-    this.widgetService.deleteWidget(widgetId).subscribe(
+  deleteWidget(widget: any){
+    this.widgetService.deleteWidget(widget.id).subscribe(
       (result)=>{
-        console.log("result delete if ok", result);
-      },
-      (error)=>{
-        console.log("result delete", error.status);
-        this.showConfirm();
-      },
-      ()=>{
       this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/myWidgets']); 
         });

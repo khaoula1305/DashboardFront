@@ -19,15 +19,14 @@
 </p-toast>
 <div class="p-grid">
   <div *ngFor="let dashboard of dashboards">
-    <p-card>
+    <p-card [style]="{'background':'rgb(249, 249, 249)'}">
       <div (click)="goToDashboard(dashboard)">
         <h3>{{ dashboard.title }}</h3>
-        <p>    {{dashboard.description}}</p>
+        <p class="description">    {{dashboard.description}}</p>
       </div>
     <footer>
   <button pButton pRipple type="button" (click)="updateDashboard(dashboard)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
    <button pButton pRipple type="button" (click)="onDelete(dashboard)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-
     </footer>
   </p-card>
 

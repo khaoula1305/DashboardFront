@@ -16,14 +16,31 @@ export class QueryDetailsComponent implements OnInit {
   load= false;
   dataSource: DataSource;
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
-
+   flatToString(obj, out){
+    if(Array.isArray(obj)){
+      out+= ' [';
+      obj.forEach(element => {
+        out+=this.flatToString(element, out);
+      });
+     out+= '] ';
+    }
+    else if (typeof obj == 'object') {
+         out+=' {' ;
+         Object.keys(obj).forEach(key => {
+           out+='\"'+key+"\":"+obj[key]+", ";
+         })
+         out+= "} , ";
+     }
+     return out;
+   }
    flat = (obj, out) => {
     Object.keys(obj).forEach(key => {
-        if (typeof obj[key] == 'object') {
-            out = this.flat(obj[key], out) //recursively call for nesteds
-        } else {
-            out[key] = obj[key] //direct assign for values
-        }
+      if( obj[key] !== null && (Array.isArray(obj[key]) || typeof obj[key] == 'object')){
+        out[key] = this.flatToString(obj[key], '');
+      }
+       else {
+           out[key] = obj[key]
+       }
     })
     return out
   }
@@ -34,12 +51,12 @@ export class QueryDetailsComponent implements OnInit {
         this.dataSource=result;
         this.dataSourceService.getDataFrom(result).subscribe(
           (data) => {
-            data.forEach(el=>{
-              this.results.push(this.flat(el,{}));
+            data.forEach(elm => {
+              this.results.push(this.flat(elm,{}));
             });
-            for (let key in this.results[0]) {
-              this.cols.push( { field: key, header: key });
-            }
+           for (let key in this.results[0]) {
+            this.cols.push( { field: key, header: key });
+          }
           },
           (error) => {
             console.log(error);
