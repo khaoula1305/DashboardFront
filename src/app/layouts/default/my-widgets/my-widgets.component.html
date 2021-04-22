@@ -17,8 +17,10 @@
       </div>
   </ng-template>
 </p-toast>
+<div style="text-align: right;">
 <button pButton pRipple type="button" label="New Widget" style="text-align:right" routerLink='/addWidget' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
-<div class="p-col-12" style="text-align:center">
+</div>
+<div style="text-align:center">
     <h3>Widgets</h3>
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
@@ -27,7 +29,7 @@
 </div>
 <div class="p-grid">
     <div *ngFor="let widget of myWidgets | filter: searchText">
-      <p-card>
+      <p-card  [style]="{'background':'rgb(254, 254, 254)'}">
         <div>
           <h3>{{widget.title }}</h3>
           <p class="description"> {{widget.description}}</p>

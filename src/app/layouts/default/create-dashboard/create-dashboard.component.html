@@ -1,7 +1,7 @@
 
 <form (ngSubmit)="onSubmit(newDashboard)" #newDashboard="ngForm">
     <div class="p-grid">
-        <div class="p-col">
+        <br class="p-col">
           <h4>Create Dashboard</h4>
             <div class="box">
                 <h5>Title *</h5>
@@ -15,13 +15,7 @@
                 [(ngModel)]="description"
               ></textarea>
             </div>
-            <p-button
-            [disabled]="!newDashboard.valid"
-              label="Save"
-              icon="pi pi-check"
-              type="submit"
-              iconPos="left"
-            ></p-button>
+          <br/>
+          <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
         </div>
-     </div>
 </form>

@@ -34,16 +34,9 @@ export class RestComponent implements OnInit {
 
     ]
   }
-  onClick(){
-    console.log(this.selectedAuthetification);
-  }
-  onChange(event){
-    console.log(event);
-  }
   DeleteParam(param){
     var removeIndex = this.params.map(function (item) { return item.id; }).indexOf(param);
     this.params.splice(removeIndex, 1);
-   // this.params.splice(this.params.findIndex(param),1)
   }
   addParam(){
     this.params.push( {code: "access_key", value:"Your access"});
@@ -55,9 +48,7 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
-  //Function here for testing
   this.isConnection=true;
-
 }
 saveRest(){
   if(this.params.length>0){

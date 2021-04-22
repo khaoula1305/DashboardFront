@@ -27,10 +27,12 @@ export class DashboardComponent implements OnInit {
   load = false;
   editMode= false;
   searchText:any;
+  empty: false;
   @Input() dashboard: Dashboard;
 
   public pauseState = false;
   ngOnInit() {
+    setTimeout(function() { this.empty = true;}.bind(this), 2000);
     this.options = {
       gridType: GridType.ScrollVertical,
       compactType: CompactType.None,

@@ -14,7 +14,7 @@
       </div>     
        <div class="p-field p-col-12 p-md-5">
         <h5>Authentication Type </h5>
-        <p-dropdown [options]="authenticationType" (onChange)="onChange($event)" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a Type" [showClear]="true"></p-dropdown>
+        <p-dropdown [options]="authenticationType" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a Type" [showClear]="true"></p-dropdown>
       </div>
     </div>
     <p-divider></p-divider>
@@ -128,7 +128,7 @@
         </div>
      </div>
     <p-divider></p-divider>
-      <div class="p-col-12">
+      <div class="p-col-12" style="text-align: right;">
           <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
           <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
       </div>
