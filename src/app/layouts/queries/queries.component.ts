@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataSource } from 'src/app/models/data-source.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { Router } from '@angular/router';
-import {MessageService} from 'primeng/api';
+import {Message, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-queries',
@@ -15,6 +15,7 @@ export class QueriesComponent implements OnInit {
   searchText:any;
   queries: DataSource[];
   query: any;
+  msgs:Message[]=[];
   constructor(
     private dataSourceService: DataSourceService, 
     private router: Router,
@@ -67,9 +68,11 @@ onDelete(query: DataSource){
       (result)=>{
       },
       (error)=>{
-
       },
       ()=>{
+        this.msgs=[
+          {severity:'success',sticky: true, summary:'Success', detail:'The query was deleted successfully !'}
+        ]; 
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/queries']); 
         });
