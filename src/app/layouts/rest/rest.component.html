@@ -1,6 +1,6 @@
 
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
-  <p-message *ngIf="isConnection" severity="warn" text="Connection Failed: Error:"  class="p-mr-6" ></p-message> 
+  <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
   <div class=" my-card">
     <h3> New Rest</h3>
     <div class="p-col-12 p-fluid p-grid">

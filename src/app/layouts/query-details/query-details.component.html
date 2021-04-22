@@ -1,8 +1,10 @@
 <div class="p-grid" *ngIf="load" >
     <div class="p-col-12">
-    <h1>Query details</h1>
-    <div>Data Source Name: {{dataSource.title}}</div>
-    <span>Data Source Type: {{dataSource.type}}</span> 
+        <div style="text-align:center">
+            <h3>Query details</h3>
+            <div>Data Source Name: {{dataSource.title}}</div>
+            <span>Data Source Type: {{dataSource.type}}</span> 
+        </div>
      </div>
      <p-table [value]="results" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
         <ng-template pTemplate="colgroup" let-columns>

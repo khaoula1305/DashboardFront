@@ -9,6 +9,9 @@
     }
   }
 }
+.p-grid {
+  padding: 0px 3em;
+}
 :host ::ng-deep {
   .p-toast-message-warn {
     background-color: #ee9fd4;

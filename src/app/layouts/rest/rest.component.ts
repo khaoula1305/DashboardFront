@@ -3,11 +3,12 @@ import { Rest } from '../../models/rest.model';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataSourceService } from 'src/app/services/data-source.service';
-
+import {Message,MessageService} from 'primeng/api';
 @Component({
   selector: 'app-rest',
   templateUrl: './rest.component.html',
-  styleUrls: ['./rest.component.scss']
+  styleUrls: ['./rest.component.scss'],
+  providers: [MessageService]
 })
 export class RestComponent implements OnInit {
 
@@ -17,22 +18,19 @@ export class RestComponent implements OnInit {
   headers:any[];
   params:any[];
   token;
-  isConnection=false;
-  constructor(private dataSourceService: DataSourceService, private router: Router) { }
+  msgs:Message[]=[];
+  constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
 
   ngOnInit(): void {
+
     this.authenticationType=[
       {name:'Basic Auth'},
       {name:'Bearer Token'},
       //{name:'OAuth 2.0'},
       {name:'Other'}
     ];
-    this.headers=[
-
-    ];
-    this.params=[
-
-    ]
+    this.headers=[];
+    this.params=[];
   }
   DeleteParam(param){
     var removeIndex = this.params.map(function (item) { return item.id; }).indexOf(param);
@@ -42,13 +40,16 @@ export class RestComponent implements OnInit {
     this.params.push( {code: "access_key", value:"Your access"});
   }
   DeleteHeader(header){
-    this.headers.splice(this.headers.findIndex(header),1)
+    var removeIndex = this.headers.map(function (item) { return item.id; }).indexOf(header);
+    this.headers.splice(removeIndex, 1);
   }
   addHeader(){
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
-  this.isConnection=true;
+  this.msgs=[
+    {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
+  ]; 
 }
 saveRest(){
   if(this.params.length>0){
