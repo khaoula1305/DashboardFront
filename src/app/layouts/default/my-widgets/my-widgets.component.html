@@ -29,10 +29,11 @@
 </div>
 <div class="p-grid">
     <div *ngFor="let widget of myWidgets | filter: searchText">
-      <p-card  [style]="{'background':'rgb(254, 254, 254)'}">
+      <p-card  [style]="{'background':'rgb(254, 254, 254)'}" header="">
         <div>
-          <h3>{{widget.title }}</h3>
-          <p class="description"> {{widget.description}}</p>
+        <img alt="{{widget.widgetType.type}}" src="{{widget.widgetType.imagePath}}" />
+        <h3>{{widget.title }}</h3>
+        <p class="description"> {{widget.description}}</p>
         </div>
       <footer>
         <button pButton pRipple type="button" (click)="updateWidget(widget)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>

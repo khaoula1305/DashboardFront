@@ -1,50 +1,33 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
-  <div class="p-grid">
-    <div class="p-col-12">
+  <div class="my-card">
       <h3>Add New Widget</h3>
-    </div>
-    
-    <div class="p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-5">
-        <h5>Title</h5>
-        <input type="text" pInputText [(ngModel)]="widget.title" name="title" />
-           </div>
-      <div class="p-field p-col-12 p-md-7">
+    <div class="p-col-12 p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <h5>Title *</h5>
+        <input type="text" pInputText [(ngModel)]="widget.title" name="title" required/>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
         <h5>Description</h5>
-        <textarea
-          name="description"
-          type="text"
-          rows="4"
-          pInputTextarea
-          [(ngModel)]="widget.description"
-        ></textarea>    </div>
-    </div>
+        <textarea rows="5" cols="73.2" name="description" type="text" rows="4" pInputTextarea [(ngModel)]="widget.description"></textarea>
+      </div>
+    
+          <div class="p-field p-col-12 p-md-6">
+            <h5>Query *</h5>
+            <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
+              placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
+          </div>
 
-    <div class="p-col-12">
-      <div class="p-fluid p-formgrid p-grid">
-        
-        <div class="p-field p-col-12">
-          <label for="visualisation">Visualisation</label>
-          <p-dropdown
-            [options]="widgetTypes"
-            [(ngModel)]="selectedWidgetType"
-            name="selectedWidgetType"
-            (ngModelChange)="OnSelectedWidgetType()"
-            optionLabel="type"
-            [filter]="true"
-            filterBy="type"
-            [showClear]="true"
-            placeholder="Select a visualisation"
-          >
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Visualization *</h5>
+          <p-dropdown required [options]="widgetTypes" [(ngModel)]="widget.widgetType" name="selectedWidgetType"
+            optionLabel="type" [filter]="true" filterBy="type"
+            [showClear]="true" placeholder="Select a visualization">
             <ng-template pTemplate="selectedItem">
-              <div
-                class="widgetType-item widgetType-item-value"
-                *ngIf="selectedWidgetType.type"
-              >
+              <div class="widgetType-item widgetType-item-value" *ngIf="widget.widgetType">
 
                 <div class="center">
-                  <img src="{{ selectedWidgetType.imagePath }}" alt="{{selectedWidgetType.type}}" />
-                  {{ selectedWidgetType.type }}
+                  <img src="{{ widget.widgetType.imagePath }}" alt="{{widget.widgetType.type}}" />
+                  {{ widget.widgetType.type }}
                 </div>
               </div>
             </ng-template>
@@ -57,28 +40,27 @@
             </ng-template>
           </p-dropdown>
         </div>
+        <div class="p-field p-col-12 p-md-12">
+        <p-divider></p-divider>
+        </div>
 
-        <div class="box" *ngIf="selectedWidgetType">
-          <div [ngSwitch]="selectedWidgetType.type">
+        <div class="box" *ngIf="widget.widgetType">
+          <div [ngSwitch]="widget.widgetType.type">
             <div *ngSwitchCase="widgetTypeEnum.Table">
-              <app-table (added)="onAddedClick($event)"></app-table>
+              <app-table></app-table>
             </div>
             <div *ngSwitchCase="widgetTypeEnum.Card">
               <app-card (added)="onAddedClick($event)"></app-card>
             </div>
-            <div *ngSwitchDefault> 
-              <app-graph [selectedWidgetType]="selectedWidgetType" (added)="onAddedClick($event)"></app-graph>
+            <div *ngSwitchDefault>
+              <app-graph></app-graph>
             </div>
           </div>
         </div>
-
-      </div>
-
     </div>
-
-
-
+    <div class="p-col-12">
+      <button pButton pRipple style="margin:5px;" type="button" label="Cancel" routerLink="/dashboards/{{dashboard.id}}" class="p-button-rounded p-button-info"></button>
+      <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-help"></button>
+    </div>
   </div>
 </form>
-
-

@@ -1,112 +1,80 @@
-<div class="p-grid">
- <div class="p-col-12">
-    <div class="p-field p-col">
-        <label for="query">Queries</label>
-        <p-dropdown
-          inputId="query"
-          name="selectedQuery"
-          [options]="queries"
-          [(ngModel)]="selectedQuery"
-          placeholder="Select"
-          (ngModelChange)="onSelectedQuery()"
-          optionLabel="title"
-        ></p-dropdown>
-      </div>
-</div>
-<div class="p-col-6">
-    <div class="p-field p-col" *ngIf="showKeys">
-            <div class="card">
-                <p-splitter [style]="{'height': '300px','width': '100px'}" styleClass="p-mb-5">
-                    <ng-template pTemplate>
-                        <div class="p-col p-d-flex p-ai-center p-jc-center">
-                          <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{width:'300px'}">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Mesures</th>
-                                    <th>          </th>
-                                    <th>          </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-tab>
-                                <tr>
-                                    <td>{{tab.key}}</td>
-                                    <td>           </td>
-                                    <td><p-button (click)="onSelectedKey(tab.key, tab.id)" icon="pi pi-check"></p-button></td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate>
-                        <div class="p-col p-d-flex p-ai-center p-jc-center">
-                          <div class="p-field p-col" *ngIf="showKeys">
-                            <div class="card">
-                              <p-table [value]="selectedKeys" [scrollable]="true" scrollHeight="250px" [style]="{width:'500px'}">
-                                  <ng-template pTemplate="header">
-                                      <tr>
-                                          <th>Selected Keys</th>
-                                          <th>Labels</th>
-                                          <th>          </th>
-                                          
-                                      </tr>
-                                  </ng-template>
-                                  <ng-template pTemplate="body" let-tab>
-                                      <tr>
-                                          <td>{{tab.key}}</td>
-                                          <td>
-                                          <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"  placeholder="Add a label"/>  
-                                          </td>     
-                                          <td><p-button (click)="onRemovedKey(tab.key, tab.id)" icon="pi pi-times"></p-button></td>
-                                      </tr>
-                                  </ng-template>
-                              </p-table>
-                          </div>
-                          </div>
-                        </div>
-                    </ng-template>
-                </p-splitter>
-            </div> 
-    </div>
-    <div class="p-col-12" *ngIf="labelsWrited">
-        <p-button
-          label="Preview"
-          [disabled]="preview"
-          icon="pi pi-check"
-          (click)="drawTable()"
-          iconPos="left"
-        ></p-button>
-      </div>
-      <div class="p-col-fixed" style="width: 670px" *ngIf="drawType && selectedKeys.length!=0">
-        <div class="box">
-            <p-table [value]="results" [scrollable]="true" scrollHeight="400px">
+<div class="my-card">
+    <div class="p-col-12 p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+            <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th  *ngFor="let th of selectedKeys" >{{th.label}}</th>
+                        <th>Measures</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
                     <tr>
-                        <td  *ngFor="let th of selectedKeys">{{tab[th.key]}}</td>
+                        <td>{{ tab.key }}</td>
+                        <td></td>
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-check"
+                                class="p-button-rounded p-button-outlined"
+                                (click)="onSelectedKey(tab.key, tab.id)"></button>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
-      </div>
- </div>
+        <div class="p-field p-col-12 p-md-6" *ngIf="widget.metaDataSources">
+            <p-table [value]="widget.metaDataSources" [scrollable]="true" scrollHeight="250px"
+                [style]="{ width: '450px' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Selected Keys</th>
+                        <th>Labels</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tab>
+                    <tr>
+                        <td>{{ tab.key }}</td>
+                        <td>
+                            <input type="text" pInputText [(ngModel)]="tab.label" name="{{ tab.label }}"
+                                placeholder="Add a label" />
+                        </td>
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-times"
+                                class="p-button-rounded p-button-danger p-button-outlined"
+                                (click)="onRemovedKey(tab.key, tab.id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
 
- <div class="p-col-12 Col12">
-    <p-divider></p-divider>
-  </div>
-
- <div class="p-col-12">
-    <p-button
-      label="Save"
-      icon="pi pi-check"
-      (click)="onSendData()"
-      iconPos="left"
-    ></p-button>
-  </div>
-
+      
+        <div class="p-field p-col-12 p-md-12" style="width: 670px">
+            <p-table [value]="results" [scrollable]="true" scrollHeight="400px" [style]="{ width: '915px' }">
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                        <col style="width: 250px" *ngFor="let col of widget.metaDataSources" />
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let th of widget.metaDataSources">
+                            {{ th.label }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tab>
+                    <tr>
+                        <td *ngFor="let th of widget.metaDataSources">
+                            {{ tab[th.key] }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12 Col12">
+            <p-divider></p-divider>
+        </div>
+    </div>
 </div>
-
-       

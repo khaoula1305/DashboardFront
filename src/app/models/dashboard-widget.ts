@@ -12,5 +12,4 @@ export class DashboardWidget{
    maxItemRows:number;
    dashboard: Dashboard;
    widget: Widget;
-   //dataSource: DataSource;
 }

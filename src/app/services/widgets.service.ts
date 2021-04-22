@@ -4,14 +4,23 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Widget } from '../models/widget.model';
 import { DashboardWidget } from '../models/dashboard-widget';
+import {BehaviorSubject} from 'rxjs';  
 
 @Injectable({
   providedIn: 'root',
 })
 export class WidgetsService {
   host: any = environment.hostApi + '/Widget/';
-
-  constructor(private http: HttpClient) {}
+  private widgetSource = new BehaviorSubject<Widget>(new Widget());
+  currentWidget = this.widgetSource.asObservable();
+  getCurrentWidget(){
+    console.log('curent from using service',this.widgetSource.getValue());
+  }
+  changeWidget(widget: Widget) {
+    this.widgetSource.next(widget);
+  }
+  constructor(private http: HttpClient) {
+  }
 
   getAllWidgets(): Observable<Widget[]> {
     return this.http.get<Widget[]>(this.host + 'allwidgets');

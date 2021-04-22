@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
-import { DataSource } from 'src/app/models/data-source.model';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
-import { error } from '@angular/compiler/src/util';
+import { WidgetType } from 'src/app/models/widget-type';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -30,6 +29,7 @@ export class DashboardWidgetComponent implements OnInit {
   dimensionKey: MetaDataSource;
   datasets: any[] = [];
   result;
+  widgetTypeOnUpdate:WidgetType;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -40,7 +40,7 @@ export class DashboardWidgetComponent implements OnInit {
     var myLabels=[];
     var objet: any;
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-     this.selectedKeys= this.dashboardWidget.widget.MetaDataSources;
+     this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
     this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
@@ -58,10 +58,10 @@ export class DashboardWidgetComponent implements OnInit {
               break;
             }
             default : {
-              this.dimensionKey = this.dashboardWidget.widget.MetaDataSources.find(elm => elm.isDimension==true);
+              this.dimensionKey = this.dashboardWidget.widget.metaDataSources.find(elm => elm.isDimension==true);
               if(this.dimensionKey){
                this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
-               this.dashboardWidget.widget.MetaDataSources.forEach(element=> {
+               this.dashboardWidget.widget.metaDataSources.forEach(element=> {
                  if(!element.isDimension){
                    var label = [];
                    this.results.forEach(elm => label.push(elm[element.key]));
