@@ -27,37 +27,38 @@
                 </ng-template>
             </p-table>
         </div>
-                <div class="p-field p-col-12 p-md-6">
-                    <p-table [value]="widget.metaDataSourceDataModels" [scrollable]="true" scrollHeight="250px"
-                    [style]="{ width: '450px' }">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Selected Keys</th>
-                                <th>Labels</th>
-                                <th> </th>
+        <div class="p-field p-col-12 p-md-6">
+            <p-table [value]="widget.metaDataSourceDataModels" [scrollable]="true" scrollHeight="250px"
+                [style]="{ width: '450px' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Selected Keys</th>
+                        <th>Labels</th>
+                        <th> </th>
 
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-tab>
-                            <tr>
-                                <td>{{tab.key}}</td>
-                                <td>
-                                    <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"
-                                        placeholder="Add a label" />
-                                </td>
-                                <td *ngIf="newWidget">
-                                    <button pButton pRipple type="button" icon="pi pi-times"
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tab>
+                    <tr>
+                        <td>{{tab.key}}</td>
+                        <td>
+                            <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"
+                                placeholder="Add a label" />
+                        </td>
+                        <td *ngIf="newWidget">
+                            <button pButton pRipple type="button" icon="pi pi-times"
                                 class="p-button-rounded p-button-danger p-button-outlined"
                                 (click)="onRemovedKey(tab.key, tab.id)"></button>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-       
-        <div >
-            <button class="p-col-2" *ngIf="widget.metaDataSourceDataModels || previewOnUpdate" pButton pRipple [disabled]="widget.metaDataSourceDataModels.length == 0"
-                type="button" label="Preview" (click)="draw()" class="p-button-rounded p-button-info"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div>
+            <button class="p-col-2" *ngIf="widget.metaDataSourceDataModels || previewOnUpdate" pButton pRipple
+                [disabled]="widget.metaDataSourceDataModels.length == 0" type="button" label="Preview" (click)="draw()"
+                class="p-button-rounded p-button-info"></button>
         </div>
 
         <div class="p-col-fixed" style="width: 670px" *ngIf="drawType && widget.metaDataSourceDataModels.length!=0">
