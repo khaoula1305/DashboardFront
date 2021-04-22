@@ -43,7 +43,12 @@ onReject() {
   this.messageService.clear('a');
 }
 updateQuery(query: DataSource){
-
+  if(query.type== "Rest API"){
+    this.router.navigate(['/updateDatasource', query.id]);
+  }
+  else{
+    window.open("https://localhost:5001/swagger/index.html", "_blank");
+  }
 }
 onDelete(query: DataSource){
   this.query=query;

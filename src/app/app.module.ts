@@ -30,6 +30,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {DividerModule} from 'primeng/divider';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { UpdateDashboardComponent } from './layouts/default/update-dashboard/update-dashboard.component';
+import { UpdateDataSourceComponent } from './layouts/update-data-source/update-data-source.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +42,8 @@ import {MessageModule} from 'primeng/message';
     RestComponent,
     HomeComponent,
     DataSourceComponent,
-    QueryDetailsComponent
+    QueryDetailsComponent,
+    UpdateDataSourceComponent
   ],
   imports: [
     BrowserModule,

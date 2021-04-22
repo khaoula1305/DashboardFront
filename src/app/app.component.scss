@@ -9,7 +9,13 @@
     }
   }
 }
-
+.inside {
+  padding: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica,
+    Arial, sans-serif, “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+  text-align: center;
+  text-shadow: 10px;
+}
 .wrapper {
   display: flex;
   flex-flow: row wrap;

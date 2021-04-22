@@ -7,7 +7,7 @@
 </span>
   <button pButton pRipple type="refresh" label="" icon="pi pi-refresh" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" label="" icon="pi pi-bookmark" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" label="share" icon="pi pi-fw pi-users" class="p-button-rounded p-button-info p-button-text"></button>
+  <button pButton pRipple type="button" label="share" icon="pi pi-fw pi-users" class="p-button-rounded p-button-secondary p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="!editMode" (click)="OnEdit(false)" label="edit"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button"  *ngIf="editMode" (click)="OnEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button"  *ngIf="editMode" (click)="OnEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>

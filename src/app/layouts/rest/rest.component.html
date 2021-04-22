@@ -128,21 +128,9 @@
         </div>
      </div>
     <p-divider></p-divider>
-      <div class="p-col-12 p-fluid p-grid">
-        <p-button
-        [disabled]="!rest.valid"
-        label="Test Connection"
-        icon="pi pi-check"
-        iconPos="left"
-        (click)="TestConnection()"
-      ></p-button>
-        <p-button
-          [disabled]="!rest.valid"
-          label="Save"
-          icon="pi pi-check"
-          type="submit"
-          iconPos="left"
-        ></p-button>
+      <div class="p-col-12">
+          <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
+          <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
       </div>
   </div>
   </form>

@@ -1,0 +1,150 @@
+
+ <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
+    <p-message *ngIf="isConnection" severity="warn" text="Connection Failed: Error:"  class="p-mr-6" ></p-message> 
+    <div class=" my-card">
+      <h3> New Rest</h3>
+      <div class="p-col-12 p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-5">
+          <h5>Data Source Name *</h5>
+          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" placeholder="Enter title" required />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Rest Host *</h5>
+          <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" required />
+        </div>     
+         <div class="p-field p-col-12 p-md-5">
+          <h5>Authentication Type </h5>
+          <p-dropdown [options]="authenticationType" (onChange)="onChange($event)" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a Type" [showClear]="true"></p-dropdown>
+        </div>
+      </div>
+      <p-divider></p-divider>
+      <div *ngIf='selectedAuthetification' [ngSwitch]="selectedAuthetification.name">
+          <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic Auth'">
+            <div class="p-md-5">
+              <h5>User Id for basic authentication </h5>
+              <input type="text" pInputText [(ngModel)]="dataSource.username" name="username" />
+            </div>
+            <div class="p-md-5">
+              <h5>Password  for basic authentication </h5>
+              <input type="text" pInputText  [(ngModel)]="dataSource.password" name="password" />
+            </div>    
+          </div>
+          <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'Bearer Token'">
+            <div class="p-md-5">
+              <h5>Access Token </h5>
+              <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
+            </div>
+          </div>
+          <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'OAuth 2.0'">
+            <div class="p-md-5">
+              <h5>To Be implemented </h5>
+              <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
+            </div>
+          </div>
+          <div  class="p-col-12 p-fluid p-grid" *ngSwitchDefault> 
+            <div class="p-md-6">
+              <div class="card">
+                 Auth URL Params
+                <button (click)="addParam()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-help"></button>
+               <p-table [value]="params" dataKey="id">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th style="width:8rem"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-param>
+                        <tr>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="param.code" name="param.code">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{param.code}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="param.value" name="value">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{param.value}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td style="text-align:center">
+                              <button (click)="DeleteParam(param)" pButton pRipple type="button"  icon="pi pi-trash"  class="p-button-rounded p-button-text p-button-danger"></button>
+                          </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+             Auth Headers
+             <button (click)="addHeader()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-help"></button>
+            <p-table [value]="headers" dataKey="id">
+                 <ng-template pTemplate="header">
+                     <tr>
+                         <th>Key</th>
+                         <th>Value</th>
+                         <th style="width:8rem"></th>
+                     </tr>
+                 </ng-template>
+                 <ng-template pTemplate="body" let-header>
+                     <tr>
+                         <td pEditableColumn>
+                             <p-cellEditor>
+                                 <ng-template pTemplate="input">
+                                     <input pInputText type="text" [(ngModel)]="header.code" name="header.code">
+                                 </ng-template>
+                                 <ng-template pTemplate="output">
+                                     {{header.code}}
+                                 </ng-template>
+                             </p-cellEditor>
+                         </td>
+                         <td pEditableColumn>
+                             <p-cellEditor>
+                                 <ng-template pTemplate="input">
+                                     <input pInputText type="text" [(ngModel)]="header.value" name="value">
+                                 </ng-template>
+                                 <ng-template pTemplate="output">
+                                     {{header.value}}
+                                 </ng-template>
+                             </p-cellEditor>
+                         </td>
+                         <td style="text-align:center">
+                           <button (click)="DeleteHeader(header)" pButton pRipple type="button"  icon="pi pi-trash"  class="p-button-rounded p-button-text p-button-danger"></button>
+                       </td>
+                     </tr>
+                 </ng-template>
+             </p-table>
+            </div>
+          </div>
+       </div>
+      <p-divider></p-divider>
+        <div class="p-col-12 p-fluid p-grid">
+          <p-button
+          [disabled]="!rest.valid"
+          label="Test Connection"
+          icon="pi pi-check"
+          iconPos="left"
+          (click)="TestConnection()"
+        ></p-button>
+          <p-button
+            [disabled]="!rest.valid"
+            label="Save"
+            icon="pi pi-check"
+            type="submit"
+            iconPos="left"
+          ></p-button>
+        </div>
+    </div>
+    </form>
+  
+  
