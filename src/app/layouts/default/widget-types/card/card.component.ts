@@ -1,81 +1,87 @@
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UUID } from 'angular2-uuid';
-import { DataSource } from 'src/app/models/data-source.model';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
+import { Widget } from 'src/app/models/widget.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CardComponent implements OnInit {
-
-  queries: DataSource[];
-  selectedQuery: DataSource;
   results = [];
-  allKeys: MetaDataSource[]=[];
-  showKeys=false;
-  cardKey:MetaDataSource;
-  selectedKey: MetaDataSource[] = [];
+  allKeys: MetaDataSource[] = [];
+  cardKey: MetaDataSource;
   cardRes;
-  preview=false;
-  showPreview=false;
-  @Output() added = new EventEmitter<any>();
+  preview = false;
+  showPreview = false;
+  newCard = false;
+  updateCard=false;
 
-  constructor(private dataSourceService: DataSourceService) { }
+  widget: Widget;
+
+  constructor(
+    private dataSourceService: DataSourceService,
+    private widgetService: WidgetsService
+  ) {}
 
   ngOnInit(): void {
-    this.dataSourceService.getAllDataSources().subscribe(
-      (data) => {
-        this.queries = [];
-        data.forEach(elm => {
-          this.dataSourceService.getDataFrom(elm).subscribe(
-            (dataBody) => {
-              if(dataBody.length==1){
-                 this.queries.push(elm);
-              }
-            }
-          );
-        })
-      }
+    this.widgetService.currentWidget.subscribe(
+      (widget) => (this.widget = widget)
     );
-  }
-
-  onSelectedQuery() {
-    this.showKeys = true;
-    this.dataSourceService.getDataFrom(this.selectedQuery).subscribe(
-      (data) => {
+    this.dataSourceService
+      .getDataFrom(this.widget.dataSource)
+      .subscribe((data) => {
         this.results = data;
-        console.log('selected query', this.results.length);
-        for(let key in data[0]){
-          this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
+        for (let key in data[0]) {
+          this.allKeys.push({
+            id: UUID.UUID(),
+            key,
+            label: key,
+            isDimension: false,
+          });
+        }
+        if(this.widget.metaDataSourceDataModels.length!=0){
+      this.results.forEach((elm) => (this.cardRes = elm[this.cardKey.key]));
         }
       });
+    if (this.widget.metaDataSourceDataModels.length==0) {
+      this.newCard = true;
+    }
+    else {
+      this.updateCard=true;
+      this.cardKey = this.widget.metaDataSourceDataModels[0];
+    }
   }
 
   onSelectedDimension(event) {
     if (this.cardKey != undefined) {
       this.allKeys.push(this.cardKey);
-      var removeIndex = this.selectedKey.map(function (item) { return item.id; }).indexOf(this.cardKey.id);
-      this.selectedKey.splice(removeIndex, 1);
+      var removeIndex = this.widget.metaDataSourceDataModels
+        .map(function (item) {
+          return item.id;
+        })
+        .indexOf(this.cardKey.id);
+      this.widget.metaDataSourceDataModels.splice(removeIndex, 1);
     }
     this.cardKey = event;
-    var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(this.cardKey.id);
+    var removeIndex = this.allKeys
+      .map(function (item) {
+        return item.id;
+      })
+      .indexOf(this.cardKey.id);
     this.allKeys.splice(removeIndex, 1);
-    this.selectedKey.push(this.cardKey);
-    this.results.forEach(elm => this.cardRes = elm[this.cardKey.key]);
+    this.widget.metaDataSourceDataModels.push(this.cardKey);
+    this.results.forEach((elm) => (this.cardRes = elm[this.cardKey.key]));
     if (this.cardRes.length == 0) this.preview = true;
     else this.preview = false;
-
   }
-  showCard(){
-    this.preview=true;
-    this.showPreview=true;
-  }
-  onSendData() {
-
-    this.added.emit([this.selectedKey, this.selectedQuery]);
+  showCard() {
+    this.preview = true;
+    this.showPreview = true;
+    console.log('card res', this.cardRes);
   }
 }

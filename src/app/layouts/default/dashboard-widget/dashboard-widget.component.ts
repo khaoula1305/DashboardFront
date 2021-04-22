@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
-import { DataSource } from 'src/app/models/data-source.model';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
-import { error } from '@angular/compiler/src/util';
 import { WidgetType } from 'src/app/models/widget-type';
 
 @Component({

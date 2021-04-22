@@ -11,6 +11,7 @@ import { DashboardWidget } from '../models/dashboard-widget';
 export class DashboardWidgetService {
 
   host: any = environment.hostApi + '/Dashboard/';
+
   constructor(private http: HttpClient) {
   }
   getAllDashboardWidget(dashboardId: any): Observable<DashboardWidget[]> {

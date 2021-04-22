@@ -19,7 +19,7 @@
 </p-toast>
 <div class="p-grid">
   <div *ngFor="let dashboard of dashboards">
-    <p-card>
+    <p-card styleClass="cardColor">
       <div (click)="goToDashboard(dashboard)">
         <h3>{{ dashboard.title }}</h3>
         <p>    {{dashboard.description}}</p>

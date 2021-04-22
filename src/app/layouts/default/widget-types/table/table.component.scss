@@ -5,11 +5,7 @@
     width: 50px;
     height: 50px;
   }
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
   .center img {
     margin-right: 10px;
   }
@@ -28,5 +24,21 @@
   
   p-table{
     display: inline-block;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .box{
+    margin-left: 10px;
+  }
+  .my-card{
+    padding: 0px 5em;
+    font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica,
+      Arial, sans-serif, “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+    text-align: center;
+    text-shadow: 10px;
   }
   
