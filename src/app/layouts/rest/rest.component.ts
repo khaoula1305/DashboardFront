@@ -47,9 +47,21 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
-  this.msgs=[
-    {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
-  ]; 
+  this.dataSourceService.getDataFromURL(this.dataSource.url).subscribe(
+    (data)=>{
+ 
+    },
+    (error)=>{
+      this.msgs=[
+        {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
+      ]; 
+    },
+    ()=>{
+      this.msgs=[
+        {severity:'success',sticky: true, summary:'Connection Successful.'}
+      ]; 
+    }
+  )
 }
 saveRest(){
   if(this.params.length>0){

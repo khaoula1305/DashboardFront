@@ -16,6 +16,9 @@ export class WidgetsService {
   getCurrentWidget(){
     console.log('curent from using service',this.widgetSource.getValue());
   }
+  getWidget(widgetId: any): Observable<Widget>{
+    return this.http.get<Widget>(this.host+widgetId);
+  }
   changeWidget(widget: Widget) {
     this.widgetSource.next(widget);
   }

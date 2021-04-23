@@ -33,6 +33,7 @@ import {ToastModule} from 'primeng/toast';
 import { TableComponent } from './widget-types/table/table.component';
 import { GraphComponent } from './widget-types/graph/graph.component';
 import { CardComponent } from './widget-types/card/card.component';
+import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -46,7 +47,8 @@ import { CardComponent } from './widget-types/card/card.component';
       MyWidgetsComponent,
       TableComponent,
       GraphComponent,
-      CardComponent
+      CardComponent,
+      UpdateWidgetComponent
     ],
   imports: [
     CommonModule,

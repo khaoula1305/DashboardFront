@@ -14,11 +14,16 @@ export class CreateDashboardComponent implements OnInit {
   messageControl = new FormControl('', Validators.required);
   title: string;
   description: string;
+  selectedTeam;
+  teams:any[];
   constructor(private dashboardService: DashboardsService,
     private router: Router) { }
 
   ngOnInit(): void {
-
+    this.teams=[
+      {name:'Team 1'},
+      {name:'Team 2'},
+    ];
   }
   onSubmit(m: NgForm) {
     if ( m.untouched || m.invalid) {

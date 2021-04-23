@@ -14,8 +14,13 @@
                 pInputTextarea
                 [(ngModel)]="description"
               ></textarea>
+              <div>
+                <h5>Team </h5>
+                <p-dropdown [options]="teams" [(ngModel)]="selectedTeam" name="selectedAuthetification" optionLabel="name" [showClear]="true"></p-dropdown>
+              </div>
             </div>
           <br/>
           <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
         </div>
+
 </form>

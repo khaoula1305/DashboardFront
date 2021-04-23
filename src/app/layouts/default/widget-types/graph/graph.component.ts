@@ -145,6 +145,7 @@ export class GraphComponent implements OnInit {
 
   draw() {
     this.datasets = [];
+    this.labels=[];
     this.drawType = true;
     this.widget.metaDataSources.forEach((elm) => {
       if (!elm.isDimension) this.onSelectedMesure(elm);
@@ -153,7 +154,17 @@ export class GraphComponent implements OnInit {
       this.widget.metaDataSources[0].isDimension=true;
       this.dimensionKey=this.widget.metaDataSources[0];
     }
-    this.results.forEach((elm) => this.labels.push(elm[this.dimensionKey.key]));
+    this.results.forEach((elm) => {
+      let repeat=true;
+      for (let index = 0; index < this.labels.length; index++) {
+       if(this.labels[index]== elm[this.dimensionKey.key]){
+        repeat=false;
+         break;
+       }
+        
+      }
+      if(repeat) this.labels.push(elm[this.dimensionKey.key]);
+    });
     this.basicData = { labels: this.labels, datasets: this.datasets };
   }
 

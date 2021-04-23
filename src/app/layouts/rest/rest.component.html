@@ -2,7 +2,7 @@
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
   <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
   <div class=" my-card">
-    <h3> New Rest</h3>
+    <h3> New REST API</h3>
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-5">
         <h5>Data Source Name *</h5>
@@ -26,7 +26,7 @@
           </div>
           <div class="p-md-5">
             <h5>Password  for basic authentication </h5>
-            <input type="text" pInputText  [(ngModel)]="dataSource.password" name="password" />
+            <input type="text" pInputText [toggleMask]="true" type="password" [(ngModel)]="dataSource.password" name="password" />
           </div>    
         </div>
         <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'Bearer Token'">

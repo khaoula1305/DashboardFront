@@ -12,6 +12,7 @@ import { MyWidgetsComponent } from './layouts/default/my-widgets/my-widgets.comp
 import { QueryDetailsComponent } from './layouts/query-details/query-details.component';
 import { DashboardComponent } from './layouts/default/dashboard/dashboard.component';
 import { UpdateDataSourceComponent } from './layouts/update-data-source/update-data-source.component';
+import { UpdateWidgetComponent } from './layouts/default/update-widget/update-widget.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path: 'dataSource', component: DataSourceComponent},
   {path: 'myWidgets', component: MyWidgetsComponent},
   {path: 'queryDetails/:id', component: QueryDetailsComponent},
-  {path: 'updateDatasource/:id', component: UpdateDataSourceComponent}
+  {path: 'updateDatasource/:id', component: UpdateDataSourceComponent},
+  {path: 'upWidget/:id', component: UpdateWidgetComponent}
 ];
 
 @NgModule({

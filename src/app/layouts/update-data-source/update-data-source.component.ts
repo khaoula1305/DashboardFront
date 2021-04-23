@@ -29,7 +29,7 @@ export class UpdateDataSourceComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
       data => {
-      //  this.dataSource = data;
+       this.dataSource = data;
       },
       (error) => {
         console.log(error);

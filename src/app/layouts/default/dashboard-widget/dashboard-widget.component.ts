@@ -60,7 +60,17 @@ export class DashboardWidgetComponent implements OnInit {
             default : {
               this.dimensionKey = this.dashboardWidget.widget.metaDataSources.find(elm => elm.isDimension==true);
               if(this.dimensionKey){
-               this.results.forEach(elm => myLabels.push(elm[this.dimensionKey.key]));
+                this.results.forEach((elm) => {
+                  let repeat=true;
+                  for (let index = 0; index < myLabels.length; index++) {
+                   if(myLabels[index]== elm[this.dimensionKey.key]){
+                    repeat=false;
+                     break;
+                   }
+                    
+                  }
+                  if(repeat) myLabels.push(elm[this.dimensionKey.key]);
+                });
                this.dashboardWidget.widget.metaDataSources.forEach(element=> {
                  if(!element.isDimension){
                    var label = [];

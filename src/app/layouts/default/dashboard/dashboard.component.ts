@@ -7,11 +7,14 @@ import { Dashboard } from 'src/app/models/dashboard.model';
 import { Widget } from 'src/app/models/widget.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import {DashboardWidgetService} from '../../../services/dashboard-widget.service';
+import {Message, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers: [MessageService]
+
 })
 export class DashboardComponent implements OnInit {
   constructor(
@@ -19,7 +22,8 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private dashboardService: DashboardsService,
-    private widgetDashboardService: DashboardsService) { }
+    private widgetDashboardService: DashboardsService,
+    private messageService: MessageService) { }
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem>= [];
   dashboardOriginal: Array<GridsterItem>;
@@ -28,6 +32,7 @@ export class DashboardComponent implements OnInit {
   editMode= false;
   searchText:any;
   empty: false;
+  widgetDashboard;
   @Input() dashboard: Dashboard;
 
   public pauseState = false;
@@ -200,9 +205,25 @@ export class DashboardComponent implements OnInit {
       result => console.log('save item change ', result)
        );
   }
-  onDeletedClick(evt , item){
+  deleteWidget( item){
    this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
    this.dashboardWidgetService.deleteDashboardWidget(this.dashboard.id,item.widgetdashboard).subscribe();
    this.options.api.optionsChanged();
+}
+onDeletedClick(evt, item){
+  this.widgetDashboard=item;
+  this.showConfirm({key: 'a',  severity:'custom', summary:'Are you sure you want to remove this widget?'});
+//this.showConfirm({key: 'a', sticky: true, severity:'custom', summary:'Are you sure you want to remove this widget?', detail:' !'});
+}
+showConfirm(message: any) {
+  this.messageService.clear();
+  this.messageService.add(message);
+}
+onConfirm() {
+this.messageService.clear('a');
+this.deleteWidget(this.widgetDashboard);}
+
+onReject() {
+this.messageService.clear('a');
 }
 }

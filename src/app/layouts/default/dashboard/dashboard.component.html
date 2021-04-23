@@ -1,3 +1,22 @@
+<p-toast position="bottom-center" key="a" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+          <div class="p-text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="p-grid p-fluid">
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="OK" class="p-button-help"></button>
+              </div>
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onReject()" label="Cancel" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
 <div *ngIf="load" class="divider1">
   <p-divider ></p-divider>
 <div class="header">
@@ -21,7 +40,7 @@
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
     <h3>This dashboard doesn't have widgets just yet!</h3>
     <p>Add one or more widgets from Library.</p> 
-   <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
+   <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-help"></button>
   </div>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
     <app-dashboard-widget (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>

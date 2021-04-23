@@ -17,7 +17,6 @@ export class DataSourceService {
   getAllDataSources(): Observable<DataSource[]> {
     return this.http.get<DataSource[]>(this.host + 'alldatasource');
   }
-
   getAllWidgets(datasourceId: any): Observable<Widget[]> {
     return this.http.get<Widget[]>(this.host + datasourceId+ '/allwidgets');
   }
@@ -27,8 +26,8 @@ export class DataSourceService {
   getDataFromURL( url: string ): Observable<any[]> {
     return this.http.get<any[]>(url);
   }
-  getDataSource(dataSourceId: any) : Observable<DataSource>{
-    return this.http.get<DataSource>(this.host +'test/'+ dataSourceId);
+  getDataSource(dataSourceId: any) : Observable<any>{
+    return this.http.get<any>(this.host +'test/'+ dataSourceId);
   }
   deleteDataSource(dataSourceId: any) : Observable<DataSource>{
     return this.http.delete<DataSource>(this.host + dataSourceId);
@@ -37,7 +36,6 @@ export class DataSourceService {
     return this.http.put(this.host + dataSource.id, dataSource);
   }
   addDataSource(dataSource: DataSource): Observable<DataSource>{
-    console.log('data', dataSource);
     return this.http.post<DataSource>(this.host, dataSource);
   }
 }

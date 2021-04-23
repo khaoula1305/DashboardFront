@@ -35,6 +35,7 @@ export class MyWidgetsComponent implements OnInit {
     );
   }
   updateWidget(widget: any){
+    this.router.navigate(['/upWidget', widget.id]); 
   }
   onDeleteWidget(widget: Widget){
     this.widget=widget;
