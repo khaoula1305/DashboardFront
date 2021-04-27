@@ -1,6 +1,6 @@
 
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
-    <p-message *ngIf="isConnection" severity="warn" text="Connection Failed: Error:"  class="p-mr-6" ></p-message> 
+  <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
     <div class=" my-card">
       <h3> New Rest</h3>
       <div class="p-col-12 p-fluid p-grid">
@@ -22,7 +22,7 @@
           <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic Auth'">
             <div class="p-md-5">
               <h5>User Id for basic authentication </h5>
-              <input type="text" pInputText [(ngModel)]="dataSource.username" name="username" />
+              <input type="text" pInputText [(ngModel)]="dataSource.userName" name="userName" />
             </div>
             <div class="p-md-5">
               <h5>Password  for basic authentication </h5>
@@ -127,23 +127,11 @@
             </div>
           </div>
        </div>
-      <p-divider></p-divider>
-        <div class="p-col-12 p-fluid p-grid">
-          <p-button
-          [disabled]="!rest.valid"
-          label="Test Connection"
-          icon="pi pi-check"
-          iconPos="left"
-          (click)="TestConnection()"
-        ></p-button>
-          <p-button
-            [disabled]="!rest.valid"
-            label="Save"
-            icon="pi pi-check"
-            type="submit"
-            iconPos="left"
-          ></p-button>
-        </div>
+       <p-divider></p-divider>
+       <div class="p-col-12" style="text-align: right;">
+           <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
+           <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
+       </div>
     </div>
     </form>
   

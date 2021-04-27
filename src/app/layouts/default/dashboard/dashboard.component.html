@@ -17,6 +17,25 @@
       </div>
   </ng-template>
 </p-toast>
+<p-toast position="bottom-center" key="b" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+          <div class="p-text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="p-grid p-fluid">
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="OK" class="p-button-help"></button>
+              </div>
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onReject()" label="Cancel" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
 <div *ngIf="load" class="divider1">
   <p-divider ></p-divider>
 <div class="header">
@@ -31,7 +50,7 @@
   <button pButton pRipple type="button" *ngIf="!editMode" (click)="OnEdit(false)" label="edit"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
-  <button pButton pRipple type="button" label="delete" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+  <button pButton pRipple type="button" label="delete" (click)="OnDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
   <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
 </div>
 <p-divider></p-divider>

@@ -22,7 +22,7 @@
         <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic Auth'">
           <div class="p-md-5">
             <h5>User Id for basic authentication </h5>
-            <input type="text" pInputText [(ngModel)]="dataSource.username" name="username" />
+            <input type="text" pInputText [(ngModel)]="dataSource.userName" name="userName" />
           </div>
           <div class="p-md-5">
             <h5>Password  for basic authentication </h5>
@@ -59,7 +59,7 @@
                           <td pEditableColumn>
                               <p-cellEditor>
                                   <ng-template pTemplate="input">
-                                      <input pInputText type="text" [(ngModel)]="param.code" name="param.code">
+                                      <input pInputText type="text" [(ngModel)]="param.code" name="param.code" placeholder="key">
                                   </ng-template>
                                   <ng-template pTemplate="output">
                                       {{param.code}}
@@ -68,8 +68,8 @@
                           </td>
                           <td pEditableColumn>
                               <p-cellEditor>
-                                  <ng-template pTemplate="input">
-                                      <input pInputText type="text" [(ngModel)]="param.value" name="value">
+                                  <ng-template pTemplate="input" >
+                                      <input pInputText type="text" [(ngModel)]="param.value" name="value" placeholder="value">
                                   </ng-template>
                                   <ng-template pTemplate="output">
                                       {{param.value}}

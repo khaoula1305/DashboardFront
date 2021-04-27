@@ -129,13 +129,12 @@ export class DashboardComponent implements OnInit {
     // ToBeImplemented
     dashboardWidget.maxItemCols=4;
     dashboardWidget.maxItemRows=4;
-
     dashboardWidget.title=widget.title;
     dashboardWidget.description=widget.description;
     dashboardWidget.dashboard=this.dashboard;
     dashboardWidget.widget=widget;
-    dashboardWidget.rowValue=   widget.defaultItemCols;
-    dashboardWidget.columnValue= widget.defaultItemRows;
+    dashboardWidget.rowValue=widget.defaultItemCols;
+    dashboardWidget.columnValue=widget.defaultItemRows;
     let item: GridsterItem ={x:0, y:0, rows: dashboardWidget.rowValue, cols:  dashboardWidget.columnValue};
     item=this.options.api.getFirstPossiblePosition(item);
     dashboardWidget.xAxisValue=item.x;
@@ -175,6 +174,7 @@ export class DashboardComponent implements OnInit {
     }
     else{
       this.dashboardGridster = this.dashboardOriginal.map(x => ({...x}));
+      this.changedOptions();
     }
   }
   trackBy(index: number, item: GridsterItem): number {
@@ -221,9 +221,29 @@ showConfirm(message: any) {
 }
 onConfirm() {
 this.messageService.clear('a');
-this.deleteWidget(this.widgetDashboard);}
-
+this.messageService.clear('b');
+this.deleteWidget(this.widgetDashboard);
+}
+deleteDashboard(){
+  this.dashboardService.deleteDashboard(this.dashboard.id).subscribe(
+    (result)=>{
+      console.log(result);
+    },
+    (error)=>{
+      console.log(error);
+    },
+    ()=>{
+    this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/']); 
+      });
+    }
+  );
+}
 onReject() {
+this.messageService.clear('b');
 this.messageService.clear('a');
+}
+OnDelete(){
+  this.showConfirm({key: 'b',  severity:'custom', summary:'Are you sure you want to remove this Dashboard?'});
 }
 }

@@ -26,7 +26,7 @@ export class RestComponent implements OnInit {
     this.authenticationType=[
       {name:'Basic Auth'},
       {name:'Bearer Token'},
-      //{name:'OAuth 2.0'},
+      {name:'OAuth 2.0'},
       {name:'Other'}
     ];
     this.headers=[];
@@ -37,7 +37,7 @@ export class RestComponent implements OnInit {
     this.params.splice(removeIndex, 1);
   }
   addParam(){
-    this.params.push( {code: "access_key", value:"Your access"});
+    this.params.push( {code: "Code", value:"Value"});
   }
   DeleteHeader(header){
     var removeIndex = this.headers.map(function (item) { return item.id; }).indexOf(header);
@@ -47,9 +47,8 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
-  this.dataSourceService.getDataFromURL(this.dataSource.url).subscribe(
+  this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
- 
     },
     (error)=>{
       this.msgs=[

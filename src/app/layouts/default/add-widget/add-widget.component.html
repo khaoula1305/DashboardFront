@@ -13,10 +13,11 @@
     
           <div class="p-field p-col-12 p-md-6">
             <h5>Query *</h5>
+
             <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
               placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
-          </div>
-
+      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" iconPos="left"></button>
+    </div>
         <div class="p-field p-col-12 p-md-6">
           <h5>Visualization *</h5>
           <p-dropdown required [options]="widgetTypes" [(ngModel)]="widget.widgetType" name="selectedWidgetType"

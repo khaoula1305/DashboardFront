@@ -3,11 +3,14 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rest } from 'src/app/models/rest.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import {Message,MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-update-data-source',
   templateUrl: './update-data-source.component.html',
-  styleUrls: ['./update-data-source.component.scss']
+  styleUrls: ['./update-data-source.component.scss'],
+  providers: [MessageService]
+
 })
 export class UpdateDataSourceComponent implements OnInit {
 
@@ -19,7 +22,7 @@ export class UpdateDataSourceComponent implements OnInit {
   params:any[];
   token;
   load=false;
-  isConnection=false;
+  msgs:Message[]=[];
   constructor(
     private dataSourceService: DataSourceService, 
     private router: Router,
@@ -29,6 +32,7 @@ export class UpdateDataSourceComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
       data => {
+        console.log(data);
        this.dataSource = data;
       },
       (error) => {
@@ -51,9 +55,6 @@ export class UpdateDataSourceComponent implements OnInit {
 
     ]
   }
-  onClick(){
-    console.log(this.selectedAuthetification);
-  }
   onChange(event){
     console.log(event);
   }
@@ -71,11 +72,22 @@ export class UpdateDataSourceComponent implements OnInit {
   addHeader(){
     this.headers.push( {code: "API_key", value:"Your access"});
   }
-TestConnection(){
-  //Function here for testing
-  this.isConnection=true;
-
-}
+  TestConnection(){
+    this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
+      (data)=>{
+      },
+      (error)=>{
+        this.msgs=[
+          {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
+        ]; 
+      },
+      ()=>{
+        this.msgs=[
+          {severity:'success',sticky: true, summary:'Connection Successful.'}
+        ]; 
+      }
+    )
+  }
 saveRest(){
   if(this.params.length>0){
     this.dataSource.url=this.dataSource.url+'?';
@@ -94,7 +106,7 @@ saveRest(){
       alert('Required');
     } else {
       this.saveRest();
-      this.dataSourceService.addDataSource(this.dataSource).subscribe(
+      this.dataSourceService.updateDataSource(this.dataSource).subscribe(
         result =>{
          this.router.navigate(['/queries'])
         }
