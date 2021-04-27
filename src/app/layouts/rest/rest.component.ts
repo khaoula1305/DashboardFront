@@ -18,6 +18,8 @@ export class RestComponent implements OnInit {
   headers:any[];
   params:any[];
   token;
+  cols: any[]=[];
+  results:any[];
   msgs:Message[]=[];
   constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
 
@@ -47,6 +49,8 @@ export class RestComponent implements OnInit {
     this.headers.push( {code: "API_key", value:"Your access"});
   }
 TestConnection(){
+  let url=this.dataSource.url;
+  this.saveRest();
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
     },
@@ -56,9 +60,31 @@ TestConnection(){
       ]; 
     },
     ()=>{
+      this.dataSource.url=url;
       this.msgs=[
         {severity:'success',sticky: true, summary:'Connection Successful.'}
       ]; 
+    }
+  )
+}
+Preview(){
+  let url=this.dataSource.url;
+  this.saveRest();
+  this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
+    (data)=>{
+      this.results=data;
+      for (let key in this.results[0]) {
+        this.cols.push( { field: key, header: key });
+      }
+    },
+    (error)=>{
+      this.results=[];
+      this.msgs=[
+        {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
+      ]; 
+    },
+    ()=>{
+      this.dataSource.url=url;
     }
   )
 }
