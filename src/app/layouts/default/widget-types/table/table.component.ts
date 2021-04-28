@@ -25,13 +25,14 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.widgetService.currentWidget.subscribe(widget => this.widget = widget);
-    console.log('curent widget from table ');
     this.dataSourceService.getDataFrom(this.widget.dataSource).subscribe(
       (data) => {
         this.results = data;
-        for(let key in data[0]){
-          this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
-        }
+          for(let key in data[0]){
+            if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
+            this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
+            }
+          } 
       });
   }
 

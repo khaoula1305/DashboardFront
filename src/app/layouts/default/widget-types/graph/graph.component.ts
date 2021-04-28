@@ -33,7 +33,7 @@ export class GraphComponent implements OnInit {
   constructor(
     private dataSourceService: DataSourceService,
     private widgetService: WidgetsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.widgetService.currentWidget.subscribe(
@@ -52,9 +52,8 @@ export class GraphComponent implements OnInit {
           });
         }
       });
-      //for the create 
-    if (this.widget.metaDataSources.length==0) 
-    {
+    //for the create 
+    if (this.widget.metaDataSources.length == 0) {
       this.newWidget = true;
     }
     else { //for the update 
@@ -145,25 +144,25 @@ export class GraphComponent implements OnInit {
 
   draw() {
     this.datasets = [];
-    this.labels=[];
+    this.labels = [];
     this.drawType = true;
     this.widget.metaDataSources.forEach((elm) => {
       if (!elm.isDimension) this.onSelectedMesure(elm);
     });
-    if(this.dimensionKey == null) { //set first item in dimension key if switching from table to graph
-      this.widget.metaDataSources[0].isDimension=true;
-      this.dimensionKey=this.widget.metaDataSources[0];
+    if (this.dimensionKey == null) { //set first item in dimension key if switching from table to graph
+      this.widget.metaDataSources[0].isDimension = true;
+      this.dimensionKey = this.widget.metaDataSources[0];
     }
     this.results.forEach((elm) => {
-      let repeat=true;
+      let repeat = true;
       for (let index = 0; index < this.labels.length; index++) {
-       if(this.labels[index]== elm[this.dimensionKey.key]){
-        repeat=false;
-         break;
-       }
-        
+        if (this.labels[index] == elm[this.dimensionKey.key]) {
+          repeat = false;
+          break;
+        }
+
       }
-      if(repeat) this.labels.push(elm[this.dimensionKey.key]);
+      if (repeat) this.labels.push(elm[this.dimensionKey.key]);
     });
     this.basicData = { labels: this.labels, datasets: this.datasets };
   }
