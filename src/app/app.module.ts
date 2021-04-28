@@ -32,6 +32,9 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { UpdateDataSourceComponent } from './layouts/update-data-source/update-data-source.component';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { TeamsComponent } from './layouts/teams/teams.component';
+import {TreeModule} from 'primeng/tree';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +46,8 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     HomeComponent,
     DataSourceComponent,
     QueryDetailsComponent,
-    UpdateDataSourceComponent
+    UpdateDataSourceComponent,
+    TeamsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,9 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     MessageModule,
     MessagesModule,
     DividerModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    TreeModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

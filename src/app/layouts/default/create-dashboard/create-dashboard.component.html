@@ -1,9 +1,8 @@
 
 <form (ngSubmit)="onSubmit(newDashboard)" #newDashboard="ngForm">
     <div class="p-grid">
-        <br class="p-col">
-          <h4>Create Dashboard</h4>
             <div class="box">
+               <h4>Create a Dashboard</h4>
                 <h5>Title *</h5>
                 <input type="text" pInputText [(ngModel)]="title" name="title" required/>
                 <h5>Description</h5>
@@ -16,11 +15,10 @@
               ></textarea>
               <div>
                 <h5>Team </h5>
-                <p-dropdown [options]="teams" [(ngModel)]="selectedTeam" name="selectedAuthetification" optionLabel="name" [showClear]="true"></p-dropdown>
+                <p-dropdown [options]="teams" [(ngModel)]="selectedTeam" placeholder="select team" name="selectedAuthetification" optionLabel="name" [showClear]="true"></p-dropdown>
               </div>
+              <br/>
+              <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
             </div>
-          <br/>
-          <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
-        </div>
-
+           </div>
 </form>
