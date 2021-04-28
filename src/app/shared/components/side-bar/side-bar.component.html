@@ -1,1 +1,50 @@
-<p-panelMenu [model]="items" [style]="{'width':'190px'}"></p-panelMenu>
+<div class="page-wrapper chiller-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+      <div class="sidebar-content">
+        <div class="sidebar-brand">
+          <a href="#">Dashboard</a>
+        </div>
+        <div class="sidebar-header">
+          <div class="user-pic">
+          <p-avatar icon="pi pi-user" styleClass="p-mr-2" [style]="{'background-color': '#9c27b0', 'color': '#ffffff'}" shape="circle"></p-avatar>
+          </div>
+          <div class="user-info">
+            <span class="user-name">Benchari
+              <strong>Khaoula</strong>
+            </span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+        <!-- sidebar-header  -->
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu" routerLink="/teams">
+              <i class="pi pi-fw pi-home"></i>
+              <span>Teams</span>
+            </li>
+            <li class="header-menu" routerLink="/">
+              <i class="pi pi-fw pi-chart-bar"></i>
+              <span>Dashboard</span>
+            </li>
+            <li class="header-menu" routerLink="/dataSource">
+              <i class="pi pi-fw pi-cloud-download"></i>
+              <span>Data Source</span>
+            </li>
+            <li class="header-menu" routerLink="/queries">
+              <i class="pi pi-fw pi-sliders-h"></i>
+              <span>Queries</span>
+            </li>
+            <li class="header-menu" routerLink="/myWidgets">
+              <i class="pi pi-fw pi-calendar"></i>
+              <span>Widgets</span>
+            </li>
+          </ul>
+        </div>
+        <!-- sidebar-menu  -->
+      </div>
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+      </div>
+    </nav>
+</div>
+   

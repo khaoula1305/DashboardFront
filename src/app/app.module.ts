@@ -31,7 +31,7 @@ import {DividerModule} from 'primeng/divider';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { UpdateDataSourceComponent } from './layouts/update-data-source/update-data-source.component';
-
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +67,8 @@ import { UpdateDataSourceComponent } from './layouts/update-data-source/update-d
     DropdownModule,
     MessageModule,
     MessagesModule,
-    DividerModule
+    DividerModule,
+    ScrollPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

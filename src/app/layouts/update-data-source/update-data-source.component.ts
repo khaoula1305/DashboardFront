@@ -23,6 +23,8 @@ export class UpdateDataSourceComponent implements OnInit {
   token;
   load=false;
   msgs:Message[]=[];
+  cols: any[]=[];
+  results:any[];
   constructor(
     private dataSourceService: DataSourceService, 
     private router: Router,
@@ -71,6 +73,27 @@ export class UpdateDataSourceComponent implements OnInit {
   }
   addHeader(){
     this.headers.push( {code: "API_key", value:"Your access"});
+  }
+  Preview(){
+    let url=this.dataSource.url;
+    this.saveRest();
+    this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
+      (data)=>{
+        this.results=data;
+        for (let key in this.results[0]) {
+          this.cols.push( { field: key, header: key });
+        }
+      },
+      (error)=>{
+        this.results=[];
+        this.msgs=[
+          {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
+        ]; 
+      },
+      ()=>{
+        this.dataSource.url=url;
+      }
+    )
   }
   TestConnection(){
     this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
