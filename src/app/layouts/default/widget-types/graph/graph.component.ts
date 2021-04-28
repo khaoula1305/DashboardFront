@@ -105,7 +105,17 @@ export class GraphComponent implements OnInit {
   onSelectedMesure(data: MetaDataSource) {
     var objet: any;
     var label = [];
-    this.results.forEach((elm) => label.push(elm[data.key]));
+    
+    this.results.forEach((elm) => {
+      let repeat = true;
+      for (let index = 0; index < this.labels.length; index++) {
+        if (this.labels[index] == elm[data.key ]) {
+          repeat = false;
+          break;
+        }
+      }
+      if (repeat) label.push(elm[data.key]);
+    });
     objet = {
       label: data.label,
       backgroundColor: this.generateColor(),

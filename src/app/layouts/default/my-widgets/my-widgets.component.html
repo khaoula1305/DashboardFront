@@ -36,12 +36,52 @@
         <p class="description"> {{widget.description}}</p>
         </div>
       <footer>
+        <button pButton pRipple type="button" (click)="onShowDetails(widget.id)" icon="pi pi-search" class="p-button-rounded p-button-success p-button-text"></button>
         <button pButton pRipple type="button" (click)="updateWidget(widget)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
         <p-messages *ngIf="err" [(value)]="errDeletingMsgs" [enableService]="false"></p-messages>
         <button pButton pRipple type="button" (click)="onDeleteWidget(widget)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
        </footer>
     </p-card>
-  
     </div>
+    <p-sidebar *ngIf="selectedWidget" [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
+      <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
+      <!--widget details-->
+      <p-card header="{{selectedWidget.title}}">
+        <div *ngIf="load" [ngSwitch]="selectedWidget.widgetType">
+            <div *ngSwitchCase="widgetTypeEnum.Table">
+                <p-table [value]="results" [scrollable]="true" scrollHeight="700px" scrollWidth="900px">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th  *ngFor="let th of selectedKeys" >{{th.label}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-tab>
+                        <tr>
+                            <td  *ngFor="let th of selectedKeys">{{tab[th.key]}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div *ngSwitchCase="widgetTypeEnum.Card">
+                    <p-card class="containSize partition" styleClass="cardColor">
+                        <div class="p-d-flex">
+                            <p  style="font-weight: bold;">{{result.label}}</p>
+                        <p-divider layout="vertical" ></p-divider>
+                        <p  style="font-weight: 500;">{{result.key}}</p>
+                        </div>
+                    </p-card>
+            </div>
+            <div *ngSwitchDefault> 
+                <p-chart type="{{selectedWidget.widgetType.type}}" [data]="basicData" [options]="basicOptions">
+                </p-chart>
+              </div>
+        </div>
+    </p-card>
+     <!--widget details-->
+      <button pButton pRipple style="margin:5px;" (click)="visibleSidebar = false" label="&nbsp;&nbsp;OK&nbsp;&nbsp;" class="p-button-rounded p-button-help"></button>
+    </p-sidebar>
 </div>
+
+
+
   

@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { Message, MessageService, PrimeNGConfig } from 'primeng/api';
+import { MetaDataSource } from 'src/app/models/meta-data-source.model';
+import { DataSourceService } from 'src/app/services/data-source.service';
+import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 
 @Component({
   selector: 'app-my-widgets',
@@ -18,10 +21,23 @@ export class MyWidgetsComponent implements OnInit {
   err = false;
   widget: any;
   searchText:any;
-  constructor(private widgetService: WidgetsService, private router: Router, private primengConfig: PrimeNGConfig,
+  visibleSidebar;
+  selectedWidget:Widget;
+  results=[];
+  widgetType: string;
+  selectedKeys : MetaDataSource[];
+  widgetTypeEnum = WidgetTypeEnum;
+  result;
+  dimensionKey: MetaDataSource;
+  datasets: any[] = [];
+  basicData: any;
+
+
+  constructor(private widgetService: WidgetsService,private dataSourceService: DataSourceService, private router: Router, private primengConfig: PrimeNGConfig,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.widgetService.getAllWidgets().subscribe(
       (data) => {
         this.myWidgets = data;
@@ -70,6 +86,84 @@ export class MyWidgetsComponent implements OnInit {
         });
       }
     );
+  }
+
+  onShowDetails(id:any){
+    this.visibleSidebar = true;
+    var myLabels=[];
+    var objet: any;
+    this.widgetService
+    .getAllWidgets()
+    .subscribe((data) => {
+      this.selectedWidget = data.find((e) => e.id == id);
+      this.widgetType = this.selectedWidget.widgetType.type;
+      this.selectedKeys= this.selectedWidget.metaDataSources;
+      console.log('selected widget', this.selectedWidget);
+      this.dataSourceService.getDataFrom(this.selectedWidget.dataSource).subscribe(
+        (data) => {
+          this.results=data;
+          switch(this.widgetType) {
+            case this.widgetTypeEnum.Table : {
+              break;
+             }
+            case this.widgetTypeEnum.Card : {
+              this.results.forEach(elm => {
+                this.result = {
+                  key: elm[this.selectedKeys[0].key],
+                  label:this.selectedKeys[0].label
+                }
+              })
+              break;
+            }
+            default : {
+              this.dimensionKey = this.selectedWidget.metaDataSources.find(elm => elm.isDimension==true);
+              if(this.dimensionKey){
+                this.results.forEach((elm) => {
+                  let repeat=true;
+                  for (let index = 0; index < myLabels.length; index++) {
+                   if(myLabels[index]== elm[this.dimensionKey.key]){
+                    repeat=false;
+                     break;
+                   }
+                    
+                  }
+                  if(repeat) myLabels.push(elm[this.dimensionKey.key]);
+                });
+               this.selectedWidget.metaDataSources.forEach(element=> {
+                 if(!element.isDimension){
+                   var label = [];
+                   this.results.forEach(elm => label.push(elm[element.key]));
+                   objet = {
+                     label: element.label,
+                     backgroundColor: this.generateColor(),
+                     data: label
+                   };
+                   this.datasets.push(objet);
+                 }
+               })
+              } 
+              break;
+
+            }
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        ()=>{
+          this.load=true;
+        });
+    },
+      (err) => console.log(err),
+      () => this.load = true); 
+
+    
+     
+
+          this.basicData = { labels: myLabels, datasets: this.datasets };
+  }
+  generateColor() {
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }
 
 }
