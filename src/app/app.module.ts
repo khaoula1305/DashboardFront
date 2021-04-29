@@ -34,6 +34,7 @@ import { UpdateDataSourceComponent } from './layouts/update-data-source/update-d
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { TeamsComponent } from './layouts/teams/teams.component';
 import {TreeModule} from 'primeng/tree';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {TreeModule} from 'primeng/tree';
     MessagesModule,
     DividerModule,
     ScrollPanelModule,
-    TreeModule
+    TreeModule,
+    DialogModule
 
   ],
   providers: [],

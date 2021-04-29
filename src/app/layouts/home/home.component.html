@@ -17,6 +17,11 @@
       </div>
   </ng-template>
 </p-toast>
+<p-dialog header="Title" [(visible)]="display">
+  Content
+</p-dialog>
+
+<button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show"></button>
 <div style="text-align: right;">
   <button pButton pRipple type="button" label="New Dashboard" style="text-align:right" routerLink='/NewDashboard' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
   </div>

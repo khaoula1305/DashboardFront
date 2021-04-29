@@ -15,12 +15,16 @@ export class HomeComponent implements OnInit {
   dashboards: Dashboard[];
   load = false;
   dashboard: any;
+  display: boolean = false;
   constructor(
-    private dashboardService: DashboardsService, 
-    private router: Router, 
+    private dashboardService: DashboardsService,
+    private router: Router,
     private dashboardWidgetService: DashboardWidgetService,
     private messageService: MessageService) { }
 
+    showDialog() {
+        this.display = true;
+    }
   ngOnInit(): void {
     this.dashboardService.getAllDashboards().subscribe(
       (data) => {
@@ -58,7 +62,7 @@ onReject() {
       },
       ()=>{
       this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/']); 
+          this.router.navigate(['/']);
         });
       }
     );
@@ -77,6 +81,6 @@ onReject() {
   }
   goToDashboard(dahsboard: Dashboard ){
     this.dashboardService.setCurrentDashboard(dahsboard);
-    this.router.navigate(['dashboards', dahsboard.id]); 
+    this.router.navigate(['dashboards', dahsboard.id]);
   }
 }

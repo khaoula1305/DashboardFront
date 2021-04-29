@@ -1,7 +1,7 @@
 <div style="text-align: right;">
     <button pButton pRipple type="button" label="New Team" style="text-align:right" routerLink='/NewDashboard' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
     </div>
-<p-tree [value]="nodes">
+<p-tree [value]="nodes" [draggableNodes]="true" [droppableNodes]="true" draggableScope="self" droppableScope="self">
     <ng-template let-node pTemplate="url">
         <a [href]="node.data">{{node.label}}</a>
     </ng-template>
