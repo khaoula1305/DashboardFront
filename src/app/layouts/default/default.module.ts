@@ -35,6 +35,7 @@ import { GraphComponent } from './widget-types/graph/graph.component';
 import { CardComponent } from './widget-types/card/card.component';
 import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 import {SidebarModule} from 'primeng/sidebar';
+import { WidgetDetailsComponent } from './widget-details/widget-details.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -49,7 +50,8 @@ import {SidebarModule} from 'primeng/sidebar';
       TableComponent,
       GraphComponent,
       CardComponent,
-      UpdateWidgetComponent
+      UpdateWidgetComponent,
+      WidgetDetailsComponent
     ],
   imports: [
     CommonModule,
