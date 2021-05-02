@@ -37,8 +37,6 @@ export class DashboardWidgetComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    var myLabels=[];
-    var objet: any;
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
      this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
     this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
@@ -58,34 +56,8 @@ export class DashboardWidgetComponent implements OnInit {
               break;
             }
             default : {
-              this.dimensionKey = this.dashboardWidget.widget.metaDataSources.find(elm => elm.isDimension==true);
-              if(this.dimensionKey){
-                this.results.forEach((elm) => {
-                  let repeat=true;
-                  for (let index = 0; index < myLabels.length; index++) {
-                   if(myLabels[index]== elm[this.dimensionKey.key]){
-                    repeat=false;
-                     break;
-                   }
-                    
-                  }
-                  if(repeat) myLabels.push(elm[this.dimensionKey.key]);
-                });
-               this.dashboardWidget.widget.metaDataSources.forEach(element=> {
-                 if(!element.isDimension){
-                   var label = [];
-                   this.results.forEach(elm => label.push(elm[element.key]));
-                   objet = {
-                     label: element.label,
-                     backgroundColor: this.generateColor(),
-                     data: label
-                   };
-                   this.datasets.push(objet);
-                 }
-               })
-              } 
+             this.CreateBasicData();
               break;
-
             }
           }
         },
@@ -95,8 +67,39 @@ export class DashboardWidgetComponent implements OnInit {
         ()=>{
           this.load=true;
         });
-        this.basicData = { labels: myLabels, datasets: this.datasets };
   }
+
+CreateBasicData(){
+  var myLabels=[];
+  var objet: any;
+  console.log(this.result);
+   this.dashboardWidget.widget.metaDataSources.forEach(element=> {
+     if(element.isDimension){
+      this.results.forEach((elm) => {
+        let repeat=true;
+        for (let index = 0; index < myLabels.length; index++) {
+         if(myLabels[index]== elm[element.key]){
+          repeat=false;
+           break;
+         }
+          
+        }
+        if(repeat) myLabels.push(elm[element.key]);
+      });
+     }
+     if(!element.isDimension){
+       var label = [];
+       this.results.forEach(elm => label.push(elm[element.key]));
+       objet = {
+         label: element.label,
+         backgroundColor: this.generateColor(),
+         data: label
+       };
+       this.datasets.push(objet);
+     }
+   }) 
+  this.basicData = { labels: myLabels, datasets: this.datasets };
+}
   generateColor() {
     return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }

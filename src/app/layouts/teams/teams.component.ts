@@ -10,7 +10,6 @@ import { Team } from 'src/app/models/team.model';
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
-
   nodes: TreeNode[];
   dashboards: Dashboard[];
   load=false;
@@ -19,46 +18,31 @@ export class TeamsComponent implements OnInit {
     private teamService: TeamsService) { }
 
   ngOnInit(): void {
+    this.nodes = [];
     this.teamService.getAllTeams().subscribe(
       (data)=>{
+        let iteration=0;
         data.forEach(element => {
+          let object : TreeNode= { key: ''+iteration, label: element.title, children: []};
           this.teamService.getAllDashboards(element.id).subscribe(
             (dashs) => {
-              this.dashboards = dashs;
-            },
-            (error) => {
-              console.error();
-            },
-            () => {
-              this.load = true;
+              let iteration2=0;
+              dashs.forEach(elem=>{
+                object.children.push({key:iteration+'-'+iteration2, label: elem.title, data:'/dashboards/'+elem.id, type: 'url', icon:"pi pi-fw pi-chart-bar", droppable:true });
+              });
+              iteration2++;
             }
           );
+          this.nodes.push(object);
         });
+      },
+      (error) => {
+        console.error();
+      },
+      () => {
+        this.load = true;
       }
       );
-
-    this.nodes = [
-      {
-          key: '0',
-          label: 'Team 1',
-          children: [
-              {key: '0-0', label: 'What is Angular', data:'dashboards/id', type: 'url', icon:"hhhh", droppable:true },
-              {key: '0-1', label: 'Getting Started', data: 'https://angular.io/guide/setup-local', type: 'url'},
-              {key: '0-2', label: 'Learn and Explore', data:'https://angular.io/guide/architecture', type: 'url'},
-              {key: '0-3', label: 'Take a Look', data: 'https://angular.io/start', type: 'url'}
-          ]
-      },
-      {
-          key: '1',
-          label: 'Components In-Depth',
-          children: [
-              {key: '1-0', label: 'Component Registration', data: 'https://angular.io/guide/component-interaction', type: 'url'},
-              {key: '1-1', label: 'User Input', data: 'https://angular.io/guide/user-input', type: 'url'},
-              {key: '1-2', label: 'Hooks', data: 'https://angular.io/guide/lifecycle-hooks', type: 'url'},
-              {key: '1-3', label: 'Attribute Directives', data: 'https://angular.io/guide/attribute-directives', type: 'url'}
-          ]
-      }
-  ];
   }
 
 }

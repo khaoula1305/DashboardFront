@@ -20,25 +20,26 @@ export class CreateDashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardsService,
     private router: Router,
-    private teamSeervice: TeamsService) { }
+    private teamService: TeamsService) { }
 
   ngOnInit(): void {
-    this.teams=[
-      {title:'Team 1'},
-      {title:'Team 2'},
-    ];
-    this.teamSeervice.getAllTeams().subscribe(
-      (data)=> this.teams=data);
+    this.teamService.getAllTeams().subscribe(
+      (data)=> {
+        this.teams=data;
+      });
   }
   onSubmit(m: NgForm) {
     if ( m.untouched || m.invalid) {
       alert('Required');
     } else {
-      //this.dashboard.team.title=this.selectedTeam.title;
       this.dashboardService.addDashboard(this.dashboard).subscribe(
-        result => this.router.navigate(['/'])
+        result =>   this.changeLocation()
          );
     }
   }
-
+  changeLocation() {
+    this.router.navigateByUrl('/teams', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/', ]); // navigate to same route
+    });
+  }
 }

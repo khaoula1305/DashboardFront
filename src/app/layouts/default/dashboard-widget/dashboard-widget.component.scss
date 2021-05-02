@@ -5,26 +5,25 @@
   top: 0px;
   visibility: hidden;
 }
-p-card {
+.pcard {
   display: block;
   margin: auto;
 }
-p-card:hover .conf {
+.pcard:hover .conf {
   visibility: visible;
-
 }
 
-.partition{
+.partition {
   color: black;
 }
 
-.cardColor{
+.cardColor {
   background-color: rgba(61, 226, 255, 0.466);
 }
 
 element {
   --main-bg-color: brown;
 }
-.element{
+.element {
   background-color: var(--main-bg-color);
 }

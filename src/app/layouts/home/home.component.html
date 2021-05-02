@@ -17,13 +17,11 @@
       </div>
   </ng-template>
 </p-toast>
-<p-dialog header="Title" [(visible)]="display">
-  Content
+<p-dialog header="New dashboard"  [(visible)]="display">
+  <app-create-dashboard></app-create-dashboard>
 </p-dialog>
-
-<button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show"></button>
 <div style="text-align: right;">
-  <button pButton pRipple type="button" label="New Dashboard" style="text-align:right" routerLink='/NewDashboard' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
+  <button pButton pRipple type="button"  (click)="showDialog()"  label="New Dashboard" style="text-align:right" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
   </div>
 <div class="p-grid">
   <div *ngFor="let dashboard of dashboards">

@@ -75,6 +75,7 @@ import { UpdateWidgetComponent } from './update-widget/update-widget.component';
     ToastModule
   ],
   exports: [
+    CreateDashboardComponent
   ]
 })
 export class DefaultModule { }

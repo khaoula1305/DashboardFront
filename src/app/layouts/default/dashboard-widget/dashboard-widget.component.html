@@ -1,4 +1,5 @@
-<p-card header="{{dashboardWidget.title}}">
+<div class="pcard">
+    <h2 style="text-align:center">{{dashboardWidget.title}}</h2>
     <div class="conf">
      <button pButton pRipple type="button" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
      <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
@@ -32,4 +33,4 @@
             </p-chart>
           </div>
     </div>
-</p-card>
+</div>

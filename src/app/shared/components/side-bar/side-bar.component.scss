@@ -149,7 +149,7 @@ body {
   flex-grow: 1;
 }
 
-.sidebar-wrapper .sidebar-brand #close-sidebar {
+.sidebar-wrapper .sidebar-brand {
   cursor: pointer;
   font-size: 20px;
 }
@@ -158,6 +158,12 @@ body {
 .sidebar-wrapper .sidebar-header {
   padding: 20px;
   overflow: hidden;
+}
+li {
+  cursor: pointer;
+}
+li:hover .header-menu {
+  color: #e0e048;
 }
 
 .sidebar-wrapper .sidebar-header .user-pic {
