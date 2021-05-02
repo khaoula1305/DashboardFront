@@ -30,7 +30,7 @@ export class WidgetConfigurationComponent implements OnInit {
     private widgetTypeService: WidgetTypeService,
     private widgetService: WidgetsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.widget = new Widget();
@@ -46,11 +46,13 @@ export class WidgetConfigurationComponent implements OnInit {
       .getAllDashboardWidget(this.currentDashboard.id)
       .subscribe((data) => {
         this.dashboardWidget = data.find((e) => e.id == id);
-        this.widget=this.dashboardWidget.widget;
+        this.widget = this.dashboardWidget.widget;
         this.widgetService.changeWidget(this.widget);
       },
-      (err)=>console.log(err),
-      ()=>this.load=true);
+        (err) => console.log(err),
+        () => this.load = true);
+
+        
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         //filter to be implemented
@@ -63,7 +65,7 @@ export class WidgetConfigurationComponent implements OnInit {
   }
 
   onSubmit(m: NgForm) {
-    this.dashboardWidget.widget=this.widget;
+    this.dashboardWidget.widget = this.widget;
     this.dashboardWidgetService
       .updateDashboardWidget(
         this.dashboardWidget.dashboard.id,

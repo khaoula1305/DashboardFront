@@ -34,6 +34,8 @@ import { TableComponent } from './widget-types/table/table.component';
 import { GraphComponent } from './widget-types/graph/graph.component';
 import { CardComponent } from './widget-types/card/card.component';
 import { UpdateWidgetComponent } from './update-widget/update-widget.component';
+import {SidebarModule} from 'primeng/sidebar';
+import { WidgetDetailsComponent } from './widget-details/widget-details.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -48,7 +50,8 @@ import { UpdateWidgetComponent } from './update-widget/update-widget.component';
       TableComponent,
       GraphComponent,
       CardComponent,
-      UpdateWidgetComponent
+      UpdateWidgetComponent,
+      WidgetDetailsComponent
     ],
   imports: [
     CommonModule,
@@ -72,7 +75,8 @@ import { UpdateWidgetComponent } from './update-widget/update-widget.component';
     SplitButtonModule,
     DividerModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    SidebarModule
   ],
   exports: [
     CreateDashboardComponent

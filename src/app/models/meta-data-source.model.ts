@@ -1,5 +1,5 @@
 export class MetaDataSource{
-    id: any;
+    id?: any;
     key: string;
     label: string;
     isDimension: boolean;

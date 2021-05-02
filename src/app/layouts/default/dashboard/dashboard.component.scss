@@ -33,13 +33,12 @@
 }
 .header {
   width: 100%;
-  height: 30px;
+  height: 50px;
   text-align: center;
   text-decoration: darkblue;
   text-justify: auto;
-}
-.divider1 {
-  margin-top: -50px;
+  background-color: rgb(253, 251, 251);
+  color: #92989e;
 }
 :host ::ng-deep {
   .p-toast-message-custom {

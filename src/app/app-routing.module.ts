@@ -14,6 +14,7 @@ import { DashboardComponent } from './layouts/default/dashboard/dashboard.compon
 import { UpdateDataSourceComponent } from './layouts/update-data-source/update-data-source.component';
 import { UpdateWidgetComponent } from './layouts/default/update-widget/update-widget.component';
 import { TeamsComponent } from './layouts/teams/teams.component';
+import { WidgetDetailsComponent } from './layouts/default/widget-details/widget-details.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'queryDetails/:id', component: QueryDetailsComponent},
   {path: 'updateDatasource/:id', component: UpdateDataSourceComponent},
   {path: 'upWidget/:id', component: UpdateWidgetComponent},
-  {path: 'teams', component: TeamsComponent}
+  {path: 'teams', component: TeamsComponent},
+  {path: 'widgetDetails/:id', component: WidgetDetailsComponent}
 ];
 
 @NgModule({

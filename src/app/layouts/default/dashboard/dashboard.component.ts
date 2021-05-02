@@ -8,6 +8,8 @@ import { Widget } from 'src/app/models/widget.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import {DashboardWidgetService} from '../../../services/dashboard-widget.service';
 import {Message, MessageService} from 'primeng/api';
+import { Team } from 'src/app/models/team.model';
+import { TeamsService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +25,8 @@ export class DashboardComponent implements OnInit {
     private router: Router, 
     private dashboardService: DashboardsService,
     private widgetDashboardService: DashboardsService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private teamService: TeamsService) { }
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem>= [];
   dashboardOriginal: Array<GridsterItem>;
@@ -34,6 +37,10 @@ export class DashboardComponent implements OnInit {
   empty: false;
   widgetDashboard;
   @Input() dashboard: Dashboard;
+
+  //Teams;
+  teams: Team[];
+  selectedTeam: Team;
 
   public pauseState = false;
   ngOnInit() {
@@ -96,6 +103,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboard(id).subscribe(
       data => {
         this.dashboard = data;
+        if(data.team) this.selectedTeam=data.team;
         this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
           (dashwidget) => {
             dashwidget.forEach( elm=> this.dashboardGridster.push(
@@ -117,6 +125,10 @@ export class DashboardComponent implements OnInit {
         this.load=true;
       }
     );
+    this.teamService.getAllTeams().subscribe(
+      (data)=> {
+        this.teams=data;
+      });
   }
   onHiddenClick(state){
   this.add = false;
@@ -124,6 +136,15 @@ export class DashboardComponent implements OnInit {
   addWidget(){
     this.add = true;
   }
+  onRowSelect(event) {
+    this.messageService.add({severity: 'info', summary: 'Team Selected', detail: event.data.title});
+    this.dashboard.team=this.selectedTeam;
+    this.dashboardService.updateDashboard(this.dashboard).subscribe(
+       );
+}
+reload(){
+  this.changeLocation(this.dashboard.id);
+}
   onAddedClick(widget : Widget){
     let dashboardWidget: DashboardWidget=new DashboardWidget();
     // ToBeImplemented

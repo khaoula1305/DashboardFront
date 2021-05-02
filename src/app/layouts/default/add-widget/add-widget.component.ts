@@ -60,7 +60,6 @@ export class AddWidgetComponent implements OnInit {
       .getDataFrom(this.widget.dataSource)
       .subscribe((dataBody) => {
         if (dataBody.length >= 2 && Object.keys(dataBody[0]).length >= 2) {
-          console.log('data body', Object.keys(dataBody[0]).length);
           this.widgetTypeService.getAllWidgetTypes().subscribe(
             (data) => {
               this.widgetTypes = [];

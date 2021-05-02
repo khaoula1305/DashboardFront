@@ -3,7 +3,7 @@ import { Rest } from '../../models/rest.model';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataSourceService } from 'src/app/services/data-source.service';
-import {Message,MessageService} from 'primeng/api';
+import {Message,MessageService, TreeNode} from 'primeng/api';
 @Component({
   selector: 'app-rest',
   templateUrl: './rest.component.html',
@@ -21,6 +21,7 @@ export class RestComponent implements OnInit {
   cols: any[]=[];
   results:any[];
   msgs:Message[]=[];
+  files1: TreeNode[];
   constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -68,6 +69,16 @@ TestConnection(){
   )
 }
 Preview(){
+  let url=this.dataSource.url;
+  this.saveRest();
+  this.dataSourceService.GetDataAsync(this.dataSource).toPromise().then(res => this.files1=res);
+  this.cols = [
+    { field: 'name', header: 'Name' },
+    { field: 'size', header: 'Size' },
+    { field: 'type', header: 'Type' }
+];
+}
+Preview2(){
   let url=this.dataSource.url;
   this.saveRest();
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(

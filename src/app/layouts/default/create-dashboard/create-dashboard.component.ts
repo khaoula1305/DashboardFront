@@ -5,7 +5,6 @@ import { Dashboard } from 'src/app/models/dashboard.model';
 import { Team } from 'src/app/models/team.model';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { TeamsService } from 'src/app/services/team.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-create-dashboard',

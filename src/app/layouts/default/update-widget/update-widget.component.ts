@@ -35,15 +35,18 @@ export class UpdateWidgetComponent implements OnInit {
         this.widget = widget;
       }
     );
-    this.widgetService.getWidget(id).subscribe((data) => {
-        this.widget=data;
+
+      this.widgetService
+      .getAllWidgets()
+      .subscribe((data) => {
+        this.widget = data.find((e) => e.id == id);
         this.widgetService.changeWidget(this.widget);
       },
-      (err)=>console.log(err),
-      ()=>this.load=true);
+        (err) => console.log(err),
+        () => this.load = true);
+
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
-        //filter to be implemented
         this.widgetTypes = data;
       },
       (error) => {

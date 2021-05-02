@@ -7,6 +7,7 @@ import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { WidgetType } from 'src/app/models/widget-type';
+import { Widget } from 'src/app/models/widget.model';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -30,6 +31,7 @@ export class DashboardWidgetComponent implements OnInit {
   datasets: any[] = [];
   result;
   widgetTypeOnUpdate:WidgetType;
+  visibleSidebar=false;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -109,5 +111,8 @@ CreateBasicData(){
   }
   deleteClick() {
     this.deleted.emit(true);
+  }
+  onShowDetails() {
+    this.visibleSidebar = true;
   }
 }
