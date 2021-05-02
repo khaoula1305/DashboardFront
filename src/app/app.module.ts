@@ -35,6 +35,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { TeamsComponent } from './layouts/teams/teams.component';
 import {TreeModule} from 'primeng/tree';
 import {DialogModule} from 'primeng/dialog';
+import {TreeTableModule} from 'primeng/treetable';
 
 @NgModule({
   declarations: [
@@ -75,8 +76,8 @@ import {DialogModule} from 'primeng/dialog';
     DividerModule,
     ScrollPanelModule,
     TreeModule,
-    DialogModule
-
+    DialogModule,
+    TreeTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
