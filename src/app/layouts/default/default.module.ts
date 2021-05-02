@@ -36,6 +36,7 @@ import { CardComponent } from './widget-types/card/card.component';
 import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 import {SidebarModule} from 'primeng/sidebar';
 import { WidgetDetailsComponent } from './widget-details/widget-details.component';
+import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
 @NgModule({
   declarations: [
     WidgetComponent,
@@ -51,7 +52,8 @@ import { WidgetDetailsComponent } from './widget-details/widget-details.componen
       GraphComponent,
       CardComponent,
       UpdateWidgetComponent,
-      WidgetDetailsComponent
+      WidgetDetailsComponent,
+      DashboardWidgetDetailsComponent
     ],
   imports: [
     CommonModule,

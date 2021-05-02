@@ -54,6 +54,9 @@
   <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
 </div>
 <p-divider></p-divider>
+
+
+
 <app-widget-panel *ngIf="add" class="panel"  (added)="onAddedClick($event)" (hidden)="onHiddenClick($event)"></app-widget-panel>
 <gridster  [options]="options">
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
@@ -61,8 +64,11 @@
     <p>Add one or more widgets from Library.</p> 
    <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-help"></button>
   </div>
+  <p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
+    <app-dashboard-widget-details *ngIf="visibleSidebar" [dashboardWidget]="selectedDashboardWidget.widgetdashboard"></app-dashboard-widget-details>
+  </p-sidebar>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
-    <app-dashboard-widget (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
+    <app-dashboard-widget (selectedDashboardWidget)="onShowDetails($event, item)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
   </gridster-item>
 </gridster>
 </div>

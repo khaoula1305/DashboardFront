@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import autoTable from 'jspdf-autotable';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
@@ -7,6 +8,9 @@ import { Widget } from 'src/app/models/widget.model';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import 'jspdf-autotable';
+import jsPDF from 'jspdf';
+//declare let jsPDF;
 
 @Component({
   selector: 'app-widget-details',
@@ -16,7 +20,6 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 export class WidgetDetailsComponent implements OnInit {
 
   @Input() widget: Widget;
-  @Input() dashbaordWidget: DashboardWidget;
   results = [];
   widgetType: string;
   widgetTypeEnum = WidgetTypeEnum;
@@ -25,6 +28,9 @@ export class WidgetDetailsComponent implements OnInit {
   datasets: any[] = [];
   basicData: any;
   load = false;
+  exportColumns: any[];
+  cols: any[];
+  loadExport=false;
 
   constructor(
     private widgetService: WidgetsService,
@@ -41,7 +47,6 @@ export class WidgetDetailsComponent implements OnInit {
       (data) => {
         this.widget = data.find((e) => e.id == this.widget.id);
         this.widgetType = this.widget.widgetType.type;
-        console.log('selected widget', this.widget);
         this.dataSourceService
           .getDataFrom(this.widget.dataSource)
           .subscribe(
@@ -109,6 +114,7 @@ export class WidgetDetailsComponent implements OnInit {
       (err) => console.log(err),
       () => (this.load = true)
     );
+
   }
 
   generateColor() {
@@ -117,8 +123,35 @@ export class WidgetDetailsComponent implements OnInit {
     );
   }
 
-  onExport(){
-
+  onExportPdf(){
+  var pdf = new jsPDF();
+  pdf.text(this.widget.title, 11, 8);
+  pdf.setFontSize(12);
+  pdf.setTextColor(99);
+let headers=[];
+let object=[];
+this.widget.metaDataSources.forEach(elm => {
+  object.push(elm.label);
+})
+  let content=[];
+  this.results.forEach(item=> {
+    let obj=[];
+    this.widget.metaDataSources.forEach(elm=> {
+    obj.push(item[elm.key]);
+    });
+    content.push(obj);
+  });
+ headers[0]=object;
+  (pdf as any).autoTable({
+  head: headers,
+  body: content,
+  theme: 'plain',
+  didDrawCell: data => {
+     // console.log(data.column.index)
   }
-
+  })
+  // Open PDF document in browser's new tab
+  pdf.output('dataurlnewwindow')
+  //pdf.save(this.widget.title+'.pdf');
+}  
 }
