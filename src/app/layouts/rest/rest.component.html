@@ -47,7 +47,7 @@
           <div class="p-md-6">
             <div class="card">
                Auth URL Params
-              <button (click)="addParam()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-help"></button>
+              <button (click)="addParam()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-success"></button>
              <p-table [value]="params" dataKey="id">
                   <ng-template pTemplate="header">
                       <tr>
@@ -89,7 +89,7 @@
           </div>
           <div class="p-field p-col-12 p-md-6">
            Auth Headers
-           <button (click)="addHeader()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-help"></button>
+           <button (click)="addHeader()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-success"></button>
           <p-table [value]="headers" dataKey="id">
                <ng-template pTemplate="header">
                    <tr>
@@ -140,7 +140,7 @@
         </div>
           <div  class="p-mr-2" style="text-align: right;">
             <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
-            <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
+            <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-success"></button>
         </div>
     </div>
   </div>

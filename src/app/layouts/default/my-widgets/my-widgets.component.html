@@ -8,7 +8,7 @@
           </div>
           <div class="p-grid p-fluid">
             <div class="p-col-6">
-              <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-help"></button>
+              <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
           </div>
           <div class="p-col-6">
               <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
@@ -38,7 +38,7 @@
 <br>
 <div class="p-grid">
     <div *ngFor="let widget of myWidgets | filter: searchText">
-      <p-card  [style]="{'background':'rgb(254, 254, 254)'}" header="">
+      <p-card  styleClass="cardHover" [style]="{'background':'rgb(254, 254, 254)'}" header="">
         <div>
         <img alt="{{widget.widgetType.type}}" src="{{widget.widgetType.imagePath}}" />
         <h3>{{widget.title }}</h3>

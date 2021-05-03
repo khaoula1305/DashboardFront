@@ -1,7 +1,9 @@
 <form (ngSubmit)="onSubmit(newDashboard)" #newDashboard="ngForm">
+  <div class="headerShared">
+    <h4>Update Dashboard</h4>
+  </div>
     <div class="p-grid">
         <div class="p-col">
-          <h4>Update Dashboard</h4>
             <div class="box">
                 <h5>Title</h5>
                 <input type="text" pInputText [(ngModel)]="dashboard.title" name="title" required />
@@ -15,7 +17,7 @@
               ></textarea>
             </div>
             <br/>
-            <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
+            <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-success"></button>
         </div>
      </div>
 </form>
