@@ -38,7 +38,7 @@
 </p-toast>
 <div *ngIf="load" class="divider1">
   <p-divider ></p-divider>
-<div class="header" [style]="{'background-color': '#282c33', 'color': '#92989e', 'height': '50px'}" >
+<div class="headerShared">
   {{dashboard.title}}
   <span class="p-input-icon-left">
     <i class="pi pi-search"></i>
@@ -51,7 +51,7 @@
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
   <button pButton pRipple type="button" label="delete" (click)="OnDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-  <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text"></button>
+  <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
 </div>
 <p-divider></p-divider>
 
@@ -62,7 +62,7 @@
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
     <h3>This dashboard doesn't have widgets just yet!</h3>
     <p>Add one or more widgets from Library.</p> 
-   <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-help"></button>
+   <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
   </div>
   <p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
     <app-dashboard-widget-details *ngIf="visibleSidebar" [dashboardWidget]="selectedDashboardWidget.widgetdashboard"></app-dashboard-widget-details>

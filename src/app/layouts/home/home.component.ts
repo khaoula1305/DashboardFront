@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   dashboards: Dashboard[];
   load = false;
   dashboard: any;
+  searchText: any;
   constructor(
     private dashboardService: DashboardsService, 
     private router: Router, 

@@ -211,7 +211,6 @@ body {
 }
 
 .sidebar-wrapper .sidebar-menu .header-menu span {
-  font-weight: bold;
   font-size: 14px;
   padding: 15px 20px 5px 20px;
   display: inline-block;
@@ -404,13 +403,13 @@ body {
 /*-----------------------------chiller-theme-------------------------------------------------*/
 
 .chiller-theme .sidebar-wrapper {
-  background: #31353d;
+  background: #114c99;
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-header,
 .chiller-theme .sidebar-wrapper,
 .chiller-theme .sidebar-wrapper .sidebar-menu {
-  border-top: 1px solid #3a3f48;
+  border-top: 1px solid #114c99;
 }
 
 .chiller-theme .sidebar-wrapper,
@@ -426,7 +425,7 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-brand > a,
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a,
 .chiller-theme .sidebar-footer > a {
-  color: #818896;
+  color: #ffffff;
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li:hover > a,
@@ -434,7 +433,7 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-header .user-info,
 .chiller-theme .sidebar-wrapper .sidebar-brand > a:hover,
 .chiller-theme .sidebar-footer > a:hover i {
-  color: #b8bfce;
+  color: #ffffff;
 }
 
 .page-wrapper.chiller-theme.toggled #close-sidebar {
@@ -462,16 +461,16 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,
 .chiller-theme .sidebar-wrapper,
 .chiller-theme .sidebar-wrapper {
-  background: #3a3f48;
+  background: #114c99;
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
-  color: #6c7b88;
+  color: #ffffff;
 }
 
 .chiller-theme .sidebar-footer {
-  background: #3a3f48;
-  box-shadow: 0px -1px 5px #282c33;
+  background: #114c99;
+  box-shadow: 0px -1px 5px #114c99;
   border-top: 1px solid #464a52;
 }
 

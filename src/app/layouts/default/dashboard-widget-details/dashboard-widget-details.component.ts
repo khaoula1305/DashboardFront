@@ -33,7 +33,6 @@ export class DashboardWidgetDetailsComponent implements OnInit {
     ngOnInit(): void {
       var myLabels = [];
       var objet: any;
-      console.log('dashboardWidget from details', this.dashboardWidget);
           this.widgetType = this.dashboardWidget.widget.widgetType.type;
           this.dataSourceService
             .getDataFrom(this.dashboardWidget.widget.dataSource)

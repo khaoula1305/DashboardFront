@@ -1,8 +1,10 @@
 
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
   <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+  <div class="headerShared">
+    <h4>New REST API</h4>
+</div>
   <div class=" my-card">
-    <h3> New REST API</h3>
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-5">
         <h5>Data Source Name *</h5>

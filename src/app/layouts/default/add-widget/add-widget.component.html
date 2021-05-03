@@ -1,6 +1,8 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
+  <div class="headerShared">
+    <h4>New widget</h4>
+  </div>
   <div class="my-card">
-      <h3>Add a new widget</h3>
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
         <h5>Title *</h5>
@@ -16,7 +18,7 @@
 
             <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
               placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
-      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" iconPos="left"></button>
+      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
     </div>
         <div class="p-field p-col-12 p-md-6">
           <h5>Visualization *</h5>

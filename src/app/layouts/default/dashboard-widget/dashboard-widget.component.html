@@ -1,8 +1,8 @@
 <p-card header="{{dashboardWidget.title}}">
     <div class="conf">
-     <button pButton pRipple type="button" (click)="onShowDetails(dashboardWidget)" icon="pi pi-th-large" class="p-button-rounded p-button-success p-button-text"></button>
-     <button pButton pRipple type="button" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
-     <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+     <button pButton pRipple type="button" title="Maximize" (click)="onShowDetails(dashboardWidget)" icon="pi pi-window-maximize" class="p-button-rounded p-button-success p-button-text"></button>
+     <button pButton pRipple type="button" title="Edit" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
+     <button pButton pRipple type="button" title="Remove From Dashboard" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
     </div>
     <div *ngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">

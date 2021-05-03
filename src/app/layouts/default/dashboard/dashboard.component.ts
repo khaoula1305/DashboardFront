@@ -251,6 +251,5 @@ OnDelete(){
 onShowDetails(evt, item) {
   this.selectedDashboardWidget=item;
   this.visibleSidebar = true;
-  console.log('selectedDashboardWidget', this.selectedDashboardWidget);
 }
 }
