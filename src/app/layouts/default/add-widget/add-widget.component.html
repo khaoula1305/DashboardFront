@@ -1,7 +1,9 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
   <div class="headerShared">
-    <h4>New widget</h4>
+    <h4>New Widget</h4>
   </div>
+  <br>
+  <p-card>
   <div class="my-card">
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
@@ -66,4 +68,5 @@
       <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-success"></button>
     </div>
   </div>
+</p-card>
 </form>

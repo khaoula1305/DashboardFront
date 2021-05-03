@@ -1,8 +1,12 @@
 
  <form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
   <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+  <div class="headerShared">
+    <h4>Update REST Data Source</h4>
+</div>
+<br>
+<p-card>
     <div class=" my-card">
-      <h3> New Rest</h3>
       <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-5">
           <h5>Data Source Name *</h5>
@@ -142,7 +146,9 @@
         </div>
     </div>
     </div>
+</p-card>
     </form>
+    <p-card *ngIf="results">
 <div class="p-grid" *ngIf="results" >
        <p-table [value]="results" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
           <ng-template pTemplate="colgroup" let-columns>
@@ -168,3 +174,4 @@
           </ng-template>
       </p-table>
   </div>
+</p-card>

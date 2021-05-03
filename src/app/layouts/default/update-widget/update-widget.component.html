@@ -2,6 +2,8 @@
   <div class="headerShared">
     <h4>Update widget</h4>
   </div>
+  <br>
+  <p-card>
     <div class="my-card" *ngIf="load">
       <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-6">
@@ -53,12 +55,10 @@
               </div>
             </div>
       </div>
-  
-      
       <div class="p-col-12">
         <button pButton pRipple style="margin:5px;" type="button" label="Cancel" routerLink="/myWidgets" class="p-button-rounded p-button-info"></button>
         <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-success"></button>
       </div>
-  
     </div>
+  </p-card>
   </form>

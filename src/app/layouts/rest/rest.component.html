@@ -4,6 +4,8 @@
   <div class="headerShared">
     <h4>New REST API</h4>
 </div>
+<br>
+<p-card>
   <div class=" my-card">
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-5">
@@ -144,7 +146,10 @@
         </div>
     </div>
   </div>
+</p-card>
   </form>
+  <br>
+  <p-card *ngIf="results">
 <div class="p-grid" *ngIf="results" >
     <p-divider></p-divider>
      <p-table [value]="results" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
@@ -171,3 +176,4 @@
         </ng-template>
     </p-table>
 </div>
+</p-card>
