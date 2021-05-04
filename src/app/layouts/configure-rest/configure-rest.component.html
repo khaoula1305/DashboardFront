@@ -1,0 +1,21 @@
+<div class="p-grid p-align-center">
+    <div class="p-col-6">
+<form (ngSubmit)="onSubmit(rest)" #rest="ngForm">
+        <div class="p-col">
+            <div class="p-field p-col">
+                <label for="query">Configure Rest</label> <br>
+                <p-dropdown
+                  inputId="key"
+                  name="selectedKey"
+                  [options]="keys"
+                  [(ngModel)]="selectedKey"
+                  placeholder="Select"
+                  (ngModelChange)="onSelectedKey()"
+                  optionLabel="label"
+                ></p-dropdown>
+              </div>
+        </div>
+    </form>
+    </div>
+</div>
+
