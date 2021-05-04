@@ -1,18 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import autoTable from 'jspdf-autotable';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
-//import 'jspdf-autotable';
-//import jsPDF from 'jspdf';
-//declare let jsPDF;
-var jsPDF = require('jspdf');
-require('jspdf-autotable');
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-widget-details',
@@ -126,7 +122,7 @@ export class WidgetDetailsComponent implements OnInit {
   }
 
   onExportPdf(){
-  var pdf = new jsPDF();
+  let pdf = new jsPDF();
   pdf.text(this.widget.title, 11, 8);
   pdf.setFontSize(12);
   pdf.setTextColor(99);
@@ -148,12 +144,10 @@ this.widget.metaDataSources.forEach(elm => {
   head: headers,
   body: content,
   theme: 'plain',
-  didDrawCell: data => {
-     // console.log(data.column.index)
-  }
   })
   // Open PDF document in browser's new tab
   pdf.output('dataurlnewwindow')
-  //pdf.save(this.widget.title+'.pdf');
+  pdf.save(this.widget.title+'.pdf');
 }  
+
 }
