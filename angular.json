@@ -35,9 +35,8 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/chart.js/dist/Chart.js"
             ],
-            "scripts": [ 
-              "../node_modules/jspdf/dist/jspdf.min.js",
-              "../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"]
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -100,7 +99,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jspdf/dist/jspdf.min.js",
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+            ]
           }
         },
         "lint": {

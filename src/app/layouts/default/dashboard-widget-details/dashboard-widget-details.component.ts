@@ -6,6 +6,7 @@ import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DashboardWidgetService } from 'src/app/services/dashboard-widget.service';
 import { DataSourceService } from 'src/app/services/data-source.service';
+//declare var jsPDF: any;
 
 @Component({
   selector: 'app-dashboard-widget-details',

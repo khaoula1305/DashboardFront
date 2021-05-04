@@ -78,7 +78,6 @@ export class AddWidgetComponent implements OnInit {
             }
           );
         } else if (dataBody.length == 1) {
-          console.log('data body', Object.keys(dataBody[0]).length);
           this.widgetTypeService.getAllWidgetTypes().subscribe(
             (data) => {
               this.widgetTypes = [];

@@ -38,7 +38,7 @@
 <br>
 <div class="p-grid">
     <div *ngFor="let widget of myWidgets | filter: searchText">
-      <p-card  styleClass="cardHover" [style]="{'background':'rgb(254, 254, 254)'}" header="">
+      <p-card [style]="{'background':'rgb(254, 254, 254)'}" header="">
         <div>
         <img alt="{{widget.widgetType.type}}" src="{{widget.widgetType.imagePath}}" />
         <h3>{{widget.title }}</h3>

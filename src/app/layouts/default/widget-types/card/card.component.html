@@ -17,7 +17,7 @@
                         <input type="text" pInputText [(ngModel)]="widget.metaDataSources[0].label"
                             name="{{widget.metaDataSources[0].label}}" placeholder="Add a label" />
                     </ng-template>
-                    {{cardRes}}
+                    {{ cardRes | number:'1.0':'en-US' }}
                     <ng-template pTemplate="footer">
 
                     </ng-template>
