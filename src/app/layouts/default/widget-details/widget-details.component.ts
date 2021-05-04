@@ -1,12 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { DashboardWidget } from 'src/app/models/dashboard-widget';
 import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetTypeEnum } from 'src/app/models/widgetTypeEnum';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-widget-details',
@@ -16,15 +18,16 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 export class WidgetDetailsComponent implements OnInit {
 
   @Input() widget: Widget;
-  @Input() dashbaordWidget: DashboardWidget;
   results = [];
-  widgetType: string;
   widgetTypeEnum = WidgetTypeEnum;
   result;
   dimensionKey: MetaDataSource;
   datasets: any[] = [];
   basicData: any;
   load = false;
+  exportColumns: any[];
+  cols: any[];
+  loadExport=false;
 
   constructor(
     private widgetService: WidgetsService,
@@ -37,17 +40,13 @@ export class WidgetDetailsComponent implements OnInit {
   ngOnInit(): void {
     var myLabels = [];
     var objet: any;
-    this.widgetService.getAllWidgets().subscribe(
-      (data) => {
-        this.widget = data.find((e) => e.id == this.widget.id);
-        this.widgetType = this.widget.widgetType.type;
-        console.log('selected widget', this.widget);
-        this.dataSourceService
+    console.log(this.widget);
+    this.dataSourceService
           .getDataFrom(this.widget.dataSource)
           .subscribe(
             (data) => {
               this.results = data;
-              switch (this.widgetType) {
+              switch (this.widget.widgetType.type) {
                 case this.widgetTypeEnum.Table: {
                   break;
                 }
@@ -105,10 +104,7 @@ export class WidgetDetailsComponent implements OnInit {
               this.load = true;
             }
           );
-      },
-      (err) => console.log(err),
-      () => (this.load = true)
-    );
+
   }
 
   generateColor() {
@@ -117,8 +113,33 @@ export class WidgetDetailsComponent implements OnInit {
     );
   }
 
-  onExport(){
-
-  }
+  onExportPdf(){
+  let pdf = new jsPDF();
+  pdf.text(this.widget.title, 11, 8);
+  pdf.setFontSize(12);
+  pdf.setTextColor(99);
+let headers=[];
+let object=[];
+this.widget.metaDataSources.forEach(elm => {
+  object.push(elm.label);
+})
+  let content=[];
+  this.results.forEach(item=> {
+    let obj=[];
+    this.widget.metaDataSources.forEach(elm=> {
+    obj.push(item[elm.key]);
+    });
+    content.push(obj);
+  });
+ headers[0]=object;
+  (pdf as any).autoTable({
+  head: headers,
+  body: content,
+  theme: 'plain',
+  })
+  // Open PDF document in browser's new tab
+  pdf.output('dataurlnewwindow')
+  pdf.save(this.widget.title+'.pdf');
+}  
 
 }

@@ -23,3 +23,37 @@
     }
   }
 }
+
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar h4 {
+  float: left;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 1px 10px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: rgb(124, 116, 116);
+  color: black;
+}
+
+.include-nav {
+  position: relative;
+  z-index: -1;
+}

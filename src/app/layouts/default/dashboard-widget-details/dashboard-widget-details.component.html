@@ -1,0 +1,36 @@
+<h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
+<!--widget details-->
+<p-card header="{{dashboardWidget.title}}">
+  <div *ngIf="load" [ngSwitch]="dashboardWidget.widget.widgetType.type">
+      <div *ngSwitchCase="widgetTypeEnum.Table">
+          <p-table [value]="results" [scrollable]="true" scrollHeight="400px"  scrollWidth="900px">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th  *ngFor="let th of dashboardWidget.widget.metaDataSources" >{{th.label}}</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-tab>
+                  <tr>
+                      <td  *ngFor="let th of dashboardWidget.widget.metaDataSources">{{tab[th.key]}}</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+      <div *ngSwitchCase="widgetTypeEnum.Card">
+              <p-card class="containSize partition" styleClass="cardColor">
+                  <div class="p-d-flex">
+                      <p  style="font-weight: bold;">{{result.label}}</p>
+                  <p-divider layout="vertical" ></p-divider>
+                  <p  style="font-weight: 500;">{{result.key | number:'1.0':'en-US'}}</p>
+                  </div>
+              </p-card>
+      </div>
+      <div *ngSwitchDefault> 
+          <p-chart type="{{dashboardWidget.widget.widgetType.type}}" [data]="basicData" [options]="basicOptions">
+          </p-chart>
+        </div>
+  </div>
+</p-card>
+<br>
+<button pButton pRipple style="margin:5px;" icon="pi pi-file-pdf" (click)="onExportPdf()" label="&nbsp;Export&nbsp;" class="p-button-rounded p-button-success"></button>
+<!--widget details-->

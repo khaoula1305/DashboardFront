@@ -39,6 +39,8 @@ export class DashboardComponent implements OnInit {
   //Teams;
   teams: Team[];
   selectedTeam: Team;
+  visibleSidebar=false;
+  selectedDashboardWidget: DashboardWidget;
 
   public pauseState = false;
   ngOnInit() {
@@ -268,5 +270,9 @@ this.messageService.clear('a');
 }
 OnDelete(){
   this.showConfirm({key: 'b',  severity:'custom', summary:'Are you sure you want to remove this Dashboard?'});
+}
+onShowDetails(evt, item) {
+  this.selectedDashboardWidget=item;
+  this.visibleSidebar = true;
 }
 }

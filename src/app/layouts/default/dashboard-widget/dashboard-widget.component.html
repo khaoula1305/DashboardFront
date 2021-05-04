@@ -1,13 +1,10 @@
 <div class="pcard">
     <h2 style="text-align:center">{{dashboardWidget.title}}</h2>
     <div class="conf">
-        <button pButton pRipple type="button" (click)="onShowDetails()" icon="pi pi-search" class="p-button-rounded p-button-success p-button-text"></button>
-     <button pButton pRipple type="button" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
-     <button pButton pRipple type="button" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+     <button pButton pRipple type="button" title="Maximize" (click)="onShowDetails(dashboardWidget)" icon="pi pi-window-maximize" class="p-button-rounded p-button-success p-button-text"></button>
+     <button pButton pRipple type="button" title="Edit" (click)="updateWidgetDashboard(dashboardWidget.id)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
+     <button pButton pRipple type="button" title="Remove From Dashboard" (click)="deleteClick()"  icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
     </div>
-    <p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
-        <app-widget-details *ngIf="visibleSidebar" [dashboardWidget]="dashboardWidget"></app-widget-details>
-    </p-sidebar>
     <div *ngIf="load" [ngSwitch]="widgetType">
         <div *ngSwitchCase="widgetTypeEnum.Table">
             <p-table [value]="results" [scrollable]="true" scrollHeight="700px" scrollWidth="900px">
@@ -28,7 +25,7 @@
                     <div class="p-d-flex">
                         <p  style="font-weight: bold;">{{result.label}}</p>
                     <p-divider layout="vertical" ></p-divider>
-                    <p  style="font-weight: 500;">{{result.key}}</p>
+                    <p  style="font-weight: 500;">{{result.key | number:'1.0':'en-US'}}</p>
                     </div>
                 </p-card>
         </div>

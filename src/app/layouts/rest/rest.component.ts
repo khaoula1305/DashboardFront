@@ -116,7 +116,7 @@ saveRest(){
   this.dataSource.type= 'Rest API';
 }
   onSubmit(rest: NgForm) {
-    if ( rest.untouched || rest.invalid) {
+    if (rest.untouched || rest.invalid) {
       alert('Required');
     } else {
       this.saveRest();
@@ -128,4 +128,6 @@ saveRest(){
          
     }
   }
+
 }
+

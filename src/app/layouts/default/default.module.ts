@@ -37,6 +37,7 @@ import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 import {SidebarModule} from 'primeng/sidebar';
 import { WidgetDetailsComponent } from './widget-details/widget-details.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
 @NgModule({
   declarations: [
       WidgetComponent,
@@ -52,7 +53,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
       GraphComponent,
       CardComponent,
       UpdateWidgetComponent,
-      WidgetDetailsComponent
+      WidgetDetailsComponent,
+      DashboardWidgetDetailsComponent
     ],
   imports: [
     CommonModule,

@@ -1,6 +1,10 @@
 <form (ngSubmit)="onSubmit(widash)" #widash="ngForm">
+  <div class="headerShared">
+    <h4>New Widget</h4>
+  </div>
+  <br>
+  <p-card>
   <div class="my-card">
-      <h3>Add a new widget</h3>
     <div class="p-col-12 p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
         <h5>Title *</h5>
@@ -16,7 +20,7 @@
 
             <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
               placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
-      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" iconPos="left"></button>
+      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
     </div>
         <div class="p-field p-col-12 p-md-6">
           <h5>Visualization *</h5>
@@ -61,7 +65,8 @@
     </div>
     <div class="p-col-12">
       <button pButton pRipple style="margin:5px;" type="button" label="Cancel" routerLink="/dashboards/{{dashboard.id}}" class="p-button-rounded p-button-info"></button>
-      <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-help"></button>
+      <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-success"></button>
     </div>
   </div>
+</p-card>
 </form>

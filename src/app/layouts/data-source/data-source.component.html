@@ -1,9 +1,12 @@
-<h3 style="text-align: center">Create a new data source</h3>
+<div class="headerShared">
+  <h4>New Data Source</h4>
+</div>
+<br>
 <div class="p-grid">
-  <p-card header="Rest Api" routerLink="/rest">
+  <p-card [style]="{'cursor': 'pointer'}" header="Rest Api" routerLink="/rest">
     <img alt="rest" src="../../../assets/images/rest.png" />
   </p-card>
-  <p-card (click)="goToQueryBuilder()" header="Query Builder">
+  <p-card [style]="{'cursor': 'pointer'}" (click)="goToQueryBuilder()" header="Query Builder">
     <img alt="QueryBuilder" src="../../../assets/images/QueryBuilder.png" />
   </p-card>
 </div>
