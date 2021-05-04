@@ -4,6 +4,6 @@ export class Dashboard{
     id: any;
     title: string;
     description: string;
-    dashboardWidgetList: DashboardWidget[];
+    dashboardWidgets?: DashboardWidget[];
     team:Team;
 }

@@ -10,7 +10,7 @@ import {DashboardWidgetService} from '../../../services/dashboard-widget.service
 import {Message, MessageService} from 'primeng/api';
 import { Team } from 'src/app/models/team.model';
 import { TeamsService } from 'src/app/services/team.service';
-
+import {OverlayPanel} from 'primeng/overlaypanel';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private dashboardService: DashboardsService,
-    private widgetDashboardService: DashboardsService,
     private messageService: MessageService,
     private teamService: TeamsService) { }
   options: GridsterConfig;
@@ -37,7 +36,6 @@ export class DashboardComponent implements OnInit {
   empty: false;
   widgetDashboard;
   @Input() dashboard: Dashboard;
-
   //Teams;
   teams: Team[];
   selectedTeam: Team;
@@ -103,7 +101,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboard(id).subscribe(
       data => {
         this.dashboard = data;
-        if(data.team) this.selectedTeam=data.team;
+        if(data.team && data.team.title != "My dashboards") this.selectedTeam=data.team;
         this.dashboardWidgetService.getAllDashboardWidget(this.dashboard.id).subscribe(
           (dashwidget) => {
             dashwidget.forEach( elm=> this.dashboardGridster.push(
@@ -127,7 +125,8 @@ export class DashboardComponent implements OnInit {
     );
     this.teamService.getAllTeams().subscribe(
       (data)=> {
-        this.teams=data;
+       this.teams= data.filter(team => team.title!="My dashboards");
+       this.teams.push({ title:"not set", admin: null, members: null})
       });
   }
   onHiddenClick(state){
@@ -137,8 +136,11 @@ export class DashboardComponent implements OnInit {
     this.add = true;
   }
   onRowSelect(event) {
+    if(this.selectedTeam.title=="not set"){
+      this.selectedTeam=this.teams.find(team=> team.title=="My dashboards");
+    }
+   this.dashboard.team=this.selectedTeam;
     this.messageService.add({severity: 'info', summary: 'Team Selected', detail: event.data.title});
-    this.dashboard.team=this.selectedTeam;
     this.dashboardService.updateDashboard(this.dashboard).subscribe(
        );
 }

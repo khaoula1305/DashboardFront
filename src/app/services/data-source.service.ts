@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Widget } from '../models/widget.model';
 import { Rest } from '../models/rest.model';
+import { TreeNode } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,9 @@ export class DataSourceService {
   getDataFrom(dataSource: DataSource): Observable<any[]>{
       return this.http.get<any[]>(this.host+dataSource.id);
   }
-  getDataFromURL( url: string ): Observable<any[]> {
-    return this.http.get<any[]>(url);
+  getDataFromURL( url: string ){
+    return this.http.get<any>(url).toPromise()
+    .then(res => <TreeNode[]> res);
   }
   GetDataAsync(datasource: Rest): Observable<any[]> {
     let headers;

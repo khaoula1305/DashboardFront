@@ -36,10 +36,11 @@ import { CardComponent } from './widget-types/card/card.component';
 import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 import {SidebarModule} from 'primeng/sidebar';
 import { WidgetDetailsComponent } from './widget-details/widget-details.component';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 @NgModule({
   declarations: [
-    WidgetComponent,
-     WidgetPanelComponent,
+      WidgetComponent,
+      WidgetPanelComponent,
       DashboardComponent,
       DashboardWidgetComponent,
       WidgetConfigurationComponent,
@@ -76,7 +77,8 @@ import { WidgetDetailsComponent } from './widget-details/widget-details.componen
     DividerModule,
     TableModule,
     ToastModule,
-    SidebarModule
+    SidebarModule,
+    OverlayPanelModule
   ],
   exports: [
     CreateDashboardComponent

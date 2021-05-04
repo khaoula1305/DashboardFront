@@ -10,7 +10,6 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { DefaultModule } from './layouts/default/default.module';
-import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { SideBarComponent } from './shared/components/side-bar/side-bar.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -36,11 +35,13 @@ import { TeamsComponent } from './layouts/teams/teams.component';
 import {TreeModule} from 'primeng/tree';
 import {DialogModule} from 'primeng/dialog';
 import {TreeTableModule} from 'primeng/treetable';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     FooterComponent,
     SideBarComponent,
     QueriesComponent,
@@ -77,7 +78,9 @@ import {TreeTableModule} from 'primeng/treetable';
     ScrollPanelModule,
     TreeModule,
     DialogModule,
-    TreeTableModule
+    TreeTableModule,
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,7 +15,7 @@
               ></textarea>
               <div>
                 <h5>Team </h5>
-                <p-dropdown [options]="teams" [(ngModel)]="this.dashboard.team" placeholder="Select team" name="selectedTeam" optionLabel="title" [showClear]="true"></p-dropdown>
+                <p-dropdown [options]="teams" [(ngModel)]="this.dashboard.team" placeholder="Select team" [filter]="true" filterBy="title" name="selectedTeam" optionLabel="title" [showClear]="true"></p-dropdown>
               </div>
               <br/>
               <button pButton pRipple [disabled]="!newDashboard.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
