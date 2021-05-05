@@ -38,6 +38,8 @@ import {SidebarModule} from 'primeng/sidebar';
 import { WidgetDetailsComponent } from './widget-details/widget-details.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
+import {RadioButtonModule} from 'primeng/radiobutton';
+
 @NgModule({
   declarations: [
       WidgetComponent,
@@ -80,7 +82,8 @@ import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dash
     TableModule,
     ToastModule,
     SidebarModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    RadioButtonModule
   ],
   exports: [
     CreateDashboardComponent

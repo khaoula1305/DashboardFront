@@ -12,6 +12,9 @@
 .pcard:hover .conf {
   visibility: visible;
 }
+.pcard {
+  cursor: pointer;
+}
 
 .partition {
   color: black;

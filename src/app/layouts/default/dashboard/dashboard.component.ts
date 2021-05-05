@@ -41,7 +41,11 @@ export class DashboardComponent implements OnInit {
   selectedTeam: Team;
   visibleSidebar=false;
   selectedDashboardWidget: DashboardWidget;
-
+  //Details
+  results:any[];
+  cols:any[];
+  visibleSidebarCard=false;
+  
   public pauseState = false;
   ngOnInit() {
     setTimeout(function() { this.empty = true;}.bind(this), 2000);
@@ -128,7 +132,6 @@ export class DashboardComponent implements OnInit {
     this.teamService.getAllTeams().subscribe(
       (data)=> {
        this.teams= data.filter(team => team.title!="My dashboards");
-       this.teams.push({ title:"not set", admin: null, members: null})
       });
   }
   onHiddenClick(state){
@@ -137,12 +140,9 @@ export class DashboardComponent implements OnInit {
   addWidget(){
     this.add = true;
   }
-  onRowSelect(event) {
-    if(this.selectedTeam.title=="not set"){
-      this.selectedTeam=this.teams.find(team=> team.title=="My dashboards");
-    }
-   this.dashboard.team=this.selectedTeam;
-    this.messageService.add({severity: 'info', summary: 'Team Selected', detail: event.data.title});
+  onRowSelect() {
+    this.dashboard.team=this.selectedTeam;
+    this.messageService.add({severity: 'info', summary: 'Team Selected', detail: this.selectedTeam.title});
     this.dashboardService.updateDashboard(this.dashboard).subscribe(
        );
 }
@@ -274,5 +274,11 @@ OnDelete(){
 onShowDetails(evt, item) {
   this.selectedDashboardWidget=item;
   this.visibleSidebar = true;
+}
+showDetails(event){
+  console.log(event);
+  this.results=event[0];
+  this.cols =event[1];
+  this.visibleSidebarCard=true;
 }
 }

@@ -34,6 +34,7 @@ export class DashboardWidgetComponent implements OnInit {
   widgetTypeOnUpdate:WidgetType;
   visibleSidebar=false;
   @Output() selectedDashboardWidget = new EventEmitter<any>();
+  @Output() selectedCard = new EventEmitter<any>();
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -51,12 +52,14 @@ export class DashboardWidgetComponent implements OnInit {
               break;
              }
             case this.widgetTypeEnum.Card : {
+              let somme=0;
               this.results.forEach(elm => {
-                this.result = {
-                  key: elm[this.selectedKeys[0].key],
-                  label:this.selectedKeys[0].label
-                }
+                somme+=elm[this.selectedKeys[0].key];
               })
+              this.result = {
+                key: somme,
+                label:this.selectedKeys[0].label
+              }
               break;
             }
             default : {
@@ -117,4 +120,8 @@ CreateBasicData(){
   onShowDetails(dashbaordWidget: DashboardWidget) {
     this.selectedDashboardWidget.emit(dashbaordWidget);
   }
+  showDetails() {
+    this.selectedCard.emit([this.results,this.selectedKeys]);
+  }
+
 }

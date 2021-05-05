@@ -37,7 +37,7 @@ import {DialogModule} from 'primeng/dialog';
 import {TreeTableModule} from 'primeng/treetable';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
-
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -80,7 +80,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     DialogModule,
     TreeTableModule,
     AutoCompleteModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

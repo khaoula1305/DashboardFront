@@ -68,7 +68,9 @@ export class AddWidgetComponent implements OnInit {
                   item.type == 'bar' ||
                   item.type == 'line' ||
                   item.type == 'pie' ||
-                  item.type == 'table'
+                  item.type == 'table' ||
+                  item.type == 'card' 
+
                 )
                   this.widgetTypes.push(item);
               });

@@ -23,13 +23,13 @@
       <p-table [value]="currentTeam.members"  [scrollable]="true" scrollHeight="200px">
           <ng-template pTemplate="body" let-rowData let-member>
               <tr [pSelectableRow]="rowData">
-                  <td> <b>{{member.lastName}}</b></td>
+                  <td> <b>{{member.lastName}}</b> <b>{{member.firstName}}</b></td>
               </tr>
           </ng-template>
       </p-table>
       <h5>Select a member </h5>
       <span class="p-fluid">
-        <p-autoComplete [(ngModel)]="currentTeam.members" [suggestions]="filtredMembers" name="membres"  (completeMethod)="filterMember($event,addMembers)" field="lastName" [multiple]="true">
+        <p-autoComplete [(ngModel)]="currentTeam.members" [suggestions]="filtredMembers" name="membres"  (completeMethod)="filterMember($event,members)" field="lastName" [multiple]="true">
         </p-autoComplete>
     </span>
   </ng-template>
@@ -38,16 +38,20 @@
     <p-button (click)="shareWithOthers()" label="Save" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
-<div style="text-align: right;">
-    <button pButton pRipple type="button" label="New Team" style="text-align:right" (click)="showDialog()" icon="pi pi-plus" class="p-button-rounded p-button-help p-button-text" ></button>
+    <div class="headerShared">
+      <h4>Available Teams</h4>
+      <div style="text-align: right;">
+        <button class="colorButton" (click)="showDialog()"  pButton pRipple type="button" label="New Team" style="text-align:right" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" ></button>
+        </div>
     </div>
+    <br>
 <p-tree [value]="nodes">
     <ng-template let-node pTemplate="url">
         <span [routerLink]="node.data" >{{node.label}}</span>
     </ng-template>
      <ng-template let-node pTemplate="default">
      <span><b>{{node.label}}</b></span>
-      <span>
+      <span *ngIf="node.label!='My dashboards'">
       <button  pButton pRipple type="button"  (click)="share(node)" icon="pi pi-fw pi-users" class="p-button-rounded p-button-success p-button-text"></button>
       <button pButton pRipple type="button" (click)="onDelete(node)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
       </span>
