@@ -1,59 +1,67 @@
-<p-dialog header="New Team"  [(visible)]="display">
-<form (ngSubmit)="onSubmit(newTeam)" #newTeam="ngForm">
+<p-dialog header="New Team" [(visible)]="display">
+  <form (ngSubmit)="onSubmit(newTeam)" #newTeam="ngForm">
     <div class="p-grid">
-            <div class="box">
-                <h5>Title *</h5>
-                <input type="text" pInputText [(ngModel)]="team.title" name="title" required/>
-              <div>
-                <h5>Members </h5>
-                <span class="p-fluid">
-                  <p-autoComplete [(ngModel)]="team.members" [suggestions]="filtredMembers" name="membres"  (completeMethod)="filterMember($event, members)" field="firstName" [multiple]="true">
-                  </p-autoComplete>
-              </span>
-              </div>
-              <br/>
-              <button pButton pRipple [disabled]="!newTeam.valid"   type="submit" label="Save" class="p-button-rounded p-button-help"></button>
-            </div>
-           </div>
-</form>
+      <div class="box">
+        <h5>Title *</h5>
+        <input type="text" pInputText [(ngModel)]="team.title" name="title" required />
+        <div>
+          <h5>Members </h5>
+          <span class="p-fluid">
+            <p-autoComplete [(ngModel)]="team.members" [suggestions]="filtredMembers" name="membres"
+              (completeMethod)="filterMember($event, members)" field="firstName" [multiple]="true">
+            </p-autoComplete>
+          </span>
+        </div>
+        <br />
+        <button pButton pRipple [disabled]="!newTeam.valid" type="submit" label="Save"
+          class="p-button-rounded p-button-help"></button>
+      </div>
+    </div>
+  </form>
 </p-dialog>
-<p-dialog header="Share with others" [(visible)]="displayShare" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}" [baseZIndex]="10000" >
-    <ng-template pTemplate>
-      <h4>{{currentTeam.title}}</h4>
-      <p-table [value]="currentTeam.members"  [scrollable]="true" scrollHeight="200px">
-          <ng-template pTemplate="body" let-rowData let-member>
-              <tr [pSelectableRow]="rowData">
-                  <td> <b>{{member.lastName}}</b> <b>{{member.firstName}}</b></td>
-              </tr>
-          </ng-template>
-      </p-table>
-      <h5>Select a member </h5>
-      <span class="p-fluid">
-        <p-autoComplete [(ngModel)]="currentTeam.members" [suggestions]="filtredMembers" name="membres"  (completeMethod)="filterMember($event,members)" field="lastName" [multiple]="true">
-        </p-autoComplete>
+<p-dialog header="Share with others" [(visible)]="displayShare" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <ng-template pTemplate>
+    <h4>{{currentTeam.title}}</h4>
+    <p-table [value]="currentTeam.members" [scrollable]="true" scrollHeight="200px">
+      <ng-template pTemplate="body" let-rowData let-member>
+        <tr [pSelectableRow]="rowData">
+          <td> <b>{{member.lastName}}</b> <b>{{member.firstName}}</b></td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <h5>Select a member </h5>
+    <span class="p-fluid">
+      <p-autoComplete [(ngModel)]="currentTeam.members" [suggestions]="filtredMembers" name="membres"
+        (completeMethod)="filterMember($event,members)" field="lastName" [multiple]="true">
+      </p-autoComplete>
     </span>
   </ng-template>
   <ng-template pTemplate="footer">
     <p-button (click)="displayShare=false" label="Cancel" styleClass="p-button-text"></p-button>
     <p-button (click)="shareWithOthers()" label="Save" styleClass="p-button-text"></p-button>
-    </ng-template>
+  </ng-template>
 </p-dialog>
-    <div class="headerShared">
-      <h4>Available Teams</h4>
-      <div style="text-align: right;">
-        <button class="colorButton" (click)="showDialog()"  pButton pRipple type="button" label="New Team" style="text-align:right" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" ></button>
-        </div>
-    </div>
-    <br>
+<div class="headerShared">
+  <h4>Available Teams</h4>
+  <div style="text-align: right;">
+    <button class="colorButton" (click)="showDialog()" pButton pRipple type="button" label="New Team"
+      style="text-align:right" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
+  </div>
+</div>
+<br>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 <p-tree [value]="nodes">
-    <ng-template let-node pTemplate="url">
-        <span [routerLink]="node.data" >{{node.label}}</span>
-    </ng-template>
-     <ng-template let-node pTemplate="default">
-     <span><b>{{node.label}}</b></span>
-      <span *ngIf="node.label!='My dashboards'">
-      <button  pButton pRipple type="button"  (click)="share(node)" icon="pi pi-fw pi-users" class="p-button-rounded p-button-success p-button-text"></button>
-      <button pButton pRipple type="button" (click)="onDelete(node)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-      </span>
-    </ng-template>
+  <ng-template let-node pTemplate="url">
+    <span [routerLink]="node.data">{{node.label}}</span>
+  </ng-template>
+  <ng-template let-node pTemplate="default">
+    <span><b>{{node.label}}</b></span>
+    <span *ngIf="node.label!='My dashboards'">
+      <button pButton pRipple type="button" (click)="share(node)" icon="pi pi-fw pi-users"
+        class="p-button-rounded p-button-success p-button-text"></button>
+      <button pButton pRipple type="button" (click)="onDelete(node)" icon="pi pi-fw pi-trash"
+        class="p-button-rounded p-button-danger p-button-text"></button>
+    </span>
+  </ng-template>
 </p-tree>

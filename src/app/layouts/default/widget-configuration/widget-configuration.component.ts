@@ -65,10 +65,10 @@ export class WidgetConfigurationComponent implements OnInit {
   }
 
   onSubmit(m: NgForm) {
-    this.dashboardWidget.widget = this.widget;
+    this.dashboardWidget.widget=this.widget;
     this.dashboardWidgetService
       .updateDashboardWidget(
-        this.dashboardWidget.dashboard.id,
+        this.currentDashboard.id,
         this.dashboardWidget
       )
       .subscribe((result) => {

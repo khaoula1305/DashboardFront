@@ -76,37 +76,35 @@ export class DashboardWidgetComponent implements OnInit {
         });
   }
 
-CreateBasicData(){
-  var myLabels=[];
-  var objet: any;
-  console.log(this.result);
-   this.dashboardWidget.widget.metaDataSources.forEach(element=> {
-     if(element.isDimension){
-      this.results.forEach((elm) => {
-        let repeat=true;
-        for (let index = 0; index < myLabels.length; index++) {
-         if(myLabels[index]== elm[element.key]){
-          repeat=false;
-           break;
-         }
-          
-        }
-        if(repeat) myLabels.push(elm[element.key]);
-      });
-     }
-     if(!element.isDimension){
-       var label = [];
-       this.results.forEach(elm => label.push(elm[element.key]));
-       objet = {
-         label: element.label,
-         backgroundColor: this.generateColor(),
-         data: label
-       };
-       this.datasets.push(objet);
-     }
-   }) 
-  this.basicData = { labels: myLabels, datasets: this.datasets };
-}
+  CreateBasicData(){
+    var labels=[];
+    var dimensions=[];
+    var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
+    this.dashboardWidget.widget.metaDataSources.forEach(element=>{
+      if(!element.isDimension){
+        labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+      }
+    })
+    this.results.forEach((elm) => {
+      let repeat=true;
+      for (let index = 0; index < dimensions.length; index++) {
+       if(dimensions[index]== elm[dimension.key]){
+        repeat=false;
+        labels.forEach(lab=>{
+          lab.data[index]+=elm[lab.key];
+        })
+         break;
+       }
+      }
+      if(repeat) {
+        dimensions.push(elm[dimension.key]);
+        labels.forEach( lab=>{
+          lab.data.push(elm[lab.key]);
+        })
+      }
+    });
+    this.basicData = { labels: dimensions, datasets: labels };
+  }
   generateColor() {
     return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
   }

@@ -24,7 +24,7 @@ export class CreateDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.teamService.getAllTeams().subscribe(
       (data)=> {
-        this.teams=data;
+        this.teams=data.filter(team => team.title !="My dashboards");
       });
   }
   onSubmit(m: NgForm) {
