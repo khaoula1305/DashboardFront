@@ -68,7 +68,7 @@ export class WidgetConfigurationComponent implements OnInit {
     this.dashboardWidget.widget = this.widget;
     this.dashboardWidgetService
       .updateDashboardWidget(
-        this.dashboardWidget.dashboard.id,
+        this.currentDashboard.id,
         this.dashboardWidget
       )
       .subscribe((result) => {
