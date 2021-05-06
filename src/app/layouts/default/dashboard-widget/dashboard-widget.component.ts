@@ -81,8 +81,11 @@ export class DashboardWidgetComponent implements OnInit {
     var dimensions=[];
     var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
-      if(!element.isDimension){
-        labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+      if(!element.isDimension){ 
+        if(this.dashboardWidget.widget.widgetType.type=="pie"){
+          labels.push( { label: element.label, key:element.key,  backgroundColor: [], data:[]} );
+        }
+        else labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
       }
     })
     this.results.forEach((elm) => {
@@ -99,6 +102,7 @@ export class DashboardWidgetComponent implements OnInit {
       if(repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab=>{
+          if(this.dashboardWidget.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
           lab.data.push(elm[lab.key]);
         })
       }

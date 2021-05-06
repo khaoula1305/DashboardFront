@@ -24,11 +24,6 @@ export class GraphComponent implements OnInit {
   basicData;
   showQueries = false;
   widget: Widget;
-
-  newWidget = false;
-  previewOnUpdate = false;
-  myVar = '';
-
   constructor(
     private dataSourceService: DataSourceService,
     private widgetService: WidgetsService
@@ -42,28 +37,18 @@ export class GraphComponent implements OnInit {
       .getDataFrom(this.widget.dataSource)
       .subscribe((data) => {
         this.results = data;
-        for (let key in data[0]) {
-          this.allKeys.push({
-            id: UUID.UUID(),
-            key,
-            label: key,
-            isDimension: false,
-          });
-        }
+        for(let key in data[0]){
+          if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
+          this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
+          }
+        } 
       });
-    //for the create 
-    if (this.widget.metaDataSources.length == 0) {
-      this.newWidget = true;
-    }
-    else { //for the update 
-      if (this.dimensionKey == null) {
-        this.dimensionKey = this.widget.metaDataSources[0];
-      }
-      this.previewOnUpdate = true;
       this.dimensionKey = this.widget.metaDataSources.find(
         (elm) => elm.isDimension == true
       );
-    }
+      if (this.dimensionKey == null) {
+        this.dimensionKey = this.widget.metaDataSources[0];
+      }
   }
 
   onSelectedDimension(event) {
@@ -139,7 +124,10 @@ CreateBasicData(){
   var dimension= this.widget.metaDataSources.find( e=> e.isDimension==true);
   this.widget.metaDataSources.forEach(element=>{
     if(!element.isDimension){
-      labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+      if(this.widget.widgetType.type=="pie"){
+        labels.push( { label: element.label, key:element.key,  backgroundColor: [], data:[]} );
+      }
+      else labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
     }
   })
   this.results.forEach((elm) => {
@@ -156,6 +144,7 @@ CreateBasicData(){
     if(repeat) {
       dimensions.push(elm[dimension.key]);
       labels.forEach( lab=>{
+        if(this.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
         lab.data.push(elm[lab.key]);
       })
     }
