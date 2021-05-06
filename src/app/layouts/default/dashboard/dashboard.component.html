@@ -38,6 +38,44 @@
   </ng-template>
 </p-toast>
 <p-toast></p-toast>
+<p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
+  <app-dashboard-widget-details *ngIf="visibleSidebar" [dashboardWidget]="selectedDashboardWidget.widgetdashboard"></app-dashboard-widget-details>
+</p-sidebar>
+<p-sidebar header="Hey" [modal]="false"  [(visible)]="visibleSidebarCard" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
+  <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
+  <p-card>
+    <p-table [value]="results" [scrollable]="true"  scrollHeight="500px">
+      <ng-template pTemplate="colgroup" let-columns>
+          <colgroup >
+              <col style="width:250px"  *ngFor="let col of cols">
+          </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th *ngFor="let col of cols">
+                  {{col.label}}
+              </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tab>
+          <tr>
+              <td  *ngFor="let col of cols">
+                  <div class="description">
+                      {{tab[col.key]}}
+                  </div>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+  </p-card>
+
+</p-sidebar>
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '300px', marginLeft:'-150px'}" >
+      <div *ngFor="let team of teams" class="p-field-checkbox p-field-radiobutton">
+        <p-radioButton [inputId]="team.id"  [value]="team" name="team" [(ngModel)]="selectedTeam"  ngDefaultControl (onClick)="onRowSelect()"></p-radioButton>
+        <label [for]="team.id">{{team.title}}</label>
+       </div>
+</p-overlayPanel>
 <div *ngIf="load">
 <p-divider ></p-divider>
 <div class="headerShared">
@@ -49,24 +87,13 @@
   <button pButton pRipple type="refresh" label="" (click)="reload()" icon="pi pi-refresh" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" label="" icon="pi pi-bookmark" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" label="share"  [label]="selectedTeam ? selectedTeam.title : 'Share'"  (click)="op.toggle($event)" icon="pi pi-fw pi-users" class="p-button-rounded p-button-secondary p-button-text"></button>
-  <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '300px', marginLeft:'-150px'}">
-    <ng-template pTemplate>
-        <p-table [value]="teams" selectionMode="single" [(selection)]="selectedTeam" (onRowSelect)="onRowSelect($event)"  [scrollable]="true" scrollHeight="200px">
-            <ng-template pTemplate="body" let-rowData let-team>
-                <tr [pSelectableRow]="rowData">
-                    <td>{{team.title}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </ng-template>
-  </p-overlayPanel>
   <button pButton pRipple type="button" *ngIf="!editMode" (click)="OnEdit(false)" label="edit"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
   <button pButton pRipple type="button" *ngIf="editMode" (click)="OnEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
   <button pButton pRipple type="button" label="delete" (click)="OnDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
   <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
 </div>
-<p-divider></p-divider>
+<p-divider ></p-divider>
 <app-widget-panel *ngIf="add" class="panel"  (added)="onAddedClick($event)" (hidden)="onHiddenClick($event)"></app-widget-panel>
 <gridster  [options]="options">
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
@@ -74,11 +101,8 @@
     <p>Add one or more widgets from Library.</p> 
    <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
   </div>
-  <p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
-    <app-dashboard-widget-details *ngIf="visibleSidebar" [dashboardWidget]="selectedDashboardWidget.widgetdashboard"></app-dashboard-widget-details>
-  </p-sidebar>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
-    <app-dashboard-widget (selectedDashboardWidget)="onShowDetails($event, item)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
+    <app-dashboard-widget (selectedDashboardWidget)="onShowDetails($event, item)"  (selectedCard)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
   </gridster-item>
 </gridster>
 </div>

@@ -15,7 +15,7 @@ export class CardComponent implements OnInit {
   results = [];
   allKeys: MetaDataSource[] = [];
   cardKey: MetaDataSource;
-  cardRes;
+  cardRes=0;
   newCard = false;
   updateCard=false;
 
@@ -43,7 +43,7 @@ export class CardComponent implements OnInit {
           });
         }
         if(this.widget.metaDataSources.length!=0){
-      this.results.forEach((elm) => (this.cardRes = elm[this.cardKey.key]));
+      this.results.forEach((elm) => (this.cardRes += elm[this.cardKey.key]));
         }
       });
     if (this.widget.metaDataSources.length==0) {
@@ -73,9 +73,7 @@ export class CardComponent implements OnInit {
       .indexOf(this.cardKey.id);
     this.allKeys.splice(removeIndex, 1);
     this.widget.metaDataSources.push(this.cardKey);
-    this.results.forEach((elm) => (this.cardRes = elm[this.cardKey.key]));
-   // this.cardRes = (this.cardRes).toLocaleString();
+    this.results.forEach((elm) => (this.cardRes  += elm[this.cardKey.key]));
     console.log('card res', this.cardRes);
-    console.log('formating', (1234567).toLocaleString());
   }
 }

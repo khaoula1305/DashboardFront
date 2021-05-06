@@ -21,7 +21,7 @@
             </p-table>
         </div>
         <div *ngSwitchCase="widgetTypeEnum.Card">
-                <p-card class="containSize partition" styleClass="cardColor">
+                <p-card class="containSize partition" styleClass="cardColor" (click)="showDetails()">
                     <div class="p-d-flex">
                         <p  style="font-weight: bold;">{{result.label}}</p>
                     <p-divider layout="vertical" ></p-divider>

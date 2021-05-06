@@ -4,6 +4,7 @@ import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { Widget } from 'src/app/models/widget.model';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-graph',
@@ -20,8 +21,6 @@ export class GraphComponent implements OnInit {
   labelsWrited = false;
   drawType = false;
   //chart
-  labels: any[] = [];
-  datasets: any[] = [];
   basicData;
   showQueries = false;
   widget: Widget;
@@ -70,7 +69,6 @@ export class GraphComponent implements OnInit {
   onSelectedDimension(event) {
     if (this.dimensionKey != undefined) {
       this.allKeys.push(this.dimensionKey);
-      this.labels = [];
       var removeIndex = this.widget.metaDataSources
         .map(function (item) {
           return item.id;
@@ -102,28 +100,6 @@ export class GraphComponent implements OnInit {
     this.labelsWrited = true;
   }
 
-  onSelectedMesure(data: MetaDataSource) {
-    var objet: any;
-    var label = [];
-    
-    this.results.forEach((elm) => {
-      let repeat = true;
-      for (let index = 0; index < this.labels.length; index++) {
-        if (this.labels[index] == elm[data.key ]) {
-          repeat = false;
-          break;
-        }
-      }
-      if (repeat) label.push(elm[data.key]);
-    });
-    objet = {
-      label: data.label,
-      backgroundColor: this.generateColor(),
-      data: label,
-    };
-    this.datasets.push(objet);
-  }
-
   onRemovedKey(key: string, id: string) {
     this.allKeys.push({ id, key, label: key, isDimension: false });
     this.removeSelectedKeyFromSecondList(id);
@@ -152,29 +128,39 @@ export class GraphComponent implements OnInit {
     );
   }
 
-  draw() {
-    this.datasets = [];
-    this.labels = [];
-    this.drawType = true;
-    this.widget.metaDataSources.forEach((elm) => {
-      if (!elm.isDimension) this.onSelectedMesure(elm);
-    });
-    if (this.dimensionKey == null) { //set first item in dimension key if switching from table to graph
-      this.widget.metaDataSources[0].isDimension = true;
-      this.dimensionKey = this.widget.metaDataSources[0];
-    }
-    this.results.forEach((elm) => {
-      let repeat = true;
-      for (let index = 0; index < this.labels.length; index++) {
-        if (this.labels[index] == elm[this.dimensionKey.key]) {
-          repeat = false;
-          break;
-        }
-
-      }
-      if (repeat) this.labels.push(elm[this.dimensionKey.key]);
-    });
-    this.basicData = { labels: this.labels, datasets: this.datasets };
+CreateBasicData(){
+  if (this.dimensionKey == null) { //set first item in dimension key if switching from table to graph
+    this.widget.metaDataSources[0].isDimension = true;
+    this.dimensionKey = this.widget.metaDataSources[0];
   }
+  this.drawType = true;
+  var labels=[];
+  var dimensions=[];
+  var dimension= this.widget.metaDataSources.find( e=> e.isDimension==true);
+  this.widget.metaDataSources.forEach(element=>{
+    if(!element.isDimension){
+      labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+    }
+  })
+  this.results.forEach((elm) => {
+    let repeat=true;
+    for (let index = 0; index < dimensions.length; index++) {
+     if(dimensions[index]== elm[dimension.key]){
+      repeat=false;
+      labels.forEach(lab=>{
+        lab.data[index]+=elm[lab.key];
+      })
+       break;
+     }
+    }
+    if(repeat) {
+      dimensions.push(elm[dimension.key]);
+      labels.forEach( lab=>{
+        lab.data.push(elm[lab.key]);
+      })
+    }
+  });
+  this.basicData = { labels: dimensions, datasets: labels };
+}
 
 }

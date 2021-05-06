@@ -6,11 +6,12 @@ import { Team } from 'src/app/models/team.model';
 import { User } from 'src/app/models/User.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api';
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.scss']
+  styleUrls: ['./teams.component.scss'],
+  providers: [ConfirmationService,MessageService]
 })
 export class TeamsComponent implements OnInit {
   nodes: TreeNode[];
@@ -26,7 +27,9 @@ export class TeamsComponent implements OnInit {
   filtredMembers: User[];
   constructor(
     private router: Router,
-    private teamService: TeamsService) { }
+    private teamService: TeamsService,
+    private confirmationService: ConfirmationService, 
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.team=new Team();
@@ -77,17 +80,34 @@ export class TeamsComponent implements OnInit {
     this.display = true;
 }
 onDelete(node){
-this.teamService.deleteTeam(node.key).subscribe(
-      (result)=>{
-        console.log(result);
-      },
-      (error)=>{
-        console.log(error);
-      },
-      ()=>{
-        this.changeLocation();
-      }
-    );
+  this.confirmationService.confirm({
+    message: 'Do you want to delete this Team?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    accept: () => {
+      this.teamService.deleteTeam(node.key).subscribe(
+        (result)=>{
+          this.messageService.add({severity:'info', summary:'Confirmed', detail:'Team'+ result.title+' was deleted'});
+        },
+        (error)=>{
+          this.messageService.add({severity:'info', summary:'Confirmed', detail:' Error in server side'});
+        },
+        ()=>{
+          this.changeLocation();
+        }
+      );
+    },
+    reject: (type) => {
+        switch(type) {
+            case ConfirmEventType.REJECT:
+                this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+            break;
+            case ConfirmEventType.CANCEL:
+                this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+            break;
+        }
+    }
+});
 }
 onSubmit(m: NgForm) {
   this.team.admin=this.teamService.getCurrentUser();
