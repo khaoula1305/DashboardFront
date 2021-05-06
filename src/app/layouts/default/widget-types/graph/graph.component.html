@@ -2,8 +2,7 @@
     <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-12">
             <h5>Dimension *</h5>
-            {{dimensionKey.label}}
-            <p-dropdown *ngIf="dimensionKey" required name="dimensionKey" [options]="allKeys" [(ngModel)]="dimensionKey"
+            <p-dropdown required name="dimensionKey" [options]="allKeys" [(ngModel)]="dimension"
                 optionLabel="key"   (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
         </div>
         <div class="p-field p-col-12 p-md-6" >

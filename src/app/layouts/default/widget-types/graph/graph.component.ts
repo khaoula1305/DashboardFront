@@ -24,6 +24,7 @@ export class GraphComponent implements OnInit {
   basicData;
   showQueries = false;
   widget: Widget;
+  dimension="";
   constructor(
     private dataSourceService: DataSourceService,
     private widgetService: WidgetsService
@@ -46,9 +47,10 @@ export class GraphComponent implements OnInit {
       this.dimensionKey = this.widget.metaDataSources.find(
         (elm) => elm.isDimension == true
       );
-      if (this.dimensionKey == null) {
-        this.dimensionKey = this.widget.metaDataSources[0];
+      if(this.dimensionKey != undefined){
+        this.dimension=this.dimensionKey.key;
       }
+
   }
 
   onSelectedDimension(event) {
@@ -121,7 +123,6 @@ CreateBasicData(){
   this.drawType = true;
   var labels=[];
   var dimensions=[];
-  var dimension= this.widget.metaDataSources.find( e=> e.isDimension==true);
   this.widget.metaDataSources.forEach(element=>{
     if(!element.isDimension){
       if(this.widget.widgetType.type=="pie"){
@@ -133,7 +134,7 @@ CreateBasicData(){
   this.results.forEach((elm) => {
     let repeat=true;
     for (let index = 0; index < dimensions.length; index++) {
-     if(dimensions[index]== elm[dimension.key]){
+     if(dimensions[index]== elm[this.dimensionKey.key]){
       repeat=false;
       labels.forEach(lab=>{
         lab.data[index]+=elm[lab.key];
@@ -142,7 +143,7 @@ CreateBasicData(){
      }
     }
     if(repeat) {
-      dimensions.push(elm[dimension.key]);
+      dimensions.push(elm[this.dimensionKey.key]);
       labels.forEach( lab=>{
         if(this.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
         lab.data.push(elm[lab.key]);
