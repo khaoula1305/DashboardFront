@@ -17,7 +17,8 @@
       </div>
   </ng-template>
 </p-toast>
-<p-dialog header="New dashboard"  [(visible)]="display">
+<p-dialog header="New dashboard"  [(visible)]="display" [modal]="true"  [baseZIndex]="10000"
+[draggable]="false" [resizable]="false">
   <app-create-dashboard></app-create-dashboard>
 </p-dialog>
 <div class="headerShared">

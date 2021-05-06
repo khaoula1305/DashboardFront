@@ -27,7 +27,7 @@ export class DataSourceService {
   }
   getDataFromURL( url: string ){
     return this.http.get<any>(url).toPromise()
-    .then(res => <TreeNode[]> res);
+    .then(res => <TreeNode[]> res.data);
   }
   GetDataAsync(datasource: Rest): Observable<any[]> {
     let headers;
