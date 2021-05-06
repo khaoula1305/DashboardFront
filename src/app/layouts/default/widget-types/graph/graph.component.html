@@ -1,15 +1,15 @@
 <div class="my-card">
     <div class="p-col-12 p-fluid p-grid">
-        <div class="p-field p-col-12 p-md-12" *ngIf="newWidget">
+        <div class="p-field p-col-12 p-md-12">
             <h5>Dimension *</h5>
             <p-dropdown required name="dimensionKey" [options]="allKeys" [(ngModel)]="myVar" editable="true"
                 optionLabel="key" (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
         </div>
-        <div class="p-field p-col-12 p-md-6" *ngIf="newWidget">
+        <div class="p-field p-col-12 p-md-6">
             <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Mesures</th>
+                        <th>Measures</th>
                         <th> </th>
                         <th> </th>
                     </tr>
@@ -28,8 +28,7 @@
             </p-table>
         </div>
         <div class="p-field p-col-12 p-md-6">
-            <p-table [value]="widget.metaDataSources" [scrollable]="true" scrollHeight="250px"
-                [style]="{ width: '450px' }">
+            <p-table [value]="widget.metaDataSources" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Selected Keys</th>
@@ -45,7 +44,7 @@
                             <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"
                                 placeholder="Add a label" />
                         </td>
-                        <td *ngIf="newWidget">
+                        <td>
                             <button pButton pRipple type="button" icon="pi pi-times"
                                 class="p-button-rounded p-button-danger p-button-outlined"
                                 (click)="onRemovedKey(tab.key, tab.id)"></button>

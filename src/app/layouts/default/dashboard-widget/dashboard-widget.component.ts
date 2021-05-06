@@ -119,7 +119,14 @@ export class DashboardWidgetComponent implements OnInit {
     this.selectedDashboardWidget.emit(dashbaordWidget);
   }
   showDetails() {
-    this.selectedCard.emit([this.results,this.selectedKeys]);
+    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources]);
   }
+
+  selectData(event) {
+    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources, event]);
+    //event.dataset = Selected dataset
+    //event.element._datasetIndex = Index of the dataset in data
+    //event.element._index = Index of the data in dataset
+}
 
 }

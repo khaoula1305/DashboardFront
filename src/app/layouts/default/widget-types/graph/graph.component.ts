@@ -42,14 +42,19 @@ export class GraphComponent implements OnInit {
       .getDataFrom(this.widget.dataSource)
       .subscribe((data) => {
         this.results = data;
-        for (let key in data[0]) {
+        for(let key in data[0]){
+          if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
+          this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
+          }
+        } 
+        /*for (let key in data[0]) {
           this.allKeys.push({
             id: UUID.UUID(),
             key,
             label: key,
             isDimension: false,
           });
-        }
+        }*/
       });
     //for the create 
     if (this.widget.metaDataSources.length == 0) {
