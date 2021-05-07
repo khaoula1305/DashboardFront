@@ -1,7 +1,7 @@
 <div class="my-card">
     <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-6">
-            <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
+            <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{ width: '448px' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Measures</th>
@@ -23,7 +23,7 @@
             </p-table>
         </div>
         <div class="p-field p-col-12 p-md-6" *ngIf="widget.metaDataSources">
-            <p-table [value]="widget.metaDataSources" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
+            <p-table [value]="widget.metaDataSources" [scrollable]="true" scrollHeight="250px" [style]="{ width: '448px' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Selected Keys</th>
@@ -33,7 +33,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
                     <tr>
-                        <td>{{ tab.key }}</td>
+                        <td>{{ tab.key | number:'1.0':'en-US' }}</td>
                         <td>
                             <input type="text" pInputText [(ngModel)]="tab.label" name="{{ tab.label }}"
                                 placeholder="Add a label" />
