@@ -138,7 +138,7 @@ this.widget.metaDataSources.forEach(elm => {
   theme: 'plain',
   })
   // Open PDF document in browser's new tab
-  pdf.output('dataurlnewwindow')
+  //pdf.output('dataurlnewwindow')
   pdf.save(this.widget.title+'.pdf');
 }  
 

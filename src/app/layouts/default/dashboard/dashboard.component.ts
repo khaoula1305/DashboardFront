@@ -19,6 +19,10 @@ import { Message, MessageService } from 'primeng/api';
 import { Team } from 'src/app/models/team.model';
 import { TeamsService } from 'src/app/services/team.service';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { Table } from 'primeng/table';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,6 +45,7 @@ export class DashboardComponent implements OnInit {
   load = false;
   editMode = false;
   searchText: any;
+  searchDetail: any;
   empty: false;
   widgetDashboard;
   @Input() dashboard: Dashboard;
@@ -53,6 +58,7 @@ export class DashboardComponent implements OnInit {
   results: any[];
   cols: any[];
   visibleSidebarCard = false;
+  customTable:any;
 
   public pauseState = false;
   ngOnInit() {
@@ -320,19 +326,57 @@ export class DashboardComponent implements OnInit {
   showDetails(event) {
     this.results = event[0];
     this.cols = [];
-    for(let key in this.results[0]){
-      this.cols.push({key, label: key});
-    } 
-    this.visibleSidebarCard = true;
-    if(event[2]){
-      let table=[];
-    this.results.forEach(elm=>{
-      if(elm[event[1].find(item=> item.isDimension==true).key]==event[2].element._model.label){
-        table.push(elm);
-      }
-    })
-    this.results=table;
+    for (let key in this.results[0]) {
+      this.cols.push({ key, label: key });
     }
-    
+    this.visibleSidebarCard = true;
+    if (event[2]) {
+      let table = [];
+      this.results.forEach((elm) => {
+        if (
+          elm[event[1].find((item) => item.isDimension == true).key] ==
+          event[2].element._model.label
+        ) {
+          table.push(elm);
+        }
+      });
+      this.results = table;
+    }
+    this.customTable=[];
+    this.cols.forEach(elm=>{
+      this.customTable.push(elm.key);
+    });
   }
+
+  onExportPdf() {
+    var pdf = new jsPDF();
+    pdf.text('Exported Data', 11, 8);
+    pdf.setFontSize(12);
+    pdf.setTextColor(99);
+    let headers = [];
+    let object = [];
+    this.cols.forEach((elm) => {
+      object.push(elm.label);
+    });
+    let content = [];
+    this.results.forEach((item) => {
+      let obj = [];
+      this.cols.forEach((elm) => {
+        obj.push(item[elm.key]);
+      });
+      content.push(obj);
+    });
+    headers[0] = object;
+    (pdf as any).autoTable({
+      head: headers,
+      body: content,
+      theme: 'plain',
+    });
+    // Open PDF document in browser's new tab
+    //pdf.output('dataurlnewwindow')
+    pdf.save('Exported Data' + '.pdf');
+  }
+  clear(table: Table) {
+    table.clear();
+}
 }
