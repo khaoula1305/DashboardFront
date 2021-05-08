@@ -44,7 +44,8 @@ export class DashboardWidgetComponent implements OnInit {
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
      this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
-    this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+     if(this.dashboardWidget.widget.dataSource.type== "Rest API"){
+      this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
         (data) => {
           this.results=data;
           switch(this.widgetType) {
@@ -74,6 +75,53 @@ export class DashboardWidgetComponent implements OnInit {
         ()=>{
           this.load=true;
         });
+     }else{
+      this.dataSourceService.getDataFromQB(this.dashboardWidget.widget.id).subscribe(
+        (data) => {
+          this.results=data;
+          switch(this.widgetType) {
+            case this.widgetTypeEnum.Table : {
+              break;
+             }
+            case this.widgetTypeEnum.Card : {
+              this.result = {
+                key: data[0]["COUNT"],
+                label:this.selectedKeys[0].label
+              }
+              break;
+            }
+            default : {
+              var labels=[];
+              var dimensions=[];
+              for(let key in data[0]){
+                let originKey=  this.dashboardWidget.widget.metaDataSources.find( meta=> meta.label == key);
+                if(this.dashboardWidget.widget.widgetType.type=="pie"){
+                  labels.push( { label: key , key: originKey.key,  backgroundColor: [], data:[]} );
+                }
+                else   labels.push( { label: key , key: originKey.key, backgroundColor: this.generateColor(), data:[]} );
+                }
+               let dim= labels.pop();
+              data.forEach(element=>{
+               dimensions.push(element[dim.key]);
+               labels.forEach( lab=>{
+                 if(this.dashboardWidget.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
+                 lab.data.push(element[lab.key]);
+               });
+              });
+              this.basicData = { labels: dimensions, datasets: labels };
+              break;
+            }
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        ()=>{
+          this.load=true;
+        });
+     }
+
+ 
   }
 
   CreateBasicData(){
@@ -123,7 +171,14 @@ export class DashboardWidgetComponent implements OnInit {
     this.selectedDashboardWidget.emit(dashbaordWidget);
   }
   showDetails() {
-    this.selectedCard.emit([this.results,this.selectedKeys]);
+    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources]);
   }
+
+  selectData(event) {
+    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources, event]);
+    //event.dataset = Selected dataset
+    //event.element._datasetIndex = Index of the dataset in data
+    //event.element._index = Index of the data in dataset
+}
 
 }

@@ -18,6 +18,7 @@ import { WidgetDetailsComponent } from './layouts/default/widget-details/widget-
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'dashboards', component: HomeComponent},
   {path: 'dashboards/:id', component: DashboardComponent },
   {path: 'queries', component: QueriesComponent},
   {path: 'rest', component: RestComponent},
