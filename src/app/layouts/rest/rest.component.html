@@ -149,6 +149,25 @@
 </p-card>
   </form>
   <br>
+  <p-card>
+    <p-treeTable [value]="files1" [columns]="cols">
+        <ng-template pTemplate="header" let-columns>
+            <tr [ttRow]="rowNode">
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns; let i = index">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+  </p-card>
   <p-card *ngIf="results">
 <div class="p-grid" *ngIf="results" >
     <p-divider></p-divider>
@@ -176,23 +195,5 @@
         </ng-template>
     </p-table>
 </div>
-<div *ngIf="files1">
-    <p-treeTable [value]="files1"  [columns]="cols">
-        <ng-template  pTemplate="header"  let-columns>
-            <tr [ttRow]="rowNode">
-                <th *ngFor="let col of columns">
-                    {{col.header}}
-                </th>            
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns; let i = index">
-                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-treeTable>
-  </div>
+   
 </p-card>

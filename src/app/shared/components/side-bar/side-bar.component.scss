@@ -162,10 +162,18 @@ body {
 li {
   cursor: pointer;
 }
-li:hover .header-menu {
-  color: #e0e048;
+.header-menu:hover {
+  color: #5cb85c;
 }
-
+.header-menu.active {
+  color: #5cb85c;
+}
+.chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
+  color: #ffffff;
+}
+.chiller-theme .sidebar-wrapper .sidebar-menu .header-menu.active span {
+  color: #5cb85c;
+}
 .sidebar-wrapper .sidebar-header .user-pic {
   float: left;
   width: 60px;
@@ -468,10 +476,6 @@ li:hover .header-menu {
 .chiller-theme .sidebar-wrapper,
 .chiller-theme .sidebar-wrapper {
   background: #114c99;
-}
-
-.chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
-  color: #ffffff;
 }
 
 .chiller-theme .sidebar-footer {

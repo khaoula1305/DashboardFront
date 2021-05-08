@@ -2,10 +2,10 @@
     <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-12">
             <h5>Dimension *</h5>
-            <p-dropdown required name="dimensionKey" [options]="allKeys" [(ngModel)]="myVar" editable="true"
-                optionLabel="key" (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
+            <p-dropdown required name="dimensionKey" [options]="allKeys" [(ngModel)]="dimension"
+                optionLabel="key"   (ngModelChange)="onSelectedDimension($event)"></p-dropdown>
         </div>
-        <div class="p-field p-col-12 p-md-6">
+        <div class="p-field p-col-12 p-md-6" >
             <p-table [value]="allKeys" [scrollable]="true" scrollHeight="250px" [style]="{ width: '450px' }">
                 <ng-template pTemplate="header">
                     <tr>
@@ -44,7 +44,7 @@
                             <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"
                                 placeholder="Add a label" />
                         </td>
-                        <td>
+                        <td >
                             <button pButton pRipple type="button" icon="pi pi-times"
                                 class="p-button-rounded p-button-danger p-button-outlined"
                                 (click)="onRemovedKey(tab.key, tab.id)"></button>
@@ -55,7 +55,7 @@
         </div>
 
         <div>
-            <button class="p-col-2" *ngIf="widget.metaDataSources || previewOnUpdate" pButton pRipple
+            <button class="p-col-2" *ngIf="widget.metaDataSources" pButton pRipple
                 [disabled]="widget.metaDataSources.length == 0" type="button" label="Preview" (click)="CreateBasicData()"
                 class="p-button-rounded p-button-info"></button>
         </div>

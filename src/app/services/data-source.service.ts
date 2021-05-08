@@ -25,9 +25,12 @@ export class DataSourceService {
   getDataFrom(dataSource: DataSource): Observable<any[]>{
       return this.http.get<any[]>(this.host+dataSource.id);
   }
+  getDataFromQB(idWidget: any): Observable<any[]>{
+    return this.http.get<any[]>(this.host+'DataFromQB/'+idWidget);
+}
   getDataFromURL( url: string ){
     return this.http.get<any>(url).toPromise()
-    .then(res => <TreeNode[]> res);
+    .then(res => <TreeNode[]> res.data);
   }
   GetDataAsync(datasource: Rest): Observable<any[]> {
     let headers;

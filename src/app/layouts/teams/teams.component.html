@@ -1,4 +1,4 @@
-<p-dialog header="New Team" [(visible)]="display">
+<p-dialog header="New Team" [(visible)]="display" [modal]="true"  [baseZIndex]="10000">
   <form (ngSubmit)="onSubmit(newTeam)" #newTeam="ngForm">
     <div class="p-grid">
       <div class="box">
@@ -14,12 +14,12 @@
         </div>
         <br />
         <button pButton pRipple [disabled]="!newTeam.valid" type="submit" label="Save"
-          class="p-button-rounded p-button-help"></button>
+          class="p-button-rounded p-button-success"></button>
       </div>
     </div>
   </form>
 </p-dialog>
-<p-dialog header="Share with others" [(visible)]="displayShare" [breakpoints]="{'960px': '75vw'}"
+<p-dialog header="Share with others" [(visible)]="displayShare" [modal]="true" [breakpoints]="{'960px': '75vw'}"
   [style]="{width: '50vw'}" [baseZIndex]="10000">
   <ng-template pTemplate>
     <h4>{{currentTeam.title}}</h4>

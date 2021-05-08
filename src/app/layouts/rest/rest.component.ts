@@ -72,9 +72,9 @@ Preview(){
   let url=this.dataSource.url;
   //this.saveRest();
   this.cols = [
-    { field: 'clouds', header: 'clouds' },
-    { field: 'base', header: 'base' },
-    { field: 'coord', header: 'coord' }
+    { field: 'name', header: 'Name' },
+    { field: 'size', header: 'Size' },
+    { field: 'type', header: 'Type' }
 ];
   this.dataSourceService.getDataFromURL(url).then(files => this.files1 = files);
   console.log(this.files1);
@@ -85,7 +85,7 @@ Preview2(){
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
       this.results=data;
-      this.files1=this.results;
+      this.files1=data;
       console.log(this.files1);
       for (let key in this.results[0]) {
         this.cols.push( { field: key, header: key });
