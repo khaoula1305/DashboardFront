@@ -52,7 +52,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     QueryDetailsComponent,
     UpdateDataSourceComponent,
     TeamsComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

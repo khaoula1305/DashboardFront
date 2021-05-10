@@ -33,7 +33,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
                     <tr>
-                        <td>{{ tab.key | number:'1.0':'en-US' }}</td>
+                        <td>{{ tab.key }}</td>
                         <td>
                             <input type="text" pInputText [(ngModel)]="tab.label" name="{{ tab.label }}"
                                 placeholder="Add a label" />
@@ -66,7 +66,7 @@
                 <ng-template pTemplate="body" let-tab>
                     <tr>
                         <td *ngFor="let th of widget.metaDataSources">
-                            {{ tab[th.key] }}
+                            {{ tab[th.key] | formatingData }}
                         </td>
                     </tr>
                 </ng-template>

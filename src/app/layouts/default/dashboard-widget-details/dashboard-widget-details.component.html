@@ -11,7 +11,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-tab>
                   <tr>
-                      <td  *ngFor="let th of dashboardWidget.widget.metaDataSources">{{tab[th.key] | number:'1.0':'en-US'}}</td>
+                      <td  *ngFor="let th of dashboardWidget.widget.metaDataSources">{{tab[th.key] | formatingData}}</td>
                   </tr>
               </ng-template>
           </p-table>
@@ -21,7 +21,7 @@
                   <div class="p-d-flex">
                       <p  style="font-weight: bold;">{{result.label}}</p>
                   <p-divider layout="vertical" ></p-divider>
-                  <p  style="font-weight: 500;">{{result.key | number:'1.0':'en-US'}}</p>
+                  <p  style="font-weight: 500;">{{result.key | formatingData}}</p>
                   </div>
               </p-card>
       </div>

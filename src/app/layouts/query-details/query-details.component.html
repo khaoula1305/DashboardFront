@@ -27,7 +27,7 @@
             <tr>
                 <td  *ngFor="let col of cols">
                     <div class="description">
-                        {{tab[col.field]}}
+                        {{tab[col.field] | formatingData}}
                     </div>
                 </td>
             </tr>
