@@ -26,11 +26,11 @@ export class WidgetsService {
   }
 
   getAllWidgets(): Observable<Widget[]> {
-    return this.http.get<Widget[]>(this.host + 'allwidgets');
+    return this.http.get<Widget[]>(this.host + 'AllWidgets');
   }
 
   getAllDashboardWidgets(widgetId: any): Observable<DashboardWidget[]> {
-    return this.http.get<DashboardWidget[]>(this.host + widgetId+ '/alldashboardwidgets');
+    return this.http.get<DashboardWidget[]>(this.host + widgetId+ '/AllDashboardWidgets');
   }
   addWidget(widget: Widget): Observable<Widget> {
     return this.http.post<Widget>(this.host, widget);

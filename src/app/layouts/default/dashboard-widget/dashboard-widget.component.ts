@@ -9,6 +9,8 @@ import { MetaDataSource } from 'src/app/models/meta-data-source.model';
 import { WidgetType } from 'src/app/models/widget-type';
 import { Widget } from 'src/app/models/widget.model';
 import { Dashboard } from 'src/app/models/dashboard.model';
+import { QueryBuilder } from '../../../models/QueryBuilder.model';
+import { QueryBuilderService } from '../../../services/query-builder.service';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -39,7 +41,8 @@ export class DashboardWidgetComponent implements OnInit {
   constructor(
     private dataSourceService: DataSourceService,
     private dashboardsService: DashboardsService,
-    private router: Router
+    private router: Router,
+    private queryBuilder: QueryBuilderService
   ) {}
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
@@ -76,7 +79,7 @@ export class DashboardWidgetComponent implements OnInit {
           this.load=true;
         });
      }else{
-      this.dataSourceService.getDataFromQB(this.dashboardWidget.widget.id).subscribe(
+      this.queryBuilder.getData(this.dashboardWidget.widget.id).subscribe(
         (data) => {
           this.results=data;
           switch(this.widgetType) {
@@ -94,18 +97,18 @@ export class DashboardWidgetComponent implements OnInit {
               var labels=[];
               var dimensions=[];
               for(let key in data[0]){
-                let originKey=  this.dashboardWidget.widget.metaDataSources.find( meta=> meta.label == key);
+                let originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
                 if(this.dashboardWidget.widget.widgetType.type=="pie"){
-                  labels.push( { label: key , key: originKey.key,  backgroundColor: [], data:[]} );
+                  labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
                 }
-                else   labels.push( { label: key , key: originKey.key, backgroundColor: this.generateColor(), data:[]} );
+                else   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} );
                 }
                let dim= labels.pop();
               data.forEach(element=>{
-               dimensions.push(element[dim.key]);
+               dimensions.push(element[dim.label.toUpperCase()]);
                labels.forEach( lab=>{
                  if(this.dashboardWidget.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
-                 lab.data.push(element[lab.key]);
+                 lab.data.push(element[lab.label.toUpperCase()]);
                });
               });
               this.basicData = { labels: dimensions, datasets: labels };
@@ -120,8 +123,6 @@ export class DashboardWidgetComponent implements OnInit {
           this.load=true;
         });
      }
-
- 
   }
 
   CreateBasicData(){
@@ -130,10 +131,7 @@ export class DashboardWidgetComponent implements OnInit {
     var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
       if(!element.isDimension){ 
-        if(this.dashboardWidget.widget.widgetType.type=="pie"){
-          labels.push( { label: element.label, key:element.key,  backgroundColor: [], data:[]} );
-        }
-        else labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+ labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
       }
     })
     this.results.forEach((elm) => {
@@ -150,7 +148,6 @@ export class DashboardWidgetComponent implements OnInit {
       if(repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab=>{
-          if(this.dashboardWidget.widget.widgetType.type=="pie") lab.backgroundColor.push(this.generateColor());
           lab.data.push(elm[lab.key]);
         })
       }
@@ -171,14 +168,22 @@ export class DashboardWidgetComponent implements OnInit {
     this.selectedDashboardWidget.emit(dashbaordWidget);
   }
   showDetails() {
-    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources]);
+    this.selectedCard.emit([this.results]);
   }
 
   selectData(event) {
-    this.selectedCard.emit([this.results,this.dashboardWidget.widget.metaDataSources, event]);
-    //event.dataset = Selected dataset
-    //event.element._datasetIndex = Index of the dataset in data
-    //event.element._index = Index of the data in dataset
+    let table=[];
+    if(this.dashboardWidget.widget.dataSource.type== "Rest API"){
+     this.results.forEach(elm=>{
+        if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
+          table.push(elm);
+        }
+      });
+    } else {
+      var sqlText=""
+      this.queryBuilder.getDataForDetails(sqlText).subscribe( data => table = data); 
+    }
+    this.selectedCard.emit([table]);
 }
 
 }

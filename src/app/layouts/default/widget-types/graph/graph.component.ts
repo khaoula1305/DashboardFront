@@ -24,7 +24,7 @@ export class GraphComponent implements OnInit {
   basicData;
   showQueries = false;
   widget: Widget;
-  dimension="";
+  dimension:MetaDataSource;
   constructor(
     private dataSourceService: DataSourceService,
     private widgetService: WidgetsService
@@ -42,21 +42,12 @@ export class GraphComponent implements OnInit {
           if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
           this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
           }
-        } 
-        /*for (let key in data[0]) {
-          this.allKeys.push({
-            id: UUID.UUID(),
-            key,
-            label: key,
-            isDimension: false,
-          });
-        }*/
+        }
       });
-      this.dimensionKey = this.widget.metaDataSources.find(
-        (elm) => elm.isDimension == true
-      );
+      this.dimensionKey = this.widget.metaDataSources.find((elm) => elm.isDimension == true);
       if(this.dimensionKey != undefined){
-        this.dimension=this.dimensionKey.key;
+        this.dimension=this.dimensionKey;
+        this.allKeys.push(this.dimension);
       }
 
   }
