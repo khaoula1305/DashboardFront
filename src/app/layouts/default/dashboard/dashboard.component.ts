@@ -330,18 +330,6 @@ export class DashboardComponent implements OnInit {
       this.cols.push({ key, label: key });
     }
     this.visibleSidebarCard = true;
-    if (event[2]) {
-      let table = [];
-      this.results.forEach((elm) => {
-        if (
-          elm[event[1].find((item) => item.isDimension == true).key] ==
-          event[2].element._model.label
-        ) {
-          table.push(elm);
-        }
-      });
-      this.results = table;
-    }
     this.customTable=[];
     this.cols.forEach(elm=>{
       this.customTable.push(elm.key);

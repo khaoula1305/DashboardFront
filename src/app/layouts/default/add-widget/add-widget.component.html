@@ -50,10 +50,10 @@
         <div class="p-field p-col-12 p-md-12">
           <p-divider></p-divider>
         </div>
-        <div class="p-field p-col-12 p-md-6" *ngIf="widget.dataSource && widget.dataSource.type=='QueryBuilder'">
+        <div class="p-field p-col-12 p-md-12" *ngIf="widget.dataSource && widget.dataSource.type=='QueryBuilder' && widget.widgetType">
           <h5>Query Details</h5>
           <p-dropdown required inputId="queryDetails" name="selectedQueryDetails" [options]="queries" [(ngModel)]="widget.DataSourceDetails"
-            placeholder="Select" (ngModelChange)="onSelectedQueryDetails()" optionLabel="title"></p-dropdown>
+            placeholder="Select a query details" (ngModelChange)="onSelectedQueryDetails()" optionLabel="title"></p-dropdown>
         </div>
 
         <div class="box" *ngIf="widget.widgetType">

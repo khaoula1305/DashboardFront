@@ -17,17 +17,14 @@ export class DataSourceService {
   constructor(private http: HttpClient) {}
 
   getAllDataSources(): Observable<DataSource[]> {
-    return this.http.get<DataSource[]>(this.host + 'alldatasource');
+    return this.http.get<DataSource[]>(this.host + 'AllDataSource');
   }
   getAllWidgets(datasourceId: any): Observable<Widget[]> {
-    return this.http.get<Widget[]>(this.host + datasourceId+ '/allwidgets');
+    return this.http.get<Widget[]>(this.host + datasourceId+ '/AllWidgets');
   }
   getDataFrom(dataSource: DataSource): Observable<any[]>{
       return this.http.get<any[]>(this.host+dataSource.id);
   }
-  getDataFromQB(idWidget: any): Observable<any[]>{
-    return this.http.get<any[]>(this.host+'DataFromQB/'+idWidget);
-}
   getDataFromURL( url: string ){
     return this.http.get<any>(url).toPromise()
     .then(res => <TreeNode[]> res.data);
