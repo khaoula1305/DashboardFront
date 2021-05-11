@@ -162,7 +162,7 @@
             <tr>
                 <td *ngFor="let col of columns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    {{rowData[col.field] | formatingData}}
+                    {{rowData[col.field]}}
                 </td>
             </tr>
         </ng-template>

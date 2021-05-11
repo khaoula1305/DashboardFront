@@ -40,6 +40,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { CustomPipe } from 'src/app/pipes/customPipe.pipe';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { CustomPipe } from 'src/app/pipes/customPipe.pipe';
     ToastModule,
     SidebarModule,
     OverlayPanelModule,
-    RadioButtonModule
+    RadioButtonModule,
+    MultiSelectModule
   ],
   exports: [
     CreateDashboardComponent

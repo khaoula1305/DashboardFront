@@ -43,14 +43,6 @@ export class GraphComponent implements OnInit {
           this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
           }
         } 
-        /*for (let key in data[0]) {
-          this.allKeys.push({
-            id: UUID.UUID(),
-            key,
-            label: key,
-            isDimension: false,
-          });
-        }*/
       });
       this.dimensionKey = this.widget.metaDataSources.find(
         (elm) => elm.isDimension == true

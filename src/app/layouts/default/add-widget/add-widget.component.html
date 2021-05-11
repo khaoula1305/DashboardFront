@@ -4,29 +4,31 @@
   </div>
   <br>
   <p-card>
-  <div class="my-card">
-    <div class="p-col-12 p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-6">
-        <h5>Title *</h5>
-        <input type="text" pInputText [(ngModel)]="widget.title" name="title" required/>
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <h5>Description</h5>
-        <textarea rows="5" cols="73.2" name="description" type="text" rows="4" pInputTextarea [(ngModel)]="widget.description"></textarea>
-      </div>
-    
-          <div class="p-field p-col-12 p-md-6">
-            <h5>Query *</h5>
+    <div class="my-card">
+      <div class="p-col-12 p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Title *</h5>
+          <input type="text" pInputText [(ngModel)]="widget.title" name="title" required />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Description</h5>
+          <textarea rows="5" cols="73.2" name="description" type="text" rows="4" pInputTextarea
+            [(ngModel)]="widget.description"></textarea>
+        </div>
 
-            <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
-              placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title" [disabled]="disableQueriesDropdown"></p-dropdown>
-      <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
-    </div>
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Query *</h5>
+
+          <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
+            placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title"
+            [disabled]="disableQueriesDropdown"></p-dropdown>
+          <button pButton pRipple type="button" label="New Query" routerLink='/dataSource' icon="pi pi-plus"
+            class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
+        </div>
         <div class="p-field p-col-12 p-md-6">
           <h5>Visualization *</h5>
           <p-dropdown required [options]="widgetTypes" [(ngModel)]="widget.widgetType" name="selectedWidgetType"
-            optionLabel="type" [filter]="true" filterBy="type"
-            [showClear]="true" placeholder="Select a visualization">
+            optionLabel="type" [filter]="true" filterBy="type" [showClear]="true" placeholder="Select a visualization">
             <ng-template pTemplate="selectedItem">
               <div class="widgetType-item widgetType-item-value" *ngIf="widget.widgetType">
 
@@ -46,7 +48,12 @@
           </p-dropdown>
         </div>
         <div class="p-field p-col-12 p-md-12">
-        <p-divider></p-divider>
+          <p-divider></p-divider>
+        </div>
+        <div class="p-field p-col-12 p-md-6" *ngIf="widget.dataSource && widget.dataSource.type=='QueryBuilder'">
+          <h5>Query Details</h5>
+          <p-dropdown required inputId="queryDetails" name="selectedQueryDetails" [options]="queries" [(ngModel)]="widget.DataSourceDetails"
+            placeholder="Select" (ngModelChange)="onSelectedQueryDetails()" optionLabel="title"></p-dropdown>
         </div>
 
         <div class="box" *ngIf="widget.widgetType">
@@ -59,16 +66,18 @@
             </div>
             <div *ngSwitchDefault>
               <p-card>
-              <app-graph></app-graph>
-            </p-card>
+                <app-graph></app-graph>
+              </p-card>
             </div>
           </div>
         </div>
+      </div>
+      <div class="p-col-12">
+        <button pButton pRipple style="margin:5px;" type="button" label="Cancel"
+          routerLink="/dashboards/{{dashboard.id}}" class="p-button-rounded p-button-info"></button>
+        <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit"
+          label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-success"></button>
+      </div>
     </div>
-    <div class="p-col-12">
-      <button pButton pRipple style="margin:5px;" type="button" label="Cancel" routerLink="/dashboards/{{dashboard.id}}" class="p-button-rounded p-button-info"></button>
-      <button pButton pRipple style="margin:5px;" [disabled]="!widash.valid" type="submit" label="&nbsp;&nbsp;Save&nbsp;&nbsp;" class="p-button-rounded p-button-success"></button>
-    </div>
-  </div>
-</p-card>
+  </p-card>
 </form>
