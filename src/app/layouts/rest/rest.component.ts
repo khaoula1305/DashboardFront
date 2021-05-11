@@ -22,6 +22,7 @@ export class RestComponent implements OnInit {
   results:any[];
   msgs:Message[]=[];
   files1: TreeNode<any>[];
+  selectedFiles: TreeNode;
   constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -70,14 +71,7 @@ TestConnection(){
 }
 Preview(){
   let url=this.dataSource.url;
-  //this.saveRest();
-  this.cols = [
-    { field: 'name', header: 'Name' },
-    { field: 'size', header: 'Size' },
-    { field: 'type', header: 'Type' }
-];
   this.dataSourceService.getDataFromURL(url).then(files => this.files1 = files);
-  console.log(this.files1);
 }
 Preview2(){
   let url=this.dataSource.url;
