@@ -15,6 +15,8 @@ export class QueryDetailsComponent implements OnInit {
   cols: any[]=[];
   load= false;
   dataSource: DataSource;
+  customTable:any;
+
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
    flatToString(obj, out){
     if(Array.isArray(obj)){
@@ -57,6 +59,10 @@ export class QueryDetailsComponent implements OnInit {
            for (let key in this.results[0]) {
             this.cols.push( { field: key, header: key });
           }
+          this.customTable=[];
+          this.cols.forEach(elm=>{
+            this.customTable.push(elm.header);
+          });
           },
           (error) => {
             console.log(error);
@@ -68,6 +74,7 @@ export class QueryDetailsComponent implements OnInit {
     );
 
   }
+
 
 
 }

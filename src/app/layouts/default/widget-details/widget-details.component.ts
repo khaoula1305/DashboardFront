@@ -28,6 +28,7 @@ export class WidgetDetailsComponent implements OnInit {
   exportColumns: any[];
   cols: any[];
   loadExport=false;
+  customTable:any;
 
   constructor(
     private widgetService: WidgetsService,
@@ -40,7 +41,6 @@ export class WidgetDetailsComponent implements OnInit {
   ngOnInit(): void {
     var myLabels = [];
     var objet: any;
-    console.log(this.widget);
     this.dataSourceService
           .getDataFrom(this.widget.dataSource)
           .subscribe(
@@ -105,6 +105,10 @@ export class WidgetDetailsComponent implements OnInit {
             }
           );
 
+          this.customTable=[];
+          this.widget.metaDataSources.forEach(elm=>{
+            this.customTable.push(elm.key);
+          });
   }
 
   generateColor() {

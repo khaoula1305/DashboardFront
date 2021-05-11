@@ -40,6 +40,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     DataSourceComponent,
     QueryDetailsComponent,
     UpdateDataSourceComponent,
-    TeamsComponent,
+    TeamsComponent
     ],
   imports: [
     BrowserModule,

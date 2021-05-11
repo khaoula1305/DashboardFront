@@ -91,7 +91,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     MultiSelectModule
   ],
   exports: [
-    CreateDashboardComponent
+    CreateDashboardComponent 
   ]
 })
 export class DefaultModule { }

@@ -3,18 +3,49 @@
 <p-card header="{{dashboardWidget.title}}">
   <div *ngIf="load" [ngSwitch]="dashboardWidget.widget.widgetType.type">
       <div *ngSwitchCase="widgetTypeEnum.Table">
-          <p-table [value]="results" [scrollable]="true" scrollHeight="400px"  scrollWidth="900px">
-              <ng-template pTemplate="header">
-                  <tr>
-                      <th  *ngFor="let th of dashboardWidget.widget.metaDataSources" >{{th.label}}</th>
-                  </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-tab>
-                  <tr>
-                      <td  *ngFor="let th of dashboardWidget.widget.metaDataSources">{{tab[th.key] | formatingData}}</td>
-                  </tr>
-              </ng-template>
-          </p-table>
+                          <!--Filter and Pagination -->
+                          <p-table  class="p-field p-col-12 p-md-12" style="height: 400px" #dt2 [value]="results"  scrollWidth="900px" [scrollable]="true" dataKey="id"
+                          [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5]" styleClass="p-datatable-customers"
+                          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                          [globalFilterFields]="customTable">
+                          <ng-template pTemplate="caption">
+                              <div class="p-d-flex">
+                                  <span class="p-input-icon-left p-ml-auto">
+                                      <i class="pi pi-search"></i>
+                                      <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                                  </span>
+                              </div>
+                          </ng-template>
+                          <ng-template pTemplate="colgroup" let-columns>
+                            <colgroup >
+                                <col style="width:250px" *ngFor="let col of dashboardWidget.widget.metaDataSources">
+                            </colgroup>
+                        </ng-template>
+                          <ng-template pTemplate="header">
+                            <tr>
+                                <th  *ngFor="let th of dashboardWidget.widget.metaDataSources" >{{th.label}}</th>
+                            </tr>
+                            <tr>
+                                <th *ngFor="let col of cols">
+                                </th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-tab>
+                            <tr>
+                                <td  *ngFor="let th of dashboardWidget.widget.metaDataSources">
+                                    <div class="description">
+                                        {{tab[th.key] | formatingData}}
+                                    </div>
+                                </td>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="emptymessage">
+                              <tr>
+                                  <td colspan="5">No results found.</td>
+                              </tr>
+                          </ng-template>
+                      </p-table>
+                      <!--Filter and Pagination End -->
       </div>
       <div *ngSwitchCase="widgetTypeEnum.Card">
               <p-card class="containSize partition" styleClass="cardColor">

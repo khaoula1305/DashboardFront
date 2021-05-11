@@ -25,6 +25,7 @@ export class DashboardWidgetDetailsComponent implements OnInit {
   exportColumns: any[];
   cols: any[];
   loadExport = false;
+  customTable:any;
 
   constructor(
     private dashboardWidgetService: DashboardWidgetService,
@@ -100,6 +101,10 @@ export class DashboardWidgetDetailsComponent implements OnInit {
           this.load = true;
         }
       );
+      this.customTable=[];
+      this.dashboardWidget.widget.metaDataSources.forEach(elm=>{
+        this.customTable.push(elm.key);
+      });
   }
 
   generateColor() {
