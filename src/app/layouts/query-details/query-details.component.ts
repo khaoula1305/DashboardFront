@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataSourceService } from '../../services/data-source.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSource } from 'src/app/models/data-source.model';
+import { TreeNode } from 'primeng/api';
 
 @Component({
   selector: 'app-query-details',
@@ -13,12 +14,16 @@ export class QueryDetailsComponent implements OnInit {
 
   results: any[]=[];
   cols: any[]=[];
+  cols2: any[]=[];
   load= false;
   dataSource: DataSource;
+  files1: TreeNode<any>[]=[];
+  selectedFiles: TreeNode<any>[]=[];
+  treeNode : TreeNode;
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
    flatToString(obj, out){
     if(Array.isArray(obj)){
-      out+= ' [';
+      out+= ' \n [';
       obj.forEach(element => {
         out+=this.flatToString(element, out);
       });
@@ -44,6 +49,21 @@ export class QueryDetailsComponent implements OnInit {
     })
     return out
   }
+  ConvertJson= (out : TreeNode<any>[], obj: any )=>{
+    if(!Array.isArray(obj)){
+      Object.entries(obj).forEach(([cle, valeur]) => {
+        if( valeur !== null && (Array.isArray(valeur) || typeof valeur == 'object')){
+         out.push({data: valeur, label: cle, children: this.ConvertJson([],valeur)});
+        }
+         else {
+          out.push({data: valeur, label: cle});
+         }
+      });
+    }else{
+      this.ConvertJson(out, obj.pop());
+    }
+    return out
+  }
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
@@ -54,9 +74,15 @@ export class QueryDetailsComponent implements OnInit {
             data.forEach(elm => {
               this.results.push(this.flat(elm,{}));
             });
+            this.ConvertJson(this.files1,data);
            for (let key in this.results[0]) {
             this.cols.push( { field: key, header: key });
           }
+          console.log(this.files1);
+          this.cols2 = [
+            { field: 'label', header: 'label' },
+            { field: 'label', header: 'label' }
+        ];
           },
           (error) => {
             console.log(error);
@@ -67,6 +93,13 @@ export class QueryDetailsComponent implements OnInit {
       }
     );
 
+  }
+  nodeSelect(event){
+    console.log('event', event);
+    console.log('selected', this.selectedFiles);
+  }
+  nodeUnselect(event){
+    console.log(event);
   }
 
 

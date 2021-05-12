@@ -72,6 +72,7 @@ TestConnection(){
 Preview(){
   let url=this.dataSource.url;
   this.dataSourceService.getDataFromURL(url).then(files => this.files1 = files);
+  console.log('files  ',this.files1);
 }
 Preview2(){
   let url=this.dataSource.url;

@@ -151,7 +151,7 @@
   <br>
   <p-card>
     <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles"></p-tree>
-    <div>Selected Nodes: <span *ngFor="let file of selectedFiles">{{file.label}} </span></div>
+    <div>Selected Nodes: <span *ngFor="let file of selectedFiles">{{file.name}} </span></div>
   </p-card>
   <p-card *ngIf="results">
 <div class="p-grid" *ngIf="results" >
