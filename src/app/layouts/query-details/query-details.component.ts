@@ -20,6 +20,8 @@ export class QueryDetailsComponent implements OnInit {
   files1: TreeNode<any>[]=[];
   selectedFiles: TreeNode<any>[]=[];
   treeNode : TreeNode;
+  customTable:any;
+
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
    flatToString(obj, out){
     if(Array.isArray(obj)){
@@ -83,6 +85,10 @@ export class QueryDetailsComponent implements OnInit {
             { field: 'label', header: 'label' },
             { field: 'label', header: 'label' }
         ];
+          this.customTable=[];
+          this.cols.forEach(elm=>{
+            this.customTable.push(elm.header);
+          });
           },
           (error) => {
             console.log(error);
@@ -101,6 +107,7 @@ export class QueryDetailsComponent implements OnInit {
   nodeUnselect(event){
     console.log(event);
   }
+
 
 
 }

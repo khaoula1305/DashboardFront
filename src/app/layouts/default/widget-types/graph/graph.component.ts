@@ -42,7 +42,7 @@ export class GraphComponent implements OnInit {
           if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
           this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
           }
-        }
+        } 
       });
       this.dimensionKey = this.widget.metaDataSources.find((elm) => elm.isDimension == true);
       if(this.dimensionKey != undefined){

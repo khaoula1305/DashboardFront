@@ -10,6 +10,7 @@ import { DataSourceService } from 'src/app/services/data-source.service';
 import { WidgetTypeEnum } from '../../../models/widgetTypeEnum';
 import { DashboardsService } from 'src/app/services/dashboards.service';
 import { Dashboard } from 'src/app/models/dashboard.model';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-add-widget',
@@ -94,6 +95,11 @@ export class AddWidgetComponent implements OnInit {
           );
         }
       });
+
+  }
+
+  onSelectedQueryDetails() {
+  
   }
 
   onSubmit(m: NgForm) {

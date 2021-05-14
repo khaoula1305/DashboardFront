@@ -125,7 +125,6 @@ changeLocation() {
   });
 }
 filterMember(event, tab) {
-  console.log(tab);
   //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
   let filtered : any[] = [];
   let query = event.query;

@@ -12,6 +12,7 @@ export class Widget{
     defaultItemCols: number;
     defaultItemRows: number;
     dataSource: DataSource;
+    dataSourceDetails: DataSource;
     widgetType: WidgetType;
     metaDataSources: MetaDataSource[];
 }

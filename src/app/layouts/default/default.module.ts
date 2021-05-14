@@ -39,6 +39,8 @@ import { WidgetDetailsComponent } from './widget-details/widget-details.componen
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import { CustomPipe } from 'src/app/pipes/customPipe.pipe';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import {RadioButtonModule} from 'primeng/radiobutton';
       CardComponent,
       UpdateWidgetComponent,
       WidgetDetailsComponent,
-      DashboardWidgetDetailsComponent
+      DashboardWidgetDetailsComponent,
+      CustomPipe
+
     ],
   imports: [
     CommonModule,
@@ -83,10 +87,11 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     ToastModule,
     SidebarModule,
     OverlayPanelModule,
-    RadioButtonModule
+    RadioButtonModule,
+    MultiSelectModule
   ],
   exports: [
-    CreateDashboardComponent
+    CreateDashboardComponent 
   ]
 })
 export class DefaultModule { }

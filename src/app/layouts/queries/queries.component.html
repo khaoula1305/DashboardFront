@@ -11,7 +11,8 @@
                     <button type="button" pButton (click)="onConfirm()" label="OK" class="p-button-success"></button>
                 </div>
                 <div class="p-col-6">
-                    <button type="button" pButton (click)="onReject()" label="Cancel" class="p-button-secondary"></button>
+                    <button type="button" pButton (click)="onReject()" label="Cancel"
+                        class="p-button-secondary"></button>
                 </div>
             </div>
         </div>
@@ -21,33 +22,38 @@
 <div class="headerShared">
     <h4>Saved Queries</h4>
     <div style="text-align: right;">
-              <button pButton pRipple type="button" label="New Query"    routerLink='/dataSource' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"    
-          iconPos="left"></button>
-      </div>
+        <button pButton pRipple type="button" label="New Query" routerLink='/dataSource' icon="pi pi-plus"
+            class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
+    </div>
 </div>
 <br>
 <p-card>
-<div class="p-grid">
-    <p-table  selectionMode="single"  [value]="queries" > 
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="text-align:center">Title</th>
-                <th style="text-align:center">Data Source Type</th>
-                <th style="width:22rem"></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-tab>
-            <tr >
-                <td [style]="{'cursor': 'pointer'}" style="text-align:center" (click)="queryDetails(tab.id)">{{tab.title}}</td>
-                <td [style]="{'cursor': 'pointer'}" style="text-align:center" (click)="queryDetails(tab.id)">{{tab.type}}</td>
-                <td  style="text-align:right">
-                  <button pButton pRipple type="button" title="Edit" (click)="updateQuery(tab)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
-                  <button pButton pRipple type="button" title="Delete" (click)="onDelete(tab)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-                 <button pButton pRipple type="button"  title="Create Widget" routerLink='/addWidget' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" ></button>
-    
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
+    <div class="p-grid">
+        <p-table selectionMode="single" [value]="queries">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="text-align:center">Title</th>
+                    <th style="text-align:center">Data Source Type</th>
+                    <th style="width:22rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tab>
+                <tr>
+                    <td [style]="{'cursor': 'pointer'}" style="text-align:center" (click)="queryDetails(tab.id)">
+                        {{tab.title}}</td>
+                    <td [style]="{'cursor': 'pointer'}" style="text-align:center" (click)="queryDetails(tab.id)">
+                        {{tab.type}}</td>
+                    <td style="text-align:right">
+                        <button pButton pRipple type="button" title="Edit" (click)="updateQuery(tab)"
+                            icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
+                        <button pButton pRipple type="button" title="Delete" (click)="onDelete(tab)"
+                            icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+                        <button pButton pRipple type="button" title="Create Widget" routerLink='/addWidget'
+                            icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </p-card>

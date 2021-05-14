@@ -179,11 +179,21 @@ export class DashboardWidgetComponent implements OnInit {
           table.push(elm);
         }
       });
-    } else {
-      var sqlText=""
-      this.queryBuilder.getDataForDetails(sqlText).subscribe( data => table = data); 
-    }
     this.selectedCard.emit([table]);
+
+    } else {
+      console.log();
+      this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
+        data=>{
+          var sqlText= data.text+" where "+this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key+"= '"+event.element._model.label+"'";
+          this.queryBuilder.getDataForDetails(sqlText).subscribe( dat =>{
+             this.selectedCard.emit([dat]);
+          }
+           ); 
+
+        }
+      )
+    }
 }
 
 }

@@ -2,61 +2,80 @@
     <h4>Query Details</h4>
 </div>
 <br>
-
+<p-card>
 <div class="p-grid" *ngIf="load" >
     <div class="p-col-12">
         <div style="text-align:center">
-            <div>Data Source Name: {{dataSource.title}}</div>
-            <span>Data Source Type: {{dataSource.type}}</span> 
+            <div><b>Data Source Name:</b> {{dataSource.title}}</div>
+            <span><b>Data Source Type:</b> {{dataSource.type}}</span> 
         </div>
      </div>
-     <p-card>
-        <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles"
-                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
-        <div>Selected Nodes: <span *ngFor="let file of selectedFiles">{{file.label}} </span></div>
-        <p-table [value]="selectedFiles" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
-            <ng-template pTemplate="colgroup" let-columns>
-                <colgroup >
-                    <col style="width:250px"  *ngFor="let col of cols2">
-                </colgroup>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th *ngFor="let col of cols2">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-tab>
-                <tr>
-                    <td>
-                        tab[data]
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-      </p-card>
-     <p-table [value]="results" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
+      <!--Filter and Pagination -->
+      <p-table  #dt2 [value]="results" [scrollable]="true" dataKey="id" [style]="{width:'1100px'}"
+      [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5]" styleClass="p-datatable-customers"
+      [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="customTable">
+      <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+              <span class="p-input-icon-left p-ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+              </span>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup >
+            <col style="width:250px"  *ngFor="let col of cols">
+        </colgroup>
+    </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+                <th *ngFor="let col of cols">
+                    {{col.header}}
+                </th>
+            </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tab>
+        <tr>
+            <td  *ngFor="let col of cols">
+                <div class="description">
+                    {{tab[col.field]}}
+                </div>
+            </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+          <tr>
+              <td colspan="5">No results found.</td>
+          </tr>
+      </ng-template>
+   </p-table>
+  <!--Filter and Pagination End -->
+</div>
+</p-card>
+<p-card>
+    <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles"
+            (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+    <div>Selected Nodes: <span *ngFor="let file of selectedFiles">{{file.label}} </span></div>
+    <p-table [value]="selectedFiles" [scrollable]="true" [style]="{width:'1100px'}"  scrollHeight="700px">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup >
-                <col style="width:250px"  *ngFor="let col of cols">
+                <col style="width:250px"  *ngFor="let col of cols2">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th *ngFor="let col of cols">
+                <th *ngFor="let col of cols2">
                     {{col.header}}
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tab>
             <tr>
-                <td  *ngFor="let col of cols">
-                    <div class="description">
-                        {{tab[col.field]}}
-                    </div>
+                <td>
+                    tab[data]
                 </td>
             </tr>
         </ng-template>
     </p-table>
-</div>
+  </p-card>

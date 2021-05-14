@@ -17,6 +17,8 @@ export class TableComponent implements OnInit {
   allKeys: MetaDataSource[]=[];
   labelsWrited=false;
   widget: Widget;
+  customTable:any;
+
   constructor(
     private dataSourceService: DataSourceService,
     private widgetService: WidgetsService,
@@ -39,11 +41,19 @@ export class TableComponent implements OnInit {
   onSelectedKey(key: string, id: string){
     this.widget.metaDataSources.push({ id, key, label: key, isDimension:false});
     this.removeSelectedKeyFromFirstList(id);
+    this.customTable=[];
+    this.widget.metaDataSources.forEach(elm=>{
+      this.customTable.push(elm.key);
+    });
   }
 
   onRemovedKey(key: string, id: string) {
     this.allKeys.push({id, key, label: key, isDimension:false});
     this.removeSelectedKeyFromSecondList(id);
+    this.customTable=[];
+    this.widget.metaDataSources.forEach(elm=>{
+      this.customTable.push(elm.key);
+    });
   }
   removeSelectedKeyFromFirstList(id: string) {
     var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(id);
