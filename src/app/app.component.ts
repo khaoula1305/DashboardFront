@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TeamsService } from './services/team.service';
+import { TeamsService } from './team/team.service';
 
 @Component({
   selector: 'app-root',
