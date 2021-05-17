@@ -22,6 +22,9 @@ import {SidebarModule} from 'primeng/sidebar';
 import { UpdateWidgetComponent } from './update-widget/update-widget.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
+import { GraphComponent } from './widget-types/graph/graph.component';
+import { CardComponent } from './widget-types/card/card.component';
+import { TableComponent } from './widget-types/table/table.component';
 @NgModule({
   declarations: [
     AddWidgetComponent,
@@ -30,7 +33,10 @@ import { ButtonModule } from 'primeng/button';
     WidgetPanelComponent,
     WidgetComponent,
     WidgetEditionComponent,
-    UpdateWidgetComponent
+    UpdateWidgetComponent,
+    GraphComponent,
+    CardComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,

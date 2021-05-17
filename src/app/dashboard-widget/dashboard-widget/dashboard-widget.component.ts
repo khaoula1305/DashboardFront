@@ -64,7 +64,7 @@ export class DashboardWidgetComponent implements OnInit {
               break;
             }
             default : {
-             this.CreateBasicData();
+             this.createBasicData();
               break;
             }
           }
@@ -122,7 +122,7 @@ export class DashboardWidgetComponent implements OnInit {
      }
   }
 
-  CreateBasicData(){
+  createBasicData(){
     var labels=[];
     var dimensions=[];
     var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);

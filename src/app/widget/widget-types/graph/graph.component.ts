@@ -15,12 +15,10 @@ export class GraphComponent implements OnInit {
   dimensionKey: MetaDataSource;
   results = [];
   allKeys: MetaDataSource[] = [];
-  //selectedKeys: MetaDataSource[] = [];
   showKeys = false;
   preview = false;
   labelsWrited = false;
   drawType = false;
-  //chart
   basicData;
   showQueries = false;
   widget: Widget;
@@ -114,7 +112,7 @@ export class GraphComponent implements OnInit {
     );
   }
 
-CreateBasicData(){
+createBasicData(){
   if (this.dimensionKey == null) { //set first item in dimension key if switching from table to graph
     this.widget.metaDataSources[0].isDimension = true;
     this.dimensionKey = this.widget.metaDataSources[0];

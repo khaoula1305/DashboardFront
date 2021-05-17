@@ -60,7 +60,7 @@ export class UpdateDataSourceComponent implements OnInit {
   onChange(event){
     console.log(event);
   }
-  DeleteParam(param){
+  deleteParam(param){
     var removeIndex = this.params.map(function (item) { return item.id; }).indexOf(param);
     this.params.splice(removeIndex, 1);
    // this.params.splice(this.params.findIndex(param),1)
@@ -68,13 +68,13 @@ export class UpdateDataSourceComponent implements OnInit {
   addParam(){
     this.params.push( {code: "access_key", value:"Your access"});
   }
-  DeleteHeader(header){
+dDeleteHeader(header){
     this.headers.splice(this.headers.findIndex(header),1)
   }
   addHeader(){
     this.headers.push( {code: "API_key", value:"Your access"});
   }
-  Preview(){
+  preview(){
     let url=this.dataSource.url;
     this.saveRest();
     this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
@@ -95,7 +95,7 @@ export class UpdateDataSourceComponent implements OnInit {
       }
     )
   }
-  TestConnection(){
+  testConnection(){
     this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
       (data)=>{
       },

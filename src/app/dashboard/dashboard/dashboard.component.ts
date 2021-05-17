@@ -214,7 +214,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['dashboards', locationData]); // navigate to same route
     });
   }
-  OnEdit(reset: boolean) {
+  onEdit(reset: boolean) {
     if (!this.editMode) {
       this.dashboardOriginal = this.dashboardGridster.map((x) => ({ ...x }));
       this.options.draggable.enabled = true;
@@ -311,7 +311,7 @@ export class DashboardComponent implements OnInit {
     this.messageService.clear('b');
     this.messageService.clear('a');
   }
-  OnDelete() {
+  onDelete() {
     this.showConfirm({
       key: 'b',
       severity: 'custom',

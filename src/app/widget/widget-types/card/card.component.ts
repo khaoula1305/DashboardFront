@@ -74,6 +74,5 @@ export class CardComponent implements OnInit {
     this.allKeys.splice(removeIndex, 1);
     this.widget.metaDataSources.push(this.cardKey);
     this.results.forEach((elm) => (this.cardRes  += elm[this.cardKey.key]));
-    console.log('card res', this.cardRes);
   }
 }
