@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/team/User.model';
-import { TeamsService } from '../../../team/team.service';
+import { User } from 'src/app/team/models/User.model';
+import { TeamsService } from '../../../team/services/team.service';
 
 @Component({
   selector: 'app-side-bar',

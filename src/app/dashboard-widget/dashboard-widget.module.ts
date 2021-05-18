@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardWidgetRoutingModule } from './dashboard-widget-routing.module';
-import { DashboardWidgetComponent } from './dashboard-widget/dashboard-widget.component';
-import { DashboardWidgetDetailsComponent } from './dashboard-widget-details/dashboard-widget-details.component';
-import { WidgetConfigurationComponent } from './widget-configuration/widget-configuration.component';
+import { DashboardWidgetComponent } from './components/dashboard-widget/dashboard-widget.component';
+import { DashboardWidgetDetailsComponent } from './components/dashboard-widget-details/dashboard-widget-details.component';
+import { WidgetConfigurationComponent } from './components/widget-configuration/widget-configuration.component';
 
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';

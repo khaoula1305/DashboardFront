@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddWidgetComponent } from './add-widget/add-widget.component';
-import { WidgetListComponent } from './widget-list/widget-list.component';
-import { WidgetDetailsComponent } from './widget-details/widget-details.component';
-import { WidgetPanelComponent } from './widget-panel/widget-panel.component';
-import { WidgetComponent } from './widget/widget.component';
-import { WidgetEditionComponent } from './widget-edition/widget-edition.component';
+import { AddWidgetComponent } from './components/add-widget/add-widget.component';
+import { WidgetListComponent } from './components/widget-list/widget-list.component';
+import { WidgetDetailsComponent } from './components/widget-details/widget-details.component';
+import { WidgetPanelComponent } from './components/widget-panel/widget-panel.component';
+import { WidgetComponent } from './components/widget/widget.component';
+import { WidgetEditionComponent } from './components/widget-edition/widget-edition.component';
 import { WidgetRoutingModule } from './widget-routing.module';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
@@ -19,12 +19,12 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {ScrollTopModule} from 'primeng/scrolltop';
 import {SidebarModule} from 'primeng/sidebar';
-import { UpdateWidgetComponent } from './update-widget/update-widget.component';
+import { UpdateWidgetComponent } from './components/update-widget/update-widget.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
-import { GraphComponent } from './widget-types/graph/graph.component';
-import { CardComponent } from './widget-types/card/card.component';
-import { TableComponent } from './widget-types/table/table.component';
+import { GraphComponent } from './components/widget-types/graph/graph.component';
+import { CardComponent } from './components/widget-types/card/card.component';
+import { TableComponent } from './components/widget-types/table/table.component';
 @NgModule({
   declarations: [
     AddWidgetComponent,

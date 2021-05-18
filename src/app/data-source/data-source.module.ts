@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataSourceRoutingModule } from './data-source-routing.module';
-import { DataSourceComponent } from './data-source/data-source.component';
-import { UpdateDataSourceComponent } from './update-data-source/update-data-source.component';
-import { QueriesComponent } from './queries/queries.component';
-import { QueryDetailsComponent } from './query-details/query-details.component';
+import { DataSourceComponent } from './components/data-source/data-source.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -17,7 +14,10 @@ import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
-import { RestEditionComponent } from './rest-edition/rest-edition.component';
+import { UpdateDataSourceComponent } from './components/update-data-source/update-data-source.component';
+import { QueriesComponent } from './components/queries/queries.component';
+import { QueryDetailsComponent } from './components/query-details/query-details.component';
+import { RestEditionComponent } from './components/rest-edition/rest-edition.component';
 
 @NgModule({
   declarations: [

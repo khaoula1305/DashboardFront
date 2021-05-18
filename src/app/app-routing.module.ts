@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { QueriesComponent } from './data-source/queries/queries.component';
+import { QueriesComponent } from './data-source/components/queries/queries.component';
 
 const routes: Routes = [
   {

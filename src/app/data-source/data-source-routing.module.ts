@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DataSourceComponent } from './data-source/data-source.component';
-import { UpdateDataSourceComponent } from './update-data-source/update-data-source.component';
-import { QueriesComponent } from './queries/queries.component';
-import { QueryDetailsComponent } from './query-details/query-details.component';
-import { RestEditionComponent } from './rest-edition/rest-edition.component';
+import { DataSourceComponent } from './components/data-source/data-source.component';
+import { QueriesComponent } from './components/queries/queries.component';
+import { QueryDetailsComponent } from './components/query-details/query-details.component';
+import { RestEditionComponent } from './components/rest-edition/rest-edition.component';
+import { UpdateDataSourceComponent } from './components/update-data-source/update-data-source.component';
 
 const routes: Routes = [
   { path: '', component: DataSourceComponent },

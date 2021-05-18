@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WidgetDetailsComponent } from './widget-details/widget-details.component';
-import { WidgetListComponent } from './widget-list/widget-list.component';
-import { AddWidgetComponent } from './add-widget/add-widget.component';
-import { UpdateWidgetComponent } from './update-widget/update-widget.component';
+import { WidgetDetailsComponent } from './components/widget-details/widget-details.component';
+import { WidgetListComponent } from './components/widget-list/widget-list.component';
+import { AddWidgetComponent } from './components/add-widget/add-widget.component';
+import { UpdateWidgetComponent } from './components/update-widget/update-widget.component';
 
 const routes: Routes = [
  {path: 'widgetDetails/:id', component: WidgetDetailsComponent},
  {path: 'addWidget', component: AddWidgetComponent},
- {path: '', component: WidgetListComponent},
+ {path: 'widgets', component: WidgetListComponent},
  {path: 'upWidget/:id', component: UpdateWidgetComponent}
 ];
 
