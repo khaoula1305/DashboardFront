@@ -14,8 +14,11 @@ export class QueryDetailsComponent implements OnInit {
 
   results: any[]=[];
   resultsFormated: any[]=[];
+  selectedTable=[];
+  selectedTableCols=[];
   cols2: any[]=[];
   resultsFormatedToTree: TreeNode<any>[]=[];
+  resultsWithoutTable=[];
   selectedItems: any[]=[];
   selectedItem: TreeNode;
   cols: any[]=[];
@@ -25,9 +28,9 @@ export class QueryDetailsComponent implements OnInit {
   customTable:any;
 
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
-   flatToString(obj, out){
+  flatToString(obj, out){
     if(Array.isArray(obj)){
-      out+= ' \n [';
+      out+= ' [';
       obj.forEach(element => {
         out+=this.flatToString(element, out);
       });
@@ -53,6 +56,14 @@ export class QueryDetailsComponent implements OnInit {
     })
     return out
   }
+  showTable(item){
+    if(Array.isArray(this.results[0][item])){
+      this.selectedTable=this.results[0][item];
+      for (let key in this.selectedTable[0]) {
+        this.selectedTableCols.push( { field: key, header: key });
+      }
+    }
+  }
   ConvertJson= (out : TreeNode<any>[], obj: any )=>{
     if(Array.isArray(obj)){
       this.ConvertJson(out,obj[0]);
@@ -71,12 +82,6 @@ export class QueryDetailsComponent implements OnInit {
     }
     return out
   }
-  DisplayAllKeys(){
-  this.results.forEach(elm => {
-      this.resultsFormated.push(this.flat(elm,{}));
-    });
-    this.displayAll=true;
-  }
   enableSelectItem(){
     this.displayAll=false;
     this.resultsFormatedToTree=[];
@@ -93,6 +98,9 @@ export class QueryDetailsComponent implements OnInit {
            for (let key in this.results[0]) {
             this.cols.push( { field: key, header: key });
           }
+          this.results.forEach(elm => {
+            this.resultsFormated.push(this.flat(elm,{}));
+          });
           this.customTable=[];
           this.cols.forEach(elm=>{
             this.customTable.push(elm.header);
