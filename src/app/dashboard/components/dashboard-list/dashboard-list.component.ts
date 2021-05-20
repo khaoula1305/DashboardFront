@@ -40,7 +40,7 @@ export class DashboardListComponent implements OnInit {
     );
   }
   updateDashboard(dashboard: Dashboard){
-    this.router.navigate(['/updateDashboard',dashboard.id ]);
+    this.router.navigate(['updateDashboard',dashboard.id ]);
   }
   showConfirm(message: any) {
     this.messageService.clear();

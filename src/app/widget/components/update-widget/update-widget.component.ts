@@ -27,23 +27,22 @@ export class UpdateWidgetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.widget = new Widget();
-    this.widgetService.changeWidget(this.widget);
     const id = this.route.snapshot.params.id;
-    this.widgetService.currentWidget.subscribe(
-      (widget) => {
-        this.widget = widget;
-      }
-    );
+      this.widgetService.getWidget(id).subscribe((data) => {
+        this.widget = data;
 
-      this.widgetService
-      .getAllWidgets()
-      .subscribe((data) => {
-        this.widget = data.find((e) => e.id == id);
         this.widgetService.changeWidget(this.widget);
+        this.widgetService.currentWidget.subscribe(
+          (widget) => {
+            this.widget = widget;
+          }
+        );
+
       },
         (err) => console.log(err),
-        () => this.load = true);
+        () => {
+          this.load = true
+  });
 
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {

@@ -20,6 +20,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { HttpClientModule } from '@angular/common/http';
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
   declarations: [
     TeamsComponent
@@ -45,7 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     OverlayPanelModule,
     RadioButtonModule ,
     ConfirmDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    InputTextModule
   ]
 })
 export class TeamModule { }

@@ -20,6 +20,19 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {DialogModule} from 'primeng/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
+import { WidgetModule } from '../widget/widget.module';
+import { GridsterModule } from 'angular-gridster2';
+import {PanelModule, } from 'primeng/panel';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {SkeletonModule} from 'primeng/skeleton';
+import {ScrollTopModule} from 'primeng/scrolltop';
+import {InputTextModule} from 'primeng/inputtext';
+import {SplitterModule} from 'primeng/splitter';
+import { TagModule } from 'primeng/tag';
+import {BadgeModule} from 'primeng/badge';
+import {SplitButtonModule} from 'primeng/splitbutton';
+import { DashboardWidgetModule } from '../dashboard-widget/dashboard-widget.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +58,11 @@ import { ButtonModule } from 'primeng/button';
     AutoCompleteModule,
     DialogModule,
     HttpClientModule,
-    ButtonModule
+    ButtonModule,
+    WidgetModule,
+    GridsterModule,
+    DashboardWidgetModule,
+    InputTextModule
 
   ]
 })

@@ -15,12 +15,14 @@ import {ToastModule} from 'primeng/toast';
 import {DividerModule} from 'primeng/divider';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
+import {ChartModule} from 'primeng/chart';
+import { SharedModule } from '../shared/shared-module.module';
 
 @NgModule({
   declarations: [
     DashboardWidgetComponent,
     DashboardWidgetDetailsComponent,
-    WidgetConfigurationComponent
+    WidgetConfigurationComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,12 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     DividerModule,
     HttpClientModule,
-    ButtonModule
+    ButtonModule,
+    ChartModule,
+    SharedModule
+    ],
+  exports: [
+    DashboardWidgetComponent
   ]
 })
 export class DashboardWidgetModule { }

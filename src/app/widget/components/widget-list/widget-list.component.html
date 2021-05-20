@@ -17,8 +17,8 @@
         </div>
     </ng-template>
   </p-toast>
-  
-  
+
+
   <div class="headerShared">
       <h4>Available Widgets</h4>
       <div style="text-align:center">
@@ -28,10 +28,10 @@
         </span>
       </div>
       <div style="text-align: right;">
-          <button pButton pRipple type="button" label="New Widget" style="text-align:right" routerLink='/addWidget' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" ></button>
+          <button pButton pRipple type="button" label="New Widget" style="text-align:right" routerLink='addWidget' icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text" ></button>
       </div>
   </div>
-   
+
   <p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
       <app-widget-details *ngIf="visibleSidebar" [widget]="selectedWidget"></app-widget-details>
   </p-sidebar>
@@ -53,7 +53,6 @@
       </p-card>
       </div>
   </div>
-  
-  
-  
-    
+
+
+

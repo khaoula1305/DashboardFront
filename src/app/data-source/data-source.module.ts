@@ -18,6 +18,7 @@ import { UpdateDataSourceComponent } from './components/update-data-source/updat
 import { QueriesComponent } from './components/queries/queries.component';
 import { QueryDetailsComponent } from './components/query-details/query-details.component';
 import { RestEditionComponent } from './components/rest-edition/rest-edition.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RestEditionComponent } from './components/rest-edition/rest-edition.com
     TreeModule,
     TreeTableModule,
     HttpClientModule,
-    ButtonModule
+    ButtonModule,
+    InputTextModule
 
   ]
 })

@@ -17,7 +17,7 @@ export class DataSourceService {
   constructor(private http: HttpClient) {}
 
   getAllDataSources(): Observable<DataSource[]> {
-    return this.http.get<DataSource[]>(this.host + 'AllDataSource');
+    return this.http.get<DataSource[]>(this.host + 'AllDataSources');
   }
   getAllWidgets(datasourceId: any): Observable<Widget[]> {
     return this.http.get<Widget[]>(this.host + datasourceId+ '/AllWidgets');
@@ -56,7 +56,7 @@ export class DataSourceService {
     }
   }
   getDataSource(dataSourceId: any) : Observable<any>{
-    return this.http.get<any>(this.host +'test/'+ dataSourceId);
+    return this.http.get<any>(this.host +'GetDataSource/'+ dataSourceId);
   }
   deleteDataSource(dataSourceId: any) : Observable<DataSource>{
     return this.http.delete<DataSource>(this.host + dataSourceId);

@@ -162,7 +162,6 @@ export class DashboardComponent implements OnInit {
   }
   addWidget() {
     this.add = true;
-    console.log('add', this.add);
   }
   onRowSelect() {
     this.dashboard.team = this.selectedTeam;

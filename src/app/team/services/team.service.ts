@@ -11,10 +11,10 @@ import { Team } from '../models/team.model';
   providedIn: 'root'
 })
 export class TeamsService {
-  
+
   currentUser: User;
   host: any = environment.hostApi + '/Team/';
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
   //Instead of authentication
   setCurrentUser(){
@@ -28,16 +28,16 @@ export class TeamsService {
   return JSON.parse(localStorage.getItem('currentUser'));
   }
   getAllTeams(): Observable<Team[]>{
-    return this.http.get<Team[]>(this.host+'allteams');
+    return this.http.get<Team[]>(this.host+'AllTeams');
   }
   getTeam(teamId: any): Observable<Team>{
     return this.http.get<Team>(this.host+teamId);
   }
   getAllDashboards(teamId: any): Observable<Dashboard[]> {
-    return this.http.get<Dashboard[]>(this.host + teamId+ '/allDashboards');
+    return this.http.get<Dashboard[]>(this.host + teamId+ '/AllDashboards');
   }
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.host + 'allusers');
+    return this.http.get<User[]>(this.host + 'AllUsers');
   }
 
   addTeam(team: Team): Observable<Team>{

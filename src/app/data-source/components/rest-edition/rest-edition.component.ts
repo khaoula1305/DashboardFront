@@ -9,7 +9,9 @@ import { DataSourceService } from '../../services/data-source.service';
 @Component({
   selector: 'app-rest-edition',
   templateUrl: './rest-edition.component.html',
-  styleUrls: ['./rest-edition.component.scss']
+  styleUrls: ['./rest-edition.component.scss'],
+  providers: [MessageService],
+
 })
 export class RestEditionComponent implements OnInit {
 
@@ -61,13 +63,13 @@ TestConnection(){
     (error)=>{
       this.msgs=[
         {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
-      ]; 
+      ];
     },
     ()=>{
       this.dataSource.url=url;
       this.msgs=[
         {severity:'success',sticky: true, summary:'Connection Successful.'}
-      ]; 
+      ];
     }
   )
 }
@@ -92,7 +94,7 @@ Preview2(){
       this.results=[];
       this.msgs=[
         {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
-      ]; 
+      ];
     },
     ()=>{
       this.dataSource.url=url;
@@ -122,7 +124,7 @@ saveRest(){
          this.router.navigate(['/queries'])
         }
          );
-         
+
     }
   }
 

@@ -8,7 +8,7 @@ import { UpdateWidgetComponent } from './components/update-widget/update-widget.
 const routes: Routes = [
  {path: 'widgetDetails/:id', component: WidgetDetailsComponent},
  {path: 'addWidget', component: AddWidgetComponent},
- {path: 'widgets', component: WidgetListComponent},
+ {path: '', component: WidgetListComponent},
  {path: 'upWidget/:id', component: UpdateWidgetComponent}
 ];
 

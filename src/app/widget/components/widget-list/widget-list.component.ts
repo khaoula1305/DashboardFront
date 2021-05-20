@@ -54,7 +54,11 @@ export class WidgetListComponent implements OnInit {
     );
   }
   updateWidget(widget: any) {
-    this.router.navigate(['/upWidget', widget.id]);
+    const currentRoute = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate(['upWidget', widget.id]);
+    });
+
   }
   onDeleteWidget(widget: Widget) {
     this.widget = widget;

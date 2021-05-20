@@ -25,6 +25,9 @@ import { ButtonModule } from 'primeng/button';
 import { GraphComponent } from './components/widget-types/graph/graph.component';
 import { CardComponent } from './components/widget-types/card/card.component';
 import { TableComponent } from './components/widget-types/table/table.component';
+import { SharedModule } from '../shared/shared-module.module';
+import { InputTextModule } from 'primeng/inputtext';
+import { ChartModule } from 'primeng/chart';
 @NgModule({
   declarations: [
     AddWidgetComponent,
@@ -54,7 +57,13 @@ import { TableComponent } from './components/widget-types/table/table.component'
     Ng2SearchPipeModule,
     SidebarModule,
     HttpClientModule,
-    ButtonModule
+    ButtonModule,
+    SharedModule,
+    InputTextModule,
+    ChartModule
+  ],
+  exports:[
+    WidgetPanelComponent
   ]
 })
 export class WidgetModule { }

@@ -59,7 +59,7 @@
         <div class="box" *ngIf="widget.widgetType">
           <div [ngSwitch]="widget.widgetType.type">
             <div *ngSwitchCase="widgetTypeEnum.Table">
-              <app-table></app-table>
+              <p-card> <app-table></app-table>  </p-card>
             </div>
             <div *ngSwitchCase="widgetTypeEnum.Card">
               <app-card (added)="onAddedClick($event)"></app-card>

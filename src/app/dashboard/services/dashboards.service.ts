@@ -14,7 +14,7 @@ export class DashboardsService {
   constructor(private http: HttpClient) { }
 
   getAllDashboards(): Observable<Dashboard[]>{
-    return this.http.get<Dashboard[]>(this.host+'alldashboards');
+    return this.http.get<Dashboard[]>(this.host+'AllDashboards');
   }
   getDashboard(dashboardId: any): Observable<Dashboard>{
     return this.http.get<Dashboard>(this.host+dashboardId);
