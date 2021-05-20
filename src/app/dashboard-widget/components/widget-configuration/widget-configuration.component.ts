@@ -4,12 +4,13 @@ import { DashboardWidget } from 'src/app/dashboard-widget/models/dashboard-widge
 import { WidgetTypeService } from 'src/app/widget/services/widget-type.service';
 import { NgForm } from '@angular/forms';
 import { DashboardsService } from 'src/app/dashboard/services/dashboards.service';
-import { Widget } from 'src/app/widget/models/widget.model';
+
 import { WidgetsService } from 'src/app/widget/services/widgets.service';
 import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { DashboardWidgetService } from '../../services/dashboard-widget.service';
 import { WidgetTypeEnum } from 'src/app/widget/models/widgetTypeEnum';
 import { WidgetType } from 'src/app/widget/models/widget-type';
+import { Widget } from 'src/app/widget/models/widget.model';
 @Component({
   selector: 'app-widget-configuration',
   templateUrl: './widget-configuration.component.html',
@@ -52,7 +53,7 @@ export class WidgetConfigurationComponent implements OnInit {
         (err) => console.log(err),
         () => this.load = true);
 
-        
+
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         //filter to be implemented
