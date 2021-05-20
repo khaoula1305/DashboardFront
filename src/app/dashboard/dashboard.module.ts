@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DashboardEditionComponent } from './components/dashboard-edition/dashboard-edition.component';
-import { DashboardListComponent } from './components/dashboard-list/dashboard-list.component';
-import { UpdateDashboardComponent } from './components/update-dashboard/update-dashboard.component';
-import { DashboardRoutingModule } from './dashboard-routing.module';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -22,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { WidgetModule } from '../widget/widget.module';
 import { GridsterModule } from 'angular-gridster2';
+import {RadioButtonModule} from 'primeng/radiobutton';
 import {PanelModule, } from 'primeng/panel';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +29,12 @@ import { TagModule } from 'primeng/tag';
 import {BadgeModule} from 'primeng/badge';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { DashboardWidgetModule } from '../dashboard-widget/dashboard-widget.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardEditionComponent } from './components/dashboard-edition/dashboard-edition.component';
+import { DashboardListComponent } from './components/dashboard-list/dashboard-list.component';
+import { UpdateDashboardComponent } from './components/update-dashboard/update-dashboard.component';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { SharedModule } from '../shared/shared-module.module';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { DashboardWidgetModule } from '../dashboard-widget/dashboard-widget.modu
     WidgetModule,
     GridsterModule,
     DashboardWidgetModule,
-    InputTextModule
+    InputTextModule,
+    RadioButtonModule,
+    SharedModule
 
   ]
 })

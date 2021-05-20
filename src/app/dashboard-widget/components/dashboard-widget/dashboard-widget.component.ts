@@ -129,7 +129,7 @@ export class DashboardWidgetComponent implements OnInit {
     var dimensions=[];
     var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
-      if(!element.isDimension){ 
+      if(!element.isDimension){
  labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
       }
     })
@@ -184,11 +184,11 @@ export class DashboardWidgetComponent implements OnInit {
       console.log();
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
-          var sqlText= data.text+" where "+this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key+"= '"+event.element._model.label+"'";
-          this.queryBuilder.getDataForDetails(sqlText).subscribe( dat =>{
+         // var sqlText= data.text+" where "+this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key+"= '"+event.element._model.label+"'";
+          this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
              this.selectedCard.emit([dat]);
           }
-           ); 
+           );
 
         }
       )

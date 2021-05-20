@@ -10,8 +10,7 @@ import { DataSourceService } from '../../services/data-source.service';
   selector: 'app-rest-edition',
   templateUrl: './rest-edition.component.html',
   styleUrls: ['./rest-edition.component.scss'],
-  providers: [MessageService],
-
+  providers: [MessageService]
 })
 export class RestEditionComponent implements OnInit {
 

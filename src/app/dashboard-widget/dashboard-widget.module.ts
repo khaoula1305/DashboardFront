@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DashboardWidgetRoutingModule } from './dashboard-widget-routing.module';
 import { DashboardWidgetComponent } from './components/dashboard-widget/dashboard-widget.component';
 import { DashboardWidgetDetailsComponent } from './components/dashboard-widget-details/dashboard-widget-details.component';
-import { WidgetConfigurationComponent } from './components/widget-configuration/widget-configuration.component';
-
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -17,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import {ChartModule} from 'primeng/chart';
 import { SharedModule } from '../shared/shared-module.module';
+import { WidgetConfigurationComponent } from './components/widget-configuration/widget-configuration.component';
 
 @NgModule({
   declarations: [

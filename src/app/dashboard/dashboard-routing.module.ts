@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardEditionComponent } from './components/dashboard-edition/dashboard-edition.component';
+import { DashboardListComponent } from './components/dashboard-list/dashboard-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UpdateDashboardComponent } from './components/update-dashboard/update-dashboard.component';
-import { DashboardListComponent } from './components/dashboard-list/dashboard-list.component';
-import { DashboardEditionComponent } from './components/dashboard-edition/dashboard-edition.component';
 
 const routes: Routes = [
-  {path: '', component: DashboardListComponent}, 
+  {path: '', component: DashboardListComponent},
   {path: ':id', component: DashboardComponent },
-  {path: 'updateDashboard/:id', component: UpdateDashboardComponent}, 
+  {path: 'updateDashboard/:id', component: UpdateDashboardComponent},
   {path: 'NewDashboard', component: DashboardEditionComponent}
 ];
 

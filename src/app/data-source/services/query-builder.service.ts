@@ -11,16 +11,16 @@ export class QueryBuilderService {
 
   host: any = environment.hostApi + '/DataSourceQB/';
   constructor(private http: HttpClient) { }
-  
+
   getData(idWidget: any): Observable<any[]>{
     return this.http.get<any[]>(this.host+idWidget);
   }
 
- getDataForDetails(sqlText: string): Observable<any[]>{
+ getDataForDetails(idWidget:any, label: string): Observable<any[]>{
    const headers = new HttpHeaders({
     'Content-Type': 'application/json'
-}); 
-   const json=JSON.stringify(sqlText);
-  return this.http.post<any[]>(this.host+'Details', json, {headers: headers});
+});
+   const json=JSON.stringify(label);
+  return this.http.get<any[]>(this.host+'Details/'+idWidget+'/'+label, {headers: headers});
 }
 }
