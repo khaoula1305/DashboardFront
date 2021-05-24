@@ -86,6 +86,7 @@ export class DashboardWidgetComponent implements OnInit {
               break;
              }
             case this.widgetTypeEnum.Card : {
+              console.log(data[0]["COUNT"]);
               this.result = {
                 key: data[0]["COUNT"],
                 label:this.selectedKeys[0].label
