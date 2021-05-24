@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import {ChartModule} from 'primeng/chart';
 import { SharedModule } from '../shared/shared-module.module';
 import { WidgetConfigurationComponent } from './components/widget-configuration/widget-configuration.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { WidgetConfigurationComponent } from './components/widget-configuration/
     HttpClientModule,
     ButtonModule,
     ChartModule,
-    SharedModule
+    SharedModule,
+    InputTextModule
     ],
   exports: [
     DashboardWidgetComponent

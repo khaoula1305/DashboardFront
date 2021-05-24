@@ -19,6 +19,7 @@ import { QueriesComponent } from './components/queries/queries.component';
 import { QueryDetailsComponent } from './components/query-details/query-details.component';
 import { RestEditionComponent } from './components/rest-edition/rest-edition.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from '../shared/shared-module.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { InputTextModule } from 'primeng/inputtext';
     TreeTableModule,
     HttpClientModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    SharedModule
 
   ]
 })
