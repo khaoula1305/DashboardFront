@@ -41,7 +41,6 @@ export class AddWidgetComponent implements OnInit {
     this.widget = new Widget();
     this.widgetService.changeWidget(this.widget);
     this.widgetService.currentWidget.subscribe((widget) => {
-      widget.metaDataSources = [];
       this.widget = widget;
     });
     this.dataSourceService.getAllDataSources().subscribe(
@@ -99,7 +98,7 @@ export class AddWidgetComponent implements OnInit {
   }
 
   onSelectedQueryDetails() {
-  
+
   }
 
   onSubmit(m: NgForm) {

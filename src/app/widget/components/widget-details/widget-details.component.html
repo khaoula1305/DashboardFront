@@ -1,7 +1,7 @@
     <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
     <!--widget details-->
-    <p-card header="{{widget.title}}">
-      <div *ngIf="load" [ngSwitch]="widget.widgetType.type">
+    <p-card header="{{title}}">
+      <div  [ngSwitch]="widget.widgetType.type">
           <div *ngSwitchCase="widgetTypeEnum.Table">
                 <!--Filter and Pagination -->
                 <p-table  class="p-field p-col-12 p-md-12" style="height: 400px" #dt2 [value]="results"  scrollWidth="900px" [scrollable]="true" dataKey="id"
@@ -23,19 +23,16 @@
               </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                      <th *ngFor="let th of widget.metaDataSources">
+                      <th *ngFor="let th of widget.metaDataSources" id="col">
                           {{th.label}}
                       </th>
                   </tr>
-                  <tr>
-                      <th *ngFor="let col of cols">
-                      </th>
-                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
                   <tr>
                       <td  *ngFor="let th of widget.metaDataSources">
                           <div class="description">
+
                               {{tab[th.key] | formatingData}}
                           </div>
                       </td>
@@ -52,14 +49,14 @@
           <div *ngSwitchCase="widgetTypeEnum.Card">
                   <p-card styleClass="cardColor">
                       <div class="p-d-flex">
-                          <p  style="font-weight: bold;">{{result.label}}</p>
+                          <p  style="font-weight: bold;">{{results.label}}</p>
                       <p-divider layout="vertical" ></p-divider>
-                      <p  style="font-weight: 500;">{{result.key | formatingData}}</p>
+                      <p  style="font-weight: 500;">{{results.key | formatingData}}</p>
                       </div>
                   </p-card>
           </div>
-          <div *ngSwitchDefault> 
-              <p-chart type="{{widget.widgetType.type}}" [data]="basicData" [options]="basicOptions">
+          <div *ngSwitchDefault>
+              <p-chart type="{{widget.widgetType.type}}" [data]="chartResults" [options]="basicOptions">
               </p-chart>
             </div>
       </div>

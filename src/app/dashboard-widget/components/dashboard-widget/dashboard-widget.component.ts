@@ -34,7 +34,7 @@ export class DashboardWidgetComponent implements OnInit {
   result;
   widgetTypeOnUpdate:WidgetType;
   visibleSidebar=false;
-  @Output() selectedDashboardWidget = new EventEmitter<any>();
+  @Output() onDetail = new EventEmitter<any>();
   @Output() selectedCard = new EventEmitter<any>();
 
   constructor(
@@ -86,7 +86,6 @@ export class DashboardWidgetComponent implements OnInit {
               break;
              }
             case this.widgetTypeEnum.Card : {
-              console.log(data[0]["COUNT"]);
               this.result = {
                 key: data[0]["COUNT"],
                 label:this.selectedKeys[0].label
@@ -164,16 +163,37 @@ export class DashboardWidgetComponent implements OnInit {
   deleteClick() {
     this.deleted.emit(true);
   }
-  onShowDetails(dashbaordWidget: DashboardWidget) {
-    this.selectedDashboardWidget.emit(dashbaordWidget);
+  onShowDetails() {
+    switch(this.dashboardWidget.widget.widgetType.type ){
+      case this.widgetTypeEnum.Table:  {
+        this.onDetail.emit([this.results, []]);
+        break;
+      }
+      case this.widgetTypeEnum.Card : {
+      this.onDetail.emit([this.result, [] ]);
+      break;
+      }
+      default : this.onDetail.emit([this.results, this.basicData]);
+
+    }
   }
   showDetails() {
-    this.selectedCard.emit([this.results]);
+    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
+      this.selectedCard.emit([this.results]);
+    }else{
+      if(this.dashboardWidget.widget.dataSourceDetails== null)
+         this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+           data=>  this.selectedCard.emit([data])
+         );
+      else this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
+           data=>  this.selectedCard.emit([data])
+         );
+    }
   }
 
   selectData(event) {
     let table=[];
-    if(this.dashboardWidget.widget.dataSource.type== Constants.restAPI){
+    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
      this.results.forEach(elm=>{
         if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
           table.push(elm);
@@ -182,10 +202,8 @@ export class DashboardWidgetComponent implements OnInit {
     this.selectedCard.emit([table]);
 
     } else {
-      console.log();
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
-         // var sqlText= data.text+" where "+this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key+"= '"+event.element._model.label+"'";
           this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
              this.selectedCard.emit([dat]);
           }

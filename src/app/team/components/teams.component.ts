@@ -28,7 +28,7 @@ export class TeamsComponent implements OnInit {
   constructor(
     private router: Router,
     private teamService: TeamsService,
-    private confirmationService: ConfirmationService, 
+    private confirmationService: ConfirmationService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class TeamsComponent implements OnInit {
   }
   share(node){
     this.currentTeam=this.teams.find(team=> team.id==node.key);
-    this.addMembers=this.members.filter(user => this.currentTeam.members.find(u => u.id == user.id)==undefined);
+    this.addMembers=this.members.filter(user => this.currentTeam.members.find(u => u.id == user.id) == undefined);
     this.displayShare=true;
   }
   shareWithOthers(){
@@ -88,12 +88,13 @@ onDelete(node){
       this.teamService.deleteTeam(node.key).subscribe(
         (result)=>{
           this.messageService.add({severity:'info', summary:'Confirmed', detail:'Team'+ result.title+' was deleted'});
+          this.changeLocation();
         },
         (error)=>{
           this.messageService.add({severity:'info', summary:'Confirmed', detail:' Error in server side'});
         },
         ()=>{
-          this.changeLocation();
+
         }
       );
     },
@@ -135,7 +136,7 @@ filterMember(event, tab) {
           filtered.push(member);
       }
   }
-  
+
   this.filtredMembers = filtered;
 }
 }

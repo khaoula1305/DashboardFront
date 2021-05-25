@@ -34,21 +34,18 @@ export class WidgetConfigurationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.widget = new Widget();
-    this.widgetService.changeWidget(this.widget);
     const id = this.route.snapshot.params.title;
     this.currentDashboard = this.dashboardsService.getCurretDashboard();
-    this.widgetService.currentWidget.subscribe(
-      (widget) => {
-        this.widget = widget;
-      }
-    );
-    this.dashboardWidgetService
-      .getAllDashboardWidget(this.currentDashboard.id)
+    this.dashboardWidgetService.getDashboardWidget(this.currentDashboard.id, id)
       .subscribe((data) => {
-        this.dashboardWidget = data.find((e) => e.id == id);
+        this.dashboardWidget = data;
         this.widget = this.dashboardWidget.widget;
         this.widgetService.changeWidget(this.widget);
+        this.widgetService.currentWidget.subscribe(
+          (widget) => {
+            this.widget = widget;
+          }
+        );
       },
         (err) => console.log(err),
         () => this.load = true);
