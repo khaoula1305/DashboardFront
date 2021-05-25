@@ -47,7 +47,6 @@ export class DataSourceService {
       const httpOptions = {
         headers: headers
       };
-     console.log(datasource.userName);
       return this.http.get<any[]>(datasource.url, httpOptions);
 
     }

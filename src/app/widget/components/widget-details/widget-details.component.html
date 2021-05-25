@@ -1,6 +1,6 @@
     <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
     <!--widget details-->
-    <p-card header="{{title}}">
+    <p-card header="{{title}}" *ngIf="load">
       <div  [ngSwitch]="widget.widgetType.type">
           <div *ngSwitchCase="widgetTypeEnum.Table">
                 <!--Filter and Pagination -->
@@ -49,9 +49,9 @@
           <div *ngSwitchCase="widgetTypeEnum.Card">
                   <p-card styleClass="cardColor">
                       <div class="p-d-flex">
-                          <p  style="font-weight: bold;">{{results.label}}</p>
+                          <p  style="font-weight: bold;">{{cardResults.label}}</p>
                       <p-divider layout="vertical" ></p-divider>
-                      <p  style="font-weight: 500;">{{results.key | formatingData}}</p>
+                      <p  style="font-weight: 500;">{{cardResults.key | formatingData}}</p>
                       </div>
                   </p-card>
           </div>

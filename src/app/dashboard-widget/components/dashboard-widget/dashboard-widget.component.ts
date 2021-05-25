@@ -166,11 +166,11 @@ export class DashboardWidgetComponent implements OnInit {
   onShowDetails() {
     switch(this.dashboardWidget.widget.widgetType.type ){
       case this.widgetTypeEnum.Table:  {
-        this.onDetail.emit([this.results, []]);
+        this.onDetail.emit([this.results, {}]);
         break;
       }
       case this.widgetTypeEnum.Card : {
-      this.onDetail.emit([this.result, [] ]);
+      this.onDetail.emit([[], this.result ]);
       break;
       }
       default : this.onDetail.emit([this.results, this.basicData]);

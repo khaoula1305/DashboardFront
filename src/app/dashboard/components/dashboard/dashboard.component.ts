@@ -55,8 +55,9 @@ export class DashboardComponent implements OnInit {
   visibleSidebarDetail = false;
   selectedDashboardWidget: DashboardWidget;
   //Details
-  results;
+  results: any[];
   chartResults: any;
+  cardResults: any;
   cols: any[];
   visibleSidebarCard = false;
   customTable:any;
@@ -323,9 +324,9 @@ export class DashboardComponent implements OnInit {
   onShowDetails(event,dashboardwidget) {
     this.selectedDashboardWidget = dashboardwidget;
     this.visibleSidebarDetail = true;
-    console.log(event)
     this.results = event[0];
     this.chartResults = event[1];
+    this.cardResults= event[1];
   }
   showDetails(event) {
     this.results = event[0];
