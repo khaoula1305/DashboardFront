@@ -5,5 +5,5 @@ export class Dashboard{
     title: string;
     description: string;
     dashboardWidgets?: DashboardWidget[];
-    team:Team;
+    team: Team;
 }

@@ -13,7 +13,7 @@ export class WidgetTypeService {
   constructor(private http: HttpClient) { }
 
   getAllWidgetTypes(): Observable<WidgetType[]>{
-    return this.http.get<WidgetType[]>(this.host+'allwidgettypes');
+    return this.http.get<WidgetType[]>(this.host + 'allwidgettypes');
   }
 
   addWidgetType(widgetType: WidgetType){

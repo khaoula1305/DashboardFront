@@ -58,16 +58,16 @@ export class DashboardWidgetComponent implements OnInit {
               let somme=0;
               this.results.forEach(elm => {
                 somme+=elm[this.selectedKeys[0].key];
-              })
+              });
               this.result = {
                 key: somme,
                 label:this.selectedKeys[0].label
-              }
+              };
               break;
             }
             default : {
              this.createBasicData();
-              break;
+             break;
             }
           }
         },
@@ -87,26 +87,26 @@ export class DashboardWidgetComponent implements OnInit {
              }
             case this.widgetTypeEnum.Card : {
               this.result = {
-                key: data[0]["COUNT"],
+                key: data[0].COUNT,
                 label:this.selectedKeys[0].label
-              }
+              };
               break;
             }
             default : {
-              var labels=[];
-              var dimensions=[];
-              for(let key in data[0]){
-                let originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
+              const labels=[];
+              const dimensions=[];
+              for(const key in data[0]){
+                const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
                   labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
                 }
-                else   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} );
+                else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
                 }
-               let dim= labels.pop();
+              const dim= labels.pop();
               data.forEach(element=>{
                dimensions.push(element[dim.label.toUpperCase()]);
                labels.forEach( lab=>{
-                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) lab.backgroundColor.push(this.generateColor());
+                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
                  lab.data.push(element[lab.label.toUpperCase()]);
                });
               });
@@ -125,14 +125,14 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   createBasicData(){
-    var labels=[];
-    var dimensions=[];
-    var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
+    const labels=[];
+    const dimensions=[];
+    const dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
       if(!element.isDimension){
  labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
       }
-    })
+    });
     this.results.forEach((elm) => {
       let repeat=true;
       for (let index = 0; index < dimensions.length; index++) {
@@ -140,15 +140,15 @@ export class DashboardWidgetComponent implements OnInit {
         repeat=false;
         labels.forEach(lab=>{
           lab.data[index]+=elm[lab.key];
-        })
-         break;
+        });
+        break;
        }
       }
       if(repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab=>{
           lab.data.push(elm[lab.key]);
-        })
+        });
       }
     });
     this.basicData = { labels: dimensions, datasets: labels };
@@ -181,25 +181,27 @@ export class DashboardWidgetComponent implements OnInit {
     if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
       this.selectedCard.emit([this.results]);
     }else{
-      if(this.dashboardWidget.widget.dataSourceDetails== null)
+      if(this.dashboardWidget.widget.dataSourceDetails== null) {
          this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
            data=>  this.selectedCard.emit([data])
          );
-      else this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
+      }
+      else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
            data=>  this.selectedCard.emit([data])
          );
+      }
     }
   }
 
   selectData(event) {
-    let table=[];
+    const table=[];
     if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
      this.results.forEach(elm=>{
         if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
           table.push(elm);
         }
       });
-    this.selectedCard.emit([table]);
+     this.selectedCard.emit([table]);
 
     } else {
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
@@ -210,7 +212,7 @@ export class DashboardWidgetComponent implements OnInit {
            );
 
         }
-      )
+      );
     }
 }
 

@@ -62,7 +62,7 @@ import { WidgetComponent } from './components/widget/widget.component';
     InputTextModule,
     ChartModule
   ],
-  exports:[
+  exports: [
     WidgetPanelComponent,
     CardComponent,
     TableComponent,

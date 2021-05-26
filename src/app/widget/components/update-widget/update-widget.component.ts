@@ -14,7 +14,7 @@ import { WidgetType } from '../../models/widget-type';
 })
 export class UpdateWidgetComponent implements OnInit {
 
-  load: boolean = false;
+  load = false;
   widgetTypeEnum = WidgetTypeEnum;
   widgetTypes: WidgetType[];
   widget: Widget;
@@ -28,7 +28,7 @@ export class UpdateWidgetComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
-      this.widgetService.getWidget(id).subscribe((data) => {
+    this.widgetService.getWidget(id).subscribe((data) => {
         this.widget = data;
 
         this.widgetService.changeWidget(this.widget);
@@ -41,7 +41,7 @@ export class UpdateWidgetComponent implements OnInit {
       },
         (err) => console.log(err),
         () => {
-          this.load = true
+          this.load = true;
   });
 
     this.widgetTypeService.getAllWidgetTypes().subscribe(

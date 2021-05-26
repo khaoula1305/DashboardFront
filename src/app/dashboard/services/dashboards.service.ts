@@ -14,10 +14,10 @@ export class DashboardsService {
   constructor(private http: HttpClient) { }
 
   getAllDashboards(): Observable<Dashboard[]>{
-    return this.http.get<Dashboard[]>(this.host+'AllDashboards');
+    return this.http.get<Dashboard[]>(this.host + 'AllDashboards');
   }
   getDashboard(dashboardId: any): Observable<Dashboard>{
-    return this.http.get<Dashboard>(this.host+dashboardId);
+    return this.http.get<Dashboard>(this.host + dashboardId);
   }
 
   addDashboard(dashboard: Dashboard): Observable<Dashboard>{
@@ -30,10 +30,10 @@ export class DashboardsService {
   getCurretDashboard(): Dashboard{
     return JSON.parse(localStorage.getItem('currentDashboard'));
   }
-  updateDashboard(dashboard: Dashboard):Observable<Dashboard>{
-    return this.http.put<Dashboard>(this.host+ '?id='+  dashboard.id, dashboard);
+  updateDashboard(dashboard: Dashboard): Observable<Dashboard>{
+    return this.http.put<Dashboard>(this.host + '?id=' +  dashboard.id, dashboard);
   }
   deleteDashboard(dashboardId: any): Observable<Dashboard>{
-    return this.http.delete<Dashboard>(this.host+ dashboardId);
+    return this.http.delete<Dashboard>(this.host + dashboardId);
   }
 }

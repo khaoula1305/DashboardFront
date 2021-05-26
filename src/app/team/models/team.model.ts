@@ -1,5 +1,5 @@
-import { Dashboard } from "../../dashboard/models/dashboard.model";
-import { User } from "./User.model";
+import { Dashboard } from '../../dashboard/models/dashboard.model';
+import { User } from './User.model';
 
 export class Team{
     id?: any;

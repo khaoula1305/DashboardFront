@@ -37,12 +37,12 @@ export class AddWidgetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dashboard= this.dashboardsService.getCurretDashboard();
+    this.dashboard = this.dashboardsService.getCurretDashboard();
     this.widgetService.currentWidget.subscribe((widget) => {
       this.widget = widget;
     });
     this.widget = new Widget();
-    this.widget.metaDataSources=[];
+    this.widget.metaDataSources = [];
     this.widgetService.changeWidget(this.widget);
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
@@ -55,8 +55,8 @@ export class AddWidgetComponent implements OnInit {
   }
 
   onSelectedQuery() {
-    if (this.widget.dataSource != null) this.disableQueriesDropdown = true;
-    //widget types filter
+    if (this.widget.dataSource != null) { this.disableQueriesDropdown = true; }
+    // widget types filter
     this.dataSourceService
       .getDataFrom(this.widget.dataSource)
       .subscribe((dataBody) => {
@@ -72,8 +72,9 @@ export class AddWidgetComponent implements OnInit {
                   item.type == this.widgetTypeEnum.Table ||
                   item.type == this.widgetTypeEnum.Card
 
-                )
+                ) {
                   this.widgetTypes.push(item);
+                }
               });
             },
             (error) => {
@@ -85,8 +86,9 @@ export class AddWidgetComponent implements OnInit {
             (data) => {
               this.widgetTypes = [];
               data.forEach((item) => {
-                if (item.type == this.widgetTypeEnum.Card || item.type == this.widgetTypeEnum.Table)
+                if (item.type == this.widgetTypeEnum.Card || item.type == this.widgetTypeEnum.Table) {
                   this.widgetTypes.push(item);
+                }
               });
             },
             (error) => {
@@ -111,7 +113,10 @@ export class AddWidgetComponent implements OnInit {
       this.widget.minItemCols = 1;
       this.widget.minItemRows = 1;
       this.widgetService.addWidget(this.widget).subscribe((result) => {
-        this.router.navigate(['/dashboards', this.dashboard.id]);
+        console.log(this.dashboard);
+        if(this.dashboard!=null) this.router.navigate(['/dashboards', this.dashboard.id]);
+        else this.router.navigateByUrl('/widgets');
+
       });
     }
   }

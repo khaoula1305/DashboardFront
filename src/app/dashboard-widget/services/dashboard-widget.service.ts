@@ -15,18 +15,18 @@ export class DashboardWidgetService {
   constructor(private http: HttpClient) {
   }
   getAllDashboardWidget(dashboardId: any): Observable<DashboardWidget[]> {
-    return this.http.get<DashboardWidget[]>(this.host+dashboardId+'/DashboardWidget');
+    return this.http.get<DashboardWidget[]>(this.host + dashboardId + '/DashboardWidget');
   }
   getDashboardWidget(dashboardId: any, dashboardWidgetId: any): Observable<DashboardWidget> {
-    return this.http.get<DashboardWidget>(this.host+dashboardId+'/DashboardWidget/'+dashboardWidgetId);
+    return this.http.get<DashboardWidget>(this.host + dashboardId + '/DashboardWidget/' + dashboardWidgetId);
   }
-  addDashboardWidget( dashboardId: any, dashboardWidget: DashboardWidget):  Observable<DashboardWidget>{
-   return  this.http.post<DashboardWidget>(this.host+dashboardId+'/DashboardWidget', dashboardWidget);
+  addDashboardWidget( dashboardId: any, dashboardWidget: DashboardWidget): Observable<DashboardWidget>{
+   return  this.http.post<DashboardWidget>(this.host + dashboardId + '/DashboardWidget', dashboardWidget);
   }
   deleteDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget): Observable<DashboardWidget>{
-    return this.http.delete<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/'+ dashboardWidget.id);
+    return this.http.delete<DashboardWidget>(this.host + dashboardId + '/DashboardWidget/' + dashboardWidget.id);
   }
-  updateDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget) : Observable<DashboardWidget>{
-    return this.http.put<DashboardWidget>(this.host + dashboardId+'/DashboardWidget/', dashboardWidget);
+  updateDashboardWidget(dashboardId: any, dashboardWidget: DashboardWidget): Observable<DashboardWidget>{
+    return this.http.put<DashboardWidget>(this.host + dashboardId + '/DashboardWidget/', dashboardWidget);
   }
 }

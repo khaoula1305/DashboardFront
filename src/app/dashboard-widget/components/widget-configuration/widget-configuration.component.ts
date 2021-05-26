@@ -19,7 +19,7 @@ import { Widget } from 'src/app/widget/models/widget.model';
 export class WidgetConfigurationComponent implements OnInit {
   currentDashboard: Dashboard;
   dashboardWidget: DashboardWidget;
-  load: boolean = false;
+  load = false;
   widgetTypeEnum = WidgetTypeEnum;
   widgetTypes: WidgetType[];
   widget: Widget;
@@ -53,7 +53,7 @@ export class WidgetConfigurationComponent implements OnInit {
 
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
-        //filter to be implemented
+        // filter to be implemented
         this.widgetTypes = data;
       },
       (error) => {
