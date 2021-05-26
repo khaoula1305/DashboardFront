@@ -4,7 +4,7 @@
       <div  [ngSwitch]="widget.widgetType.type">
           <div *ngSwitchCase="widgetTypeEnum.Table">
                 <!--Filter and Pagination -->
-                <p-table  class="p-field p-col-12 p-md-12" style="height: 400px" #dt2 [value]="results"  scrollWidth="900px" [scrollable]="true" dataKey="id"
+                <p-table  class="p-field p-col-12 p-md-12" [style]="{'height': '400px'}"  #dt2 [value]="results"  scrollWidth="900px" [scrollable]="true" dataKey="id"
                 [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5]" styleClass="p-datatable-customers"
                 [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [globalFilterFields]="customTable">

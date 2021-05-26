@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { QueriesComponent } from './data-source/components/queries/queries.component';
+import { DataSourceComponent } from './data-source/components/data-source/data-source.component';
 
 const routes: Routes = [
   {
     path: 'dashboards',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
-  { 
-    path: 'dataSources', 
-    loadChildren: () => import('./data-source/data-source.module').then(m => m.DataSourceModule) 
+  {
+    path: 'queries',
+    loadChildren: () => import('./data-source/data-source.module').then(m => m.DataSourceModule)
   },
-  { 
-    path: 'queries', 
-    component: QueriesComponent,
+  {
+    path: 'dataSources',
+    component: DataSourceComponent,
 
   },
   {

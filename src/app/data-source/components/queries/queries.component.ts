@@ -29,12 +29,12 @@ export class QueriesComponent implements OnInit {
     );
   }
   queryDetails(queryId : any){
-    this.router.navigate(['/queryDetails', queryId]);
+    this.router.navigate(['queries/queryDetails', queryId]);
 
   }
 updateQuery(query: DataSource){
   if(query.type== Constants.restAPI){
-    this.router.navigate(['/updateDatasource', query.id]);
+    this.router.navigate(['queries/updateDatasource', query.id]);
   }
   else{
     window.open(Constants.queryBuilderURL, "_blank");
