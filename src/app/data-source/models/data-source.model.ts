@@ -2,5 +2,6 @@
 export class DataSource{
     id: number;
     title: string;
-    type:string;
+    type: string;
+    description: string;
 }

@@ -8,21 +8,31 @@
       <div class="p-col-12 p-fluid p-grid">
         <div class="p-field p-col-12 p-md-6">
           <h5>Title *</h5>
-          <input type="text" pInputText [(ngModel)]="widget.title" name="title" required />
+          <input type="text" pInputText [(ngModel)]="widget.title" name="title" placeholder="Enter a title" required />
         </div>
-        <div class="p-field p-col-12 p-md-6">
+        <div class=" p-md-6">
           <h5>Description</h5>
-          <textarea rows="5" cols="73.2" name="description" type="text" rows="4" pInputTextarea
+          <textarea rows="5" cols="72" name="description" type="text" rows="4" pInputTextarea 
             [(ngModel)]="widget.description"></textarea>
         </div>
 
         <div class="p-field p-col-12 p-md-6">
-          <h5>Query *</h5>
+          <h5>Query * </h5>
+          
+          <p-dropdown required inputId="query" name="selectedQuery" [options]="groupedQueries" [(ngModel)]="selectedItm"
+            placeholder="Select a query" (ngModelChange)="onSelectedQuery()"
+            [disabled]="disableQueriesDropdown" [filter]="true" filterBy="label,additionalValue" [showClear]="true" [group]="true">
+            <ng-template let-group pTemplate="group">
+              <div class="p-d-flex p-ai-center">
+                <img src="assets/images/{{group.value}}" style="width:65px;vertical-align:middle"/>
+                <span style="margin-left:.25em">{{group.label}}</span>
+              </div>
+          </ng-template>
+          </p-dropdown>
+          <button pButton pRipple type="button" label="Query Content" icon="pi pi-info-circle" *ngIf="widget.dataSource"
+          class="p-button-rounded p-button-success p-button-text" iconPos="left" (click)="showPopup(false)"></button>
 
-          <p-dropdown required inputId="query" name="selectedQuery" [options]="queries" [(ngModel)]="widget.dataSource"
-            placeholder="Select" (ngModelChange)="onSelectedQuery()" optionLabel="title"
-            [disabled]="disableQueriesDropdown"></p-dropdown>
-          <button pButton pRipple type="button" label="New Query" routerLink='/dataSource' icon="pi pi-plus"
+          <button pButton pRipple type="button" label="New Query" routerLink='/dataSources' icon="pi pi-plus"
             class="p-button-rounded p-button-success p-button-text" iconPos="left"></button>
         </div>
         <div class="p-field p-col-12 p-md-6">
@@ -50,16 +60,81 @@
         <div class="p-field p-col-12 p-md-12">
           <p-divider></p-divider>
         </div>
-        <div class="p-field p-col-12 p-md-12" *ngIf="widget.dataSource && widget.dataSource.type=='Query Builder' && widget.widgetType">
+        <div class="p-field p-col-12 p-md-12"
+          *ngIf="widget.dataSource && widget.dataSource.type=='Query Builder' && widget.widgetType">
           <h5>Query Details</h5>
-          <p-dropdown inputId="queryDetails" name="selectedQueryDetails" [options]="queries" [(ngModel)]="widget.DataSourceDetails"
-            placeholder="Select a query details" (ngModelChange)="onSelectedQueryDetails()" optionLabel="title"></p-dropdown>
+          <p-dropdown inputId="queryDetails" name="selectedQueryDetails" [options]="filteredQueries"
+            [(ngModel)]="widget.dataSourceDetails" placeholder="Select a query details"
+            optionLabel="title" [filter]="true" filterBy="title" [showClear]="true"></p-dropdown>
+           <br>
+        <button  (click)="showPopup(true)" pButton pRipple type="button"  icon="pi pi-info-circle"
+        class="p-button-rounded p-button-success p-button-text" iconPos="left" label="Query Content" *ngIf="widget.dataSourceDetails"></button>
         </div>
 
+        <!--Popup details query-->
+        <p-dialog [modal]="true" [responsive]="true" [(visible)]="displayPopup" [style]="{width: '65vw'}" [baseZIndex]="10000">
+          <p-header>
+            &nbsp;&nbsp;&nbsp;Query Content
+            <button type="button" (click)="showDescriptionDialog()" icon="pi pi-info-circle" pButton pRipple class="p-button-rounded p-button-success p-button-text" ></button>
+        </p-header>
+          <p-table  #dt2 [value]="results" [scrollable]="true" dataKey="id"  [style]="{width: '60vw'}"
+          [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5]" styleClass="p-datatable-customers"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="customTable">
+          <ng-template pTemplate="caption">
+              <div class="p-d-flex">
+                  <span class="p-input-icon-left p-ml-auto">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                  </span>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup >
+                <col style="width:250px"  *ngFor="let col of cols">
+            </colgroup>
+        </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+                    <th *ngFor="let col of cols">
+                        {{col.header}}
+                    </th>
+                </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tab>
+            <tr>
+                <td  *ngFor="let col of cols" (click)="showTable(col.field)">
+                    <div class="description">
+                        {{tab[col.field]}}
+                    </div>
+                </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="5">No results found.</td>
+              </tr>
+          </ng-template>
+         </p-table>
+
+          <ng-template pTemplate="footer">
+          </ng-template>
+        </p-dialog>
+<!--Popup details query-->
+<!--Popup description query-->
+<p-dialog header="Query Description" [(visible)]="displayDescription" [modal]="true" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}" [baseZIndex]="10000" 
+    [draggable]="false" [resizable]="false">
+    <p>
+      {{queryDescription}}
+    </p>
+</p-dialog>
+<!--Popup description query-->
         <div class="box" *ngIf="widget.widgetType">
           <div [ngSwitch]="widget.widgetType.type">
             <div *ngSwitchCase="widgetTypeEnum.Table">
-              <p-card> <app-table></app-table>  </p-card>
+              <p-card>
+                <app-table></app-table>
+              </p-card>
             </div>
             <div *ngSwitchCase="widgetTypeEnum.Card">
               <app-card (added)="onAddedClick($event)"></app-card>

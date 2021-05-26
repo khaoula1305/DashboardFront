@@ -8,39 +8,44 @@
   <p-card>
     <div class=" my-card">
       <div class="p-col-12 p-fluid p-grid">
-        <div class="p-field p-col-12 p-md-5">
+        <div class="p-field p-col-12 p-md-6">
           <h5>Data Source Name *</h5>
-          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" placeholder="Enter title" required />
+          <input type="text" pInputText [(ngModel)]="dataSource.title" name="title" placeholder="Enter a name" required />
         </div>
         <div class="p-field p-col-12 p-md-6">
           <h5>Rest Host *</h5>
-          <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" required />
+          <input type="text" pInputText [(ngModel)]="dataSource.url" name="url" placeholder="Enter a host" required />
         </div>
-         <div class="p-field p-col-12 p-md-5">
+         <div class="p-field p-col-12 p-md-6">
           <h5>Authentication Type </h5>
-          <p-dropdown [options]="authenticationType" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a Type" [showClear]="true"></p-dropdown>
+          <p-dropdown [options]="authenticationType" [(ngModel)]="selectedAuthetification" name="selectedAuthetification" optionLabel="name" placeholder="Select a type" [showClear]="true"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <h5>Description</h5>
+          <textarea rows="5" cols="76" name="description" type="text" rows="4" pInputTextarea
+            [(ngModel)]="dataSource.description"></textarea>
         </div>
       </div>
       <div *ngIf='selectedAuthetification' [ngSwitch]="selectedAuthetification.name">
           <p-divider></p-divider>
           <div class="p-col-12 p-fluid p-grid" *ngSwitchCase="'Basic Auth'">
-            <div class="p-md-5">
+            <div class="p-md-6">
               <h5>User Id for basic authentication </h5>
               <input type="text" pInputText [(ngModel)]="dataSource.userName" name="userName" />
             </div>
-            <div class="p-md-5">
+            <div class="p-md-6">
               <h5>Password  for basic authentication </h5>
               <input type="text" pInputText [toggleMask]="true" type="password" [(ngModel)]="dataSource.password" name="password" />
             </div>
           </div>
           <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'Bearer Token'">
-            <div class="p-md-5">
+            <div class="p-md-6">
               <h5>Access Token </h5>
               <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
             </div>
           </div>
           <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'OAuth 2.0'">
-            <div class="p-md-5">
+            <div class="p-md-6">
               <h5>To Be implemented </h5>
               <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
             </div>

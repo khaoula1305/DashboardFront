@@ -10,6 +10,8 @@ import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { DataSource } from 'src/app/data-source/models/data-source.model';
 import { WidgetType } from '../../models/widget-type';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
+import { Constants } from 'src/app/constants/constants';
+import { SelectItem, SelectItemGroup } from 'primeng/api';
 
 @Component({
   selector: 'app-add-widget',
@@ -27,6 +29,21 @@ export class AddWidgetComponent implements OnInit {
   graphEnum = GraphEnum;
   disableQueriesDropdown = false;
   dashboard: Dashboard;
+  displayPopup: boolean;
+  showButton = false;
+  results: any;
+  load = false;
+  customTable: any;
+  cols: any[] = [];
+  filteredQueries: DataSource[];
+  groupedQueries: SelectItemGroup[];
+  items: SelectItem[];
+  showButton1 = false;
+  selectedItm: any;
+  displayDescription = false;
+  queryDescription: string;
+  isQueryDetails:boolean;
+  previousUrl: string;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -37,16 +54,47 @@ export class AddWidgetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dashboard= this.dashboardsService.getCurretDashboard();
+
+    this.dashboard = this.dashboardsService.getCurretDashboard();
     this.widget = new Widget();
     this.widgetService.changeWidget(this.widget);
     this.widgetService.currentWidget.subscribe((widget) => {
       widget.metaDataSources = [];
       this.widget = widget;
     });
+
+    let restItems = [];
+    let qbItems = [];
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;
+        data.forEach((elm) => {
+          if (elm.type == Constants.restAPI) {
+            restItems.push({
+              label: elm.title,
+              value: elm.id,
+              additionalValue: 'rest.png',
+            });
+          } else if (elm.type == Constants.queryBuilder) {
+            qbItems.push({
+              label: elm.title,
+              value: elm.id,
+              additionalValue: 'QueryBuilder.png',
+            });
+          }
+        });
+        this.groupedQueries = [
+          {
+            label: Constants.restAPI,
+            value: 'rest.png',
+            items: restItems,
+          },
+          {
+            label: Constants.queryBuilder,
+            value: 'QueryBuilder.png',
+            items: qbItems,
+          },
+        ];
       },
       (error) => {
         console.log(error);
@@ -55,51 +103,107 @@ export class AddWidgetComponent implements OnInit {
   }
 
   onSelectedQuery() {
-    if (this.widget.dataSource != null) this.disableQueriesDropdown = true;
-    //widget types filter
+    this.showButton1 = true;
+    this.dataSourceService.getAllDataSources().subscribe(
+      (data)=>{
+        this.widget.dataSource = data.find(elm=> {return elm.id == this.selectedItm});
+    if(this.widget.dataSource != null) this.disableQueriesDropdown = true;
+            //widget types filter
     this.dataSourceService
-      .getDataFrom(this.widget.dataSource)
-      .subscribe((dataBody) => {
-        if (dataBody.length >= 2 && Object.keys(dataBody[0]).length >= 2) {
-          this.widgetTypeService.getAllWidgetTypes().subscribe(
-            (data) => {
-              this.widgetTypes = [];
-              data.forEach((item) => {
-                if (
-                  item.type == this.graphEnum.Bar ||
-                  item.type == this.graphEnum.Line ||
-                  item.type == this.graphEnum.Pie ||
-                  item.type == this.widgetTypeEnum.Table ||
-                  item.type == this.widgetTypeEnum.Card
+    .getDataFrom(this.widget.dataSource)
+    .subscribe((dataBody) => {
+      if (dataBody.length >= 2 && Object.keys(dataBody[0]).length >= 2) {
+        this.widgetTypeService.getAllWidgetTypes().subscribe(
+          (data) => {
+            this.widgetTypes = [];
+            data.forEach((item) => {
+              if (
+                item.type == this.graphEnum.Bar ||
+                item.type == this.graphEnum.Line ||
+                item.type == this.graphEnum.Pie ||
+                item.type == this.widgetTypeEnum.Table ||
+                item.type == this.widgetTypeEnum.Card
+              )
+                this.widgetTypes.push(item);
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else if (dataBody.length == 1) {
+        this.widgetTypeService.getAllWidgetTypes().subscribe(
+          (data) => {
+            this.widgetTypes = [];
+            data.forEach((item) => {
+              if (
+                item.type == this.widgetTypeEnum.Card ||
+                item.type == this.widgetTypeEnum.Table
+              )
+                this.widgetTypes.push(item);
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    });
+    },
+      (error) => {
+        console.log(error);
+      }
+      );
 
-                )
-                  this.widgetTypes.push(item);
-              });
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        } else if (dataBody.length == 1) {
-          this.widgetTypeService.getAllWidgetTypes().subscribe(
-            (data) => {
-              this.widgetTypes = [];
-              data.forEach((item) => {
-                if (item.type == this.widgetTypeEnum.Card || item.type == this.widgetTypeEnum.Table)
-                  this.widgetTypes.push(item);
-              });
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        }
-      });
 
+    this.dataSourceService.getAllDataSources().subscribe(
+      (data) => {
+        this.filteredQueries = [];
+        data.forEach((elm) => {
+          if (elm.type == Constants.queryBuilder)
+            this.filteredQueries.push(elm);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  onSelectedQueryDetails() {
-  
+  onShowQueryDetails(dataSourceQuery: DataSource) {
+    this.showButton = true;
+    this.dataSourceService
+      .getDataFrom(dataSourceQuery)
+      .subscribe((data) => {
+        this.results = data;
+        for (let key in this.results[0]) {
+          this.cols.push({ field: key, header: key });
+        }
+        this.customTable = [];
+        this.cols.forEach((elm) => {
+          this.customTable.push(elm.header);
+        });
+      });
+  }
+
+  showPopup(isDetail : boolean) {
+    this.displayPopup = true;
+    this.results = [];
+    this.cols = [];
+    if(isDetail) {
+      this.isQueryDetails = true;
+      this.onShowQueryDetails(this.widget.dataSourceDetails);
+    }
+    else {
+      this.isQueryDetails = false;
+      this.onShowQueryDetails(this.widget.dataSource);
+    }
+  }
+
+  showDescriptionDialog() {
+    this.displayDescription=true;
+    if(this.isQueryDetails) this.queryDescription = this.widget.dataSourceDetails.description;
+    else this.queryDescription = this.widget.dataSource.description;
   }
 
   onSubmit(m: NgForm) {
@@ -111,7 +215,8 @@ export class AddWidgetComponent implements OnInit {
       this.widget.minItemCols = 1;
       this.widget.minItemRows = 1;
       this.widgetService.addWidget(this.widget).subscribe((result) => {
-        this.router.navigate(['/dashboards', this.dashboard.id]);
+        if(this.dashboard!=null) this.router.navigate(['/dashboards', this.dashboard.id]);
+        else this.router.navigateByUrl('/widgets');
       });
     }
   }

@@ -28,6 +28,10 @@ import { TableComponent } from './components/widget-types/table/table.component'
 import { SharedModule } from '../shared/shared-module.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChartModule } from 'primeng/chart';
+import {DialogModule} from 'primeng/dialog';
+
+import {TreeModule} from 'primeng/tree';
+import {TreeTableModule} from 'primeng/treetable';
 @NgModule({
   declarations: [
     AddWidgetComponent,
@@ -60,7 +64,10 @@ import { ChartModule } from 'primeng/chart';
     ButtonModule,
     SharedModule,
     InputTextModule,
-    ChartModule
+    ChartModule,
+    DialogModule,
+    TreeModule,
+    TreeTableModule
   ],
   exports:[
     WidgetPanelComponent
