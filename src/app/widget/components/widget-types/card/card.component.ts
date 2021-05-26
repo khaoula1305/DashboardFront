@@ -15,9 +15,9 @@ export class CardComponent implements OnInit {
   results = [];
   allKeys: MetaDataSource[] = [];
   cardKey: MetaDataSource;
-  cardRes=0;
+  cardRes = 0;
   newCard = false;
-  updateCard=false;
+  updateCard = false;
 
   widget: Widget;
 
@@ -34,7 +34,7 @@ export class CardComponent implements OnInit {
       .getDataFrom(this.widget.dataSource)
       .subscribe((data) => {
         this.results = data;
-        for (let key in data[0]) {
+        for (const key in data[0]) {
           this.allKeys.push({
             id: UUID.UUID(),
             key,
@@ -42,15 +42,15 @@ export class CardComponent implements OnInit {
             isDimension: false,
           });
         }
-        if(this.widget.metaDataSources.length!=0){
+        if (this.widget.metaDataSources.length != 0){
       this.results.forEach((elm) => (this.cardRes += elm[this.cardKey.key]));
         }
       });
-    if (this.widget.metaDataSources.length==0) {
+    if (this.widget.metaDataSources.length == 0) {
       this.newCard = true;
     }
     else {
-      this.updateCard=true;
+      this.updateCard = true;
       this.cardKey = this.widget.metaDataSources[0];
     }
   }
@@ -58,16 +58,16 @@ export class CardComponent implements OnInit {
   onSelectedDimension(event) {
     if (this.cardKey != undefined) {
       this.allKeys.push(this.cardKey);
-      var removeIndex = this.widget.metaDataSources
-        .map(function (item) {
+      const removeIndex = this.widget.metaDataSources
+        .map(function(item) {
           return item.id;
         })
         .indexOf(this.cardKey.id);
       this.widget.metaDataSources.splice(removeIndex, 1);
     }
     this.cardKey = event;
-    var removeIndex = this.allKeys
-      .map(function (item) {
+    const removeIndex = this.allKeys
+      .map(function(item) {
         return item.id;
       })
       .indexOf(this.cardKey.id);

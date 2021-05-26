@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardWidgetRoutingModule } from './dashboard-widget-routing.module';
 import { DashboardWidgetComponent } from './components/dashboard-widget/dashboard-widget.component';
-import { DashboardWidgetDetailsComponent } from './components/dashboard-widget-details/dashboard-widget-details.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -17,12 +16,12 @@ import {ChartModule} from 'primeng/chart';
 import { SharedModule } from '../shared/shared-module.module';
 import { WidgetConfigurationComponent } from './components/widget-configuration/widget-configuration.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { WidgetModule } from '../widget/widget.module';
 
 @NgModule({
   declarations: [
     DashboardWidgetComponent,
-    DashboardWidgetDetailsComponent,
-    WidgetConfigurationComponent,
+    WidgetConfigurationComponent
   ],
   imports: [
     CommonModule,
@@ -39,10 +38,11 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     ChartModule,
     SharedModule,
-    InputTextModule
+    InputTextModule,
+    WidgetModule
     ],
   exports: [
     DashboardWidgetComponent
-  ]
+    ]
 })
 export class DashboardWidgetModule { }

@@ -14,10 +14,10 @@ import { WidgetsService } from 'src/app/widget/services/widgets.service';
 export class TableComponent implements OnInit {
 
   results = [];
-  allKeys: MetaDataSource[]=[];
-  labelsWrited=false;
+  allKeys: MetaDataSource[] = [];
+  labelsWrited = false;
   widget: Widget;
-  customTable:any;
+  customTable: any;
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -30,37 +30,37 @@ export class TableComponent implements OnInit {
     this.dataSourceService.getDataFrom(this.widget.dataSource).subscribe(
       (data) => {
         this.results = data;
-          for(let key in data[0]){
-            if(!this.widget.metaDataSources.find(elm=>elm.key==key)){
-            this.allKeys.push({id: UUID.UUID(),key, label: key, isDimension:false});
+        for (const key in data[0]){
+            if (!this.widget.metaDataSources.find(elm => elm.key == key)){
+            this.allKeys.push({id: UUID.UUID(), key, label: key, isDimension: false});
             }
-          } 
+          }
       });
   }
 
   onSelectedKey(key: string, id: string){
-    this.widget.metaDataSources.push({ id, key, label: key, isDimension:false});
+    this.widget.metaDataSources.push({ id, key, label: key, isDimension: false});
     this.removeSelectedKeyFromFirstList(id);
-    this.customTable=[];
-    this.widget.metaDataSources.forEach(elm=>{
+    this.customTable = [];
+    this.widget.metaDataSources.forEach(elm => {
       this.customTable.push(elm.key);
     });
   }
 
   onRemovedKey(key: string, id: string) {
-    this.allKeys.push({id, key, label: key, isDimension:false});
+    this.allKeys.push({id, key, label: key, isDimension: false});
     this.removeSelectedKeyFromSecondList(id);
-    this.customTable=[];
-    this.widget.metaDataSources.forEach(elm=>{
+    this.customTable = [];
+    this.widget.metaDataSources.forEach(elm => {
       this.customTable.push(elm.key);
     });
   }
   removeSelectedKeyFromFirstList(id: string) {
-    var removeIndex = this.allKeys.map(function (item) { return item.id; }).indexOf(id);
+    const removeIndex = this.allKeys.map(function(item) { return item.id; }).indexOf(id);
     this.allKeys.splice(removeIndex, 1);
   }
   removeSelectedKeyFromSecondList(id: string) {
-    var removeIndex = this.widget.metaDataSources.map(function (item) { return item.id; }).indexOf(id);
+    const removeIndex = this.widget.metaDataSources.map(function(item) { return item.id; }).indexOf(id);
     this.widget.metaDataSources.splice(removeIndex, 1);
   }
 

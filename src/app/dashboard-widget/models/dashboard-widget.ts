@@ -8,8 +8,8 @@ export class DashboardWidget{
    yAxisValue: number;
    columnValue: number;
    rowValue: number;
-   maxItemCols:number;
-   maxItemRows:number;
+   maxItemCols: number;
+   maxItemRows: number;
    dashboard: Dashboard;
    widget: Widget;
 }

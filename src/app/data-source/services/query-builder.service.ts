@@ -13,14 +13,14 @@ export class QueryBuilderService {
   constructor(private http: HttpClient) { }
 
   getData(idWidget: any): Observable<any[]>{
-    return this.http.get<any[]>(this.host+idWidget);
+    return this.http.get<any[]>(this.host + idWidget);
   }
 
- getDataForDetails(idWidget:any, label: string): Observable<any[]>{
+ getDataForDetails(idWidget: any, label: string): Observable<any[]>{
    const headers = new HttpHeaders({
     'Content-Type': 'application/json'
 });
-   const json=JSON.stringify(label);
-  return this.http.get<any[]>(this.host+'Details/'+idWidget+'/'+label, {headers: headers});
+   const json = JSON.stringify(label);
+   return this.http.get<any[]>(this.host + 'Details/' + idWidget + '/' + label, {headers});
 }
 }

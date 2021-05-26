@@ -21,7 +21,7 @@ export class WidgetListComponent implements OnInit {
   err = false;
   widget: any;
   searchText: any;
-  visibleSidebar=false;
+  visibleSidebar = false;
   selectedWidget: Widget;
   results = [];
   widgetType: string;
@@ -106,7 +106,7 @@ export class WidgetListComponent implements OnInit {
   }
 
   onShowDetails(widget: Widget) {
-    this.selectedWidget=widget;
+    this.selectedWidget = widget;
     this.visibleSidebar = true;
   }
 }

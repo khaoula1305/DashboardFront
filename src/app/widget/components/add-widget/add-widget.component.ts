@@ -54,17 +54,16 @@ export class AddWidgetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.dashboard = this.dashboardsService.getCurretDashboard();
-    this.widget = new Widget();
-    this.widgetService.changeWidget(this.widget);
     this.widgetService.currentWidget.subscribe((widget) => {
-      widget.metaDataSources = [];
       this.widget = widget;
     });
 
     let restItems = [];
     let qbItems = [];
+    this.widget = new Widget();
+    this.widget.metaDataSources = [];
+    this.widgetService.changeWidget(this.widget);
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
         this.queries = data;

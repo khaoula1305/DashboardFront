@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Widget } from '../models/widget.model';
 import { DashboardWidget } from '../../dashboard-widget/models/dashboard-widget';
-import {BehaviorSubject} from 'rxjs';  
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,10 @@ export class WidgetsService {
   private widgetSource = new BehaviorSubject<Widget>(new Widget());
   currentWidget = this.widgetSource.asObservable();
   getCurrentWidget(){
-    console.log('curent from using service',this.widgetSource.getValue());
+    console.log('curent from using service', this.widgetSource.getValue());
   }
   getWidget(widgetId: any): Observable<Widget>{
-    return this.http.get<Widget>(this.host+widgetId);
+    return this.http.get<Widget>(this.host + widgetId);
   }
   changeWidget(widget: Widget) {
     this.widgetSource.next(widget);
@@ -30,13 +30,13 @@ export class WidgetsService {
   }
 
   getAllDashboardWidgets(widgetId: any): Observable<DashboardWidget[]> {
-    return this.http.get<DashboardWidget[]>(this.host + widgetId+ '/AllDashboardWidgets');
+    return this.http.get<DashboardWidget[]>(this.host + widgetId + '/AllDashboardWidgets');
   }
   addWidget(widget: Widget): Observable<Widget> {
     return this.http.post<Widget>(this.host, widget);
   }
 
-  deleteWidget(widgetId: any) : Observable<Widget>{
+  deleteWidget(widgetId: any): Observable<Widget>{
     return this.http.delete<Widget>(this.host + widgetId);
   }
 

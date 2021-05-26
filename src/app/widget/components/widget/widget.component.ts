@@ -20,7 +20,7 @@ export class WidgetComponent implements OnInit {
     };
   }
   notHover(){
-    this.hoverStyle={};
+    this.hoverStyle = {};
   }
 
 }

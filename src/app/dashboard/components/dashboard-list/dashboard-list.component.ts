@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { DashboardsService } from 'src/app/dashboard/services/dashboards.service';
-import {MessageService} from 'primeng/api';
 import { DashboardWidgetService } from 'src/app/dashboard-widget/services/dashboard-widget.service';
+import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api';
 @Component({
   selector: 'app-dashboard-list',
   templateUrl: './dashboard-list.component.html',
   styleUrls: ['./dashboard-list.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 
 })
 export class DashboardListComponent implements OnInit {
@@ -21,6 +21,7 @@ export class DashboardListComponent implements OnInit {
     private dashboardService: DashboardsService,
     private router: Router,
     private dashboardWidgetService: DashboardWidgetService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService) { }
 
     showDialog() {
@@ -42,41 +43,45 @@ export class DashboardListComponent implements OnInit {
   updateDashboard(dashboard: Dashboard){
     this.router.navigate(['updateDashboard',dashboard.id ]);
   }
-  showConfirm(message: any) {
-    this.messageService.clear();
-    this.messageService.add(message);
-}
-onConfirm() {
-  this.deleteDashboard(this.dashboard);
-  this.messageService.clear('a');
-}
-onReject() {
-  this.messageService.clear('a');
-}
-  deleteDashboard(dashboard: any){
-    this.dashboardService.deleteDashboard(dashboard.id).subscribe(
-      (result)=>{
-        console.log(result);
-      },
-      (error)=>{
-        console.log(error);
-      },
-      ()=>{
-      this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/']);
-        });
-      }
-    );
-  }
   onDelete(dashboard: Dashboard){
-    this.dashboard=dashboard;
+    let message;
     this.dashboardWidgetService.getAllDashboardWidget(dashboard.id).subscribe(
       (data) => {
         if(data.length>0){
-          this.showConfirm({key: 'a', sticky: true, severity:'warn', summary:'Dashboard is not empty', detail:' This will remove the dashboard and its associated widgets and cannot be undone!'});
+        message = 'This will remove the dashboard and its associated widgets and cannot be undone!';
         } else{
-          this.showConfirm({key: 'a',  severity:'custom', summary:'Are you sure you want to remove this Dashboard?', detail:' !'});
+          message= 'Are you sure you want to remove this Dashboard?';
         }
+        this.confirmationService.confirm({
+          message: message,
+          header: 'Delete Confirmation',
+          icon: 'pi pi-info-circle',
+          accept: () => {
+            this.dashboardService.deleteDashboard(dashboard.id).subscribe(
+              (result)=>{
+                this.messageService.add({severity:'info', summary:'Confirmed', detail:'Dashboard deleted'});
+              },
+              (error)=>{
+                this.messageService.add({severity:'error', summary:'Rejected', detail:'Dashboard not deleted'});
+              },
+              ()=>{
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                  this.router.navigate(['/dashboards']);
+                });
+              }
+            );
+          },
+          reject: (type) => {
+              switch(type) {
+                  case ConfirmEventType.REJECT:
+                      this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+                  break;
+                  case ConfirmEventType.CANCEL:
+                      this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+                  break;
+              }
+          }
+      });
       }
     );
   }

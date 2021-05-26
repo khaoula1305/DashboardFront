@@ -34,7 +34,7 @@ export class DashboardWidgetComponent implements OnInit {
   result;
   widgetTypeOnUpdate:WidgetType;
   visibleSidebar=false;
-  @Output() selectedDashboardWidget = new EventEmitter<any>();
+  @Output() onDetail = new EventEmitter<any>();
   @Output() selectedCard = new EventEmitter<any>();
 
   constructor(
@@ -58,16 +58,16 @@ export class DashboardWidgetComponent implements OnInit {
               let somme=0;
               this.results.forEach(elm => {
                 somme+=elm[this.selectedKeys[0].key];
-              })
+              });
               this.result = {
                 key: somme,
                 label:this.selectedKeys[0].label
-              }
+              };
               break;
             }
             default : {
              this.createBasicData();
-              break;
+             break;
             }
           }
         },
@@ -87,26 +87,26 @@ export class DashboardWidgetComponent implements OnInit {
              }
             case this.widgetTypeEnum.Card : {
               this.result = {
-                key: data[0]["COUNT"],
+                key: data[0].COUNT,
                 label:this.selectedKeys[0].label
-              }
+              };
               break;
             }
             default : {
-              var labels=[];
-              var dimensions=[];
-              for(let key in data[0]){
-                let originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
+              const labels=[];
+              const dimensions=[];
+              for(const key in data[0]){
+                const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
                   labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
                 }
-                else   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} );
+                else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
                 }
-               let dim= labels.pop();
+              const dim= labels.pop();
               data.forEach(element=>{
                dimensions.push(element[dim.label.toUpperCase()]);
                labels.forEach( lab=>{
-                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) lab.backgroundColor.push(this.generateColor());
+                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
                  lab.data.push(element[lab.label.toUpperCase()]);
                });
               });
@@ -125,14 +125,14 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   createBasicData(){
-    var labels=[];
-    var dimensions=[];
-    var dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
+    const labels=[];
+    const dimensions=[];
+    const dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
       if(!element.isDimension){
  labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
       }
-    })
+    });
     this.results.forEach((elm) => {
       let repeat=true;
       for (let index = 0; index < dimensions.length; index++) {
@@ -140,15 +140,15 @@ export class DashboardWidgetComponent implements OnInit {
         repeat=false;
         labels.forEach(lab=>{
           lab.data[index]+=elm[lab.key];
-        })
-         break;
+        });
+        break;
        }
       }
       if(repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab=>{
           lab.data.push(elm[lab.key]);
-        })
+        });
       }
     });
     this.basicData = { labels: dimensions, datasets: labels };
@@ -163,35 +163,56 @@ export class DashboardWidgetComponent implements OnInit {
   deleteClick() {
     this.deleted.emit(true);
   }
-  onShowDetails(dashbaordWidget: DashboardWidget) {
-    this.selectedDashboardWidget.emit(dashbaordWidget);
+  onShowDetails() {
+    switch(this.dashboardWidget.widget.widgetType.type ){
+      case this.widgetTypeEnum.Table:  {
+        this.onDetail.emit([this.results, {}]);
+        break;
+      }
+      case this.widgetTypeEnum.Card : {
+      this.onDetail.emit([[], this.result ]);
+      break;
+      }
+      default : this.onDetail.emit([this.results, this.basicData]);
+
+    }
   }
   showDetails() {
-    this.selectedCard.emit([this.results]);
+    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
+      this.selectedCard.emit([this.results]);
+    }else{
+      if(this.dashboardWidget.widget.dataSourceDetails== null) {
+         this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+           data=>  this.selectedCard.emit([data])
+         );
+      }
+      else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
+           data=>  this.selectedCard.emit([data])
+         );
+      }
+    }
   }
 
   selectData(event) {
-    let table=[];
-    if(this.dashboardWidget.widget.dataSource.type== Constants.restAPI){
+    const table=[];
+    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
      this.results.forEach(elm=>{
         if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
           table.push(elm);
         }
       });
-    this.selectedCard.emit([table]);
+     this.selectedCard.emit([table]);
 
     } else {
-      console.log();
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
-         // var sqlText= data.text+" where "+this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key+"= '"+event.element._model.label+"'";
           this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
              this.selectedCard.emit([dat]);
           }
            );
 
         }
-      )
+      );
     }
 }
 

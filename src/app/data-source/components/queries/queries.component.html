@@ -1,24 +1,5 @@
-<p-toast position="bottom-center" key="a" (onClose)="onReject()" [baseZIndex]="5000">
-    <ng-template let-message pTemplate="message">
-        <div class="p-flex p-flex-column" style="flex: 1">
-            <div class="p-text-center">
-                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-                <h4>{{message.summary}}</h4>
-                <p>{{message.detail}}</p>
-            </div>
-            <div class="p-grid p-fluid">
-                <div class="p-col-6">
-                    <button type="button" pButton (click)="onConfirm()" label="OK" class="p-button-success"></button>
-                </div>
-                <div class="p-col-6">
-                    <button type="button" pButton (click)="onReject()" label="Cancel"
-                        class="p-button-secondary"></button>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-</p-toast>
-<p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 <div class="headerShared">
     <h4>Saved Queries</h4>
     <div style="text-align: right;">
@@ -48,9 +29,6 @@
                             icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
                         <button pButton pRipple type="button" title="Delete" (click)="onDelete(tab)"
                             icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-                        <button pButton pRipple type="button" title="Create Widget" routerLink='/addWidget'
-                            icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
-
                     </td>
                 </tr>
             </ng-template>

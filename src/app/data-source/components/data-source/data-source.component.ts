@@ -13,7 +13,7 @@ export class DataSourceComponent implements OnInit {
   ngOnInit(): void {
   }
   goToQueryBuilder(){
-    window.open(Constants.queryBuilderURL, "_blank");
+    window.open(Constants.queryBuilderURL, '_blank');
   }
 
 }

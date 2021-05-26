@@ -38,8 +38,8 @@
   </ng-template>
 </p-toast>
 <p-toast></p-toast>
-<p-sidebar  [modal]="false"  [(visible)]="visibleSidebar" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
-  <app-dashboard-widget-details *ngIf="visibleSidebar" [dashboardWidget]="selectedDashboardWidget.widgetdashboard"></app-dashboard-widget-details>
+<p-sidebar  [modal]="false"  [(visible)]="visibleSidebarDetail" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
+  <app-widget-details *ngIf="visibleSidebarDetail" [title]="selectedDashboardWidget.title" [widget]="selectedDashboardWidget.widget" [results]="results" [chartResults]="chartResults" [cardResults]="cardResults"></app-widget-details>
 </p-sidebar>
 <p-sidebar header="Hey" [modal]="false" [(visible)]="visibleSidebarCard" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
   <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
@@ -120,11 +120,11 @@
 <gridster  [options]="options">
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
     <h3>This dashboard doesn't have widgets just yet!</h3>
-    <p>Add one or more widgets from Library.</p> 
+    <p>Add one or more widgets from Library.</p>
    <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
   </div>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
-    <app-dashboard-widget (selectedDashboardWidget)="onShowDetails($event, item)"  (selectedCard)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
+    <app-dashboard-widget (onDetail)="onShowDetails($event, item.widgetdashboard)"  (selectedCard)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
   </gridster-item>
 </gridster>
 </div>

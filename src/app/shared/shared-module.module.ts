@@ -1,4 +1,4 @@
-import { FormatingData } from "../pipes/formating-data.pipe";
+import { FormatingData } from '../pipes/formating-data.pipe';
 import { NgModule } from '@angular/core';
 
 

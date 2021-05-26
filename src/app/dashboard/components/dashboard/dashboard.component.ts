@@ -52,10 +52,12 @@ export class DashboardComponent implements OnInit {
   //Teams;
   teams: Team[];
   selectedTeam: Team;
-  visibleSidebar = false;
+  visibleSidebarDetail = false;
   selectedDashboardWidget: DashboardWidget;
   //Details
   results: any[];
+  chartResults: any;
+  cardResults: any;
   cols: any[];
   visibleSidebarCard = false;
   customTable:any;
@@ -319,9 +321,12 @@ export class DashboardComponent implements OnInit {
       summary: 'Are you sure you want to remove this Dashboard?',
     });
   }
-  onShowDetails(evt, item) {
-    this.selectedDashboardWidget = item;
-    this.visibleSidebar = true;
+  onShowDetails(event,dashboardwidget) {
+    this.selectedDashboardWidget = dashboardwidget;
+    this.visibleSidebarDetail = true;
+    this.results = event[0];
+    this.chartResults = event[1];
+    this.cardResults= event[1];
   }
   showDetails(event) {
     this.results = event[0];

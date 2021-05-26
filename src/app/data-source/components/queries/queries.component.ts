@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {Message, MessageService} from 'primeng/api';
 import { Constants } from 'src/app/constants/constants';
 import { DataSource } from '../../models/data-source.model';
 import { DataSourceService } from '../../services/data-source.service';
-
+import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api';
 @Component({
   selector: 'app-queries',
   templateUrl: './queries.component.html',
   styleUrls: ['./queries.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 
 })
 export class QueriesComponent implements OnInit {
   searchText:any;
   queries: DataSource[];
   query: any;
-  msgs:Message[]=[];
   constructor(
-    private dataSourceService: DataSourceService, 
+    private dataSourceService: DataSourceService,
     private router: Router,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.dataSourceService.getAllDataSources().subscribe(
@@ -30,55 +29,52 @@ export class QueriesComponent implements OnInit {
     );
   }
   queryDetails(queryId : any){
-    this.router.navigate(['/queryDetails', queryId]);
+    this.router.navigate(['queries/queryDetails', queryId]);
 
   }
-  showConfirm(message: any) {
-    this.messageService.clear();
-    this.messageService.add(message);
-}
-onConfirm() {
-  this.messageService.clear('a');
-  this.deleteQuery(this.query);}
-
-onReject() {
-  this.messageService.clear('a');
-}
 updateQuery(query: DataSource){
   if(query.type== Constants.restAPI){
-    this.router.navigate(['/updateDatasource', query.id]);
+    this.router.navigate(['queries/updateDatasource', query.id]);
   }
   else{
     window.open(Constants.queryBuilderURL, "_blank");
   }
 }
 onDelete(query: DataSource){
-  this.query=query;
+  let message;
   this.dataSourceService.getAllWidgets(query.id).subscribe(
     (data) => {
       if(data.length>0){
-        this.showConfirm({key: 'a', sticky: true, severity:'warn', summary:'Query is already used', detail:' This will remove the data and its associated widget and cannot be undone!'});
+       message= ' This will remove the data and its associated widget and cannot be undone!';
       } else{
-        this.showConfirm({key: 'a', sticky: true, severity:'custom', summary:'Are you sure you want to remove this Query?', detail:' !'});
+       message= 'Are you sure you want to remove this Query?';
       }
+      this.confirmationService.confirm({
+        message: message,
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+          this.dataSourceService.deleteDataSource(query.id).subscribe(
+            (result)=>{
+            this.messageService.add({severity:'info', summary:'Confirmed', detail:'The query was deleted successfully !'});
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/queries']);
+            });
+            }
+          );
+        },
+        reject: (type) => {
+            switch(type) {
+                case ConfirmEventType.REJECT:
+                    this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+                break;
+                case ConfirmEventType.CANCEL:
+                    this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+                break;
+            }
+        }
+    });
     }
   );
 }
-  deleteQuery(query: DataSource){
-    this.dataSourceService.deleteDataSource(query.id).subscribe(
-      (result)=>{
-      },
-      (error)=>{
-      },
-      ()=>{
-        this.msgs=[
-          {severity:'success',sticky: true, summary:'Success', detail:'The query was deleted successfully !'}
-        ]; 
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/queries']); 
-        });
-      }
-    );
-  }
-
 }
