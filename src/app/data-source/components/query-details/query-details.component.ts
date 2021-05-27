@@ -17,11 +17,7 @@ export class QueryDetailsComponent implements OnInit {
   resultsFormated: any[]=[];
   selectedTable=[];
   selectedTableCols=[];
-  cols2: any[]=[];
-  resultsFormatedToTree: TreeNode<any>[]=[];
   resultsWithoutTable=[];
-  selectedItems: any[]=[];
-  selectedItem: TreeNode;
   cols: any[]=[];
   load= false;
   displayAll= true;
@@ -67,29 +63,6 @@ export class QueryDetailsComponent implements OnInit {
       }
     }
   }
-  ConvertJson= (out : TreeNode<any>[], obj: any )=>{
-    if(Array.isArray(obj)){
-      this.ConvertJson(out,obj[0]);
-    }
-   else{
-      Object.keys(obj).forEach(key => {
-        let valeur=obj[key];
-        let cle=key;
-        if( valeur !== null && (Array.isArray(valeur) || typeof valeur == Constants.object)){
-         out.push({data: valeur, label: cle, children: this.ConvertJson([],valeur)});
-        }
-         else {
-          out.push({data: valeur, label: cle});
-         }
-      });
-    }
-    return out
-  }
-  enableSelectItem(){
-    this.displayAll=false;
-    this.resultsFormatedToTree=[];
-    this.ConvertJson(this.resultsFormatedToTree,this.results);
-  }
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
@@ -118,24 +91,6 @@ export class QueryDetailsComponent implements OnInit {
       }
     );
 
-  }
-  nodeSelect(event){
-    this.cols2=[];
-    if(Array.isArray(event.node.data)){
-      this.selectedItems=event.node.data;
-    }else{
-      if(event.node.parent != undefined){
-        this.selectedItems=event.node.parent.data;
-      }else{
-        this.selectedItems=this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
-      }
-    }
-    for (let key in this.selectedItems[0] ) {
-      this.cols2.push( { field: key, header: key });
-    }
-  }
-  nodeUnselect(event){
-    console.log(event);
   }
 
 

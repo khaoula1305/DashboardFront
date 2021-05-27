@@ -99,7 +99,7 @@
        </div>
 </p-overlayPanel>
 <div *ngIf="load">
-<p-divider ></p-divider>
+<hr>
 <div class="headerShared">
   <b>{{dashboard.title}}</b>
   <span class="p-input-icon-left">
@@ -115,7 +115,6 @@
   <button pButton pRipple type="button" label="delete" (click)="onDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
   <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
 </div>
-<p-divider ></p-divider>
 <app-widget-panel *ngIf="add" class="panel"  (added)="onAddedClick($event)" (hidden)="onHiddenClick($event)"></app-widget-panel>
 <gridster  [options]="options">
   <div class="message" *ngIf="empty && dashboardGridster.length==0">

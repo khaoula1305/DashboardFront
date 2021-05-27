@@ -25,6 +25,13 @@ export class RestEditionComponent implements OnInit {
   msgs:Message[]=[];
   files1: TreeNode<any>[];
   selectedFiles: TreeNode;
+
+  // Flotten
+  displayAll=false;
+  resultsFormatedToTree: TreeNode<any>[]=[];
+  cols2: any[]=[];
+  selectedItems: any[]=[];
+  selectedItem: TreeNode;
   constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
 
 
@@ -72,24 +79,21 @@ TestConnection(){
     }
   )
 }
-Preview(){
-  let url=this.dataSource.url;
-  this.dataSourceService.getDataFromURL(url).then(files => this.files1 = files);
-  console.log('files  ',this.files1);
-}
-Preview2(){
+preview(){
+  this.displayAll=true;
   let url=this.dataSource.url;
   this.saveRest();
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
       this.results=data;
-      this.files1=data;
-      console.log(this.files1);
       for (let key in this.results[0]) {
         this.cols.push( { field: key, header: key });
       }
+      this.resultsFormatedToTree=[];
+      this.ConvertJson(this.resultsFormatedToTree,this.results);
     },
     (error)=>{
+      this.displayAll=false;
       this.results=[];
       this.msgs=[
         {severity:'warn',sticky: true, summary:'Error', detail:'Connection Failed: Error:'}
@@ -125,6 +129,45 @@ saveRest(){
          );
 
     }
+  }
+  ConvertJson= (out : TreeNode<any>[], obj: any )=>{
+    if(Array.isArray(obj)){
+      this.ConvertJson(out,obj[0]);
+    }
+   else{
+      Object.keys(obj).forEach(key => {
+        let valeur=obj[key];
+        let cle=key;
+        if( valeur !== null && (Array.isArray(valeur) || typeof valeur == Constants.object)){
+         out.push({data: valeur, label: cle, children: this.ConvertJson([],valeur)});
+        }
+         else {
+          out.push({data: valeur, label: cle});
+         }
+      });
+    }
+    return out
+  }
+  nodeSelect(event){
+    console.log(event);
+    this.cols2=[];
+    if(Array.isArray(event.node.data)){
+      this.selectedItems=event.node.data;
+    }else{
+      if(event.node.parent != undefined){
+        this.selectedItems=event.node.parent.data;
+        console.log(this.results[event.node.parent.label][0][event.node.label]);
+      }else{
+    
+       this.selectedItems=this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
+      }
+    }
+    for (let key in this.selectedItems[0] ) {
+      this.cols2.push( { field: key, header: key });
+    }
+  }
+  nodeUnselect(event){
+    console.log(event);
   }
 
 }
