@@ -4,4 +4,5 @@ export class DataSource{
     title: string;
     type: string;
     description: string;
+    path: string;
 }

@@ -21,6 +21,7 @@ import { RestEditionComponent } from './components/rest-edition/rest-edition.com
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared-module.module';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {StepsModule} from 'primeng/steps';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ButtonModule,
     InputTextModule,
     SharedModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    StepsModule
 
   ]
 })

@@ -136,20 +136,32 @@
             </div>
           </div>
        </div>
-      <p-divider></p-divider>
-      <div class="p-col-12" >
-            <div  style="text-align: left;">
-              <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
-              <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-success"></button>
-          </div>
+       <div class="p-col-12">
+        <button pButton pRipple [disabled]="!rest.valid"  (click)="TestConnection()" type="button" label="Test Connection" class="p-button-rounded p-button-info"></button>
+         <button class="colorButton" (click)="preview()" label="Preview" pButton pRipple type="button" icon="pi pi-table" style="text-align:right" class="p-button-rounded p-button-info" ></button>
+        <button pButton pRipple [disabled]="!rest.valid"   type="submit" label="Save" class="p-button-rounded p-button-success"></button>
+       </div>
       </div>
-    </div>
   </p-card>
-  <p-card>
-    <button class="colorButton" (click)="preview()" label="preview" pButton pRipple type="button" icon="pi pi-table" style="text-align:right" class="p-button-rounded p-button-info" ></button>
-    <div  *ngIf="displayAll" >
+  <br>
+    <p-card>
+      <p-table [value]="results" [scrollable]="true" scrollHeight="200px">
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let col of cols">{{col.header}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td *ngFor="let col of cols">{{product[col.field]}}</td>
+            </tr>
+        </ng-template>
+      </p-table>
+      <!--Ici il y aura un choix pour définir la table concernée-->
+    <div *ngIf="notNormal">
+      <b>  There are several nested tables, you must choose one.</b>
       <p-tree  [value]="resultsFormatedToTree" selectionMode="single" [(selection)]="selectedItem"
-              (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+              (onNodeSelect)="tabeSelect($event)" ></p-tree>
       <div>Selected Node: {{selectedItem ? selectedItem.label : 'none'}} </div>
 
       <p-table  #dt2 [value]="selectedItems" [scrollable]="true" dataKey="id" [style]="{maxWidth:'1100px'}"
