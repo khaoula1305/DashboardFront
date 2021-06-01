@@ -32,6 +32,8 @@ import { UpdateWidgetComponent } from './components/update-widget/update-widget.
 import { GraphComponent } from './components/widget-types/graph/graph.component';
 import { CardComponent } from './components/widget-types/card/card.component';
 import { TableComponent } from './components/widget-types/table/table.component';
+import { CurrencyComponent } from './components/static/currency/currency.component';
+import {MultiSelectModule} from 'primeng/multiselect';
 @NgModule({
   declarations: [
     AddWidgetComponent,
@@ -43,7 +45,8 @@ import { TableComponent } from './components/widget-types/table/table.component'
     UpdateWidgetComponent,
     GraphComponent,
     CardComponent,
-    TableComponent
+    TableComponent,
+    CurrencyComponent
   ],
   imports: [
     CommonModule,
@@ -67,14 +70,16 @@ import { TableComponent } from './components/widget-types/table/table.component'
     ChartModule,
     DialogModule,
     TreeModule,
-    TreeTableModule
+    TreeTableModule,
+    MultiSelectModule
   ],
   exports: [
     WidgetPanelComponent,
     CardComponent,
     TableComponent,
     GraphComponent,
-    WidgetDetailsComponent
+    WidgetDetailsComponent,
+    CurrencyComponent
   ]
 })
 export class WidgetModule { }

@@ -181,7 +181,6 @@ saveRest(){
         this.selectedItems=event.node.parent.data;
         console.log(this.results[event.node.parent.label][0][event.node.label]);
       }else{
-    
        this.selectedItems=this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
       }
     }

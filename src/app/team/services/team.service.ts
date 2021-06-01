@@ -20,7 +20,7 @@ export class TeamsService {
   setCurrentUser(){
     this.getAllUsers().subscribe(
       data=>  {
-        localStorage.setItem('currentUser', JSON.stringify(data.find(u=> u.firstName=="Khaoula")));
+        localStorage.setItem('currentUser', JSON.stringify(data.pop));
     }
     )
   }

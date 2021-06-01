@@ -45,83 +45,87 @@ export class DashboardWidgetComponent implements OnInit {
   ) {}
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-     this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
-     if(this.dashboardWidget.widget.dataSource.type== Constants.restAPI){
-      this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
-        (data) => {
-          this.results=data;
-          switch(this.widgetType) {
-            case this.widgetTypeEnum.Table : {
-              break;
-             }
-            case this.widgetTypeEnum.Card : {
-              let somme=0;
-              this.results.forEach(elm => {
-                somme+=elm[this.selectedKeys[0].key];
-              });
-              this.result = {
-                key: somme,
-                label:this.selectedKeys[0].label
-              };
-              break;
-            }
-            default : {
-             this.createBasicData();
-             break;
-            }
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        ()=>{
-          this.load=true;
-        });
-     }else{
-      this.queryBuilder.getData(this.dashboardWidget.widget.id).subscribe(
-        (data) => {
-          this.results=data;
-          switch(this.widgetType) {
-            case this.widgetTypeEnum.Table : {
-              break;
-             }
-            case this.widgetTypeEnum.Card : {
-              this.result = {
-                key: data[0].COUNT,
-                label:this.selectedKeys[0].label
-              };
-              break;
-            }
-            default : {
-              const labels=[];
-              const dimensions=[];
-              for(const key in data[0]){
-                const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
-                if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
-                  labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
-                }
-                else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
-                }
-              const dim= labels.pop();
-              data.forEach(element=>{
-               dimensions.push(element[dim.label.toUpperCase()]);
-               labels.forEach( lab=>{
-                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
-                 lab.data.push(element[lab.label.toUpperCase()]);
+    if(this.widgetType == this.widgetTypeEnum.Static){
+      this.load=true
+    }else{
+      this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
+      if(this.dashboardWidget.widget.dataSource.type== Constants.restAPI){
+       this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+         (data) => {
+           this.results=data;
+           switch(this.widgetType) {
+             case this.widgetTypeEnum.Table : {
+               break;
+              }
+             case this.widgetTypeEnum.Card : {
+               let somme=0;
+               this.results.forEach(elm => {
+                 somme+=elm[this.selectedKeys[0].key];
                });
-              });
-              this.basicData = { labels: dimensions, datasets: labels };
+               this.result = {
+                 key: somme,
+                 label:this.selectedKeys[0].label
+               };
+               break;
+             }
+             default : {
+              this.createBasicData();
               break;
-            }
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        ()=>{
-          this.load=true;
-        });
-     }
+             }
+           }
+         },
+         (error) => {
+           console.log(error);
+         },
+         ()=>{
+           this.load=true;
+         });
+      }else{
+       this.queryBuilder.getData(this.dashboardWidget.widget.id).subscribe(
+         (data) => {
+           this.results=data;
+           switch(this.widgetType) {
+             case this.widgetTypeEnum.Table : {
+               break;
+              }
+             case this.widgetTypeEnum.Card : {
+               this.result = {
+                 key: data[0].COUNT,
+                 label:this.selectedKeys[0].label
+               };
+               break;
+             }
+             default : {
+               const labels=[];
+               const dimensions=[];
+               for(const key in data[0]){
+                 const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
+                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
+                   labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
+                 }
+                 else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
+                 }
+               const dim= labels.pop();
+               data.forEach(element=>{
+                dimensions.push(element[dim.label.toUpperCase()]);
+                labels.forEach( lab=>{
+                  if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+                  lab.data.push(element[lab.label.toUpperCase()]);
+                });
+               });
+               this.basicData = { labels: dimensions, datasets: labels };
+               break;
+             }
+           }
+         },
+         (error) => {
+           console.log(error);
+         },
+         ()=>{
+           this.load=true;
+         });
+      }
+    }
   }
 
   createBasicData(){

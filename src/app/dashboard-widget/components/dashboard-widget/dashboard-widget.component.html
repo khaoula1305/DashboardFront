@@ -29,6 +29,9 @@
                     </div>
                 </p-card>
         </div>
+        <div *ngSwitchCase="widgetTypeEnum.Static">  
+            <app-currency></app-currency>
+        </div>
         <div *ngSwitchDefault>
             <p-chart type="{{dashboardWidget.widget.widgetType.type}}" [data]="basicData" [options]="basicOptions" (onDataSelect)="selectData($event)">
             </p-chart>

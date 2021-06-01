@@ -1,0 +1,26 @@
+<div class="col-md-12">
+        
+    <div class="page-header">
+        <p-dropdown [options]="currencies" [(ngModel)]="base" (ngModelChange)="changeBase($event)" placeholder="Select Item" [virtualScroll]="true" optionLabel="name" [itemSize]="31" [filter]="true"></p-dropdown>
+      <small>{{base.name}} to other currencies</small>
+    </div>
+    
+    <div class="form-group">
+      <!-- Button trigger modal -->
+      <p-multiSelect [options]="currencies" [(ngModel)]="selectedCurrencies" defaultLabel="Select  Currency" optionLabel="name" display="chip"></p-multiSelect>
+    </div>
+    <p-table [value]="selectedCurrencies">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th >Value</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-currency>
+            <tr>
+                <td>{{ currency.name }}</td>
+                <td>{{ currency.value }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

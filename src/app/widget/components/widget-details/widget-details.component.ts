@@ -135,8 +135,6 @@ export class WidgetDetailsComponent implements OnInit {
   body: content,
   theme: 'plain',
   });
-  // Open PDF document in browser's new tab
-  // pdf.output('dataurlnewwindow')
   pdf.save(this.title + '.pdf');
 }
 

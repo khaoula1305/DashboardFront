@@ -30,16 +30,11 @@ export class UpdateDashboardComponent implements OnInit {
     );
   }
   onSubmit(m: NgForm) {
-    if ( m.untouched || m.invalid) {
-      alert('Required');
-    } else {
- 
       this.dashboard.title = m.value.title;
       this.dashboard.description= m.value.description;
       this.dashboardService.updateDashboard(this.dashboard).subscribe(
         result => this.router.navigate(['/'])
          );
-    }
   }
 
 }

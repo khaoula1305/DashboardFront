@@ -33,7 +33,6 @@ export class WidgetListComponent implements OnInit {
 
   constructor(
     private widgetService: WidgetsService,
-    private dataSourceService: DataSourceService,
     private router: Router,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService
@@ -43,7 +42,7 @@ export class WidgetListComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.widgetService.getAllWidgets().subscribe(
       (data) => {
-        this.myWidgets = data;
+        this.myWidgets = data.filter(widget => widget.widgetType.type != this.widgetTypeEnum.Static);
       },
       (error) => {
         console.error();
