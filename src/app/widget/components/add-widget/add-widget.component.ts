@@ -159,8 +159,12 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.filteredQueries = [];
         data.forEach((elm) => {
-          if (elm.type == Constants.queryBuilder)
-            this.filteredQueries.push(elm);
+          if (elm.type == Constants.queryBuilder){
+            console.log(elm.associatedQuery == this.widget.dataSource.id);
+            if(elm.associatedQuery == this.widget.dataSource.id){
+              this.filteredQueries.push(elm);
+            }
+          }
         });
       },
       (error) => {
