@@ -75,7 +75,6 @@ TestConnection(){
 Preview(){
   let url=this.dataSource.url;
   this.dataSourceService.getDataFromURL(url).then(files => this.files1 = files);
-  console.log('files  ',this.files1);
 }
 Preview2(){
   let url=this.dataSource.url;
@@ -84,7 +83,6 @@ Preview2(){
     (data)=>{
       this.results=data;
       this.files1=data;
-      console.log(this.files1);
       for (let key in this.results[0]) {
         this.cols.push( { field: key, header: key });
       }

@@ -149,7 +149,6 @@ export class DashboardComponent implements OnInit {
           });
       },
       (error) => {
-        console.log(error);
       },
       () => {
         this.load = true;
@@ -282,7 +281,6 @@ export class DashboardComponent implements OnInit {
       severity: 'custom',
       summary: 'Are you sure you want to remove this widget?',
     });
-    //this.showConfirm({key: 'a', sticky: true, severity:'custom', summary:'Are you sure you want to remove this widget?', detail:' !'});
   }
   showConfirm(message: any) {
     this.messageService.clear();
@@ -296,10 +294,8 @@ export class DashboardComponent implements OnInit {
   deleteDashboard() {
     this.dashboardService.deleteDashboard(this.dashboard.id).subscribe(
       (result) => {
-        console.log(result);
       },
       (error) => {
-        console.log(error);
       },
       () => {
         this.router
@@ -343,9 +339,9 @@ export class DashboardComponent implements OnInit {
 
   onExportPdf() {
     var pdf = new jsPDF();
-    pdf.text('Exported Data', 11, 8);
-    pdf.setFontSize(12);
-    pdf.setTextColor(99);
+    pdf.text(Constants.pdfTitle, Constants.coordX, Constants.coordY);
+    pdf.setFontSize(Constants.fontSize);
+    pdf.setTextColor(Constants.textColor);
     let headers = [];
     let object = [];
     this.cols.forEach((elm) => {
@@ -365,9 +361,7 @@ export class DashboardComponent implements OnInit {
       body: content,
       theme: 'plain',
     });
-    // Open PDF document in browser's new tab
-    //pdf.output('dataurlnewwindow')
-    pdf.save('Exported Data' + '.pdf');
+    pdf.save(Constants.pdfTitle + '.pdf');
   }
   clear(table: Table) {
     table.clear();

@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { WidgetTypeEnum } from '../../models/widgetTypeEnum';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
+import { Constants } from 'src/app/constants/constants';
 
 @Component({
   selector: 'app-widget-details',
@@ -89,7 +90,6 @@ export class WidgetDetailsComponent implements OnInit {
           }
         },
         (error) => {
-          console.log(error);
         },
         () => {
           this.load = true;
@@ -113,9 +113,9 @@ export class WidgetDetailsComponent implements OnInit {
   }
   onExportPdf(){
   const pdf = new jsPDF();
-  pdf.text(this.title, 11, 8);
-  pdf.setFontSize(12);
-  pdf.setTextColor(99);
+  pdf.text(this.title, Constants.coordX, Constants.coordY);
+  pdf.setFontSize(Constants.fontSize);
+  pdf.setTextColor(Constants.textColor);
   const headers = [];
   const object = [];
   this.widget.metaDataSources.forEach(elm => {
@@ -135,8 +135,6 @@ export class WidgetDetailsComponent implements OnInit {
   body: content,
   theme: 'plain',
   });
-  // Open PDF document in browser's new tab
-  // pdf.output('dataurlnewwindow')
   pdf.save(this.title + '.pdf');
 }
 

@@ -72,7 +72,6 @@ export class DashboardWidgetComponent implements OnInit {
           }
         },
         (error) => {
-          console.log(error);
         },
         ()=>{
           this.load=true;
@@ -116,7 +115,6 @@ export class DashboardWidgetComponent implements OnInit {
           }
         },
         (error) => {
-          console.log(error);
         },
         ()=>{
           this.load=true;

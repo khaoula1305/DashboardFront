@@ -110,7 +110,6 @@ export class QueryDetailsComponent implements OnInit {
           });
           },
           (error) => {
-            console.log(error);
             },
             () => {
            this.load=true;
@@ -135,7 +134,6 @@ export class QueryDetailsComponent implements OnInit {
     }
   }
   nodeUnselect(event){
-    console.log(event);
   }
 
 

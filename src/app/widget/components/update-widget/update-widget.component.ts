@@ -49,7 +49,6 @@ export class UpdateWidgetComponent implements OnInit {
         this.widgetTypes = data;
       },
       (error) => {
-        console.log(error);
       }
     );
   }
