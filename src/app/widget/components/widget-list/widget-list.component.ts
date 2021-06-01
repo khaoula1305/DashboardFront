@@ -42,7 +42,7 @@ export class WidgetListComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.widgetService.getAllWidgets().subscribe(
       (data) => {
-        this.myWidgets = data.filter(widget => widget.widgetType.type != this.widgetTypeEnum.Static);
+        this.myWidgets = data.filter(widget => widget.widgetType.type != this.widgetTypeEnum.Currency);
       },
       (error) => {
         console.error();

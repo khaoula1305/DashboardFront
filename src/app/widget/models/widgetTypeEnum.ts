@@ -2,7 +2,7 @@ export enum WidgetTypeEnum {
    Table = 'table',
    Card = 'card',
    Graph= 'graph',
-   Static='static'
+   Currency='currency'
 }
 
 export enum GraphEnum{

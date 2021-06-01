@@ -45,7 +45,7 @@ export class DashboardWidgetComponent implements OnInit {
   ) {}
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-    if(this.widgetType == this.widgetTypeEnum.Static){
+    if(this.widgetType == this.widgetTypeEnum.Currency){
       this.load=true
     }else{
       this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
