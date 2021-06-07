@@ -29,19 +29,20 @@ export class RestEditionComponent implements OnInit {
 
   // Flotten
   notNormal=false;
+  display=false;
   resultsFormatedToTree: TreeNode<any>[]=[];
   cols2: any[]=[];
   selectedItems: any[]=[];
   selectedItem: TreeNode;
 
-  constructor(private dataSourceService: DataSourceService, private router: Router,private messageService: MessageService) { }
+  constructor(private dataSourceService: DataSourceService, private router: Router) { }
 
 
   ngOnInit(): void {
+    this.dataSource.path="";
     this.authenticationType=[
-      {name:'Basic Auth'},
+      {name:'Basic Authentication'},
       {name:'Bearer Token'},
-      {name:'OAuth 2.0'},
       {name:'Other'}
     ];
     this.headers=[];
@@ -89,6 +90,7 @@ next(){
 preview(){
   let url=this.dataSource.url;
   this.saveRest();
+  this.display=true;
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
       this.results=[];
@@ -189,6 +191,7 @@ saveRest(){
     }
   }
   onSubmit(rest: NgForm) {
+    console.log(this.dataSource);
     if (rest.untouched || rest.invalid) {
       alert('Required');
     } else {

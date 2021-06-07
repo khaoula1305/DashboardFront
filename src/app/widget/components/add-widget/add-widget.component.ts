@@ -96,7 +96,6 @@ export class AddWidgetComponent implements OnInit {
         ];
       },
       (error) => {
-        console.log(error);
       }
     );
   }
@@ -127,7 +126,6 @@ export class AddWidgetComponent implements OnInit {
             });
           },
           (error) => {
-            console.log(error);
           }
         );
       } else if (dataBody.length == 1) {
@@ -143,14 +141,12 @@ export class AddWidgetComponent implements OnInit {
             });
           },
           (error) => {
-            console.log(error);
           }
         );
       }
     });
     },
       (error) => {
-        console.log(error);
       }
       );
 
@@ -159,12 +155,14 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.filteredQueries = [];
         data.forEach((elm) => {
-          if (elm.type == Constants.queryBuilder)
-            this.filteredQueries.push(elm);
+          if (elm.type == Constants.queryBuilder){
+            if(elm.associatedQuery == this.widget.dataSource.id){
+              this.filteredQueries.push(elm);
+            }
+          }
         });
       },
       (error) => {
-        console.log(error);
       }
     );
   }

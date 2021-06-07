@@ -35,11 +35,9 @@ export class UpdateDataSourceComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     this.dataSourceService.getDataSource(id).subscribe(
       data => {
-        console.log(data);
        this.dataSource = data;
       },
       (error) => {
-        console.log(error);
       },
       () => {
         this.load=true;
@@ -59,7 +57,6 @@ export class UpdateDataSourceComponent implements OnInit {
     ]
   }
   onChange(event){
-    console.log(event);
   }
   deleteParam(param){
     var removeIndex = this.params.map(function (item) { return item.id; }).indexOf(param);

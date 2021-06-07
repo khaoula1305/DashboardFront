@@ -134,8 +134,11 @@ export class DashboardWidgetComponent implements OnInit {
     const dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
     this.dashboardWidget.widget.metaDataSources.forEach(element=>{
       if(!element.isDimension){
- labels.push( { label: element.label, key:element.key, backgroundColor: this.generateColor(), data:[]} );
+        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie){
+        labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
       }
+      else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
+         }
     });
     this.results.forEach((elm) => {
       let repeat=true;
@@ -151,6 +154,7 @@ export class DashboardWidgetComponent implements OnInit {
       if(repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab=>{
+        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
           lab.data.push(elm[lab.key]);
         });
       }
@@ -174,8 +178,11 @@ export class DashboardWidgetComponent implements OnInit {
         break;
       }
       case this.widgetTypeEnum.Card : {
-      this.onDetail.emit([[], this.result ]);
+      this.onDetail.emit([[], {} ]);
       break;
+      }
+      case this.widgetTypeEnum.Currency:{
+        this.onDetail.emit([[], {} ])
       }
       default : this.onDetail.emit([this.results, this.basicData]);
 

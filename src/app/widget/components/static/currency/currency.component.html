@@ -2,12 +2,12 @@
         
     <div class="page-header">
         <p-dropdown [options]="currencies" [(ngModel)]="base" (ngModelChange)="changeBase($event)" placeholder="Select Item" [virtualScroll]="true" optionLabel="name" [itemSize]="31" [filter]="true"></p-dropdown>
-      <small>{{base.name}} to other currencies</small>
+      <small (click)=onDetails()>{{base.name}} to other currencies</small>
     </div>
     
     <div class="form-group">
       <!-- Button trigger modal -->
-      <p-multiSelect [options]="currencies" [(ngModel)]="selectedCurrencies" defaultLabel="Select  Currency" optionLabel="name" display="chip"></p-multiSelect>
+      <p-multiSelect [options]="allCurrencies" [(ngModel)]="selectedCurrencies" defaultLabel="Select  Currency" optionLabel="name" display="chip"></p-multiSelect>
     </div>
     <p-table [value]="selectedCurrencies">
         <ng-template pTemplate="header">

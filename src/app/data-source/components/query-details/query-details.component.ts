@@ -83,7 +83,6 @@ export class QueryDetailsComponent implements OnInit {
           });
           },
           (error) => {
-            console.log(error);
             },
             () => {
            this.load=true;

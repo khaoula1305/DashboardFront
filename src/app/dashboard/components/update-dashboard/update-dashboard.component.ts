@@ -22,7 +22,6 @@ export class UpdateDashboardComponent implements OnInit {
         this.dashboard = data;
       },
       (error) => {
-        console.log(error);
       },
       () => {
         this.load=true;

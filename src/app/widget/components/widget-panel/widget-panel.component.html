@@ -8,6 +8,6 @@
       <app-widget *ngFor="let widget of widgets | filter: searchText" [widget]="widget"   (click)="addClick(widget)" class="pointer"></app-widget>
       <p-scrollTop target="parent" styleClass="custom-scrolltop" [threshold]="100" icon="pi pi-arrow-up"></p-scrollTop>
     </p-scrollPanel>
-  <button pButton pRipple type="button" label="Create widget" routerLink="/widgets/addWidget" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
+  <button pButton pRipple type="button" label="Create Widget" routerLink="/widgets/addWidget" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
 </p-card >
 

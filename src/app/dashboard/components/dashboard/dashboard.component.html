@@ -106,21 +106,20 @@
     <i class="pi pi-search"></i>
     <input type="text" pInputText name="search" placeholder="Search" [(ngModel)]="searchText" />
 </span>
-  <button pButton pRipple type="refresh" label="" (click)="reload()" icon="pi pi-refresh" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" label="" icon="pi pi-bookmark" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" label="share"  [label]="selectedTeam ? selectedTeam.title : 'Share'"  (click)="op.toggle($event)" icon="pi pi-fw pi-users" class="p-button-rounded p-button-secondary p-button-text"></button>
-  <button pButton pRipple type="button" *ngIf="!editMode" (click)="onEdit(false)" label="edit"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" *ngIf="editMode" (click)="onEdit(false)" label="save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
-  <button pButton pRipple type="button" *ngIf="editMode" (click)="onEdit(true)" label="cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
-  <button pButton pRipple type="button" label="delete" (click)="onDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-  <button pButton pRipple type="button" label="add widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
+  <button pButton pRipple type="refresh" label="Refresh" (click)="reload()" icon="pi pi-refresh" class="p-button-rounded p-button-info p-button-text"></button>
+  <button pButton pRipple type="button" label="Share"  [label]="selectedTeam ? selectedTeam.title : 'Share'"  (click)="op.toggle($event)" icon="pi pi-fw pi-users" class="p-button-rounded p-button-secondary p-button-text"></button>
+  <button pButton pRipple type="button" *ngIf="!editMode" (click)="onEdit(false)" label="Edit"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
+  <button pButton pRipple type="button" *ngIf="editMode" (click)="onEdit(false)" label="Save" icon="pi pi-check" class="p-button-rounded p-button-info p-button-text"></button>
+  <button pButton pRipple type="button" *ngIf="editMode" (click)="onEdit(true)" label="Cancel" icon="pi pi-times" class="p-button-rounded p-button-warning p-button-text"></button>
+  <button pButton pRipple type="button" label="Delete" (click)="onDelete()" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+  <button pButton pRipple type="button" label="Add Widget" (click)="addWidget()" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-text"></button>
 </div>
 <app-widget-panel *ngIf="add" class="panel"  (added)="onAddedClick($event)" (hidden)="onHiddenClick($event)"></app-widget-panel>
 <gridster  [options]="options">
   <div class="message" *ngIf="empty && dashboardGridster.length==0">
     <h3>This dashboard doesn't have widgets just yet!</h3>
     <p>Add one or more widgets from Library.</p>
-   <button pButton pRipple type="button" label="add a widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
+   <button pButton pRipple type="button" label="Add Widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
   </div>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
     <app-dashboard-widget (onDetail)="onShowDetails($event, item.widgetdashboard)"  (selectedCard)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>

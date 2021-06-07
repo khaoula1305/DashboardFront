@@ -57,7 +57,6 @@ export class WidgetConfigurationComponent implements OnInit {
         this.widgetTypes = data;
       },
       (error) => {
-        console.log(error);
       }
     );
   }

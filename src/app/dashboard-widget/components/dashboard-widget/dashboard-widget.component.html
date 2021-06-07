@@ -30,7 +30,7 @@
                 </p-card>
         </div>
         <div *ngSwitchCase="widgetTypeEnum.Currency">  
-            <app-currency></app-currency>
+            <app-currency (onClick)="showDetails()"></app-currency>
         </div>
         <div *ngSwitchDefault>
             <p-chart type="{{dashboardWidget.widget.widgetType.type}}" [data]="basicData" [options]="basicOptions" (onDataSelect)="selectData($event)">

@@ -55,6 +55,9 @@
                       </div>
                   </p-card>
           </div>
+          <div *ngSwitchCase="widgetTypeEnum.Currency">
+           <p>Details</p>
+         </div>
           <div *ngSwitchDefault>
               <p-chart type="{{widget.widgetType.type}}" [data]="chartResults" [options]="basicOptions">
               </p-chart>
