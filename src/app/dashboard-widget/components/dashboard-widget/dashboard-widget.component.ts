@@ -214,6 +214,7 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   selectData(event) {
+    console.log(event);
     const table=[];
     if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
      this.results.forEach(elm=>{
@@ -221,13 +222,13 @@ export class DashboardWidgetComponent implements OnInit {
           table.push(elm);
         }
       });
-     this.selectedItemDetail.emit([table]);
+     this.selectedItemDetail.emit(table);
 
     } else {
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
           this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
-             this.selectedItemDetail.emit([dat]);
+             this.selectedItemDetail.emit(dat);
           }
            );
 

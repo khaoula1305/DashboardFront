@@ -3,18 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   CompactType,
   DisplayGrid,
-  Draggable,
-  GridsterItemComponent,
   GridType,
-  PushDirections,
-  Resizable,
 } from 'angular-gridster2';
 import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 import { DashboardWidget } from 'src/app/dashboard-widget/models/dashboard-widget';
 import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { Widget } from 'src/app/widget/models/widget.model';
 import { DashboardsService } from 'src/app/dashboard/services/dashboards.service';
-import { Message, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { TeamsService } from 'src/app/team/services/team.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -81,7 +77,7 @@ export class DashboardComponent implements OnInit {
       outerMarginLeft: null,
       useTransformPositioning: true,
       mobileBreakpoint: 640,
-      minCols: 1,
+      minCols: 6,
       maxCols: 10,
       minRows: 1,
       maxRows: 100,

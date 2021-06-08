@@ -38,14 +38,14 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tab>
-                    <tr>
+                    <tr [hidden]="tab.isDimension==true">
                         <td>{{tab.key}}</td>
                         <td>
                             <input type="text" pInputText [(ngModel)]="tab.label" name="{{tab.label}}"
                                 placeholder="Add a label" />
                         </td>
                         <td >
-                            <button pButton pRipple type="button" icon="pi pi-times"
+                            <button  pButton pRipple type="button" icon="pi pi-times"
                                 class="p-button-rounded p-button-danger p-button-outlined"
                                 (click)="onRemovedKey(tab.key, tab.id)"></button>
                         </td>
