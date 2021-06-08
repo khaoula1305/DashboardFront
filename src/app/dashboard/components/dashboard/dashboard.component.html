@@ -122,7 +122,7 @@
    <button pButton pRipple type="button" label="Add Widget" (click)="addWidget()" class="p-button-rounded p-button-success"></button>
   </div>
   <gridster-item [item]="item" *ngFor="let item of dashboardGridster | filter: searchText">
-    <app-dashboard-widget (onDetail)="onShowDetails($event, item.widgetdashboard)"  (selectedCard)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
+    <app-dashboard-widget (onDetail)="onShowDetails($event, item.widgetdashboard)"  (selectedItemDetail)="showDetails($event)" (deleted)="onDeletedClick($event, item)" [dashboardWidget]="item.widgetdashboard"></app-dashboard-widget>
   </gridster-item>
 </gridster>
 </div>

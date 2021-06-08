@@ -325,7 +325,7 @@ export class DashboardComponent implements OnInit {
     this.cardResults= event[1];
   }
   showDetails(event) {
-    this.results = event[0];
+    this.results = event;
     this.cols = [];
     for (let key in this.results[0]) {
       this.cols.push({ key, label: key });

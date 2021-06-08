@@ -35,7 +35,7 @@ export class DashboardWidgetComponent implements OnInit {
   widgetTypeOnUpdate:WidgetType;
   visibleSidebar=false;
   @Output() onDetail = new EventEmitter<any>();
-  @Output() selectedCard = new EventEmitter<any>();
+  @Output() selectedItemDetail = new EventEmitter<any>();
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -188,20 +188,29 @@ export class DashboardWidgetComponent implements OnInit {
 
     }
   }
-  showDetails() {
-    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
-      this.selectedCard.emit([this.results]);
-    }else{
-      if(this.dashboardWidget.widget.dataSourceDetails== null) {
-         this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
-           data=>  this.selectedCard.emit([data])
-         );
+  onClickForDetail(event) {
+    switch(this.dashboardWidget.widget.widgetType.type){
+      case  this.widgetTypeEnum.Card: {
+        if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
+          this.selectedItemDetail.emit(this.results);
+        }else{
+          if(this.dashboardWidget.widget.dataSourceDetails== null) {
+             this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+               data=>  this.selectedItemDetail.emit(data)
+             );
+          }
+          else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
+               data=>  this.selectedItemDetail.emit(data)
+             );
+          }
+        }
+        break;
       }
-      else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
-           data=>  this.selectedCard.emit([data])
-         );
+      case this.widgetTypeEnum.Currency:{
+        this.selectedItemDetail.emit(event);
+        break;
       }
-    }
+        }
   }
 
   selectData(event) {
@@ -212,13 +221,13 @@ export class DashboardWidgetComponent implements OnInit {
           table.push(elm);
         }
       });
-     this.selectedCard.emit([table]);
+     this.selectedItemDetail.emit([table]);
 
     } else {
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
           this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
-             this.selectedCard.emit([dat]);
+             this.selectedItemDetail.emit([dat]);
           }
            );
 

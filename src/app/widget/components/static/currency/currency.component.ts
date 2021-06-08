@@ -44,7 +44,7 @@ export class CurrencyComponent implements OnInit {
     )
   }
   onDetails(){
-    this.onClick.emit(true);
+    this.onClick.emit(this.allCurrencies);
   }
 
 }
