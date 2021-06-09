@@ -9,6 +9,7 @@ import { GraphEnum, WidgetTypeEnum } from 'src/app/widget/models/widgetTypeEnum'
 import { WidgetType } from 'src/app/widget/models/widget-type';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
 import { Constants } from 'src/app/constants/constants';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -30,10 +31,13 @@ export class DashboardWidgetComponent implements OnInit {
   load= false;
   results=[];
   dimensionKey: MetaDataSource;
-  datasets: any[] = [];
   result;
   widgetTypeOnUpdate:WidgetType;
   visibleSidebar=false;
+  //Chart 
+  labels=[];
+  dimensions=[];
+  datasets: any[] = [];
   @Output() onDetail = new EventEmitter<any>();
   @Output() selectedItemDetail = new EventEmitter<any>();
 
@@ -96,24 +100,22 @@ export class DashboardWidgetComponent implements OnInit {
                break;
              }
              default : {
-               const labels=[];
-               const dimensions=[];
                for(const key in data[0]){
                  const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
                  if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
-                   labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
+                   this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
                  }
-                 else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
+                 else {   this.labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
                  }
-               const dim= labels.pop();
+               const dim= this.labels.pop();
                data.forEach(element=>{
-                dimensions.push(element[dim.label.toUpperCase()]);
-                labels.forEach( lab=>{
+                this.dimensions.push(element[dim.label.toUpperCase()]);
+                this.labels.forEach( lab=>{
                   if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
                   lab.data.push(element[lab.label.toUpperCase()]);
                 });
                });
-               this.basicData = { labels: dimensions, datasets: labels };
+               this.basicData = { labels: this.dimensions, datasets: this.labels };
                break;
              }
            }
@@ -127,7 +129,6 @@ export class DashboardWidgetComponent implements OnInit {
       }
     }
   }
-
   createBasicData(){
     const labels=[];
     const dimensions=[];
@@ -212,13 +213,12 @@ export class DashboardWidgetComponent implements OnInit {
       }
         }
   }
-
   selectData(event) {
-    console.log(event);
+    let label=this.basicData.labels[event.element._index];
     const table=[];
     if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
      this.results.forEach(elm=>{
-        if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
+        if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==label){
           table.push(elm);
         }
       });
@@ -227,7 +227,7 @@ export class DashboardWidgetComponent implements OnInit {
     } else {
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
         data=>{
-          this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
+          this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,label).subscribe( dat =>{
              this.selectedItemDetail.emit(dat);
           }
            );

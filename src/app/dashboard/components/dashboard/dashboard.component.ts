@@ -161,6 +161,7 @@ export class DashboardComponent implements OnInit {
     this.add = true;
   }
   onRowSelect() {
+    console.log( this.selectedTeam);
     this.dashboard.team = this.selectedTeam;
     this.messageService.add({
       severity: 'info',

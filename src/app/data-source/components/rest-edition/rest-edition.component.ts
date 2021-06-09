@@ -34,6 +34,8 @@ export class RestEditionComponent implements OnInit {
   cols2: any[]=[];
   selectedItems: any[]=[];
   selectedItem: TreeNode;
+  informationCard=true;
+  displayCard= false;
 
   constructor(private dataSourceService: DataSourceService, private router: Router) { }
 
@@ -93,6 +95,8 @@ preview(){
   this.display=true;
   this.dataSourceService.GetDataAsync(this.dataSource).subscribe(
     (data)=>{
+      this.informationCard=false;
+      this.displayCard=true;
       this.results=[];
       this.cols=[];
       this.resultsFormatedToTree=[];
@@ -168,20 +172,17 @@ saveRest(){
     this.cols2=[];
     this.selectedItems=event.node.data;
     this.dataSource.path=this.generatePath('', event.node);
-    console.log(this.dataSource.path);
     for (let key in this.selectedItems[0] ) {
       this.cols2.push( { field: key, header: key });
     }
   }
   nodeSelect(event){
-    console.log(event);
     this.cols2=[];
     if(Array.isArray(event.node.data)){
       this.selectedItems=event.node.data;
     }else{
       if(event.node.parent != undefined){
         this.selectedItems=event.node.parent.data;
-        console.log(this.results[event.node.parent.label][0][event.node.label]);
       }else{
        this.selectedItems=this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
       }
@@ -191,17 +192,11 @@ saveRest(){
     }
   }
   onSubmit(rest: NgForm) {
-    console.log(this.dataSource);
-    if (rest.untouched || rest.invalid) {
-      alert('Required');
-    } else {
       this.saveRest();
       this.dataSourceService.addDataSource(this.dataSource).subscribe(
         result =>{
          this.router.navigate(['/queries'])
         }
-         );
-    }
+        );
   }
-
 }
