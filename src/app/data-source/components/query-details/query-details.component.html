@@ -15,7 +15,7 @@
           <p-table  #dt2 [value]="results" [scrollable]="true" dataKey="id" [style]="{maxWidth:'1169px'}"
           [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5]" styleClass="p-datatable-customers"
           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [globalFilterFields]="customTable">
+          [globalFilterFields]="cols">
           <ng-template pTemplate="caption">
               <div class="p-d-flex">
                   <span class="p-input-icon-left p-ml-auto">
@@ -32,15 +32,15 @@
           <ng-template pTemplate="header">
             <tr>
                     <th *ngFor="let col of cols">
-                        {{col.header}}
+                        {{col}}
                     </th>
                 </tr>
           </ng-template>
           <ng-template pTemplate="body" let-tab>
             <tr>
-                <td  *ngFor="let col of cols" (click)="showTable(col.field)">
-                    <div class="description">
-                        {{tab[col.field]}}
+                <td  *ngFor="let col of cols">
+                    <div class="description" >
+                        {{tab[col]}}
                     </div>
                 </td>
             </tr>

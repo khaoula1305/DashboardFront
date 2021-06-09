@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from 'src/app/constants/constants';
 import { DataSource } from '../../models/data-source.model';
 import { DataSourceService } from '../../services/data-source.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-query-details',
@@ -16,7 +17,6 @@ export class QueryDetailsComponent implements OnInit {
   cols: any[]=[];
   load= false;
   dataSource: DataSource;
-  customTable:any;
 
   constructor(private route: ActivatedRoute, private dataSourceService: DataSourceService ) { }
   ngOnInit(): void {
@@ -26,22 +26,15 @@ export class QueryDetailsComponent implements OnInit {
         this.dataSource=result;
         this.dataSourceService.getDataFrom(result).subscribe(
           (data) => {
+            this.results=data;
+           for (let key in data[0]) {
             //show only simple elements => no tables ; no objects
-            this.results=data.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
-           for (let key in this.results[0]) {
-            this.cols.push( { field: key, header: key });
+            if(!Array.isArray(data[0][key]) && typeof data[0][key] != Constants.object ) {
+              this.cols.push(key);
+            }
           }
-          this.customTable=[];
-          this.cols.forEach(elm=>{
-            this.customTable.push(elm.header);
-          });
-          },
-          (error) => {
-            },
-            () => {
-           this.load=true;
-            });
-      }
-    );
-  }
+          this.load=true;
+      });
+  });
+}
 }

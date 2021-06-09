@@ -107,6 +107,7 @@ preview(){
         this.results.push(data);
       }
       this.selectedItems=this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
+      console.log(this.selectedItems);
       for (let key in this.results[0]) {
         if(Array.isArray(this.results[0][key]))  {
           this.notNormal=true;
