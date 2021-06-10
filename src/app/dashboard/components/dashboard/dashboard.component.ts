@@ -4,8 +4,9 @@ import {
   CompactType,
   DisplayGrid,
   GridType,
+  GridsterItem,
+  GridsterConfig
 } from 'angular-gridster2';
-import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 import { DashboardWidget } from 'src/app/dashboard-widget/models/dashboard-widget';
 import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { Widget } from 'src/app/widget/models/widget.model';
@@ -44,24 +45,25 @@ export class DashboardComponent implements OnInit {
   searchDetail: any;
   empty: false;
   widgetDashboard;
+  // Current dashboard
   @Input() dashboard: Dashboard;
-  //Teams;
+  // Teams;
   teams: Team[];
   selectedTeam: Team;
   visibleSidebarDetail = false;
   selectedDashboardWidget: DashboardWidget;
-  //Details
+  // Details
   results: any[];
   chartResults: any;
   cardResults: any;
   cols: any[];
   visibleSidebarCard = false;
-  customTable:any;
+  customTable: any;
 
   public pauseState = false;
-  ngOnInit() {
+  ngOnInit(): void {
     setTimeout(
-      function () {
+      function() {
         this.empty = true;
       }.bind(this),
       2000
@@ -124,8 +126,9 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboard(id).subscribe(
       (data) => {
         this.dashboard = data;
-        if (data.team && data.team.title != Constants.myDashboards)
+        if (data.team && data.team.title !== Constants.myDashboards) {
           this.selectedTeam = data.team;
+        }
         this.dashboardWidgetService
           .getAllDashboardWidget(this.dashboard.id)
           .subscribe((dashwidget) => {
@@ -144,37 +147,34 @@ export class DashboardComponent implements OnInit {
             );
           });
       },
-      (error) => {
-      },
+      (error) => {},
       () => {
         this.load = true;
       }
     );
     this.teamService.getAllTeams().subscribe((data) => {
-      this.teams = data.filter((team) => team.title != Constants.myDashboards);
+      this.teams = data.filter((team) => team.title !== Constants.myDashboards);
     });
   }
-  onHiddenClick(state) {
+  onHiddenClick(state): void {
     this.add = false;
   }
-  addWidget() {
+  addWidget(): void {
     this.add = true;
   }
-  onRowSelect() {
-    console.log( this.selectedTeam);
+  onRowSelect(): void {
     this.dashboard.team = this.selectedTeam;
     this.messageService.add({
       severity: 'info',
-      summary: 'Team Selected',
-      detail: this.selectedTeam.title,
+      summary: 'Dashboard is shared with ' + this.selectedTeam.title
     });
     this.dashboardService.updateDashboard(this.dashboard).subscribe();
   }
-  reload() {
+  reload(): void {
     this.changeLocation(this.dashboard.id);
   }
-  onAddedClick(widget: Widget) {
-    let dashboardWidget: DashboardWidget = new DashboardWidget();
+  onAddedClick(widget: Widget): void {
+    const dashboardWidget: DashboardWidget = new DashboardWidget();
     // ToBeImplemented
     dashboardWidget.maxItemCols = 4;
     dashboardWidget.maxItemRows = 4;
@@ -206,14 +206,12 @@ export class DashboardComponent implements OnInit {
         this.changeLocation(this.dashboard.id);
       });
   }
-  changeLocation(locationData) {
-    // save current route first
-    const currentRoute = this.router.url;
+  changeLocation(locationData): void {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['dashboards', locationData]); // navigate to same route
     });
   }
-  onEdit(reset: boolean) {
+  onEdit(reset: boolean): void {
     if (!this.editMode) {
       this.dashboardOriginal = this.dashboardGridster.map((x) => ({ ...x }));
       this.options.draggable.enabled = true;
@@ -242,7 +240,7 @@ export class DashboardComponent implements OnInit {
       this.options.api.optionsChanged();
     }
   }
-  updateDashboard() {
+  updateDashboard(): void {
     this.dashboardGridster.forEach((item) => {
       // add isEqual function
       item.widgetdashboard.xAxisValue = item.x;
@@ -254,7 +252,7 @@ export class DashboardComponent implements OnInit {
         .subscribe();
     });
   }
-  saveItemChanges(item: GridsterItem) {
+  saveItemChanges(item: GridsterItem): void {
     item.widgetdashboard.xAxisValue = item.x;
     item.widgetdashboard.yAxisValue = item.y;
     item.widgetdashboard.columnValue = item.cols;
@@ -264,14 +262,14 @@ export class DashboardComponent implements OnInit {
       .updateDashboardWidget(this.dashboard.id, item.widgetdashboard)
       .subscribe((result) => console.log('save item change ', result));
   }
-  deleteWidget(item) {
+  deleteWidget(item): void {
     this.dashboardGridster.splice(this.dashboardGridster.indexOf(item), 1);
     this.dashboardWidgetService
       .deleteDashboardWidget(this.dashboard.id, item.widgetdashboard)
       .subscribe();
     this.options.api.optionsChanged();
   }
-  onDeletedClick(evt, item) {
+  onDeletedClick(evt, item): void {
     this.widgetDashboard = item;
     this.showConfirm({
       key: 'a',
@@ -279,16 +277,16 @@ export class DashboardComponent implements OnInit {
       summary: 'Are you sure you want to remove this widget?',
     });
   }
-  showConfirm(message: any) {
+  showConfirm(message: any): void {
     this.messageService.clear();
     this.messageService.add(message);
   }
-  onConfirm() {
+  onConfirm(): void {
     this.messageService.clear('a');
     this.messageService.clear('b');
     this.deleteWidget(this.widgetDashboard);
   }
-  deleteDashboard() {
+  deleteDashboard(): void {
     this.dashboardService.deleteDashboard(this.dashboard.id).subscribe(
       (result) => {
       },
@@ -303,50 +301,50 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  onReject() {
+  onReject(): void {
     this.messageService.clear('b');
     this.messageService.clear('a');
   }
-  onDelete() {
+  onDelete(): void {
     this.showConfirm({
       key: 'b',
       severity: 'custom',
       summary: 'Are you sure you want to remove this Dashboard?',
     });
   }
-  onShowDetails(event,dashboardwidget) {
+  onShowDetails(event, dashboardwidget): void {
     this.selectedDashboardWidget = dashboardwidget;
     this.visibleSidebarDetail = true;
     this.results = event[0];
     this.chartResults = event[1];
-    this.cardResults= event[1];
+    this.cardResults = event[1];
   }
-  showDetails(event) {
+  showDetails(event): void {
     this.results = event;
     this.cols = [];
-    for (let key in this.results[0]) {
+    for (const key in this.results[0]) {
       this.cols.push({ key, label: key });
     }
     this.visibleSidebarCard = true;
-    this.customTable=[];
-    this.cols.forEach(elm=>{
+    this.customTable = [];
+    this.cols.forEach(elm => {
       this.customTable.push(elm.key);
     });
   }
 
-  onExportPdf() {
-    var pdf = new jsPDF();
+  onExportPdf(): void {
+    const pdf = new jsPDF();
     pdf.text(Constants.pdfTitle, Constants.coordX, Constants.coordY);
     pdf.setFontSize(Constants.fontSize);
     pdf.setTextColor(Constants.textColor);
-    let headers = [];
-    let object = [];
+    const headers = [];
+    const object = [];
     this.cols.forEach((elm) => {
       object.push(elm.label);
     });
-    let content = [];
+    const content = [];
     this.results.forEach((item) => {
-      let obj = [];
+      const obj = [];
       this.cols.forEach((elm) => {
         obj.push(item[elm.key]);
       });
@@ -360,7 +358,7 @@ export class DashboardComponent implements OnInit {
     });
     pdf.save(Constants.pdfTitle + '.pdf');
   }
-  clear(table: Table) {
+  clear(table: Table): void {
     table.clear();
 }
 }

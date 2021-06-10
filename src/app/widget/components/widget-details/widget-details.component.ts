@@ -52,9 +52,7 @@ export class WidgetDetailsComponent implements OnInit {
               const datasets: any[] = [];
               let object: any;
               const myLabels = [];
-              const dimensionKey = this.widget.metaDataSources.find(
-                (elm) => elm.isDimension == true
-              );
+              const dimensionKey = this.widget.metaDataSources.find( elm => elm.isDimension );
               if (dimensionKey) {
                 this.results.forEach((elm) => {
                   let repeat = true;
@@ -98,7 +96,7 @@ export class WidgetDetailsComponent implements OnInit {
     }
    else{
      this.load = true;
-     if (this.widget.widgetType.type == this.widgetTypeEnum.Table){
+     if (this.widget.widgetType.type === this.widgetTypeEnum.Table){
       this.customTable = [];
       this.widget.metaDataSources.forEach(elm => {
         this.customTable.push(elm.key);
@@ -106,12 +104,12 @@ export class WidgetDetailsComponent implements OnInit {
     }
   }
   }
-  generateColor() {
+  generateColor(): string {
     return (
       '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
     );
   }
-  onExportPdf(){
+  onExportPdf(): void {
   const pdf = new jsPDF();
   pdf.text(this.title, Constants.coordX, Constants.coordY);
   pdf.setFontSize(Constants.fontSize);

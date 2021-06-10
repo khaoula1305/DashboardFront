@@ -12,7 +12,7 @@ import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api
 
 })
 export class QueriesComponent implements OnInit {
-  searchText:any;
+  searchText: any;
   queries: DataSource[];
   query: any;
   constructor(
@@ -28,35 +28,35 @@ export class QueriesComponent implements OnInit {
       }
     );
   }
-  queryDetails(queryId : any){
+  queryDetails(queryId: any): void {
     this.router.navigate(['queries/queryDetails', queryId]);
 
   }
-updateQuery(query: DataSource){
-  if(query.type== Constants.restAPI){
+updateQuery(query: DataSource): void {
+  if (query.type === Constants.restAPI){
     this.router.navigate(['queries/updateDatasource', query.id]);
   }
   else{
-    window.open(Constants.queryBuilderURL, "_blank");
+    window.open(Constants.queryBuilderURL, '_blank');
   }
 }
-onDelete(query: DataSource){
+onDelete(query: DataSource): void {
   let message;
   this.dataSourceService.getAllWidgets(query.id).subscribe(
     (data) => {
-      if(data.length>0){
-       message= ' This will remove the data and its associated widget and cannot be undone!';
+      if (data.length > 0){
+       message = ' This will remove the data and its associated widget and cannot be undone!';
       } else{
-       message= 'Are you sure you want to remove this Query?';
+       message = 'Are you sure you want to remove this Query?';
       }
       this.confirmationService.confirm({
-        message: message,
+        message,
         header: 'Delete Confirmation',
         icon: 'pi pi-info-circle',
         accept: () => {
           this.dataSourceService.deleteDataSource(query.id).subscribe(
-            (result)=>{
-            this.messageService.add({severity:'info', summary:'Confirmed', detail:'The query was deleted successfully !'});
+            (result) => {
+            this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'The query was deleted successfully !'});
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               this.router.navigate(['/queries']);
             });
@@ -64,13 +64,13 @@ onDelete(query: DataSource){
           );
         },
         reject: (type) => {
-            switch(type) {
+            switch (type) {
                 case ConfirmEventType.REJECT:
-                    this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
-                break;
+                    this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+                    break;
                 case ConfirmEventType.CANCEL:
-                    this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-                break;
+                    this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+                    break;
             }
         }
     });

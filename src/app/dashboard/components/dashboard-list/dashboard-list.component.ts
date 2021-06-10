@@ -15,7 +15,7 @@ export class DashboardListComponent implements OnInit {
   dashboards: Dashboard[];
   load = false;
   dashboard: any;
-  display: boolean = false;
+  display = false;
   searchText: any;
   constructor(
     private dashboardService: DashboardsService,
@@ -24,7 +24,7 @@ export class DashboardListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService) { }
 
-    showDialog() {
+    showDialog(): void {
         this.display = true;
     }
   ngOnInit(): void {
@@ -40,31 +40,31 @@ export class DashboardListComponent implements OnInit {
       }
     );
   }
-  updateDashboard(dashboard: Dashboard){
-    this.router.navigate(['updateDashboard',dashboard.id ]);
+  updateDashboard(dashboard: Dashboard): void {
+    this.router.navigate(['updateDashboard', dashboard.id ]);
   }
-  onDelete(dashboard: Dashboard){
+  onDelete(dashboard: Dashboard): void {
     let message;
     this.dashboardWidgetService.getAllDashboardWidget(dashboard.id).subscribe(
       (data) => {
-        if(data.length>0){
+        if (data.length > 0){
         message = 'This will remove the dashboard and its associated widgets and cannot be undone!';
         } else{
-          message= 'Are you sure you want to remove this Dashboard?';
+          message = 'Are you sure you want to remove this Dashboard?';
         }
         this.confirmationService.confirm({
-          message: message,
+          message,
           header: 'Delete Confirmation',
           icon: 'pi pi-info-circle',
           accept: () => {
             this.dashboardService.deleteDashboard(dashboard.id).subscribe(
-              (result)=>{
-                this.messageService.add({severity:'info', summary:'Confirmed', detail:'Dashboard deleted'});
+              (result) => {
+                this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Dashboard deleted'});
               },
-              (error)=>{
-                this.messageService.add({severity:'error', summary:'Rejected', detail:'Dashboard not deleted'});
+              (error) => {
+                this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'Dashboard not deleted'});
               },
-              ()=>{
+              () => {
                 this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
                   this.router.navigate(['/dashboards']);
                 });
@@ -72,20 +72,20 @@ export class DashboardListComponent implements OnInit {
             );
           },
           reject: (type) => {
-              switch(type) {
+              switch (type) {
                   case ConfirmEventType.REJECT:
-                      this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
-                  break;
+                      this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+                      break;
                   case ConfirmEventType.CANCEL:
-                      this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
-                  break;
+                      this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+                      break;
               }
           }
       });
       }
     );
   }
-  goToDashboard(dahsboard: Dashboard ){
+  goToDashboard(dahsboard: Dashboard): void {
     this.dashboardService.setCurrentDashboard(dahsboard);
     this.router.navigate(['dashboards', dahsboard.id]);
   }

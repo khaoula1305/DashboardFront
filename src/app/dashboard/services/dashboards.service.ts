@@ -23,7 +23,7 @@ export class DashboardsService {
   addDashboard(dashboard: Dashboard): Observable<Dashboard>{
     return this.http.post<Dashboard>(this.host, dashboard);
   }
-  setCurrentDashboard(dashboard: Dashboard){
+  setCurrentDashboard(dashboard: Dashboard): void{
     localStorage.setItem('currentDashboard', JSON.stringify(dashboard)
     );
   }

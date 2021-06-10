@@ -53,7 +53,7 @@ export class UpdateWidgetComponent implements OnInit {
     );
   }
 
-  onSubmit(m: NgForm) {
+  onSubmit(m: NgForm): void {
     this.widgetService.updateWidget(this.widget)
       .subscribe((result) => {
         this.router.navigate(['/widgets']);

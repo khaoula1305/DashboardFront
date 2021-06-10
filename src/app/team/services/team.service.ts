@@ -16,25 +16,25 @@ export class TeamsService {
   host: any = environment.hostApi + '/Team/';
   constructor(private http: HttpClient) {
   }
-  //Instead of authentication
-  setCurrentUser(){
+  // Instead of authentication
+  setCurrentUser(): void {
     this.getAllUsers().subscribe(
-      data=>  {
+      data =>  {
         localStorage.setItem('currentUser', JSON.stringify(data.pop()));
     }
-    )
+    );
   }
   getCurrentUser(): User{
   return JSON.parse(localStorage.getItem('currentUser'));
   }
   getAllTeams(): Observable<Team[]>{
-    return this.http.get<Team[]>(this.host+'AllTeams');
+    return this.http.get<Team[]>(this.host + 'AllTeams');
   }
   getTeam(teamId: any): Observable<Team>{
-    return this.http.get<Team>(this.host+teamId);
+    return this.http.get<Team>(this.host + teamId);
   }
   getAllDashboards(teamId: any): Observable<Dashboard[]> {
-    return this.http.get<Dashboard[]>(this.host + teamId+ '/AllDashboards');
+    return this.http.get<Dashboard[]>(this.host + teamId + '/AllDashboards');
   }
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.host + 'AllUsers');
@@ -43,10 +43,10 @@ export class TeamsService {
   addTeam(team: Team): Observable<Team>{
     return this.http.post<Team>(this.host, team);
   }
-  updateTeam(team: Team):Observable<Team>{
-    return this.http.put<Team>(environment.hostApi+ '/Team?id='+  team.id, team);
+  updateTeam(team: Team): Observable<Team>{
+    return this.http.put<Team>(environment.hostApi + '/Team?id=' +  team.id, team);
   }
   deleteTeam(teamId: any): Observable<Team>{
-    return this.http.delete<Team>(this.host+ teamId);
+    return this.http.delete<Team>(this.host + teamId);
   }
 }

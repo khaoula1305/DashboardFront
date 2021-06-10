@@ -55,7 +55,7 @@ export class CardComponent implements OnInit {
     }
   }
 
-  onSelectedDimension(event) {
+  onSelectedDimension(event): void {
     if (this.cardKey != undefined) {
       this.allKeys.push(this.cardKey);
       const removeIndex = this.widget.metaDataSources
