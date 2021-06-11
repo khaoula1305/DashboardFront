@@ -46,7 +46,7 @@ export class CardComponent implements OnInit {
       this.results.forEach((elm) => (this.cardRes += elm[this.cardKey.key]));
         }
       });
-    if (this.widget.metaDataSources.length == 0) {
+    if (this.widget.metaDataSources.length === 0) {
       this.newCard = true;
     }
     else {
@@ -55,7 +55,7 @@ export class CardComponent implements OnInit {
     }
   }
 
-  onSelectedDimension(event) {
+  onSelectedDimension(event): void {
     if (this.cardKey != undefined) {
       this.allKeys.push(this.cardKey);
       const removeIndex = this.widget.metaDataSources
@@ -73,6 +73,7 @@ export class CardComponent implements OnInit {
       .indexOf(this.cardKey.id);
     this.allKeys.splice(removeIndex, 1);
     this.widget.metaDataSources.push(this.cardKey);
+    this.cardRes = 0;
     this.results.forEach((elm) => (this.cardRes  += elm[this.cardKey.key]));
   }
 }

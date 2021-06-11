@@ -16,13 +16,13 @@ export class WidgetTypeService {
     return this.http.get<WidgetType[]>(this.host + 'allwidgettypes');
   }
 
-  addWidgetType(widgetType: WidgetType){
+  addWidgetType(widgetType: WidgetType): void {
     this.http.post(this.host, widgetType);
   }
-  updateWidgetType(widgetType: WidgetType){
+  updateWidgetType(widgetType: WidgetType): void {
     this.http.put(this.host, widgetType);
   }
-  deleteWidgetType(widgetTypeId: number){
+  deleteWidgetType(widgetTypeId: number): void {
     this.http.delete(this.host + widgetTypeId);
   }
 }

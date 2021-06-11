@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Widget } from 'src/app/widget/models/widget.model';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { WidgetTypeEnum } from '../../models/widgetTypeEnum';
+import { GraphEnum, WidgetTypeEnum } from '../../models/widgetTypeEnum';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
 import { Constants } from 'src/app/constants/constants';
 
@@ -23,10 +23,11 @@ export class WidgetDetailsComponent implements OnInit {
   loadExport = false;
   customTable: any[];
   load = false;
+  graphEnum = GraphEnum;
 
   constructor( private dataSourceService: DataSourceService) {}
   ngOnInit(): void {
-    if (this.title == undefined){
+    if (this.title === undefined){
       this.title = this.widget.title;
       this.dataSourceService.getDataFrom(this.widget.dataSource).subscribe(
         (data) => {
@@ -49,42 +50,7 @@ export class WidgetDetailsComponent implements OnInit {
               break;
             }
             default: {
-              const datasets: any[] = [];
-              let object: any;
-              const myLabels = [];
-              const dimensionKey = this.widget.metaDataSources.find(
-                (elm) => elm.isDimension == true
-              );
-              if (dimensionKey) {
-                this.results.forEach((elm) => {
-                  let repeat = true;
-                  for (const value of myLabels) {
-                    if (value == elm[dimensionKey.key]) {
-                      repeat = false;
-                      break;
-                    }
-                  }
-                  if (repeat) { myLabels.push(elm[dimensionKey.key]); }
-                });
-                this.widget.metaDataSources.forEach((element) => {
-                  if (!element.isDimension) {
-                    const label = [];
-                    this.results.forEach((elm) =>
-                      label.push(elm[element.key])
-                    );
-                    object = {
-                      label: element.label,
-                      backgroundColor: this.generateColor(),
-                      data: label,
-                    };
-                    datasets.push(object);
-                  }
-                });
-              }
-              this.chartResults = {
-                labels: myLabels,
-                datasets,
-              };
+              this.createBasicData();
               break;
             }
           }
@@ -98,7 +64,7 @@ export class WidgetDetailsComponent implements OnInit {
     }
    else{
      this.load = true;
-     if (this.widget.widgetType.type == this.widgetTypeEnum.Table){
+     if (this.widget.widgetType.type === this.widgetTypeEnum.Table){
       this.customTable = [];
       this.widget.metaDataSources.forEach(elm => {
         this.customTable.push(elm.key);
@@ -106,12 +72,44 @@ export class WidgetDetailsComponent implements OnInit {
     }
   }
   }
-  generateColor() {
-    return (
-      '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
-    );
-  }
-  onExportPdf(){
+    // Generate the data that we will be used in the chart
+    createBasicData(): void {
+      const labels = [];
+      const dimensions = [];
+      const dimension = this.widget.metaDataSources.find( e => e.isDimension === true);
+      this.widget.metaDataSources.forEach(element => {
+        if (!element.isDimension){
+          if (this.widget.widgetType.type === this.graphEnum.Pie){
+          labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
+        }
+        else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
+           }
+      });
+      this.results.forEach((elm) => {
+        let repeat = true;
+        for (let index = 0; index < dimensions.length; index++) {
+         if (dimensions[index] === elm[dimension.key]){
+          repeat = false;
+          labels.forEach(lab => {
+            lab.data[index] += elm[lab.key];
+          });
+          break;
+         }
+        }
+        if (repeat) {
+          dimensions.push(elm[dimension.key]);
+          labels.forEach( lab => {
+          if (this.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+          lab.data.push(elm[lab.key]);
+          });
+        }
+      });
+      this.chartResults = { labels: dimensions, datasets: labels };
+    }
+    generateColor(): string {
+      return '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
+    }
+  onExportPdf(): void {
   const pdf = new jsPDF();
   pdf.text(this.title, Constants.coordX, Constants.coordY);
   pdf.setFontSize(Constants.fontSize);

@@ -42,7 +42,7 @@ export class AddWidgetComponent implements OnInit {
   selectedItm: any;
   displayDescription = false;
   queryDescription: string;
-  isQueryDetails:boolean;
+  isQueryDetails: boolean;
   previousUrl: string;
 
   constructor(
@@ -59,8 +59,8 @@ export class AddWidgetComponent implements OnInit {
       this.widget = widget;
     });
 
-    let restItems = [];
-    let qbItems = [];
+    const restItems = [];
+    const qbItems = [];
     this.widget = new Widget();
     this.widget.metaDataSources = [];
     this.widgetService.changeWidget(this.widget);
@@ -68,13 +68,13 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.queries = data;
         data.forEach((elm) => {
-          if (elm.type == Constants.restAPI) {
+          if (elm.type === Constants.restAPI) {
             restItems.push({
               label: elm.title,
               value: elm.id,
               additionalValue: 'rest.png',
             });
-          } else if (elm.type == Constants.queryBuilder) {
+          } else if (elm.type === Constants.queryBuilder) {
             qbItems.push({
               label: elm.title,
               value: elm.id,
@@ -99,15 +99,15 @@ export class AddWidgetComponent implements OnInit {
       }
     );
   }
-
-  onSelectedQuery() {
+  // while user select Query => filter data Source and disable dropdown
+  onSelectedQuery(): void  {
     this.showButton1 = true;
     this.dataSourceService.getAllDataSources().subscribe(
-      (data)=>{
-        this.widget.dataSource = data.find(elm=> {return elm.id == this.selectedItm});
-    if(this.widget.dataSource != null) this.disableQueriesDropdown = true;
-            //widget types filter
-    this.dataSourceService
+      (data) => {
+        this.widget.dataSource = data.find(elm => elm.id === this.selectedItm);
+        if (this.widget.dataSource != null) { this.disableQueriesDropdown = true; }
+            // widget types filter
+        this.dataSourceService
     .getDataFrom(this.widget.dataSource)
     .subscribe((dataBody) => {
       if (dataBody.length >= 2 && Object.keys(dataBody[0]).length >= 2) {
@@ -116,28 +116,30 @@ export class AddWidgetComponent implements OnInit {
             this.widgetTypes = [];
             data.forEach((item) => {
               if (
-                item.type == this.graphEnum.Bar ||
-                item.type == this.graphEnum.Line ||
-                item.type == this.graphEnum.Pie ||
-                item.type == this.widgetTypeEnum.Table ||
-                item.type == this.widgetTypeEnum.Card
-              )
+                item.type === this.graphEnum.Bar ||
+                item.type === this.graphEnum.Line ||
+                item.type === this.graphEnum.Pie ||
+                item.type === this.widgetTypeEnum.Table ||
+                item.type === this.widgetTypeEnum.Card
+              ) {
                 this.widgetTypes.push(item);
+              }
             });
           },
           (error) => {
           }
         );
-      } else if (dataBody.length == 1) {
+      } else if (dataBody.length === 1) {
         this.widgetTypeService.getAllWidgetTypes().subscribe(
           (data) => {
             this.widgetTypes = [];
             data.forEach((item) => {
               if (
-                item.type == this.widgetTypeEnum.Card ||
-                item.type == this.widgetTypeEnum.Table
-              )
+                item.type === this.widgetTypeEnum.Card ||
+                item.type === this.widgetTypeEnum.Table
+              ) {
                 this.widgetTypes.push(item);
+              }
             });
           },
           (error) => {
@@ -155,8 +157,8 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.filteredQueries = [];
         data.forEach((elm) => {
-          if (elm.type == Constants.queryBuilder){
-            if(elm.associatedQuery == this.widget.dataSource.id){
+          if (elm.type === Constants.queryBuilder){
+            if (elm.associatedQuery === this.widget.dataSource.id){
               this.filteredQueries.push(elm);
             }
           }
@@ -167,13 +169,13 @@ export class AddWidgetComponent implements OnInit {
     );
   }
 
-  onShowQueryDetails(dataSourceQuery: DataSource) {
+  onShowQueryDetails(dataSourceQuery: DataSource): void {
     this.showButton = true;
     this.dataSourceService
       .getDataFrom(dataSourceQuery)
       .subscribe((data) => {
         this.results = data;
-        for (let key in this.results[0]) {
+        for (const key in this.results[0]) {
           this.cols.push({ field: key, header: key });
         }
         this.customTable = [];
@@ -183,11 +185,11 @@ export class AddWidgetComponent implements OnInit {
       });
   }
 
-  showPopup(isDetail : boolean) {
+  showPopup(isDetail: boolean) {
     this.displayPopup = true;
     this.results = [];
     this.cols = [];
-    if(isDetail) {
+    if (isDetail) {
       this.isQueryDetails = true;
       this.onShowQueryDetails(this.widget.dataSourceDetails);
     }
@@ -198,12 +200,12 @@ export class AddWidgetComponent implements OnInit {
   }
 
   showDescriptionDialog() {
-    this.displayDescription=true;
-    if(this.isQueryDetails) this.queryDescription = this.widget.dataSourceDetails.description;
-    else this.queryDescription = this.widget.dataSource.description;
+    this.displayDescription = true;
+    if (this.isQueryDetails) { this.queryDescription = this.widget.dataSourceDetails.description; }
+    else { this.queryDescription = this.widget.dataSource.description; }
   }
 
-  onSubmit(m: NgForm) {
+  onSubmit(m: NgForm): void {
     if (m.untouched || m.invalid) {
       alert('Required');
     } else {
@@ -212,8 +214,8 @@ export class AddWidgetComponent implements OnInit {
       this.widget.minItemCols = 1;
       this.widget.minItemRows = 1;
       this.widgetService.addWidget(this.widget).subscribe((result) => {
-        if(this.dashboard!=null) this.router.navigate(['/dashboards', this.dashboard.id]);
-        else this.router.navigateByUrl('/widgets');
+        if (this.dashboard != null) { this.router.navigate(['/dashboards', this.dashboard.id]); }
+        else { this.router.navigateByUrl('/widgets'); }
       });
     }
   }

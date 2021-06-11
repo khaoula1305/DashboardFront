@@ -12,7 +12,8 @@ export class DataSourceComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  goToQueryBuilder(){
+  // Redirect to Query builder plateform
+  goToQueryBuilder(): void{
     window.open(Constants.queryBuilderURL, '_blank');
   }
 

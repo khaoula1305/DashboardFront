@@ -14,12 +14,12 @@ export class WidgetComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  hover(){
+  hover(): void{
   this.hoverStyle = {
       'background-color':  '#f6f6f6',
     };
   }
-  notHover(){
+  notHover(): void{
     this.hoverStyle = {};
   }
 

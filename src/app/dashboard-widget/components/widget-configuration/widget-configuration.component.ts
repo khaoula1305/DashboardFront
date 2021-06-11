@@ -4,7 +4,6 @@ import { DashboardWidget } from 'src/app/dashboard-widget/models/dashboard-widge
 import { WidgetTypeService } from 'src/app/widget/services/widget-type.service';
 import { NgForm } from '@angular/forms';
 import { DashboardsService } from 'src/app/dashboard/services/dashboards.service';
-
 import { WidgetsService } from 'src/app/widget/services/widgets.service';
 import { Dashboard } from 'src/app/dashboard/models/dashboard.model';
 import { DashboardWidgetService } from '../../services/dashboard-widget.service';
@@ -49,8 +48,6 @@ export class WidgetConfigurationComponent implements OnInit {
       },
         (err) => console.log(err),
         () => this.load = true);
-
-
     this.widgetTypeService.getAllWidgetTypes().subscribe(
       (data) => {
         // filter to be implemented
@@ -61,7 +58,7 @@ export class WidgetConfigurationComponent implements OnInit {
     );
   }
 
-  onSubmit(m: NgForm) {
+  onSubmit(m: NgForm): void {
     this.dashboardWidget.widget = this.widget;
     this.dashboardWidgetService
       .updateDashboardWidget(

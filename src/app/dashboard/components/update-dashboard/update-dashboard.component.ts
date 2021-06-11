@@ -9,11 +9,11 @@ import { DashboardsService } from 'src/app/dashboard/services/dashboards.service
   styleUrls: ['./update-dashboard.component.scss']
 })
 export class UpdateDashboardComponent implements OnInit {
-  dashboard : Dashboard = new Dashboard();
-  load=false;
+  dashboard: Dashboard = new Dashboard();
+  load = false;
   constructor(private dashboardService: DashboardsService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
@@ -24,13 +24,13 @@ export class UpdateDashboardComponent implements OnInit {
       (error) => {
       },
       () => {
-        this.load=true;
+        this.load = true;
       }
     );
   }
-  onSubmit(m: NgForm) {
+  onSubmit(m: NgForm): void {
       this.dashboard.title = m.value.title;
-      this.dashboard.description= m.value.description;
+      this.dashboard.description = m.value.description;
       this.dashboardService.updateDashboard(this.dashboard).subscribe(
         result => this.router.navigate(['/'])
          );

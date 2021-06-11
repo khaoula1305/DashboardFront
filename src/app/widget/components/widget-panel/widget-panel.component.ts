@@ -13,7 +13,7 @@ export class WidgetPanelComponent implements OnInit {
   widgets: Widget[];
   searchText;
   constructor( private widgetsService: WidgetsService, private router: Router) { }
-  hideClick(){
+  hideClick(): void {
     this.hidden.emit(true);
   }
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class WidgetPanelComponent implements OnInit {
     }
     );
     }
-    addClick(widget: Widget ){
+    addClick(widget: Widget ): void {
       this.added.emit(widget);
     }
 }

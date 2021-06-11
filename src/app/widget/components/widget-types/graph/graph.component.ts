@@ -19,7 +19,7 @@ export class GraphComponent implements OnInit {
   preview = false;
   labelsWrited = false;
   drawType = false;
-  basicData;
+  basicData: any;
   showQueries = false;
   widget: Widget;
   dimension: MetaDataSource;
@@ -39,20 +39,20 @@ export class GraphComponent implements OnInit {
       .subscribe((data) => {
         this.results = data;
         for (const key in data[0]){
-          if (!this.widget.metaDataSources.find(elm => elm.key == key)){
+          if (!this.widget.metaDataSources.find(elm => elm.key === key)){
           this.allKeys.push({id: UUID.UUID(), key, label: key, isDimension: false});
           }
         }
       });
-    this.dimensionKey = this.widget.metaDataSources.find((elm) => elm.isDimension == true);
-    if (this.dimensionKey != undefined){
+    this.dimensionKey = this.widget.metaDataSources.find((elm) => elm.isDimension === true);
+    if (this.dimensionKey !== undefined){
         this.dimension = this.dimensionKey;
         this.allKeys.push(this.dimension);
       }
 
   }
 
-  onSelectedDimension(event) {
+  onSelectedDimension(event): void {
     if (this.dimensionKey != undefined) {
       this.allKeys.push(this.dimensionKey);
       const removeIndex = this.widget.metaDataSources
@@ -73,20 +73,20 @@ export class GraphComponent implements OnInit {
     this.widget.metaDataSources.push(this.dimensionKey);
   }
 
-  onSelectedKey(key: string, id: string) {
+  onSelectedKey(key: string, id: string): void {
     this.widget.metaDataSources.push({
       id,
       key,
       label: key,
       isDimension: false,
     });
-    if (this.widget.metaDataSources.length == 0) { this.preview = true; }
+    if (this.widget.metaDataSources.length === 0) { this.preview = true; }
     else { this.preview = false; }
     this.removeSelectedKeyFromFirstList(id);
     this.labelsWrited = true;
   }
 
-  onRemovedKey(key: string, id: string) {
+  onRemovedKey(key: string, id: string): void {
     this.allKeys.push({ id, key, label: key, isDimension: false });
     this.removeSelectedKeyFromSecondList(id);
   }
@@ -98,14 +98,14 @@ export class GraphComponent implements OnInit {
       .indexOf(id);
     this.allKeys.splice(removeIndex, 1);
   }
-  removeSelectedKeyFromSecondList(id: string) {
+  removeSelectedKeyFromSecondList(id: string): void {
     const removeIndex = this.widget.metaDataSources
       .map(function(item) {
         return item.id;
       })
       .indexOf(id);
     this.widget.metaDataSources.splice(removeIndex, 1);
-    if (this.widget.metaDataSources.length == 0) { this.preview = true; }
+    if (this.widget.metaDataSources.length === 0) { this.preview = true; }
     else { this.preview = false; }
   }
   generateColor() {
@@ -114,8 +114,8 @@ export class GraphComponent implements OnInit {
     );
   }
 
-createBasicData(){
-  if (this.dimensionKey == null) { // set first item in dimension key if switching from table to graph
+createBasicData(): void {
+  if (this.dimensionKey === null) { // set first item in dimension key if switching from table to graph
     this.widget.metaDataSources[0].isDimension = true;
     this.dimensionKey = this.widget.metaDataSources[0];
   }
@@ -124,7 +124,7 @@ createBasicData(){
   const dimensions = [];
   this.widget.metaDataSources.forEach(element => {
     if (!element.isDimension){
-      if (this.widget.widgetType.type == this.graphEnum.Pie){
+      if (this.widget.widgetType.type === this.graphEnum.Pie){
         labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
       }
       else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
@@ -133,7 +133,7 @@ createBasicData(){
   this.results.forEach((elm) => {
     let repeat = true;
     for (let index = 0; index < dimensions.length; index++) {
-     if (dimensions[index] == elm[this.dimensionKey.key]){
+     if (dimensions[index] === elm[this.dimensionKey.key]){
       repeat = false;
       labels.forEach(lab => {
         lab.data[index] += elm[lab.key];
@@ -144,7 +144,7 @@ createBasicData(){
     if (repeat) {
       dimensions.push(elm[this.dimensionKey.key]);
       labels.forEach( lab => {
-        if (this.widget.widgetType.type == this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+        if (this.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
         lab.data.push(elm[lab.key]);
       });
     }

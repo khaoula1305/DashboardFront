@@ -5,7 +5,6 @@ import { WidgetsService } from 'src/app/widget/services/widgets.service';
 import { Message, MessageService, PrimeNGConfig } from 'primeng/api';
 import { MetaDataSource } from 'src/app/widget/models/meta-data-source.model';
 import { WidgetTypeEnum } from '../../models/widgetTypeEnum';
-import { DataSourceService } from 'src/app/data-source/services/data-source.service';
 @Component({
   selector: 'app-widget-list',
   templateUrl: './widget-list.component.html',
@@ -42,7 +41,7 @@ export class WidgetListComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.widgetService.getAllWidgets().subscribe(
       (data) => {
-        this.myWidgets = data.filter(widget => widget.widgetType.type != this.widgetTypeEnum.Currency);
+        this.myWidgets = data.filter(widget => widget.widgetType.type !== this.widgetTypeEnum.Currency);
       },
       (error) => {
         console.error();
@@ -52,14 +51,14 @@ export class WidgetListComponent implements OnInit {
       }
     );
   }
-  updateWidget(widget: any) {
+  updateWidget(widget: any): void {
     const currentRoute = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
     this.router.navigate(['upWidget', widget.id]);
     });
 
   }
-  onDeleteWidget(widget: Widget) {
+  onDeleteWidget(widget: Widget): void {
     this.widget = widget;
     this.widgetService.getAllDashboardWidgets(widget.id).subscribe((data) => {
       if (data.length > 0) {
@@ -81,20 +80,20 @@ export class WidgetListComponent implements OnInit {
       }
     });
   }
-  showConfirm(message: any) {
+  showConfirm(message: any): void {
     this.messageService.clear();
     this.messageService.add(message);
   }
-  onConfirm() {
+  onConfirm(): void {
     this.deleteWidget(this.widget);
     this.messageService.clear('a');
   }
 
-  onReject() {
+  onReject(): void {
     this.messageService.clear('a');
   }
 
-  deleteWidget(widget: any) {
+  deleteWidget(widget: any): void {
     this.widgetService.deleteWidget(widget.id).subscribe((result) => {
       this.router
         .navigateByUrl('/NewDashboard', { skipLocationChange: true })
@@ -104,7 +103,7 @@ export class WidgetListComponent implements OnInit {
     });
   }
 
-  onShowDetails(widget: Widget) {
+  onShowDetails(widget: Widget): void {
     this.selectedWidget = widget;
     this.visibleSidebar = true;
   }

@@ -13,13 +13,10 @@ export class WidgetsService {
   host: any = environment.hostApi + '/Widget/';
   private widgetSource = new BehaviorSubject<Widget>(new Widget());
   currentWidget = this.widgetSource.asObservable();
-  getCurrentWidget(){
-    console.log('curent from using service', this.widgetSource.getValue());
-  }
   getWidget(widgetId: any): Observable<Widget>{
     return this.http.get<Widget>(this.host + widgetId);
   }
-  changeWidget(widget: Widget) {
+  changeWidget(widget: Widget): void{
     this.widgetSource.next(widget);
   }
   constructor(private http: HttpClient) {

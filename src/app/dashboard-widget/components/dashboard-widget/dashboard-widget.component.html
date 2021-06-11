@@ -21,7 +21,7 @@
             </p-table>
         </div>
         <div *ngSwitchCase="widgetTypeEnum.Card">
-                <p-card class="containSize partition" styleClass="cardColor" (click)="showDetails()">
+                <p-card class="containSize partition" styleClass="cardColor" (click)="onClickForDetail(1)">
                     <div class="p-d-flex">
                         <p  style="font-weight: bold;">{{result.label}}</p>
                     <p-divider layout="vertical" ></p-divider>
@@ -30,7 +30,7 @@
                 </p-card>
         </div>
         <div *ngSwitchCase="widgetTypeEnum.Currency">  
-            <app-currency (onClick)="showDetails()"></app-currency>
+            <app-currency (onClick)="onClickForDetail($event)"></app-currency>
         </div>
         <div *ngSwitchDefault>
             <p-chart type="{{dashboardWidget.widget.widgetType.type}}" [data]="basicData" [options]="basicOptions" (onDataSelect)="selectData($event)">

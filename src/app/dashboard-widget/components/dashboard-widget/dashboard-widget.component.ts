@@ -9,6 +9,7 @@ import { GraphEnum, WidgetTypeEnum } from 'src/app/widget/models/widgetTypeEnum'
 import { WidgetType } from 'src/app/widget/models/widget-type';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
 import { Constants } from 'src/app/constants/constants';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -19,7 +20,7 @@ import { Constants } from 'src/app/constants/constants';
 export class DashboardWidgetComponent implements OnInit {
   @Output() deleted = new EventEmitter<any>();
   @Input() dashboardWidget: DashboardWidget;
-  selectedKeys : MetaDataSource[];
+  selectedKeys: MetaDataSource[];
   basicData: any;
   basicOptions: any;
   items: MenuItem[];
@@ -27,15 +28,18 @@ export class DashboardWidgetComponent implements OnInit {
   widgetTypeEnum = WidgetTypeEnum;
   graphEnum = GraphEnum;
   widgetType: string;
-  load= false;
-  results=[];
+  load = false;
+  results = [];
   dimensionKey: MetaDataSource;
-  datasets: any[] = [];
   result;
-  widgetTypeOnUpdate:WidgetType;
-  visibleSidebar=false;
-  @Output() onDetail = new EventEmitter<any>();
-  @Output() selectedCard = new EventEmitter<any>();
+  widgetTypeOnUpdate: WidgetType;
+  visibleSidebar = false;
+  // Chart
+  labels = [];
+  dimensions = [];
+  datasets: any[] = [];
+  @Output() fullScreen = new EventEmitter<any>();
+  @Output() selectedItemDetail = new EventEmitter<any>();
 
   constructor(
     private dataSourceService: DataSourceService,
@@ -45,26 +49,28 @@ export class DashboardWidgetComponent implements OnInit {
   ) {}
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
-    if(this.widgetType == this.widgetTypeEnum.Currency){
-      this.load=true
+     // static widget, w don't need datasource
+     if (this.widgetType === this.widgetTypeEnum.Currency){
+      this.load = true;
     }else{
-      this.selectedKeys= this.dashboardWidget.widget.metaDataSources;
-      if(this.dashboardWidget.widget.dataSource.type== Constants.restAPI){
+      this.selectedKeys = this.dashboardWidget.widget.metaDataSources;
+      // there is tow cases: Rest API and QueryBuilder
+      if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI){
        this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
          (data) => {
-           this.results=data;
-           switch(this.widgetType) {
+           this.results = data;
+           switch (this.widgetType) {
              case this.widgetTypeEnum.Table : {
                break;
               }
              case this.widgetTypeEnum.Card : {
-               let somme=0;
+               let somme = 0;
                this.results.forEach(elm => {
-                 somme+=elm[this.selectedKeys[0].key];
+                 somme += elm[this.selectedKeys[0].key];
                });
                this.result = {
                  key: somme,
-                 label:this.selectedKeys[0].label
+                 label: this.selectedKeys[0].label
                };
                break;
              }
@@ -77,43 +83,45 @@ export class DashboardWidgetComponent implements OnInit {
          (error) => {
            console.log(error);
          },
-         ()=>{
-           this.load=true;
+         () => {
+           this.load = true;
          });
       }else{
        this.queryBuilder.getData(this.dashboardWidget.widget.id).subscribe(
          (data) => {
-           this.results=data;
-           switch(this.widgetType) {
+           this.results = data;
+           switch (this.widgetType) {
              case this.widgetTypeEnum.Table : {
                break;
               }
              case this.widgetTypeEnum.Card : {
                this.result = {
                  key: data[0].COUNT,
-                 label:this.selectedKeys[0].label
+                 label: this.selectedKeys[0].label
                };
                break;
              }
              default : {
-               const labels=[];
-               const dimensions=[];
-               for(const key in data[0]){
-                 const originKey=  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
-                 if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie){
-                   labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data:[]} );
+               for (const key in data[0]){
+                 const originKey =  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() === key.toLowerCase());
+                 if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
+                   this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data: []} );
                  }
-                 else {   labels.push( { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data:[]} ); }
+                 else {
+                   this.labels.push(
+                     { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data: []}
+                     );
+                  }
                  }
-               const dim= labels.pop();
-               data.forEach(element=>{
-                dimensions.push(element[dim.label.toUpperCase()]);
-                labels.forEach( lab=>{
-                  if(this.dashboardWidget.widget.widgetType.type==this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+               const dim = this.labels.pop();
+               data.forEach(element => {
+                this.dimensions.push(element[dim.label.toUpperCase()]);
+                this.labels.forEach( lab => {
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
                   lab.data.push(element[lab.label.toUpperCase()]);
                 });
                });
-               this.basicData = { labels: dimensions, datasets: labels };
+               this.basicData = { labels: this.dimensions, datasets: this.labels };
                break;
              }
            }
@@ -121,104 +129,116 @@ export class DashboardWidgetComponent implements OnInit {
          (error) => {
            console.log(error);
          },
-         ()=>{
-           this.load=true;
+         () => {
+           this.load = true;
          });
       }
     }
   }
-
-  createBasicData(){
-    const labels=[];
-    const dimensions=[];
-    const dimension= this.dashboardWidget.widget.metaDataSources.find( e=> e.isDimension==true);
-    this.dashboardWidget.widget.metaDataSources.forEach(element=>{
-      if(!element.isDimension){
-        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie){
+  // Generate the data that we will be used in the chart
+  createBasicData(): void {
+    const labels = [];
+    const dimensions = [];
+    const dimension = this.dashboardWidget.widget.metaDataSources.find( e => e.isDimension === true);
+    this.dashboardWidget.widget.metaDataSources.forEach(element => {
+      if (!element.isDimension){
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
         labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
       }
       else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
          }
     });
     this.results.forEach((elm) => {
-      let repeat=true;
+      let repeat = true;
       for (let index = 0; index < dimensions.length; index++) {
-       if(dimensions[index]== elm[dimension.key]){
-        repeat=false;
-        labels.forEach(lab=>{
-          lab.data[index]+=elm[lab.key];
+       if (dimensions[index] === elm[dimension.key]){
+        repeat = false;
+        labels.forEach(lab => {
+          lab.data[index] += elm[lab.key];
         });
         break;
        }
       }
-      if(repeat) {
+      if (repeat) {
         dimensions.push(elm[dimension.key]);
-        labels.forEach( lab=>{
-        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
-          lab.data.push(elm[lab.key]);
+        labels.forEach( lab => {
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+        lab.data.push(elm[lab.key]);
         });
       }
     });
     this.basicData = { labels: dimensions, datasets: labels };
   }
-  generateColor() {
-    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+  generateColor(): string {
+    return '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
   }
-  updateWidgetDashboard(id: any){
-    this.dashboardsService.currentDasboard= this.dashboardWidget.dashboard;
+  updateWidgetDashboard(id: any): void {
+    this.dashboardsService.currentDasboard = this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', id]);
   }
-  deleteClick() {
+  // Emit delete event
+  deleteClick(): void {
     this.deleted.emit(true);
   }
-  onShowDetails() {
-    switch(this.dashboardWidget.widget.widgetType.type ){
+  // this for full screen
+  onShowDetails(): void {
+    switch (this.dashboardWidget.widget.widgetType.type ){
       case this.widgetTypeEnum.Table:  {
-        this.onDetail.emit([this.results, {}]);
+        this.fullScreen.emit([this.results, {}]);
         break;
       }
       case this.widgetTypeEnum.Card : {
-      this.onDetail.emit([[], {} ]);
+      this.fullScreen.emit([[], {} ]);
       break;
       }
-      case this.widgetTypeEnum.Currency:{
-        this.onDetail.emit([[], {} ])
+      case this.widgetTypeEnum.Currency: {
+        this.fullScreen.emit([[], {} ]);
       }
-      default : this.onDetail.emit([this.results, this.basicData]);
+      default : this.fullScreen.emit([this.results, this.basicData]);
 
     }
   }
-  showDetails() {
-    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
-      this.selectedCard.emit([this.results]);
-    }else{
-      if(this.dashboardWidget.widget.dataSourceDetails== null) {
-         this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
-           data=>  this.selectedCard.emit([data])
-         );
+  // whene user click for details
+  onClickForDetail(event): void {
+    switch (this.dashboardWidget.widget.widgetType.type){
+      case  this.widgetTypeEnum.Card: {
+        if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI ){
+          this.selectedItemDetail.emit(this.results);
+        }else{
+          if (this.dashboardWidget.widget.dataSourceDetails === null) {
+             this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
+               data =>  this.selectedItemDetail.emit(data)
+             );
+          }
+          else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
+               data =>  this.selectedItemDetail.emit(data)
+             );
+          }
+        }
+        break;
       }
-      else { this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSourceDetails).subscribe(
-           data=>  this.selectedCard.emit([data])
-         );
+      case this.widgetTypeEnum.Currency: {
+        this.selectedItemDetail.emit(event);
+        break;
       }
-    }
+        }
   }
-
-  selectData(event) {
-    const table=[];
-    if(this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails== null){
-     this.results.forEach(elm=>{
-        if(elm[this.dashboardWidget.widget.metaDataSources.find(item=> item.isDimension==true).key]==event.element._model.label){
+  // When the user clicks in the graph for more details
+  selectData(event): void {
+    const label = this.basicData.labels[event.element._index];
+    const table = [];
+    if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails === null){
+     this.results.forEach(elm => {
+        if (elm[this.dashboardWidget.widget.metaDataSources.find(item => item.isDimension === true).key] === label){
           table.push(elm);
         }
       });
-     this.selectedCard.emit([table]);
-
+     this.selectedItemDetail.emit(table);
     } else {
       this.dataSourceService.getDataSource(this.dashboardWidget.widget.dataSourceDetails.id).subscribe(
-        data=>{
-          this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id,event.element._model.label).subscribe( dat =>{
-             this.selectedCard.emit([dat]);
+        data => {
+          this.queryBuilder.getDataForDetails(this.dashboardWidget.widget.id, label).subscribe( dat => {
+             this.selectedItemDetail.emit(dat);
           }
            );
 

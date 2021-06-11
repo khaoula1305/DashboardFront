@@ -31,14 +31,14 @@ export class TableComponent implements OnInit {
       (data) => {
         this.results = data;
         for (const key in data[0]){
-            if (!this.widget.metaDataSources.find(elm => elm.key == key)){
+            if (!this.widget.metaDataSources.find(elm => elm.key === key)){
             this.allKeys.push({id: UUID.UUID(), key, label: key, isDimension: false});
             }
           }
       });
   }
 
-  onSelectedKey(key: string, id: string){
+  onSelectedKey(key: string, id: string): void {
     this.widget.metaDataSources.push({ id, key, label: key, isDimension: false});
     this.removeSelectedKeyFromFirstList(id);
     this.customTable = [];
@@ -47,7 +47,7 @@ export class TableComponent implements OnInit {
     });
   }
 
-  onRemovedKey(key: string, id: string) {
+  onRemovedKey(key: string, id: string): void {
     this.allKeys.push({id, key, label: key, isDimension: false});
     this.removeSelectedKeyFromSecondList(id);
     this.customTable = [];
@@ -55,11 +55,11 @@ export class TableComponent implements OnInit {
       this.customTable.push(elm.key);
     });
   }
-  removeSelectedKeyFromFirstList(id: string) {
+  removeSelectedKeyFromFirstList(id: string): void {
     const removeIndex = this.allKeys.map(function(item) { return item.id; }).indexOf(id);
     this.allKeys.splice(removeIndex, 1);
   }
-  removeSelectedKeyFromSecondList(id: string) {
+  removeSelectedKeyFromSecondList(id: string): void {
     const removeIndex = this.widget.metaDataSources.map(function(item) { return item.id; }).indexOf(id);
     this.widget.metaDataSources.splice(removeIndex, 1);
   }

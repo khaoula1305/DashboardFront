@@ -8,7 +8,7 @@ import { TeamsService } from '../../../team/services/team.service';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent implements OnInit {
-  user:User;
+  user: User;
   constructor(
     private teamService: TeamsService) { }
 

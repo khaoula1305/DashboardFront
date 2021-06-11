@@ -8,12 +8,12 @@ export class FormatingData implements PipeTransform {
 
     constructor() {}
 
-    transform(value: any) {
+    transform(value: any): number {
         // get just 2 numbers after , from float numbers
         const isFloat = (n) => {
             return n === +n && n !== (n | 0);
           };
-        if (typeof(value) == Constants.number) {
+        if (typeof(value) === Constants.number) {
            if (isFloat(value)) {
                return value.toLocaleString('fr-FR',  {
                 minimumFractionDigits: 2,
@@ -21,7 +21,7 @@ export class FormatingData implements PipeTransform {
               });
             }
            return value.toLocaleString('fr-FR');
-       }  else if (typeof(value) == Constants.string) {
+       }  else if (typeof(value) === Constants.string) {
            return value;
         }
     }

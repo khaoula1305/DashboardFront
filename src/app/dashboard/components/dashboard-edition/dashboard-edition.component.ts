@@ -14,9 +14,9 @@ import { TeamsService } from 'src/app/team/services/team.service';
 export class DashboardEditionComponent implements OnInit {
 
   messageControl = new FormControl('', Validators.required);
-  selectedTeam:Team;
-  teams:Team[];
-  dashboard:Dashboard=new Dashboard();
+  selectedTeam: Team;
+  teams: Team[];
+  dashboard: Dashboard = new Dashboard();
   constructor(
     private dashboardService: DashboardsService,
     private router: Router,
@@ -24,20 +24,16 @@ export class DashboardEditionComponent implements OnInit {
 
   ngOnInit(): void {
     this.teamService.getAllTeams().subscribe(
-      (data)=> {
-        this.teams=data.filter(team => team.title !=Constants.myDashboards);
+      (data) => {
+        this.teams = data.filter(team => team.title !== Constants.myDashboards);
       });
   }
-  onSubmit(m: NgForm) {
-    if ( m.untouched || m.invalid) {
-      alert('Required');
-    } else {
+  onSubmit(m: NgForm): void {
       this.dashboardService.addDashboard(this.dashboard).subscribe(
         result =>   this.changeLocation()
          );
-    }
   }
-  changeLocation() {
+  changeLocation(): void {
     this.router.navigateByUrl('/teams', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/', ]); // navigate to same route
     });
