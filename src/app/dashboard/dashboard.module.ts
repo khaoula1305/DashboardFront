@@ -40,9 +40,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     DashboardEditionComponent,
-    DashboardListComponent,
     UpdateDashboardComponent,
-    DashboardComponent
+    DashboardComponent,
+    DashboardListComponent
     ],
   imports: [
     CommonModule,

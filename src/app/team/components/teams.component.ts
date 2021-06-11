@@ -67,8 +67,8 @@ export class TeamsComponent implements OnInit {
   }
   // add members to a existant team
   share(node): void {
-    this.currentTeam = this.teams.find(team => team.id == node.key);
-    this.addMembers = this.members.filter(user => this.currentTeam.members.find(u => u.id == user.id) == undefined);
+    this.currentTeam = this.teams.find(team => team.id === node.key);
+    this.addMembers = this.members.filter(user => this.currentTeam.members.find(u => u.id === user.id) === undefined);
     this.displayShare = true;
   }
   shareWithOthers(): void {
@@ -132,8 +132,8 @@ filterMember(event, tab): void {
   const query = event.query;
   for (const member of this.members ){
     if (
-      member.lastName.toLowerCase().indexOf(query.toLowerCase()) == 0 || 
-      member.firstName.toLowerCase().indexOf(query.toLowerCase()) == 0) 
+      member.lastName.toLowerCase().indexOf(query.toLowerCase()) === 0 ||
+      member.firstName.toLowerCase().indexOf(query.toLowerCase()) === 0)
       {
         filtered.push(member);
     }

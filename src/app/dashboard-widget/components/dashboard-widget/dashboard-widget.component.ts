@@ -50,12 +50,12 @@ export class DashboardWidgetComponent implements OnInit {
   ngOnInit(): void {
      this.widgetType = this.dashboardWidget.widget.widgetType.type;
      // static widget, w don't need datasource
-     if (this.widgetType == this.widgetTypeEnum.Currency){
+     if (this.widgetType === this.widgetTypeEnum.Currency){
       this.load = true;
     }else{
       this.selectedKeys = this.dashboardWidget.widget.metaDataSources;
       // there is tow cases: Rest API and QueryBuilder
-      if (this.dashboardWidget.widget.dataSource.type == Constants.restAPI){
+      if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI){
        this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
          (data) => {
            this.results = data;
@@ -103,21 +103,21 @@ export class DashboardWidgetComponent implements OnInit {
              }
              default : {
                for (const key in data[0]){
-                 const originKey =  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() == key.toLowerCase());
-                 if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie){
+                 const originKey =  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() === key.toLowerCase());
+                 if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
                    this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data: []} );
                  }
-                 else {   
-                   this.labels.push( 
-                     { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data: []} 
-                     ); 
+                 else {
+                   this.labels.push(
+                     { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data: []}
+                     );
                   }
                  }
                const dim = this.labels.pop();
                data.forEach(element => {
                 this.dimensions.push(element[dim.label.toUpperCase()]);
                 this.labels.forEach( lab => {
-                  if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
                   lab.data.push(element[lab.label.toUpperCase()]);
                 });
                });
@@ -135,14 +135,14 @@ export class DashboardWidgetComponent implements OnInit {
       }
     }
   }
-  //Generate the data that we will be used in the chart
+  // Generate the data that we will be used in the chart
   createBasicData(): void {
     const labels = [];
     const dimensions = [];
-    const dimension = this.dashboardWidget.widget.metaDataSources.find( e => e.isDimension == true);
+    const dimension = this.dashboardWidget.widget.metaDataSources.find( e => e.isDimension === true);
     this.dashboardWidget.widget.metaDataSources.forEach(element => {
       if (!element.isDimension){
-        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie){
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
         labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
       }
       else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
@@ -151,7 +151,7 @@ export class DashboardWidgetComponent implements OnInit {
     this.results.forEach((elm) => {
       let repeat = true;
       for (let index = 0; index < dimensions.length; index++) {
-       if (dimensions[index] == elm[dimension.key]){
+       if (dimensions[index] === elm[dimension.key]){
         repeat = false;
         labels.forEach(lab => {
           lab.data[index] += elm[lab.key];
@@ -162,7 +162,7 @@ export class DashboardWidgetComponent implements OnInit {
       if (repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab => {
-        if (this.dashboardWidget.widget.widgetType.type == this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
         lab.data.push(elm[lab.key]);
         });
       }
@@ -176,7 +176,7 @@ export class DashboardWidgetComponent implements OnInit {
     this.dashboardsService.currentDasboard = this.dashboardWidget.dashboard;
     this.router.navigate(['/updateWidget', id]);
   }
-  // Emit delete event 
+  // Emit delete event
   deleteClick(): void {
     this.deleted.emit(true);
   }
@@ -202,10 +202,10 @@ export class DashboardWidgetComponent implements OnInit {
   onClickForDetail(event): void {
     switch (this.dashboardWidget.widget.widgetType.type){
       case  this.widgetTypeEnum.Card: {
-        if (this.dashboardWidget.widget.dataSource.type == Constants.restAPI ){
+        if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI ){
           this.selectedItemDetail.emit(this.results);
         }else{
-          if (this.dashboardWidget.widget.dataSourceDetails == null) {
+          if (this.dashboardWidget.widget.dataSourceDetails === null) {
              this.dataSourceService.getDataFrom(this.dashboardWidget.widget.dataSource).subscribe(
                data =>  this.selectedItemDetail.emit(data)
              );
@@ -227,9 +227,9 @@ export class DashboardWidgetComponent implements OnInit {
   selectData(event): void {
     const label = this.basicData.labels[event.element._index];
     const table = [];
-    if (this.dashboardWidget.widget.dataSource.type == Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails == null){
+    if (this.dashboardWidget.widget.dataSource.type === Constants.restAPI  || this.dashboardWidget.widget.dataSourceDetails === null){
      this.results.forEach(elm => {
-        if (elm[this.dashboardWidget.widget.metaDataSources.find(item => item.isDimension == true).key] == label){
+        if (elm[this.dashboardWidget.widget.metaDataSources.find(item => item.isDimension === true).key] === label){
           table.push(elm);
         }
       });

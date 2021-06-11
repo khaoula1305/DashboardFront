@@ -46,7 +46,7 @@ export class CardComponent implements OnInit {
       this.results.forEach((elm) => (this.cardRes += elm[this.cardKey.key]));
         }
       });
-    if (this.widget.metaDataSources.length == 0) {
+    if (this.widget.metaDataSources.length === 0) {
       this.newCard = true;
     }
     else {

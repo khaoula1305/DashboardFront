@@ -40,7 +40,7 @@
 <p-sidebar  [modal]="false"  [(visible)]="visibleSidebarDetail" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
   <app-widget-details *ngIf="visibleSidebarDetail" [title]="selectedDashboardWidget.title" [widget]="selectedDashboardWidget.widget" [results]="results" [chartResults]="chartResults" [cardResults]="cardResults"></app-widget-details>
 </p-sidebar>
-<<!--Détails-->
+<!--Détails-->
 <p-sidebar header="Hey" [modal]="false" [(visible)]="visibleSidebarCard" position="right" [style]="{width:'60em'}" [baseZIndex]="10000">
   <h2 style="font-weight:normal"><strong>Widget Details</strong></h2>
   <p-card>

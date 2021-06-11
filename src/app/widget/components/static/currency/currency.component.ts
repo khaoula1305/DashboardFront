@@ -14,7 +14,7 @@ export class CurrencyComponent implements OnInit {
   host = 'https://api.exchangerate-api.com/v4/latest/';
   currencies: any[] = [];
   allCurrencies: any[] = [];
-  @Output() onClick = new EventEmitter<any>();
+  @Output() clickDetail = new EventEmitter<any>();
 
   constructor(private staticWidgetService: StaticWidgetService) { }
 
@@ -26,8 +26,8 @@ export class CurrencyComponent implements OnInit {
           this.currencies.push({name: key});
           this.allCurrencies.push({name: key, value: this.results.rates[key]});
         }
-        this.base = this.currencies.find( currency => currency.name = 'MAD');
-        this.selectedCurrencies = this.allCurrencies.filter( currency => currency.name == 'USD' || currency.name == 'EUR');
+        this.base = this.currencies.find( currency => currency.name === 'MAD');
+        this.selectedCurrencies = this.allCurrencies.filter( currency => currency.name === 'USD' || currency.name === 'EUR');
       }
     );
   }
@@ -44,7 +44,7 @@ export class CurrencyComponent implements OnInit {
     );
   }
   onDetails(){
-    this.onClick.emit(this.allCurrencies);
+    this.clickDetail.emit(this.allCurrencies);
   }
 
 }

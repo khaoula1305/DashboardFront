@@ -68,13 +68,13 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.queries = data;
         data.forEach((elm) => {
-          if (elm.type == Constants.restAPI) {
+          if (elm.type === Constants.restAPI) {
             restItems.push({
               label: elm.title,
               value: elm.id,
               additionalValue: 'rest.png',
             });
-          } else if (elm.type == Constants.queryBuilder) {
+          } else if (elm.type === Constants.queryBuilder) {
             qbItems.push({
               label: elm.title,
               value: elm.id,
@@ -99,12 +99,12 @@ export class AddWidgetComponent implements OnInit {
       }
     );
   }
-
-  onSelectedQuery() {
+  // while user select Query => filter data Source and disable dropdown
+  onSelectedQuery(): void  {
     this.showButton1 = true;
     this.dataSourceService.getAllDataSources().subscribe(
       (data) => {
-        this.widget.dataSource = data.find(elm => elm.id == this.selectedItm);
+        this.widget.dataSource = data.find(elm => elm.id === this.selectedItm);
         if (this.widget.dataSource != null) { this.disableQueriesDropdown = true; }
             // widget types filter
         this.dataSourceService
@@ -116,11 +116,11 @@ export class AddWidgetComponent implements OnInit {
             this.widgetTypes = [];
             data.forEach((item) => {
               if (
-                item.type == this.graphEnum.Bar ||
-                item.type == this.graphEnum.Line ||
-                item.type == this.graphEnum.Pie ||
-                item.type == this.widgetTypeEnum.Table ||
-                item.type == this.widgetTypeEnum.Card
+                item.type === this.graphEnum.Bar ||
+                item.type === this.graphEnum.Line ||
+                item.type === this.graphEnum.Pie ||
+                item.type === this.widgetTypeEnum.Table ||
+                item.type === this.widgetTypeEnum.Card
               ) {
                 this.widgetTypes.push(item);
               }
@@ -129,14 +129,14 @@ export class AddWidgetComponent implements OnInit {
           (error) => {
           }
         );
-      } else if (dataBody.length == 1) {
+      } else if (dataBody.length === 1) {
         this.widgetTypeService.getAllWidgetTypes().subscribe(
           (data) => {
             this.widgetTypes = [];
             data.forEach((item) => {
               if (
-                item.type == this.widgetTypeEnum.Card ||
-                item.type == this.widgetTypeEnum.Table
+                item.type === this.widgetTypeEnum.Card ||
+                item.type === this.widgetTypeEnum.Table
               ) {
                 this.widgetTypes.push(item);
               }
@@ -157,8 +157,8 @@ export class AddWidgetComponent implements OnInit {
       (data) => {
         this.filteredQueries = [];
         data.forEach((elm) => {
-          if (elm.type == Constants.queryBuilder){
-            if (elm.associatedQuery == this.widget.dataSource.id){
+          if (elm.type === Constants.queryBuilder){
+            if (elm.associatedQuery === this.widget.dataSource.id){
               this.filteredQueries.push(elm);
             }
           }
@@ -169,7 +169,7 @@ export class AddWidgetComponent implements OnInit {
     );
   }
 
-  onShowQueryDetails(dataSourceQuery: DataSource) {
+  onShowQueryDetails(dataSourceQuery: DataSource): void {
     this.showButton = true;
     this.dataSourceService
       .getDataFrom(dataSourceQuery)
@@ -205,7 +205,7 @@ export class AddWidgetComponent implements OnInit {
     else { this.queryDescription = this.widget.dataSource.description; }
   }
 
-  onSubmit(m: NgForm) {
+  onSubmit(m: NgForm): void {
     if (m.untouched || m.invalid) {
       alert('Required');
     } else {

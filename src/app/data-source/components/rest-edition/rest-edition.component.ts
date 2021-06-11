@@ -101,7 +101,7 @@ preview(): void {
       }else{
         this.results.push(data);
       }
-      this.selectedItems = this.results.filter(elm => !( Array.isArray(elm) && typeof elm == Constants.object));
+      this.selectedItems = this.results.filter(elm => !( Array.isArray(elm) && typeof elm === Constants.object));
       console.log(this.selectedItems);
       for (const key in this.results[0]) {
         if (Array.isArray(this.results[0][key]))  {
@@ -149,7 +149,7 @@ saveRest(): void {
         const cle = key;
         if ( valeur !== null && (Array.isArray(valeur))){
          out.push({data: valeur, label: cle, children: this.ConvertJson([], valeur), selectable : true});
-        } else if ( valeur !== null &&  typeof valeur == Constants.object){
+        } else if ( valeur !== null &&  typeof valeur === Constants.object){
           out.push({data: valeur, label: cle, children: this.ConvertJson([], valeur), selectable : false});
          }
          else {
@@ -161,7 +161,7 @@ saveRest(): void {
   }
   generatePath(path , node){
     path += node.label + ',';
-    if (node.parent == undefined) { return path; }
+    if (node.parent === undefined) { return path; }
     this.generatePath(path, node.parent);
   }
   tabeSelect(event): void {
