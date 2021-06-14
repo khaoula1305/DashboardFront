@@ -31,7 +31,7 @@ export class CurrencyComponent implements OnInit {
       }
     );
   }
-  changeBase(currency ){
+  changeBase(currency ): void {
     this.staticWidgetService.getDataFromURL(this.host + currency.name).subscribe(
       data => {
         this.allCurrencies = [];
@@ -43,7 +43,7 @@ export class CurrencyComponent implements OnInit {
       }
     );
   }
-  onDetails(){
+  onDetails(): void {
     this.clickDetail.emit(this.allCurrencies);
   }
 
