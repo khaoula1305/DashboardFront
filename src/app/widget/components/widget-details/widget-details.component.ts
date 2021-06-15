@@ -24,16 +24,16 @@ export class WidgetDetailsComponent implements OnInit {
   customTable: any[];
   load = false;
   graphEnum = GraphEnum;
-  widgetStatic = true;
+  staticWidget : boolean;
 
   constructor( private dataSourceService: DataSourceService) {}
   ngOnInit(): void {
+    this.staticWidget = (this.widget.widgetType.type === this.widgetTypeEnum.Currency);
     if (this.title === undefined){
       this.title = this.widget.title;
       this.dataSourceService.getDataFrom(this.widget.dataSource).subscribe(
         (data) => {
-          this.results = data;
-          this.widgetStatic = this.widget.widgetType.type !== this.widgetTypeEnum.Currency; 
+          this.results = data; 
           switch (this.widget.widgetType.type) {
             case this.widgetTypeEnum.Table: {
               this.customTable = [];
