@@ -68,6 +68,8 @@ export class DashboardComponent implements OnInit {
       }.bind(this),
       2000
     );
+    
+    // initialize dashboard options
     this.options = {
       gridType: GridType.ScrollVertical,
       compactType: CompactType.None,
@@ -122,6 +124,7 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false,
     };
+    // the ID of the DAshboard that will be displayed 
     const id = this.route.snapshot.params.id;
     this.dashboardService.getDashboard(id).subscribe(
       (data) => {
@@ -129,6 +132,7 @@ export class DashboardComponent implements OnInit {
         if (data.team && data.team.title !== Constants.myDashboards) {
           this.selectedTeam = data.team;
         }
+        // All widget inside
         this.dashboardWidgetService
           .getAllDashboardWidget(this.dashboard.id)
           .subscribe((dashwidget) => {
@@ -156,12 +160,15 @@ export class DashboardComponent implements OnInit {
       this.teams = data.filter((team) => team.title !== Constants.myDashboards);
     });
   }
+  // Hide widget panel
   onHiddenClick(state): void {
     this.add = false;
   }
+  // show widget panel for adding widget
   addWidget(): void {
     this.add = true;
   }
+  // Share Dash
   onRowSelect(): void {
     this.dashboard.team = this.selectedTeam;
     this.messageService.add({
@@ -170,12 +177,13 @@ export class DashboardComponent implements OnInit {
     });
     this.dashboardService.updateDashboard(this.dashboard).subscribe();
   }
+  // Refresh
   reload(): void {
     this.changeLocation(this.dashboard.id);
   }
+  // Add Dashboard Widget
   onAddedClick(widget: Widget): void {
     const dashboardWidget: DashboardWidget = new DashboardWidget();
-    // ToBeImplemented
     dashboardWidget.maxItemCols = 4;
     dashboardWidget.maxItemRows = 4;
     dashboardWidget.title = widget.title;
@@ -211,6 +219,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['dashboards', locationData]); // navigate to same route
     });
   }
+  // positionement 
   onEdit(reset: boolean): void {
     if (!this.editMode) {
       this.dashboardOriginal = this.dashboardGridster.map((x) => ({ ...x }));
@@ -232,17 +241,20 @@ export class DashboardComponent implements OnInit {
       this.changedOptions();
     }
   }
+  // annuler le positionnement
   trackBy(index: number, item: GridsterItem): number {
     return item.id;
   }
+
   changedOptions(): void {
     if (this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
     }
   }
+
   updateDashboard(): void {
     this.dashboardGridster.forEach((item) => {
-      // add isEqual function
+      // widget will take new place
       item.widgetdashboard.xAxisValue = item.x;
       item.widgetdashboard.yAxisValue = item.y;
       item.widgetdashboard.columnValue = item.cols;
@@ -323,7 +335,9 @@ export class DashboardComponent implements OnInit {
     this.results = event;
     this.cols = [];
     for (const key in this.results[0]) {
+      if (Object.prototype.hasOwnProperty.call(this.results[0], key)) {
       this.cols.push({ key, label: key });
+      }
     }
     this.visibleSidebarCard = true;
     this.customTable = [];

@@ -85,6 +85,7 @@ export class DashboardListComponent implements OnInit {
       }
     );
   }
+  // Display dashboard
   goToDashboard(dahsboard: Dashboard): void {
     this.dashboardService.setCurrentDashboard(dahsboard);
     this.router.navigate(['dashboards', dahsboard.id]);

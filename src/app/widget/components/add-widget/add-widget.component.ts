@@ -94,8 +94,6 @@ export class AddWidgetComponent implements OnInit {
             items: qbItems,
           },
         ];
-      },
-      (error) => {
       }
     );
   }
@@ -112,9 +110,9 @@ export class AddWidgetComponent implements OnInit {
     .subscribe((dataBody) => {
       if (dataBody.length >= 2 && Object.keys(dataBody[0]).length >= 2) {
         this.widgetTypeService.getAllWidgetTypes().subscribe(
-          (data) => {
+          (dataType) => {
             this.widgetTypes = [];
-            data.forEach((item) => {
+            dataType.forEach((item) => {
               if (
                 item.type === this.graphEnum.Bar ||
                 item.type === this.graphEnum.Line ||
@@ -125,15 +123,13 @@ export class AddWidgetComponent implements OnInit {
                 this.widgetTypes.push(item);
               }
             });
-          },
-          (error) => {
           }
         );
       } else if (dataBody.length === 1) {
         this.widgetTypeService.getAllWidgetTypes().subscribe(
-          (data) => {
+          (dataType) => {
             this.widgetTypes = [];
-            data.forEach((item) => {
+            dataType.forEach((item) => {
               if (
                 item.type === this.widgetTypeEnum.Card ||
                 item.type === this.widgetTypeEnum.Table
@@ -141,15 +137,11 @@ export class AddWidgetComponent implements OnInit {
                 this.widgetTypes.push(item);
               }
             });
-          },
-          (error) => {
           }
         );
       }
     });
-    },
-      (error) => {
-      }
+    }
       );
 
 
@@ -163,10 +155,7 @@ export class AddWidgetComponent implements OnInit {
             }
           }
         });
-      },
-      (error) => {
-      }
-    );
+      });
   }
 
   onShowQueryDetails(dataSourceQuery: DataSource): void {
@@ -175,8 +164,10 @@ export class AddWidgetComponent implements OnInit {
       .getDataFrom(dataSourceQuery)
       .subscribe((data) => {
         this.results = data;
-        for (const key in this.results[0]) {
+        for (const key in this.results.rates) {
+          if (Object.prototype.hasOwnProperty.call(this.results.rates, key)) {
           this.cols.push({ field: key, header: key });
+          }
         }
         this.customTable = [];
         this.cols.forEach((elm) => {
@@ -185,7 +176,7 @@ export class AddWidgetComponent implements OnInit {
       });
   }
 
-  showPopup(isDetail: boolean) {
+  showPopup(isDetail: boolean): void {
     this.displayPopup = true;
     this.results = [];
     this.cols = [];
@@ -199,7 +190,7 @@ export class AddWidgetComponent implements OnInit {
     }
   }
 
-  showDescriptionDialog() {
+  showDescriptionDialog(): void {
     this.displayDescription = true;
     if (this.isQueryDetails) { this.queryDescription = this.widget.dataSourceDetails.description; }
     else { this.queryDescription = this.widget.dataSource.description; }

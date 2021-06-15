@@ -53,22 +53,17 @@ export class GraphComponent implements OnInit {
   }
 
   onSelectedDimension(event): void {
-    if (this.dimensionKey != undefined) {
+    let removeIndex ;
+    if (this.dimensionKey !== undefined) {
       this.allKeys.push(this.dimensionKey);
-      const removeIndex = this.widget.metaDataSources
-        .map(function(item) {
-          return item.id;
-        })
+      removeIndex = this.widget.metaDataSources
+        .map((item) => item.id)
         .indexOf(this.dimensionKey.id);
       this.widget.metaDataSources.splice(removeIndex, 1);
     }
     this.dimensionKey = event;
     this.dimensionKey.isDimension = true;
-    const removeIndex = this.allKeys
-      .map(function(item) {
-        return item.id;
-      })
-      .indexOf(this.dimensionKey.id);
+    removeIndex = this.allKeys.map((item) => item.id ).indexOf(this.dimensionKey.id);
     this.allKeys.splice(removeIndex, 1);
     this.widget.metaDataSources.push(this.dimensionKey);
   }
@@ -90,25 +85,17 @@ export class GraphComponent implements OnInit {
     this.allKeys.push({ id, key, label: key, isDimension: false });
     this.removeSelectedKeyFromSecondList(id);
   }
-  removeSelectedKeyFromFirstList(id: string) {
-    const removeIndex = this.allKeys
-      .map(function(item) {
-        return item.id;
-      })
-      .indexOf(id);
+  removeSelectedKeyFromFirstList(id: string): void {
+    const removeIndex = this.allKeys.map((item) => item.id ).indexOf(id);
     this.allKeys.splice(removeIndex, 1);
   }
   removeSelectedKeyFromSecondList(id: string): void {
-    const removeIndex = this.widget.metaDataSources
-      .map(function(item) {
-        return item.id;
-      })
-      .indexOf(id);
+    const removeIndex = this.widget.metaDataSources.map((item) => item.id ).indexOf(id);
     this.widget.metaDataSources.splice(removeIndex, 1);
     if (this.widget.metaDataSources.length === 0) { this.preview = true; }
     else { this.preview = false; }
   }
-  generateColor() {
+  generateColor(): string {
     return (
       '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
     );

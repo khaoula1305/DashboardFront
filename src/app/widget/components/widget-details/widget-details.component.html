@@ -56,8 +56,8 @@
                   </p-card>
           </div>
           <div *ngSwitchCase="widgetTypeEnum.Currency">
-           <p>Details</p>
-         </div>
+              <app-currency></app-currency>     
+        </div>
           <div *ngSwitchDefault>
               <p-chart type="{{widget.widgetType.type}}" [data]="chartResults" [options]="basicOptions">
               </p-chart>
@@ -65,5 +65,5 @@
       </div>
   </p-card>
   <br>
-  <button pButton pRipple style="margin:5px;" icon="pi pi-file-pdf" (click)="onExportPdf()" label="&nbsp;Export&nbsp;" class="p-button-rounded p-button-success"></button>
+  <button pButton pRipple style="margin:5px;" icon="pi pi-file-pdf"  *ngIf="staticWidget" (click)="onExportPdf()" label="&nbsp;Export&nbsp;" class="p-button-rounded p-button-success"></button>
    <!--widget details-->

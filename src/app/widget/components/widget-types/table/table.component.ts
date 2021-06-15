@@ -56,11 +56,11 @@ export class TableComponent implements OnInit {
     });
   }
   removeSelectedKeyFromFirstList(id: string): void {
-    const removeIndex = this.allKeys.map(function(item) { return item.id; }).indexOf(id);
+    const removeIndex = this.allKeys.map((item) => item.id ).indexOf(id);
     this.allKeys.splice(removeIndex, 1);
   }
   removeSelectedKeyFromSecondList(id: string): void {
-    const removeIndex = this.widget.metaDataSources.map(function(item) { return item.id; }).indexOf(id);
+    const removeIndex = this.widget.metaDataSources.map((item) => item.id ).indexOf(id);
     this.widget.metaDataSources.splice(removeIndex, 1);
   }
 

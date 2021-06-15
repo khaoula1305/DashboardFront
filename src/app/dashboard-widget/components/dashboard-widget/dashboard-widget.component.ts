@@ -9,7 +9,6 @@ import { GraphEnum, WidgetTypeEnum } from 'src/app/widget/models/widgetTypeEnum'
 import { WidgetType } from 'src/app/widget/models/widget-type';
 import { DataSourceService } from 'src/app/data-source/services/data-source.service';
 import { Constants } from 'src/app/constants/constants';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -34,6 +33,7 @@ export class DashboardWidgetComponent implements OnInit {
   result;
   widgetTypeOnUpdate: WidgetType;
   visibleSidebar = false;
+  staticWidget = true;
   // Chart
   labels = [];
   dimensions = [];
@@ -52,6 +52,7 @@ export class DashboardWidgetComponent implements OnInit {
      // static widget, w don't need datasource
      if (this.widgetType === this.widgetTypeEnum.Currency){
       this.load = true;
+      this.staticWidget = false;
     }else{
       this.selectedKeys = this.dashboardWidget.widget.metaDataSources;
       // there is tow cases: Rest API and QueryBuilder
@@ -102,22 +103,29 @@ export class DashboardWidgetComponent implements OnInit {
                break;
              }
              default : {
-               for (const key in data[0]){
-                 const originKey =  this.dashboardWidget.widget.metaDataSources.find( meta => meta.label.toLowerCase() === key.toLowerCase());
-                 if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
-                   this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data: []} );
-                 }
-                 else {
-                   this.labels.push(
-                     { label: originKey.label , key: originKey.key,   backgroundColor: this.generateColor(), data: []}
-                     );
+               for (const key in data[0]) {
+                 if (Object.prototype.hasOwnProperty.call(data[0], key)) {
+                  const originKey =  this.dashboardWidget.widget.metaDataSources
+                  .find( meta => meta.label.toLowerCase() === key.toLowerCase());
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
+                    this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data: []} );
                   }
+                  else {
+                    this.labels.push(
+                      {
+                        label: originKey.label ,
+                        key: originKey.key,
+                        backgroundColor: this.generateColor(), data: []}
+                      );
+                   }
                  }
+               }
                const dim = this.labels.pop();
                data.forEach(element => {
                 this.dimensions.push(element[dim.label.toUpperCase()]);
                 this.labels.forEach( lab => {
-                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie)
+                   { lab.backgroundColor.push(this.generateColor()); }
                   lab.data.push(element[lab.label.toUpperCase()]);
                 });
                });
@@ -193,6 +201,7 @@ export class DashboardWidgetComponent implements OnInit {
       }
       case this.widgetTypeEnum.Currency: {
         this.fullScreen.emit([[], {} ]);
+        break;
       }
       default : this.fullScreen.emit([this.results, this.basicData]);
 

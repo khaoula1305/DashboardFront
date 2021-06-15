@@ -18,8 +18,8 @@ export class UpdateDataSourceComponent implements OnInit {
 
   dataSource: Rest = new Rest();
   msgs: Message[] = [];
-  informationCard= true;
-  load= false;
+  informationCard = true;
+  load = false;
   constructor(
     private dataSourceService: DataSourceService,
     private router: Router,

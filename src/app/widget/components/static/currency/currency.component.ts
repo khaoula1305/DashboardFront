@@ -22,28 +22,34 @@ export class CurrencyComponent implements OnInit {
     this.staticWidgetService.getDataFromURL(this.host + this.base.name).subscribe(
       data => {
         this.results = data;
-        for ( const key in this.results.rates){
+        for (const key in this.results.rates) {
+          if (Object.prototype.hasOwnProperty.call(this.results.rates, key)) {
           this.currencies.push({name: key});
           this.allCurrencies.push({name: key, value: this.results.rates[key]});
+
+          }
         }
+
         this.base = this.currencies.find( currency => currency.name === 'MAD');
         this.selectedCurrencies = this.allCurrencies.filter( currency => currency.name === 'USD' || currency.name === 'EUR');
       }
     );
   }
-  changeBase(currency ){
+  changeBase(currency ): void {
     this.staticWidgetService.getDataFromURL(this.host + currency.name).subscribe(
       data => {
         this.allCurrencies = [];
         this.selectedCurrencies = [];
         this.results = data;
-        for ( const key in this.results.rates){
+        for (const key in this.results.rates) {
+          if (Object.prototype.hasOwnProperty.call(this.results.rates, key)) {
           this.allCurrencies.push({name: key, value: this.results.rates[key]});
+          }
         }
       }
     );
   }
-  onDetails(){
+  onDetails(): void {
     this.clickDetail.emit(this.allCurrencies);
   }
 

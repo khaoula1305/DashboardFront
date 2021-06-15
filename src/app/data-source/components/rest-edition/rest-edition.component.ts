@@ -51,14 +51,14 @@ export class RestEditionComponent implements OnInit {
     this.params = [];
   }
   DeleteParam(param): void {
-    const removeIndex = this.params.map(function(item) { return item.id; }).indexOf(param);
+    const removeIndex = this.params.map((item) => item.id ).indexOf(param);
     this.params.splice(removeIndex, 1);
   }
   addParam(): void {
     this.params.push( {code: 'Code', value: 'Value'});
   }
   deleteHeader(header): void {
-    const removeIndex = this.headers.map(function(item) { return item.id; }).indexOf(header);
+    const removeIndex = this.headers.map((item) => item.id ).indexOf(header);
     this.headers.splice(removeIndex, 1);
   }
   addHeader(): void {
@@ -102,16 +102,18 @@ preview(): void {
         this.results.push(data);
       }
       this.selectedItems = this.results.filter(elm => !( Array.isArray(elm) && typeof elm === Constants.object));
-      console.log(this.selectedItems);
       for (const key in this.results[0]) {
-        if (Array.isArray(this.results[0][key]))  {
-          this.notNormal = true;
-          this.ConvertJson(this.resultsFormatedToTree, this.results);
-          this.results = [];
-          this.cols = [];
-          break;
+        if (Object.prototype.hasOwnProperty.call(this.results[0], key)) {
+          const element = this.results[0][key];
+          if (Array.isArray(element))  {
+            this.notNormal = true;
+            this.ConvertJson(this.resultsFormatedToTree, this.results);
+            this.results = [];
+            this.cols = [];
+            break;
+          }
+          this.cols.push( { field: key, header: key });
         }
-        this.cols.push( { field: key, header: key });
       }
     },
     (error) => {
@@ -159,7 +161,7 @@ saveRest(): void {
     }
     return out;
   }
-  generatePath(path , node){
+  generatePath(path , node): string {
     path += node.label + ',';
     if (node.parent === undefined) { return path; }
     this.generatePath(path, node.parent);
@@ -168,8 +170,11 @@ saveRest(): void {
     this.cols2 = [];
     this.selectedItems = event.node.data;
     this.dataSource.path = this.generatePath('', event.node);
-    for (const key in this.selectedItems[0] ) {
+    for (const key in this.selectedItems[0]) {
+      if (Object.prototype.hasOwnProperty.call(this.selectedItems[0], key)) {
       this.cols2.push( { field: key, header: key });
+
+      }
     }
   }
   onSubmit(rest: NgForm): void  {
