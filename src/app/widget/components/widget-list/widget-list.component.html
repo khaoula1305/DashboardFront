@@ -44,6 +44,7 @@
         <footer>
           <button pButton pRipple type="button" title="Maximize" (click)="onShowDetails(widget)" icon="pi pi-window-maximize" class="p-button-rounded p-button-success p-button-text"></button>
           <button pButton pRipple type="button" title="Edit" (click)="updateWidget(widget)"  icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
+           <button pButton pRipple type="button" title="Clone" (click)="clone(widget)" icon="pi pi-fw pi-clone" class="p-button-rounded p-button-secondary p-button-text"></button>
           <p-messages *ngIf="err" [(value)]="errDeletingMsgs" [enableService]="false"></p-messages>
           <button pButton pRipple type="button" title="Delete" (click)="onDeleteWidget(widget)" icon="pi pi-fw pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
          </footer>

@@ -95,16 +95,24 @@ export class WidgetListComponent implements OnInit {
 
   deleteWidget(widget: any): void {
     this.widgetService.deleteWidget(widget.id).subscribe((result) => {
-      this.router
-        .navigateByUrl('/NewDashboard', { skipLocationChange: true })
-        .then(() => {
-          this.router.navigate(['/widgets']);
-        });
+      this.changeLocation();
     });
   }
 
   onShowDetails(widget: Widget): void {
     this.selectedWidget = widget;
     this.visibleSidebar = true;
+  }
+    // Duplicate Dash
+  clone(widget: Widget): void{
+    this.widgetService.cloneWidget(widget).subscribe(
+        result =>   this.changeLocation()
+         );
+  }
+  changeLocation(): void {
+         this.router.navigateByUrl('/NewDashboard', { skipLocationChange: true })
+        .then(() => {
+          this.router.navigate(['/widgets']);
+        });
   }
 }

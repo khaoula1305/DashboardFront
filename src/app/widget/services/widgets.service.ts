@@ -32,6 +32,9 @@ export class WidgetsService {
   addWidget(widget: Widget): Observable<Widget> {
     return this.http.post<Widget>(this.host, widget);
   }
+   cloneWidget(widget: Widget): Observable<Widget> {
+    return this.http.post<Widget>(this.host+ 'Clone', widget);
+  }
 
   deleteWidget(widgetId: any): Observable<Widget>{
     return this.http.delete<Widget>(this.host + widgetId);

@@ -197,9 +197,6 @@ export class AddWidgetComponent implements OnInit {
   }
 
   onSubmit(m: NgForm): void {
-    if (m.untouched || m.invalid) {
-      alert('Required');
-    } else {
       this.widget.defaultItemCols = 2;
       this.widget.defaultItemRows = 2;
       this.widget.minItemCols = 1;
@@ -208,6 +205,5 @@ export class AddWidgetComponent implements OnInit {
         if (this.dashboard != null) { this.router.navigate(['/dashboards', this.dashboard.id]); }
         else { this.router.navigateByUrl('/widgets'); }
       });
-    }
   }
 }

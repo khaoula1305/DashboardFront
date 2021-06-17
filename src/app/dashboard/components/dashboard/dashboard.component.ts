@@ -363,4 +363,7 @@ export class DashboardComponent implements OnInit {
   clear(table: Table): void {
     table.clear();
 }
+onPrint() {
+       window.print();
+}
 }
