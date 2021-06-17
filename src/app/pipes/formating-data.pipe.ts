@@ -11,7 +11,7 @@ export class FormatingData implements PipeTransform {
     transform(value: any): number {
         // get just 2 numbers after , from float numbers
         const isFloat = (n) => {
-            return n === +n && n !== (n | 0);
+            return Number(n) === n && n % 1 !== 0;
           };
         if (typeof(value) === Constants.number) {
            if (isFloat(value)) {

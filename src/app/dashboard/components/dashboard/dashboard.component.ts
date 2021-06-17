@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   editMode = false;
   searchText: any;
   searchDetail: any;
-  empty: false;
+  empty = false;
   widgetDashboard;
   // Current dashboard
   @Input() dashboard: Dashboard;
@@ -62,13 +62,6 @@ export class DashboardComponent implements OnInit {
 
   public pauseState = false;
   ngOnInit(): void {
-    setTimeout(
-      function() {
-        this.empty = true;
-      }.bind(this),
-      2000
-    );
-    
     // initialize dashboard options
     this.options = {
       gridType: GridType.ScrollVertical,
@@ -124,7 +117,7 @@ export class DashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false,
     };
-    // the ID of the DAshboard that will be displayed 
+    // the ID of the DAshboard that will be displayed
     const id = this.route.snapshot.params.id;
     this.dashboardService.getDashboard(id).subscribe(
       (data) => {
@@ -135,8 +128,8 @@ export class DashboardComponent implements OnInit {
         // All widget inside
         this.dashboardWidgetService
           .getAllDashboardWidget(this.dashboard.id)
-          .subscribe((dashwidget) => {
-            dashwidget.forEach((elm) =>
+          .subscribe((dashWidgets) => {
+            dashWidgets.forEach((elm) =>
               this.dashboardGridster.push({
                 x: elm.xAxisValue,
                 y: elm.yAxisValue,
@@ -149,12 +142,14 @@ export class DashboardComponent implements OnInit {
                 widgetdashboard: elm,
               })
             );
+            // if Dashboard is empty
+            this.empty = true;
           });
       },
       (error) => {},
       () => {
         this.load = true;
-      }
+       }
     );
     this.teamService.getAllTeams().subscribe((data) => {
       this.teams = data.filter((team) => team.title !== Constants.myDashboards);
@@ -219,7 +214,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['dashboards', locationData]); // navigate to same route
     });
   }
-  // positionement 
+  // positionement
   onEdit(reset: boolean): void {
     if (!this.editMode) {
       this.dashboardOriginal = this.dashboardGridster.map((x) => ({ ...x }));
@@ -316,13 +311,6 @@ export class DashboardComponent implements OnInit {
   onReject(): void {
     this.messageService.clear('b');
     this.messageService.clear('a');
-  }
-  onDelete(): void {
-    this.showConfirm({
-      key: 'b',
-      severity: 'custom',
-      summary: 'Are you sure you want to remove this Dashboard?',
-    });
   }
   onShowDetails(event, dashboardwidget): void {
     this.selectedDashboardWidget = dashboardwidget;

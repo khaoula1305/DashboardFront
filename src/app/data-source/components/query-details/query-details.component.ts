@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from 'src/app/constants/constants';
 import { DataSource } from '../../models/data-source.model';
 import { DataSourceService } from '../../services/data-source.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-query-details',
