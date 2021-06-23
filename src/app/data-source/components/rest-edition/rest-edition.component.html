@@ -48,12 +48,6 @@
             <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
           </div>
         </div>
-        <div class="p-col-12 p-fluid p-grid"  *ngSwitchCase="'OAuth 2.0'">
-          <div class="p-md-6">
-            <h5>To Be implemented </h5>
-            <input type="text" pInputText [(ngModel)]="dataSource.token" name="token" />
-          </div>
-        </div>
         <div  class="p-col-12 p-fluid p-grid" *ngSwitchDefault>
           <div class="p-md-6">
             <div class="card">
@@ -97,46 +91,6 @@
               </p-table>
           </div>
 
-          </div>
-          <div class="p-field p-col-12 p-md-6">
-           Auth Headers
-           <button (click)="addHeader()" pButton pRipple type="button"  icon="pi pi-plus"  class="p-button-rounded p-button-text p-button-success"></button>
-          <p-table [value]="headers" dataKey="id">
-               <ng-template pTemplate="header">
-                   <tr>
-                       <th>Key</th>
-                       <th>Value</th>
-                       <th style="width:8rem"></th>
-                   </tr>
-               </ng-template>
-               <ng-template pTemplate="body" let-header>
-                   <tr>
-                       <td pEditableColumn>
-                           <p-cellEditor>
-                               <ng-template pTemplate="input">
-                                   <input pInputText type="text" [(ngModel)]="header.code" name="header.code">
-                               </ng-template>
-                               <ng-template pTemplate="output">
-                                   {{header.code}}
-                               </ng-template>
-                           </p-cellEditor>
-                       </td>
-                       <td pEditableColumn>
-                           <p-cellEditor>
-                               <ng-template pTemplate="input">
-                                   <input pInputText type="text" [(ngModel)]="header.value" name="value">
-                               </ng-template>
-                               <ng-template pTemplate="output">
-                                   {{header.value}}
-                               </ng-template>
-                           </p-cellEditor>
-                       </td>
-                       <td style="text-align:center">
-                         <button (click)="DeleteHeader(header)" pButton pRipple type="button"  icon="pi pi-trash"  class="p-button-rounded p-button-text p-button-danger"></button>
-                     </td>
-                   </tr>
-               </ng-template>
-           </p-table>
           </div>
         </div>
      </div>

@@ -34,7 +34,10 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardsService,
     private messageService: MessageService,
     private teamService: TeamsService
-  ) {}
+  ) {
+    this.backgroundColor= '#FDFDFD';
+  }
+  backgroundColor: string;
   options: GridsterConfig;
   dashboardGridster: Array<GridsterItem> = [];
   dashboardOriginal: Array<GridsterItem>;
@@ -45,6 +48,7 @@ export class DashboardComponent implements OnInit {
   searchDetail: any;
   empty = false;
   widgetDashboard;
+  settings=false;
   // Current dashboard
   @Input() dashboard: Dashboard;
   // Teams;
@@ -176,7 +180,7 @@ export class DashboardComponent implements OnInit {
   reload(): void {
     this.changeLocation(this.dashboard.id);
   }
-  // Add Dashboard Widget
+  // Add Widget into a dashboard => dashboard widget
   onAddedClick(widget: Widget): void {
     const dashboardWidget: DashboardWidget = new DashboardWidget();
     dashboardWidget.maxItemCols = 4;
@@ -240,13 +244,21 @@ export class DashboardComponent implements OnInit {
   trackBy(index: number, item: GridsterItem): number {
     return item.id;
   }
-
+  setting(){
+    this.settings=true;
+  }
+  saveSettings(){
+    this.settings=false;
+    this.options.api.optionsChanged();
+  }
+  pushWidgets(){
+    this.options.api.optionsChanged();
+  }
   changedOptions(): void {
     if (this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
     }
   }
-
   updateDashboard(): void {
     this.dashboardGridster.forEach((item) => {
       // widget will take new place

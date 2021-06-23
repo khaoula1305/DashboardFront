@@ -36,6 +36,8 @@ import { UpdateDashboardComponent } from './components/update-dashboard/update-d
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared-module.module';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ColorPickerModule} from 'primeng/colorpicker';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     InputTextModule,
     RadioButtonModule,
     SharedModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ColorPickerModule,
+    InputSwitchModule
 
   ]
 })

@@ -107,7 +107,7 @@ export class DashboardWidgetComponent implements OnInit {
                  if (Object.prototype.hasOwnProperty.call(data[0], key)) {
                   const originKey =  this.dashboardWidget.widget.metaDataSources
                   .find( meta => meta.label.toLowerCase() === key.toLowerCase());
-                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Doughnut || this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
                     this.labels.push( { label: originKey.label , key: originKey.key,  backgroundColor: [], data: []} );
                   }
                   else {
@@ -124,7 +124,7 @@ export class DashboardWidgetComponent implements OnInit {
                data.forEach(element => {
                 this.dimensions.push(element[dim.label.toUpperCase()]);
                 this.labels.forEach( lab => {
-                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie)
+                  if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Doughnut || this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie)
                    { lab.backgroundColor.push(this.generateColor()); }
                   lab.data.push(element[lab.label.toUpperCase()]);
                 });
@@ -150,12 +150,13 @@ export class DashboardWidgetComponent implements OnInit {
     const dimension = this.dashboardWidget.widget.metaDataSources.find( e => e.isDimension === true);
     this.dashboardWidget.widget.metaDataSources.forEach(element => {
       if (!element.isDimension){
-        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
-        labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
-      }
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Doughnut ||
+          this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie){
+        labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );}
       else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
          }
-    });
+    }
+    );
     this.results.forEach((elm) => {
       let repeat = true;
       for (let index = 0; index < dimensions.length; index++) {
@@ -170,7 +171,8 @@ export class DashboardWidgetComponent implements OnInit {
       if (repeat) {
         dimensions.push(elm[dimension.key]);
         labels.forEach( lab => {
-        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+        if (this.dashboardWidget.widget.widgetType.type === this.graphEnum.Doughnut ||
+          this.dashboardWidget.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
         lab.data.push(elm[lab.key]);
         });
       }
@@ -178,7 +180,7 @@ export class DashboardWidgetComponent implements OnInit {
     this.basicData = { labels: dimensions, datasets: labels };
   }
   generateColor(): string {
-    return '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
+    return '#' + (0x1000000 + Math.random()/2 * 0xffffff).toString(16).substr(1, 6);
   }
   updateWidgetDashboard(id: any): void {
     this.dashboardsService.currentDasboard = this.dashboardWidget.dashboard;

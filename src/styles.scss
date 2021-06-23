@@ -39,3 +39,8 @@ body {
 .p-button-success .p-button-text {
   color: #54af37 !important;
 }
+
+//print 
+@media print{
+   .doNotPrint{display:none !important;}
+ }

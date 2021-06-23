@@ -111,7 +111,7 @@ createBasicData(): void {
   const dimensions = [];
   this.widget.metaDataSources.forEach(element => {
     if (!element.isDimension){
-      if (this.widget.widgetType.type === this.graphEnum.Pie){
+      if ( this.widget.widgetType.type === this.graphEnum.Doughnut || this.widget.widgetType.type === this.graphEnum.Pie ){
         labels.push( { label: element.label, key: element.key,  backgroundColor: [], data: []} );
       }
       else { labels.push( { label: element.label, key: element.key, backgroundColor: this.generateColor(), data: []} ); }
@@ -131,7 +131,7 @@ createBasicData(): void {
     if (repeat) {
       dimensions.push(elm[this.dimensionKey.key]);
       labels.forEach( lab => {
-        if (this.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
+        if (this.widget.widgetType.type === this.graphEnum.Doughnut || this.widget.widgetType.type === this.graphEnum.Pie) { lab.backgroundColor.push(this.generateColor()); }
         lab.data.push(elm[lab.key]);
       });
     }

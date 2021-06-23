@@ -117,6 +117,7 @@ export class AddWidgetComponent implements OnInit {
                 item.type === this.graphEnum.Bar ||
                 item.type === this.graphEnum.Line ||
                 item.type === this.graphEnum.Pie ||
+                item.type === this.graphEnum.Doughnut ||
                 item.type === this.widgetTypeEnum.Table ||
                 item.type === this.widgetTypeEnum.Card
               ) {
@@ -164,8 +165,8 @@ export class AddWidgetComponent implements OnInit {
       .getDataFrom(dataSourceQuery)
       .subscribe((data) => {
         this.results = data;
-        for (const key in this.results.rates) {
-          if (Object.prototype.hasOwnProperty.call(this.results.rates, key)) {
+        for (const key in this.results[0]) {
+          if (Object.prototype.hasOwnProperty.call(this.results[0], key)) {
           this.cols.push({ field: key, header: key });
           }
         }

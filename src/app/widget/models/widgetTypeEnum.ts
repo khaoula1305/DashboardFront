@@ -8,5 +8,6 @@ export enum WidgetTypeEnum {
 export enum GraphEnum{
    Bar= 'bar',
    Pie= 'pie',
-   Line= 'line'
+   Line= 'line',
+   Doughnut= 'doughnut'
 }
